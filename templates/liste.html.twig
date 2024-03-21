@@ -2,9 +2,22 @@
 
 {% block title %}Liste des Cours{% endblock %}
 
+{% block stylesheets %}
+    <style>
+        .table-separator td {
+            border-right: 1px solid #ccc; /* Bordure droite */
+            padding: 8px; /* Espacement */
+        }
+        .table-separator th {
+            border-right: 1px solid #ccc; /* Bordure droite */
+            padding: 8px; /* Espacement */
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     <h1>Liste des Cours</h1>
-    <table>
+    <table class="table-separator">
         <thead>
             <tr>
                 <th>ID</th>
@@ -39,6 +52,11 @@
                         <form method="post" action="{{ path('cour_supprimer', {'id': cour.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?')">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cour.id) }}">
                             <button type="submit">Supprimer</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="get" action="{{ path('cour_modifier', {'id': cour.id}) }}">
+                            <button type="submit">Modifier</button>
                         </form>
                     </td>
                 </tr>

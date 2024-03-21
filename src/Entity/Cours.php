@@ -163,7 +163,7 @@ class Cours
         return $this->image;
     }
 
-    public function setImage($image): static
+    public function setImage($image): self
     {
         $this->image = $image;
 

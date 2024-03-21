@@ -30,21 +30,11 @@ class CourAdminController extends AbstractController
     
             // Vérifie si un fichier a été uploadé
             if ($imageFile) {
-                // Générez un nom de fichier unique
-                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                // Lire le contenu du fichier en tant que flux
+                $imageContent = file_get_contents($imageFile->getPathname());
     
-                // Déplacez le fichier dans le répertoire où vous souhaitez stocker les images
-                try {
-                    $imageFile->move(
-                        $this->getParameter('upload_directory'), // Répertoire de destination (doit être configuré dans config/services.yaml)
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // Gérer les exceptions si le téléchargement échoue
-                }
-    
-                // Mettez à jour la propriété 'image' de l'entité Cours avec le nom de fichier
-                $cours->setImage($newFilename);
+                // Stocker le contenu du fichier dans l'entité Produit
+                $cours->setImage($imageContent);
             }
     
             $entityManager = $this->getDoctrine()->getManager();
@@ -98,6 +88,32 @@ public function supprimer(Request $request, int $id, CoursRepository $coursRepos
 
     return $this->redirectToRoute('cour_liste');
 }
+
+#[Route('/admin/cours/modifier/{id}', name: 'cour_modifier')]
+public function modifier(Request $request, int $id, CoursRepository $coursRepository): Response
+{
+    $cour = $coursRepository->find($id);
+
+    if (!$cour) {
+        throw $this->createNotFoundException('Le cours avec l\'ID '.$id.' n\'existe pas.');
+    }
+
+    $form = $this->createForm(CoursType::class, $cour);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+
+        return $this->redirectToRoute('cour_liste');
+    }
+
+    return $this->render('modifier.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
+
+
 
 
 }
