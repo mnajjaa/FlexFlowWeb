@@ -64,17 +64,40 @@ class CourAdminController extends AbstractController
 
 
     #[Route('/admin/cours/liste', name: 'cour_liste')]
-    public function liste(CoursRepository $coursRepository): Response
-    {
-        $cours = $coursRepository->findAll(); // Récupérer tous les cours depuis la base de données
-    
-        // Convertir les BLOBs en données binaires
-        foreach ($cours as $cour) {
-            $cour->setImage(base64_encode(stream_get_contents($cour->getImage())));
+public function liste(CoursRepository $coursRepository): Response
+{
+    $cours = $coursRepository->findAll(); // Récupérer tous les cours depuis la base de données
+
+    foreach ($cours as $cour) {
+        // Vérifier si l'image existe
+        if ($cour->getImage()) {
+            // Convertir les données binaires en base64
+            $imageData = base64_encode(stream_get_contents($cour->getImage()));
+            $cour->setImage($imageData);
         }
-    
-        return $this->render('liste.html.twig', [
-            'cours' => $cours, // Passer les cours récupérés à la vue
-        ]);
     }
+    return $this->render('liste.html.twig', [
+        'cours' => $cours, // Passer les cours récupérés à la vue
+    ]);
+}
+
+#[Route('/admin/cours/supprimer/{id}', name: 'cour_supprimer', methods: ['POST'])]
+public function supprimer(Request $request, int $id, CoursRepository $coursRepository): Response
+{
+    $cour = $coursRepository->find($id);
+
+    if (!$cour) {
+        throw $this->createNotFoundException('Le cours avec l\'ID '.$id.' n\'existe pas.');
+    }
+
+    if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($cour);
+        $entityManager->flush();
+    }
+
+    return $this->redirectToRoute('cour_liste');
+}
+
+
 }
