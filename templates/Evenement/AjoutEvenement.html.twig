@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un événement{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un événement</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.nomEvenement) }}
+    {{ form_row(form.categorie) }}
+    {{ form_row(form.Objectif) }}
+    {{ form_row(form.nbrPlace) }}
+    {{ form_row(form.Date) }}
+    {{ form_row(form.Time) }}
+    {{ form_row(form.user) }}
+    {{ form_row(form.etat) }}
+    {{ form_row(form.image) }}
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+    {{ form_end(form) }}
+{% endblock %}
