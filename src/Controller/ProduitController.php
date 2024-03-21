@@ -3,6 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
+use App\Entity\Commande;
+use App\Service\PDFGeneratorService;
+use Symfony\Component\Routing\RouterInterface;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,13 +51,16 @@ public function consulterPanier(): Response
 
 
 #[Route('/valider-panier', name: 'valider_panier')]
-public function validerPanier(): Response
+public function validerPanier(PDFGeneratorService $pdfGeneratorService, SessionInterface $session, RouterInterface $router): Response
 {
     // Récupérer les éléments du panier depuis la session
-    $panier = $this->get('session')->get('panier', []);
+    $panier = $session->get('panier', []);
 
     // Récupérer le gestionnaire d'entités
     $entityManager = $this->getDoctrine()->getManager();
+
+    // Liste des produits achetés pour le PDF
+    $productsForPDF = [];
 
     // Parcourir les éléments du panier
     foreach ($panier as $item) {
@@ -64,7 +71,7 @@ public function validerPanier(): Response
         // Trouver le produit dans la base de données par son ID
         $produit = $entityManager->getRepository(Produit::class)->find($produitId);
 
-        // Vérifier si le produit existe dans la base de données
+        // Si le produit existe
         if ($produit) {
             // Vérifier si la quantité en stock est suffisante
             if ($produit->getQuantite() >= $quantiteAchete) {
@@ -78,17 +85,51 @@ public function validerPanier(): Response
                 // Gérer le cas où la quantité en stock est insuffisante
                 // Par exemple, afficher un message d'erreur à l'utilisateur
             }
+
+            // Créer une nouvelle entité Commande
+            $commande = new Commande();
+            $commande->setDateCommande(new \DateTime()); // Date et heure actuelles
+            $commande->setIdProduit($produit->getId());
+            $commande->setNom($produit->getNom());
+            $commande->setMontant($produit->getPrix() * $quantiteAchete);
+
+            // Enregistrer la commande dans la base de données
+            $entityManager->persist($commande);
+
+            // Ajouter les détails du produit à la liste des produits pour le PDF
+            $productsForPDF[] = [
+                'nom' => $produit->getNom(),
+                'quantite' => $quantiteAchete,
+                'montant' => $produit->getPrix() * $quantiteAchete,
+            ];
         }
     }
 
+
+     // Supprimez tous les éléments du panier de la session
+
+     // Redirigez ou renvoyez une réponse appropriée
     // Enregistrer les modifications dans la base de données
     $entityManager->flush();
 
-    // Supprimer les produits achetés du panier dans la session
-    $this->get('session')->remove('panier');
+    // Générer le nom du fichier PDF avec la date actuelle et l'heure
+    $date = new \DateTime();
+    $fileName = 'facture_' . $date->format('Y-m-d_H-i-s') . '.pdf';
 
-    // Rediriger vers une page de confirmation ou une autre page appropriée
-    return $this->redirectToRoute('produits');
+    // Générer le contenu du PDF avec les détails des produits achetés
+    $pdfContent = $pdfGeneratorService->generatePDF($productsForPDF);
+
+    // Supprimer les produits achetés du panier dans la session
+    $session->set('panier', []);
+
+    // Retourner le PDF en tant que réponse HTTP
+    return new Response($pdfContent, 200, [
+        'Content-Type' => 'application/pdf',
+        'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+    ]);
+    
+    // Redirection vers la page des produits après le téléchargement du PDF
+    
 }
 
 
