@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un cours{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ajouter un cours</h5>
+                    <form action="{{ path('cour_ajouter') }}" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="nomCour" class="form-label">Nom du cours</label>
+                            {{ form_widget(form.nomCour, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="Duree" class="form-label">Durée</label>
+                            {{ form_widget(form.Duree, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="Intensite" class="form-label">Intensité</label>
+                            {{ form_widget(form.Intensite, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="Cible" class="form-label">Cible</label>
+                            {{ form_widget(form.Cible, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="Categorie" class="form-label">Catégorie</label>
+                            {{ form_widget(form.Categorie, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="Objectif" class="form-label">Objectif</label>
+                            {{ form_widget(form.Objectif, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="etat" class="form-label">État</label>
+                            {{ form_widget(form.etat, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="capacite" class="form-label">Capacité</label>
+                            {{ form_widget(form.capacite, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="imageFile" class="form-label">Image</label>
+                            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="user" class="form-label">Utilisateur</label>
+                            {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
