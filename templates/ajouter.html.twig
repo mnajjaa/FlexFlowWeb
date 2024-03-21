@@ -10,6 +10,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Ajouter un cours</h5>
                     <form action="{{ path('cour_ajouter') }}" method="post" enctype="multipart/form-data">
+                        {{ form_start(form, {'method': 'POST'}) }}
+                        {{ form_row(form._token) }} {# Ajout du jeton CSRF #}
                         <div class="mb-3">
                             <label for="nomCour" class="form-label">Nom du cours</label>
                             {{ form_widget(form.nomCour, {'attr': {'class': 'form-control'}}) }}
@@ -46,11 +48,13 @@
                             <label for="imageFile" class="form-label">Image</label>
                             {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
                         </div>
+                        
                         <div class="mb-3">
                             <label for="user" class="form-label">Utilisateur</label>
                             {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
                         </div>
                         <button type="submit" class="btn btn-primary">Ajouter</button>
+                        {{ form_end(form) }}
                     </form>
                 </div>
             </div>

@@ -1,0 +1,43 @@
+{# templates/liste.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Cours{% endblock %}
+
+{% block body %}
+    <h1>Liste des Cours</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom du Cours</th>
+                <th>Durée</th>
+                <th>Intensité</th>
+                <th>Cible</th>
+                <th>Catégorie</th>
+                <th>Objectif</th>
+                <th>État</th>
+                <th>Capacité</th>
+                <th>Utilisateur</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cour in cours %}
+                <tr>
+                    <td>{{ cour.id }}</td>
+                    <td>{{ cour.nomCour }}</td>
+                    <td>{{ cour.Duree }}</td>
+                    <td>{{ cour.Intensite }}</td>
+                    <td>{{ cour.Cible }}</td>
+                    <td>{{ cour.Categorie }}</td>
+                    <td>{{ cour.Objectif }}</td>
+                    <td>{{ cour.etat ? 'Actif' : 'Inactif' }}</td>
+                    <td>{{ cour.capacite }}</td>
+                    <td>{{ cour.user.username }}</td> {# Assurez-vous que l'entité User a une méthode getUsername() pour obtenir le nom d'utilisateur #}
+                    <td><img src="data:image/jpeg;base64,{{ cour.image }}" alt="Image du cours" style="max-width: 100px;"></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

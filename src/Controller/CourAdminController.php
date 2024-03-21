@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use App\Repository\CoursRepository;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
 
 
 class CourAdminController extends AbstractController
@@ -50,11 +53,28 @@ class CourAdminController extends AbstractController
     
             // Ajoutez ici un message flash ou redirigez l'utilisateur vers une autre page
     
-            return $this->redirectToRoute('ajouter.html.twig');
+            //return $this->redirectToRoute('ajouter.html.twig');
         }
     
         return $this->render('ajouter.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+
+
+    #[Route('/admin/cours/liste', name: 'cour_liste')]
+    public function liste(CoursRepository $coursRepository): Response
+    {
+        $cours = $coursRepository->findAll(); // Récupérer tous les cours depuis la base de données
+    
+        // Convertir les BLOBs en données binaires
+        foreach ($cours as $cour) {
+            $cour->setImage(base64_encode(stream_get_contents($cour->getImage())));
+        }
+    
+        return $this->render('liste.html.twig', [
+            'cours' => $cours, // Passer les cours récupérés à la vue
         ]);
     }
 }
