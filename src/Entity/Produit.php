@@ -33,7 +33,7 @@ class Produit
     private ?int $quantiteVendues = null;
 
     #[ORM\Column(type: Types::BLOB)]
-    private $image = null;
+    public $image = null;
 
     public function getId(): ?int
     {
