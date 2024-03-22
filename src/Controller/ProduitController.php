@@ -6,20 +6,20 @@ use App\Entity\Produit;
 use App\Entity\Commande;
 use App\Service\PDFGeneratorService;
 use Symfony\Component\Routing\RouterInterface;
-
-use Stripe\Checkout\Session;
-use Stripe\Stripe;
+use App\Service\SmsGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 class ProduitController extends AbstractController
 {
-    #[Route('/', name: 'produits')]
+    #[Route('/vitrine', name: 'produits')]
     public function index(): Response
 {
     $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
