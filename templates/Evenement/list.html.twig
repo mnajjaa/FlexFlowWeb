@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des evenement{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .table-separator td {
+            border-right: 1px solid #ccc; /* Bordure droite */
+            padding: 8px; /* Espacement */
+        }
+        .table-separator th {
+            border-right: 1px solid #ccc; /* Bordure droite */
+            padding: 8px; /* Espacement */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Liste des Evenement</h1>
+    <table class="table-separator">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom de l'evenement</th>
+                 <th>Catégorie</th>
+                <th>Objectif</th>
+                <th>Nombre de place</th>
+                <th>Date</th>
+                <th>Time</th>
+               
+                <th>État</th>
+                <th>Utilisateur</th>
+                <th>Image</th>
+                <th>Actions</th> <!-- Ajout de la colonne pour les actions -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in evenement %}
+                <tr>
+                    <td>{{ e.id }}</td>
+                    <td>{{ e.nomEvenement}}</td>
+                    <td>{{ e.categorie }}</td>
+                    <td>{{ e.Objectif }}</td>
+                    <td>{{ e.nbrPlace }}</td>
+                    <td>{{ e.Date|date('Y-m-d')}}</td>
+                    <td>{{ e.Time|date('H:i:s') }}</td>
+                    <td>{{ e.etat ? 'Actif' : 'Inactif' }}</td>
+                    <td>{{ e.user.username }}</td>
+                    <td><img src="data:image/jpeg;base64,{{ e.image }}" alt="Image evenement" style="max-width: 100px;"></td>
+                    <td>
+                        <form method="post" action="" onsubmit="">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ e.id) }}">
+                            <button type="submit">Supprimer</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="get" action="">
+                            <button type="submit">Modifier</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

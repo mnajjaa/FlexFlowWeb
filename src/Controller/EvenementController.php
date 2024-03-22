@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Form\AjouterEvenementType;
+use App\Repository\EvenementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EvenementController extends AbstractController
 {
+
+ 
+
+
+
      #[Route("/admin/ajouterEvenement", name:"ajouter_evenement")]
 
     public function ajouterEvenement(Request $request): Response
@@ -65,4 +71,32 @@ class EvenementController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+
+    #[Route('/admin/list', name: 'evenements_list')]
+    public function listEvenements(EvenementRepository $EvenementRepository): Response
+    {
+       
+
+        // Récupérer tous les événements depuis le repository
+        $evenements = $EvenementRepository->findAll();
+
+        foreach ($evenements as $evenement) {
+            // Vérifier si l'image existe
+            if ($evenement->getImage()) {
+                // Convertir les données binaires en base64
+                $imageData = base64_encode(stream_get_contents($evenement->getImage()));
+                $evenement->setImage($imageData);
+            }
+        }
+
+        // Rendre la vue en passant les événements récupérés
+        return $this->render('Evenement/list.html.twig', [
+            'evenement' => $evenements,
+        ]);
+    }
+
+
+
 }
