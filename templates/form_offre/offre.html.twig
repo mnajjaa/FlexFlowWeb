@@ -1,22 +1,164 @@
-{# templates/offre/creer.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Créer une nouvelle offre{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Styles pour le formulaire */
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative; /* Pour positionner l'image */
+            display: flex; /* Utilisation de flexbox */
+            flex-direction: column; /* Alignement vertical */
+            align-items: flex-start; /* Alignement à gauche */
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%; /* Largeur pleine */
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-buttons {
+            margin-top: 10px; /* Marge en haut pour les boutons */
+            display: flex; /* Utilisation de flexbox */
+            justify-content: flex-end; /* Alignement des boutons à droite */
+        }
+        button[type="submit"],
+        .btn-secondary {
+            margin-left: 10px; /* Marge entre les boutons */
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s; /* Animation de transition */
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s; /* Animation de transition */
+        }
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+        
+        /* Animation pour les lettres */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                color: transparent;
+            }
+            to {
+                opacity: 1;
+                color: #333;
+            }
+        }
+
+        .animated-letter {
+            animation: fadeIn 0.5s forwards;
+        }
+
+        /* Style pour l'image */
+        #imageContainer {
+            position: absolute;
+            top: 0;
+            right: 0; /* Positionnement à droite */
+            padding: 20px; /* Ajout d'un espace autour de l'image */
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-    <h1>Créer une nouvelle offre</h1>
+    <div id="imageContainer">
+        <img src="{{ asset('images/votre_image.jpg') }}" alt="Image">
+    </div>
+
+    <h1 id="titreOffre">Créer une nouvelle offre</h1>
     {{ form_start(form) }}
     {{ form_row(form.nom) }}
-    {{ form_row(form.specialite) }}
+    <div>
+        <label for="specialite">Spécialité</label>
+        {{ form_widget(form.specialite, {'attr': {'class': 'form-control'}}) }}
+    </div>
     {{ form_row(form.tarif_heure) }}
     {{ form_row(form.etat_offre) }}
     {{ form_row(form.email) }}
     {{ form_row(form.coach) }}
-    <button type="submit" class="btn btn-primary">Créer</button>
+    <div class="form-buttons">
+        <button type="submit" id="submitButton">Créer</button>
+        <a href="{{ path('app_consulter_offres') }}" class="btn-secondary" id="consulterOffres">Consulter les offres</a>
+    </div>
     {{ form_end(form) }}
 
-    {# Ajout du bouton "Consulter les offres" #}
-    <a href="{{ path('app_consulter_offres') }}" class="btn btn-secondary">Consulter les offres</a>
-    
+    <script>
+        // Sélection du titre
+        var titreOffre = document.getElementById('titreOffre');
+        var titreTexte = titreOffre.textContent.trim(); // Contenu du titre sans les espaces autour
+
+        // Remplacement du contenu du titre par des span pour chaque lettre
+        titreOffre.innerHTML = titreTexte
+            .split('')
+            .map(function(letter) {
+                return '<span class="animated-letter">' + letter + '</span>';
+            })
+            .join('');
+
+        // Animation amusante pour le titre
+        setInterval(function() {
+            titreOffre.innerHTML = titreOffre.innerHTML === 'Créer une nouvelle offre' ? 'Coach' : 'Créer une nouvelle offre';
+        }, 1000);
+
+        // Animation amusante pour le bouton "Créer"
+        var submitButton = document.getElementById('submitButton');
+        submitButton.addEventListener('mouseenter', function() {
+            submitButton.style.backgroundColor = '#ff0000'; // Change la couleur en rouge
+        });
+
+        submitButton.addEventListener('mouseleave', function() {
+            submitButton.style.backgroundColor = '#007bff'; // Revert la couleur en bleu
+        });
+
+        // Animation amusante pour
+        var consulterOffresButton = document.getElementById('consulterOffres');
+        setInterval(function() {
+            consulterOffresButton.style.backgroundColor = getRandomColor();
+        }, 1000);
+
+        // Fonction pour générer une couleur aléatoire
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
 {% endblock %}

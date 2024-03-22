@@ -24,7 +24,7 @@ class Offre
     private ?float $tarif_heure = null;
 
     #[ORM\Column(length: 255)] 
-    private ?string $etat_offre = null;
+    private ?string $etat_offre = "en atttente";
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;

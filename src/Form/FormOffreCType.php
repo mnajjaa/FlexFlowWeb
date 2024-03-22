@@ -24,16 +24,24 @@ class FormOffreCType extends AbstractType
     {
         $builder
         ->add('nom', TextType::class, [
-            'label' => 'Nom'
+            'label' => 'Nom de votre offre'
         ])
-        ->add('specialite', TextType::class, [
-            'label' => 'Spécialité'
+        ->add('specialite', ChoiceType::class, [ // Utilisation de ChoiceType pour le champ Spécialité
+            'label' => 'Spécialité',
+            'choices' => [
+                'Musculation' => 'Musculation',
+                'Cardio' => 'Cardio',
+                'Yoga' => 'Yoga',
+                'Boxe' => 'Boxe',
+            ],
         ])
         ->add('tarif_heure', NumberType::class, [
             'label' => 'Tarif par heure'
         ])
         ->add('etat_offre', TextType::class, [
-            'label' => 'État de l\'offre'
+            'label' => 'État de l\'offre',
+            'data' => 'En attente', // Valeur par défaut
+            'disabled' => true, // Désactiver le champ pour empêcher les modifications
         ])
         ->add('email', EmailType::class, [
             'label' => 'Email'

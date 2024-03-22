@@ -74,24 +74,25 @@ class FormOffreController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $offre = $entityManager->getRepository(Offre::class)->find($id);
-
+    
         if (!$offre) {
             throw $this->createNotFoundException(
                 'Aucune offre trouvée pour l\'id ' . $id
             );
         }
-
+    
         $form = $this->createForm(FormOffreCType::class, $offre);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
+            // Les valeurs du formulaire sont automatiquement mises à jour dans l'objet $offre
             $entityManager->flush();
-
+    
             $this->addFlash('success', 'Offre modifiée avec succès.');
-
+    
             return $this->redirectToRoute('app_consulter_offres');
         }
-
+    
         return $this->render('form_offre/modifier_offre.html.twig', [
             'form' => $form->createView(),
         ]);
