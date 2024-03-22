@@ -30,7 +30,7 @@ class Evenement
     private ?string $Objectif = null;
 
     #[ORM\Column]
-    private ?int $etat = null;
+    private ?bool $etat = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $Time = null;
@@ -107,18 +107,17 @@ class Evenement
         return $this;
     }
 
-    public function getEtat(): ?int
+    public function isEtat(): ?bool
     {
         return $this->etat;
     }
 
-    public function setEtat(int $etat): static
+    public function setEtat(bool $etat): static
     {
         $this->etat = $etat;
 
         return $this;
     }
-
     public function getTime(): ?\DateTimeInterface
     {
         return $this->Time;

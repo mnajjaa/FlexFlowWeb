@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Form\AjouterEvenementType;
+use App\Form\EvenementType;
 use App\Repository\EvenementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -114,5 +115,28 @@ class EvenementController extends AbstractController
     
         return $this->redirectToRoute('evenements_list');
     }
+    #[Route('/admin/modifier/{id}', name: 'Evenement_modifier')]
+public function modifier(Request $request, int $id, EvenementRepository $EvenementRepository): Response
+{
+    $evenement = $EvenementRepository->find($id);
+
+    if (!$evenement) {
+        throw $this->createNotFoundException('l\'evenement avec l\'ID '.$id.' n\'existe pas.');
+    }
+
+    $form = $this->createForm(AjouterEvenementType::class, $evenement);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+
+        return $this->redirectToRoute('evenements_list');
+    }
+
+    return $this->render('Evenement/modifier.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
 
 }

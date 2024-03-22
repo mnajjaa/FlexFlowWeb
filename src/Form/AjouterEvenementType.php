@@ -11,8 +11,10 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AjouterEvenementType extends AbstractType
@@ -69,9 +71,7 @@ class AjouterEvenementType extends AbstractType
                 'label' => 'Image de l\'événement',
                 'mapped' => false, // Indique que ce champ n'est pas associé à une propriété de l'entité
                 'required' => false, // Le champ n'est pas requis, il peut être vide
-            ])
-          
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
