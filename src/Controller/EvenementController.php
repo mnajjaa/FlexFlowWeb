@@ -97,6 +97,22 @@ class EvenementController extends AbstractController
         ]);
     }
 
-
+    #[Route('/admin/supprimer/{id}', name: 'Evenement_supprimer', methods: ['POST'])]
+    public function supprimerEvenement(Request $request, int $id, EvenementRepository $EvenementRepository): Response
+    {
+        $evenement = $EvenementRepository->find($id);
+    
+        if (!$evenement) {
+            throw $this->createNotFoundException('l\'evenement avec l\'ID '.$id.' n\'existe pas.');
+        }
+    
+        if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($evenement);
+            $entityManager->flush();
+        }
+    
+        return $this->redirectToRoute('evenements_list');
+    }
 
 }

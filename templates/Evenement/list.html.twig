@@ -48,7 +48,7 @@
                     <td>{{ e.user.username }}</td>
                     <td><img src="data:image/jpeg;base64,{{ e.image }}" alt="Image evenement" style="max-width: 100px;"></td>
                     <td>
-                        <form method="post" action="" onsubmit="">
+                        <form method="post" action="{{ path('Evenement_supprimer', {'id': e.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet evenement?')">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ e.id) }}">
                             <button type="submit">Supprimer</button>
                         </form>
@@ -57,7 +57,7 @@
                         <form method="get" action="">
                             <button type="submit">Modifier</button>
                         </form>
-                    </td>
+                    </td>s
                 </tr>
             {% endfor %}
         </tbody>
