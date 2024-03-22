@@ -1,0 +1,18 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulter les offres{% endblock %}
+
+{% block body %}
+    <h1>Consulter les offres</h1>
+
+    <ul>
+        {% for offre in offres %}
+            <li>
+                {{ offre.nom }} - {{ offre.specialite }} - {{ offre.tarif_heure }} - {{ offre.etat_offre }} - {{ offre.coach }} - {{ offre.email }} <li> 
+                <a href="{{ path('modifier_offre', {'id': offre.id}) }}">Modifier</a>
+                <a href="{{ path('supprimer_offre', {'id': offre.id}) }}">Supprimer</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

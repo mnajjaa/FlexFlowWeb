@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OffreRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: OffreRepository::class)]
 class Offre
 {
@@ -65,13 +66,25 @@ class Offre
     {
         return $this->tarif_heure;
     }
-
-    public function setTarifHeure(float $tarif_heure): static
+    
+    public function setTarifHeure(float $tarif_heure): self
     {
         $this->tarif_heure = $tarif_heure;
-
+    
         return $this;
     }
+    public function getTarif_Heure(): ?float
+    {
+        return $this->tarif_heure;
+    }
+    
+    public function setTarif_Heure(float $tarif_heure): self
+    {
+        $this->tarif_heure = $tarif_heure;
+    
+        return $this;
+    }
+
     public function getEtatOffre(): ?string
     {
         return $this->etat_offre;
@@ -84,6 +97,17 @@ class Offre
         return $this;
     }
 
+    public function getEtat_Offre(): ?string
+    {
+        return $this->etat_offre;
+    }
+
+    public function setEtat_Offre(string $etat_offre): static
+    {
+        $this->etat_offre = $etat_offre;
+
+        return $this;
+    }
     
 
     public function getEmail(): ?string
@@ -110,16 +134,4 @@ class Offre
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-        return $this;
-
-
-    }
 }

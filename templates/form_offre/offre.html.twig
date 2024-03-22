@@ -15,4 +15,8 @@
     {{ form_row(form.coach) }}
     <button type="submit" class="btn btn-primary">Créer</button>
     {{ form_end(form) }}
+
+    {# Ajout du bouton "Consulter les offres" #}
+    <a href="{{ path('app_consulter_offres') }}" class="btn btn-secondary">Consulter les offres</a>
+    
 {% endblock %}
