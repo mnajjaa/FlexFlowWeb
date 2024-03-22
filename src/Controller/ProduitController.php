@@ -244,8 +244,8 @@ public function checkout($stripeSK): Response
 
 
 
-#[Route('/success-url', name: 'success_url')]
-public function validerPanier(PDFGeneratorService $pdfGeneratorService, SessionInterface $session, RouterInterface $router): Response
+#[Route('/success-url', name: 'success_url' )]
+public function validerPanier(PDFGeneratorService $pdfGeneratorService,Request $request, SmsGenerator $smsGenerator, SessionInterface $session, RouterInterface $router): Response
 {
     // Récupérer les éléments du panier depuis la session
     $panier = $session->get('panier', []);
@@ -315,15 +315,33 @@ public function validerPanier(PDFGeneratorService $pdfGeneratorService, SessionI
 
     // Supprimer les produits achetés du panier dans la session
     $session->set('panier', []);
+    $number="29678226";
+    $name="FlexFlow";
 
+    $text = "Bonjour,
+  
+    Votre commande sera prête à être retirée. Vous pouvez venir la récupérer à tout moment.
+    
+    Votre commande est valable pendant une semaine à partir d'aujourd'hui " . date('d/m/Y');
+    
+
+    $number_test=$_ENV['twilio_to_number'];// Numéro vérifier par twilio. Un seul numéro autorisé pour la version de test.
+
+    //Appel du service
+    $smsGenerator->sendSms($number_test ,$name,$text);
+
+    
+    // Redirection vers la page des produits après le téléchargement du PDF
+    
     // Retourner le PDF en tant que réponse HTTP
     return new Response($pdfContent, 200, [
         'Content-Type' => 'application/pdf',
         'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
     ]);
-    
-    // Redirection vers la page des produits après le téléchargement du PDF
-    
+
+
+
+   
 }
 
 

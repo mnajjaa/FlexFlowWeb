@@ -17,10 +17,7 @@ services:
             # config/services.yaml
 
 
-    App\Service\SmsGenerator:
-        arguments:
-            $twilioAccountSid: '%env(TWILIO_ACCOUNT_SID)%'
-            $twilioAuthToken: '%env(TWILIO_AUTH_TOKEN)%'
+    
 
             
             # config/services.yaml
