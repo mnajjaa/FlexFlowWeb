@@ -1,56 +1,76 @@
 /* styles.css */
 
 .card {
-    background-color: #fff;
-    border-radius: 8px;
+    background-color: fff;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Ajustez l'espacement entre les cartes */
     overflow: hidden;
-    width: 250px; /* Largeur de la carte */
+    width: 250px; /* Largeur fixe pour toutes les cartes */
+    height: 450px; /* Hauteur fixe pour toutes les cartes */
+    margin-right: 20px; /* Espacement entre les cartes horizontales */
+    float: left; /* Mettre les cartes côte à côte */
+    clear: none; /* Supprimer le clear pour empêcher le saut de ligne */
+    transition: box-shadow 0.3s; /* Ajouter une transition pour l'ombre de la carte */
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Augmenter l'ombre au survol */
+}
+
+.card:nth-child(3n) {
+    margin-right: 0; /* Supprimer la marge à droite pour la troisième carte dans chaque ligne */
 }
 
 .card img {
     width: 100%;
-    height: auto;
-    border-top-left-radius: 8px;
-    transition: transform 0.3s; /* Transition pour agrandir l'image */
-    border-top-right-radius: 8px;
+    height: 50%; /* Ajustez la hauteur de l'image */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transition: transform 0.3s; /* Ajouter une transition pour le zoom de l'image */
 }
 
 .card:hover img {
-    transform: scale(1.2); /* Agrandir l'image lorsqu'on passe la souris dessus */
+    transform: scale(1.1); /* Agrandir l'image lorsqu'on passe la souris dessus */
 }
 
 .card-body {
     padding: 20px;
+    height: 45%; /* Ajustez la hauteur du corps */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card-title {
-    font-size: 1.2rem; /* Taille du titre */
+    font-size: 1.5rem;
     margin-bottom: 10px;
 }
 
 .card-text {
     color: #555;
-    font-size: 1rem; /* Taille du texte */
+    font-size: 1.2rem;
     margin-bottom: 15px;
 }
 
 .btn {
     display: inline-block;
-    background-color: #007bff;
+    background-color: #2a66a0; /* Couleur du bouton */
     color: #fff;
-    padding: 8px 16px;
-    border-radius: 4px;
+    padding: 12px 24px; /* Ajustez le rembourrage du bouton */
+    border-radius: 12px; /* Augmentez le rayon de la bordure pour un look plus moderne */
     text-decoration: none;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s; /* Ajouter une transition pour le changement de couleur au survol */
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #2a66a0; /* Couleur du bouton au survol */
 }
 
+
 .custom-select {
-    height: 32px; /* Ajustez la hauteur selon vos préférences */
+    height: 39px;
+    border-radius: 3px; /* Augmentez le rayon de la bordure pour un look plus moderne */
+    /* Ajustez la hauteur selon vos préférences */
     /* Autres styles de la dropdown */
-}
+}  

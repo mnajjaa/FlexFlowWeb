@@ -858,13 +858,15 @@
 
                                                
 
+  <main>
+        
 
-                                            <div class="container">
-                                                <!-- Bloc div où vous souhaitez inclure votre contenu Twig -->
-                                                <div id="produit-content">
-                                                    {% include 'produit/index.html.twig' %}
-                                                </div>
-                                            </div>
+        {# Inclure le contenu de product.html.twig #}
+        {% block product_content %}
+            {% include 'product.html.twig' %}
+        {% endblock %}
+    </main>
+
 
 
 
