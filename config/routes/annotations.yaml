@@ -5,3 +5,11 @@ controllers:
 kernel:
     resource: ../../src/Kernel.php
     type: annotation
+    
+offre_new:
+    path: /offre/new
+    controller: App\Controller\OffreController::new
+
+offre_show:
+    path: /offre/{id}
+    controller: App\Controller\OffreController::show

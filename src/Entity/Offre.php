@@ -22,15 +22,15 @@ class Offre
     #[ORM\Column]
     private ?float $tarif_heure = null;
 
+    #[ORM\Column(length: 255)] 
+    private ?string $etat_offre = null;
+
     #[ORM\Column(length: 255)]
-    private ?string $etatOffre = null;
+    private ?string $email = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $coach = null;
-
-
-
 
     public function getId(): ?int
     {
@@ -72,15 +72,28 @@ class Offre
 
         return $this;
     }
-
     public function getEtatOffre(): ?string
     {
-        return $this->etatOffre;
+        return $this->etat_offre;
     }
 
-    public function setEtatOffre(string $etatOffre): static
+    public function setEtatOffre(string $etat_offre): static
     {
-        $this->etatOffre = $etatOffre;
+        $this->etat_offre = $etat_offre;
+
+        return $this;
+    }
+
+    
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
@@ -97,6 +110,16 @@ class Offre
         return $this;
     }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
 
-   
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+        return $this;
+
+
+    }
 }
