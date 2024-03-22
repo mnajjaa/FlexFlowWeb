@@ -213,20 +213,27 @@ public function checkout($stripeSK): Response
 {
     Stripe::setApiKey($stripeSK);
 
+    // Récupérer les éléments du panier depuis la session
+    $panier = $this->get('session')->get('panier', []);
+
+    // Préparer les éléments de la session Stripe à partir des produits dans le panier
+    $lineItems = [];
+    foreach ($panier as $item) {
+        $lineItems[] = [
+            'price_data' => [
+                'currency'     => 'usd',
+                'product_data' => [
+                    'name' => $item['produit']->getNom(),
+                ],
+                'unit_amount'  => round($item['produit']->getPrix() * 100 / 3),
+            ],
+            'quantity'   => $item['quantite'],
+        ];
+    }
+
     $session = Session::create([
         'payment_method_types' => ['card'],
-        'line_items'           => [
-            [
-                'price_data' => [
-                    'currency'     => 'usd',
-                    'product_data' => [
-                        'name' => 'T-shirt',
-                    ],
-                    'unit_amount'  => 2000,
-                ],
-                'quantity'   => 1,
-            ]
-        ],
+        'line_items'           => $lineItems,
         'mode'                 => 'payment',
         'success_url'          => $this->generateUrl('success_url', [], UrlGeneratorInterface::ABSOLUTE_URL),
         'cancel_url'           => $this->generateUrl('cancel_url', [], UrlGeneratorInterface::ABSOLUTE_URL),
@@ -234,6 +241,7 @@ public function checkout($stripeSK): Response
 
     return $this->redirect($session->url, 303);
 }
+
 
 
 #[Route('/success-url', name: 'success_url')]
