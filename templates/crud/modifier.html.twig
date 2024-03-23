@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {# Incluez les fichiers CSS Bootstrap ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .custom-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .custom-form-label {
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}Modifier un produit{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <center><h1>Modifier un produit</h1></center>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card custom-card">
+                    <div class="card-body">
+                        {# Votre formulaire ici #}
+                        {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                        <div class="mb-3">
+                            {{ form_label(form.nom, 'Nom du produit', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.Description, 'Description', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.Description, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.Prix, 'Prix', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.Prix, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.Type, 'Type', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.Type, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.quantite, 'quantite', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.quantite, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.quantite_Vendues, 'quantite Vendues', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.quantite_Vendues, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.imageFile, 'Image', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <center>
+                            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                        </center>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

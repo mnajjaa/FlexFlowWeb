@@ -17,9 +17,17 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
+
+
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 class ProduitController extends AbstractController
 {
-    #[Route('/vitrine', name: 'produits')]
+    #[Route('/', name: 'produits')]
     public function index(): Response
 {
     $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();

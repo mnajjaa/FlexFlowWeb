@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des produits{% endblock %}
+
+{% block stylesheets %}
+    {# Incluez les fichiers CSS Bootstrap ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {# Incluez les fichiers CSS Font Awesome ici #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
+{% block body %}
+    <h1>Liste des produits</h1>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom du produit</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th>Type</th>
+                    <th>Quantité</th>
+                    <th>Quantité Vendues</th>
+                    <th>Image</th>
+                    <th>Actions</th> <!-- Ajout de la colonne pour les actions -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for produit in produits %}
+                    <tr>
+                        <td>{{ produit.id }}</td>
+                        <td>{{ produit.nom }}</td>
+                        <td>{{ produit.description }}</td>
+                        <td>{{ produit.prix }}</td>
+                        <td>{{ produit.type }}</td>
+                        <td>{{ produit.quantite }}</td>
+                        <td>{{ produit.quantiteVendues }}</td>
+                        <td><img src="data:image/jpeg;base64,{{ produit.image }}" alt="Image du produit" style="max-width: 100px;"></td>
+                        <td>
+                            <form method="post" action="{{ path('produit-supprimer', {'id': produit.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}"  >
+                                <button type="submit" class="btn btn-danger mr-1"><i class="fas fa-trash-alt"></i></button>
+                            </form>
+
+                            <form method="get" action="{{ path('produit_modifier', {'id': produit.id}) }}">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
