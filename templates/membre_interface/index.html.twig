@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Coaching Offers{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-gap: 20px;
+            width: 80%;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px; /* Slightly rounded corners for aesthetics */
+            padding: 0; /* Padding removed here and handled within the content areas */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Ensure the image corners are also rounded */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-header {
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .card-header-img {
+            width: 100%;
+            display: block; /* Makes sure the image is block level so it takes up the full width */
+            height: 150px; /* Fixed height, or use 'auto' to maintain aspect ratio */
+            object-fit: cover; /* Ensures the image covers the area nicely */
+        }
+
+        .card-content {
+            padding: 20px;
+            text-align: center; /* Center the text inside the content area */
+        }
+
+        .button {
+            background-color: #6CCDD9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s; /* Transition for the button background color */
+        }
+
+        .button:hover {
+            background-color: #5ab6c9; /* A darker shade of the button color for hover state */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <!-- Replace these with your actual paths and text content -->
+    <div class="card">
+        <img src="{{ asset('images/image.png') }}" alt="Muscle Building" class="card-header-img">
+        <div class="card-header">
+            Muscle Building
+        </div>
+        <div class="card-content">
+            <p>Enhance your strength with tailored muscle building programs.</p>
+            <a href="{{ path('muscle_building') }}" class="button">Read More</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="{{ asset('images/image.png') }}" alt="Cardio" class="card-header-img">
+        <div class="card-header">
+            Cardio
+        </div>
+        <div class="card-content">
+            <p>Improve your cardiovascular health with specialized cardio workouts.</p>
+            <a href="{{ path('cardio') }}" class="button">Read More</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="{{ asset('images/image.png') }}" alt="Boxing" class="card-header-img">
+        <div class="card-header">
+            Boxing
+        </div>
+        <div class="card-content">
+            <p>Learn boxing techniques and improve your overall fitness and coordination.</p>
+            <a href="{{ path('boxing') }}" class="button">Read More</a>
+        </div>
+    </div>
+    <div class="card">
+    <img src="{{ asset('images/image.png') }}" alt="Yoga" class="card-header-img">
+    <div class="card-header">
+        Yoga
+    </div>
+    <div class="card-content">
+        <p>Find inner peace and flexibility with our yoga classes.</p>
+        <a href="{{ path('yoga') }}" class="button">Read More</a>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    // Your JavaScript here, if needed.
+</script>
+{% endblock %}
+
+       

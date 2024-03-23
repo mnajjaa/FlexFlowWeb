@@ -1,0 +1,70 @@
+/* Styles supplémentaires pour correspondre à l'image fournie */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #333;
+}
+
+.registration-form {
+    background-color: #2c3e50;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    color: #fff;
+    width: 400px;
+}
+
+.registration-form header h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #34495e;
+    color: #fff;
+    margin-top: 5px;
+}
+
+.form-group input::placeholder {
+    color: #bbb;
+}
+
+.form-actions {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.btn-submit, .btn-consult {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover, .btn-consult:hover {
+    background-color: #2980b9;
+}
+
+.animated-form {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
