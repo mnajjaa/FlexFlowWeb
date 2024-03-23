@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -58,7 +59,11 @@ class AjouterEvenementType extends AbstractType
                 'widget' => 'single_text',
                 'attr' => ['class' => 'datepicker'],
             ])
-            ->add('Time')
+            ->add('Time', TimeType::class, [ // Ajoutez le champ TimeType
+                'label' => 'Heure',
+                'widget' => 'single_text', // Utilisez le widget de type texte
+                'attr' => ['class' => 'timepicker'], // Ajoutez une classe pour l'initialisation du time picker
+            ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'id', // Champ à afficher dans le formulaire

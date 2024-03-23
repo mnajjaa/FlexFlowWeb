@@ -30,7 +30,6 @@
                
                 <th>État</th>
                 <th>Utilisateur</th>
-                <th>Image</th>
                 <th>Actions</th> <!-- Ajout de la colonne pour les actions -->
             </tr>
         </thead>
@@ -46,7 +45,6 @@
                     <td>{{ e.Time|date('H:i:s') }}</td>
                     <td>{{ e.etat ? 'Actif' : 'Inactif' }}</td>
                     <td>{{ e.user.username }}</td>
-                    <td><img src="data:image/jpeg;base64,{{ e.image }}" alt="Image evenement" style="max-width: 100px;"></td>
                     <td>
                         <form method="post" action="{{ path('Evenement_supprimer', {'id': e.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet evenement?')">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ e.id) }}">
@@ -57,7 +55,7 @@
                         <form method="get" action="{{ path('Evenement_modifier', {'id': e.id}) }}">
                             <button type="submit">Modifier</button>
                         </form>
-                    </td>s
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
