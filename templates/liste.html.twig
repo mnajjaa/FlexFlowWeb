@@ -17,48 +17,109 @@
 
 {% block body %}
     <h1>Liste des Cours</h1>
-    <table class="table-separator">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom du Cours</th>
-                <th>Durée</th>
-                <th>Intensité</th>
-                <th>Cible</th>
-                <th>Catégorie</th>
-                <th>Objectif</th>
-                <th>État</th>
-                <th>Capacité</th>
-                <th>Coach</th>
-                <th>Actions</th> <!-- Ajout de la colonne pour les actions -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for cour in cours %}
-                <tr>
-                    <td>{{ cour.id }}</td>
-                    <td>{{ cour.nomCour }}</td>
-                    <td>{{ cour.Duree }}</td>
-                    <td>{{ cour.Intensite }}</td>
-                    <td>{{ cour.Cible }}</td>
-                    <td>{{ cour.Categorie }}</td>
-                    <td>{{ cour.Objectif }}</td>
-                    <td>{{ cour.etat ? 'Actif' : 'Inactif' }}</td>
-                    <td>{{ cour.capacite }}</td>
-                    <td>{{ cour.user.username }}</td>
-                    <td>
-                        <form method="post" action="{{ path('cour_supprimer', {'id': cour.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?')">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cour.id) }}">
-                            <button type="submit">Supprimer</button>
-                        </form>
-                    </td>
-                    <td>
-                        <form method="get" action="{{ path('cour_modifier', {'id': cour.id}) }}">
-                            <button type="submit">Modifier</button>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="dataTables_length" id="datatable_length">
+                                <label for="entries">Show 
+                                    <select name="datatable_length" id="entries" aria-controls="datatable" class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm">
+                                        <option value="10">5</option>
+                                        <option value="25">10</option>
+                                        <option value="50">3</option>
+                                        <option value="100">100</option>
+                                    </select> entries
+                                </label>
+                            </div>
+                            <div id="datatable_filter" class="dataTables_filter">
+                                <label>Search:<input id="tableSearch" type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label>
+                            </div>
+                        </div>
+
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nom du Cours</th>
+                                    <th>Durée</th>
+                                    <th>Intensité</th>
+                                    <th>Cible</th>
+                                    <th>Catégorie</th>
+                                    <th>Objectif</th>
+                                    <th>État</th>
+                                    <th>Capacité</th>
+                                    <th>Coach</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cour in cours %}
+                                    <tr>
+                                        <td>{{ cour.id }}</td>
+                                        <td>{{ cour.nomCour }}</td>
+                                        <td>{{ cour.Duree }}</td>
+                                        <td>{{ cour.Intensite }}</td>
+                                        <td>{{ cour.Cible }}</td>
+                                        <td>{{ cour.Categorie }}</td>
+                                        <td>{{ cour.Objectif }}</td>
+                                        <td>{{ cour.etat ? 'Actif' : 'Inactif' }}</td>
+                                        <td>{{ cour.capacite }}</td>
+                                        <td>{{ cour.user.username }}</td>
+                                        <td>
+                                            <form method="post" action="{{ path('cour_supprimer', {'id': cour.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?')">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cour.id) }}">
+                                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form method="get" action="{{ path('cour_modifier', {'id': cour.id}) }}">
+                                                <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+    </div> <!-- end container-fluid -->
 {% endblock %}
+
+{% block javascripts %}
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+    // Gérer le changement du nombre d'entrées à afficher
+    $('#entries').on('change', function() {
+        var pageSize = $(this).val();
+        $('#datatable').DataTable().page.len(pageSize).draw();
+    });
+
+    // Script pour la recherche dans la table
+    $('#tableSearch').on('keyup', function() {
+        var searchText = $(this).val().toLowerCase();
+        $('#datatable tbody tr').each(function() {
+            var rowData = $('td:eq(1)', this).text().toLowerCase(); // Rechercher dans la deuxième colonne (Nom du Cours)
+            if (rowData.startsWith(searchText)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+});
+
+    </script>
+{% endblock %}
+
+
+
