@@ -14,13 +14,14 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Repository\CoursRepository;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 
 class AdminController extends AbstractController
 {
     #[Route('/admin/ajouter', name: 'produit_ajouter')]
-    public function ajouter(Request $request): Response
+    public function ajouter(Request $request,MailerInterface $mailer): Response
     {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
@@ -43,10 +44,20 @@ class AdminController extends AbstractController
             $entityManager->persist($produit);
             $entityManager->flush();
     
+
+
+             
+
+          return $this->redirectToRoute('produit-liste');
+      }
+
+    
             // Ajoutez ici un message flash ou redirigez l'utilisateur vers une autre page
     
-            return $this->redirectToRoute('produit-liste');
-        }
+        
+
+
+
     
         return $this->render('crud/ajouter.html.twig', [
             'form' => $form->createView(),
