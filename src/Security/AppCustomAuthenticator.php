@@ -54,13 +54,13 @@ class AppCustomAuthenticator extends AbstractAuthenticator
             return new RedirectResponse($targetPath);
         }
         $user = $token->getUser();
-        if($user->getRoles() === ['ROLE_ADMIN']){
+        if($user->getRoles() === ['ADMIN']){
             return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
         }
-        if($user->getRoles() === ['ROLE_COACH']){
+        if($user->getRoles() === ['COACH']){
             return new RedirectResponse($this->urlGenerator->generate('coach_dashboard'));
         }
-        if($user->getRoles() === ['ROLE_MEMBRE']){
+        if($user->getRoles() === ['MEMBRE']){
             return new RedirectResponse($this->urlGenerator->generate('membre_dashboard'));
         }
         
