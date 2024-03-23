@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
@@ -36,6 +37,9 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+       // kifeh tejbed luser m session
+       /* $email=$request->getSession()->get(Security::LAST_USERNAME);
+        $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$email]);*/
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -50,7 +54,7 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-           $session->set('user',$user);
+            $session->set('user',$user);
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
