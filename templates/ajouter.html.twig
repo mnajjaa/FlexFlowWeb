@@ -9,6 +9,13 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Ajouter un cours</h5>
+                    
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    
                     <form action="{{ path('cour_ajouter') }}" method="post" enctype="multipart/form-data">
                         {{ form_start(form, {'method': 'POST'}) }}
                         {{ form_row(form._token) }} {# Ajout du jeton CSRF #}
@@ -50,7 +57,7 @@
                         </div>
                         
                         <div class="mb-3">
-                            <label for="user" class="form-label">Utilisateur</label>
+                            <label for="user" class="form-label">Coach</label>
                             {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
                         </div>
                         <button type="submit" class="btn btn-primary">Ajouter</button>

@@ -29,8 +29,7 @@
                 <th>Objectif</th>
                 <th>État</th>
                 <th>Capacité</th>
-                <th>Utilisateur</th>
-                <th>Image</th>
+                <th>Coach</th>
                 <th>Actions</th> <!-- Ajout de la colonne pour les actions -->
             </tr>
         </thead>
@@ -47,7 +46,6 @@
                     <td>{{ cour.etat ? 'Actif' : 'Inactif' }}</td>
                     <td>{{ cour.capacite }}</td>
                     <td>{{ cour.user.username }}</td>
-                    <td><img src="data:image/jpeg;base64,{{ cour.image }}" alt="Image du cours" style="max-width: 100px;"></td>
                     <td>
                         <form method="post" action="{{ path('cour_supprimer', {'id': cour.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?')">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cour.id) }}">

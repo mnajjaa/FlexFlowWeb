@@ -23,53 +23,47 @@ class CourAdminController extends AbstractController
         $cours = new Cours();
         $form = $this->createForm(CoursType::class, $cours);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $imageFile */
             $imageFile = $form->get('imageFile')->getData();
-    
+
             // Vérifie si un fichier a été uploadé
             if ($imageFile) {
                 // Lire le contenu du fichier en tant que flux
                 $imageContent = file_get_contents($imageFile->getPathname());
-    
+
                 // Stocker le contenu du fichier dans l'entité Produit
                 $cours->setImage($imageContent);
             }
-    
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($cours);
             $entityManager->flush();
-    
-            // Ajoutez ici un message flash ou redirigez l'utilisateur vers une autre page
-    
-            //return $this->redirectToRoute('ajouter.html.twig');
+
+            // Ajout d'un message flash de succès
+            $this->addFlash('success', 'Le cours a été ajouté avec succès.');
+
+            // Redirection vers la page d'accueil ou une autre page de votre choix
+            return $this->redirectToRoute('cour_ajouter');
         }
-    
+
         return $this->render('ajouter.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
 
-
     #[Route('/admin/cours/liste', name: 'cour_liste')]
-public function liste(CoursRepository $coursRepository): Response
-{
-    $cours = $coursRepository->findAll(); // Récupérer tous les cours depuis la base de données
-
-    foreach ($cours as $cour) {
-        // Vérifier si l'image existe
-        if ($cour->getImage()) {
-            // Convertir les données binaires en base64
-            $imageData = base64_encode(stream_get_contents($cour->getImage()));
-            $cour->setImage($imageData);
-        }
+    public function liste(CoursRepository $coursRepository): Response
+    {
+        $cours = $coursRepository->findAll(); // Récupérer tous les cours depuis la base de données
+    
+        return $this->render('liste.html.twig', [
+            'cours' => $cours, // Passer les cours récupérés à la vue
+        ]);
     }
-    return $this->render('liste.html.twig', [
-        'cours' => $cours, // Passer les cours récupérés à la vue
-    ]);
-}
+    
 
 #[Route('/admin/cours/supprimer/{id}', name: 'cour_supprimer', methods: ['POST'])]
 public function supprimer(Request $request, int $id, CoursRepository $coursRepository): Response

@@ -18,23 +18,46 @@ class CoursType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('nomCour', TextType::class, [
-            'label' => 'Nom du cours'
-        ])
-        ->add('Duree', TextType::class, [
-            'label' => 'Durée'
-        ])
-        ->add('Intensite', ChoiceType::class, [
-            'label' => 'Intensité',
-            'choices' => [
-                'Faible' => 'Faible',
-                'Moyenne' => 'Moyenne',
-                'Forte' => 'Forte',
-            ],
-        ])
-            ->add('Cible')
-            ->add('Categorie')
-            ->add('Objectif')
+            ->add('nomCour', TextType::class, [
+                'label' => 'Nom du cours'
+            ])
+            ->add('Duree', TextType::class, [
+                'label' => 'Durée'
+            ])
+            ->add('Intensite', ChoiceType::class, [
+                'label' => 'Intensité',
+                'choices' => [
+                    'Faible' => 'Faible',
+                    'Moyenne' => 'Moyenne',
+                    'Forte' => 'Forte',
+                ],
+            ])
+            ->add('Cible', ChoiceType::class, [
+                'label' => 'Cible',
+                'choices' => [
+                    'Enfant' => 'Enfant',
+                    'Adulte' => 'Adulte',
+                ],
+            ])
+            ->add('Categorie', ChoiceType::class, [
+                'label' => 'Catégorie',
+                'choices' => [
+                    'Aquatique' => 'Aquatique',
+                    'Cardio' => 'Cardio',
+                    'Force' => 'Force',
+                    'Danse' => 'Danse',
+                    'Kids Island' => 'Kids Island',
+                ],
+            ])
+            ->add('Objectif', ChoiceType::class, [
+                'label' => 'Objectif',
+                'choices' => [
+                    'Perdre du poids' => 'Perdre du poids',
+                    'Se défouler' => 'Se défouler',
+                    'Se musculer' => 'Se musculer',
+                    'S\'entrainer en dansant' => 'S\'entrainer en dansant',
+                ],
+            ])
             ->add('etat')
             ->add('capacite')
             ->add('imageFile', FileType::class, [
@@ -44,9 +67,11 @@ class CoursType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id', // Champ à afficher dans le formulaire
-            ])
-        ;
+                'choice_label' => 'email',
+                'label' => 'Coach',
+                'attr' => ['class' => 'form-control'] // Champ à afficher dans le formulaire
+            ]);
+            
     }
 
     public function configureOptions(OptionsResolver $resolver): void
