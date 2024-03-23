@@ -1,20 +1,26 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
-{% block title %}Hello MembreController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/FlexFlowWEb/src/Controller/MembreController.php'|file_link(0) }}">src/Controller/MembreController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/FlexFlowWEb/templates/membre/index.html.twig'|file_link(0) }}">templates/membre/index.html.twig</a></code></li>
-    </ul>
-</div>
+    </head>
+<body>
+<h5> Welcome to the MEMBRE dashboard </h5>
+</body>
 {% endblock %}
