@@ -1,3 +1,5 @@
+# config/routes.yaml
+
 controllers:
     resource: ../../src/Controller/
     type: annotation
@@ -5,7 +7,7 @@ controllers:
 kernel:
     resource: ../../src/Kernel.php
     type: annotation
-    
+
 offre_new:
     path: /offre/new
     controller: App\Controller\OffreController::new
@@ -13,3 +15,17 @@ offre_new:
 offre_show:
     path: /offre/{id}
     controller: App\Controller\OffreController::show
+
+accepter_offre:
+    path: '/interface/admin/accepter/{id}'
+    controller: 'App\Controller\InterfaceAdminController::accepterOffre'
+    methods: ['GET', 'POST']
+    requirements:
+        id: '\d+'
+
+refuser_offre:
+    path: '/interface/admin/refuser/{id}'
+    controller: 'App\Controller\InterfaceAdminController::refuserOffre'
+    methods: ['GET', 'POST']
+    requirements:
+        id: '\d+'

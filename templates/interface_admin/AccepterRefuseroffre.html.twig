@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulter les offres{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        tr:hover {
+            background-color: #e2e2e2;
+        }
+
+        .action-btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .edit-btn {
+            background-color: #28a745;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }
+
+        .action-btn + .action-btn {
+            margin-left: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Liste des offres</h1>
+        {% block content %}
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Spécialité</th>
+                            <th>Tarif / heure</th>
+                            <th>État de l'offre</th>
+                            <th>Coach</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for offre in offres %}
+                            <tr>
+                                <td>{{ offre.nom }}</td>
+                                <td>{{ offre.specialite }}</td>
+                                <td>{{ offre.tarif_heure }}</td>
+                                <td>{{ offre.etat_offre }}</td>
+                                <td>{{ offre.coach }}</td>
+                                <td>{{ offre.email }}</td>
+                                <td>
+                                    <a href="{{ path('accepter_offre', {'id': offre.id}) }}" class="action-btn edit-btn">
+                                        Accepter
+                                    </a>
+                                    <a href="{{ path('refuser_offre', {'id': offre.id}) }}" class="action-btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir refuser cette offre ?')">
+                                        Refuser
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
