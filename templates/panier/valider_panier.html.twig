@@ -1,0 +1,9 @@
+<script>
+    // Afficher une boîte de dialogue modale de confirmation
+    if (confirm("Voulez-vous télécharger votre facture ?")) {
+        // Si l'utilisateur confirme, redirigez vers l'action de téléchargement de la facture
+        window.location.href = "{{ path('telecharger_facture') }}";
+    } else {
+        // Sinon, ne faites rien
+    }
+</script>

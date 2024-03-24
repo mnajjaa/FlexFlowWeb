@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use App\Repository\ProduitRepository;
 use Doctrine\DBAL\Types\Types;
@@ -21,6 +22,9 @@ class Produit
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le champ 'Prix' ne peut pas être vide")]
+    #[Assert\Type(type: "float", message: "Le champ 'Prix' doit être un nombre décimal")]
+    #[Assert\PositiveOrZero(message: "Le champ 'Prix' ne peut pas être négatif")]
     private ?float $prix = null;
 
     #[ORM\Column(length: 255)]
@@ -33,7 +37,7 @@ class Produit
     private ?int $quantiteVendues = null;
 
     #[ORM\Column(type: Types::BLOB)]
-    private $image = null;
+    public $image = null;
 
     public function getId(): ?int
     {
@@ -117,7 +121,7 @@ class Produit
         return $this->image;
     }
 
-    public function setImage($image): static
+    public function setImage($image): self
     {
         $this->image = $image;
 
