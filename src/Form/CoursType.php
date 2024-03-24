@@ -61,7 +61,7 @@ class CoursType extends AbstractType
             ->add('etat')
             ->add('capacite')
             ->add('imageFile', FileType::class, [
-                'label' => 'Uploader une image',
+                //'label' => 'Uploader une image',
                 'mapped' => false, // Ce champ ne sera pas mappé à une propriété de l'entité Cours
                 'required' => false, // Le champ n'est pas obligatoire
             ])

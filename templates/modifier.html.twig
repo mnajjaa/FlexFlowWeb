@@ -1,11 +1,114 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {# Inclure les fichiers CSS Bootstrap #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .custom-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .custom-form-label {
+            font-weight: bold;
+        }
+        /* Ajouter des styles personnalisés */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn-save {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .btn-save:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
 {% block title %}Modifier un cours{% endblock %}
 
 {% block body %}
-    <h1>Modifier un cours</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit">Enregistrer les modifications</button>
-    {{ form_end(form) }}
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Modifier un cours</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card custom-card">
+                    <div class="card-body">
+                        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                            <div class="form-group row">
+                                <label for="{{ form.nomCour.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Nom du cours :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.nomCour, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="{{ form.Duree.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Durée :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.Duree, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="{{ form.Intensite.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Intensité :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.Intensite, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="{{ form.Cible.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Cible :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.Cible, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="{{ form.Categorie.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Catégorie :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.Categorie, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="{{ form.Objectif.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Objectif :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.Objectif, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                             <div class="form-group row">
+                                <label for="{{ form.Objectif.vars.id }}" class="col-sm-3 col-form-label custom-form-label">État :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.etat, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                             <div class="form-group row">
+                                <label for="{{ form.Objectif.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Capacité :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.capacite, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                                 <div class="form-group row">
+                                <label for="{{ form.Objectif.vars.id }}" class="col-sm-3 col-form-label custom-form-label">ImageFile :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                             <div class="form-group row">
+                                <label for="{{ form.Objectif.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Coach :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <!-- Ajouter d'autres champs du formulaire ici -->
+                            <div class="form-group row">
+                                <div class="col-sm-9 offset-sm-3">
+                                    <center><button type="submit" class="btn btn-save">Enregistrer</button></center>
+                                </div>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
