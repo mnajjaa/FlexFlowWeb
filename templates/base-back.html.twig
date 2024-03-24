@@ -348,20 +348,21 @@
                     <!--- Sidemenu -->
                     <div id="sidebar-menu">
                         <!-- Left Menu Start -->
+                        {#{% if is_granted("COACH") %}#}
                         <ul class="metismenu list-unstyled" id="side-menu">
-                            <li class="menu-title">Menu</li>
+                            <li class="menu-title">Users</li>
 
                             <li>
                                 <a href="index.html">
                                     <i class="uil-home-alt"></i><span class="badge rounded-pill bg-primary float-end">01</span>
-                                    <span>Dashboard</span>
+                                    <span>Membres</span>
                                 </a>
                             </li>
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="uil-window-section"></i>
-                                    <span>Layouts</span>
+                                    <span>Coachs</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
                                     <li>
@@ -610,6 +611,13 @@
                             </li>
 
                         </ul>
+                       {# {% else %}
+                        <p>Vous n'avez pas les droits pour accéder à cette page</p>
+                        {% endif  %} #} 
+                       
+
+                        
+                        
                     </div>
                     <!-- Sidebar -->
                 </div>
