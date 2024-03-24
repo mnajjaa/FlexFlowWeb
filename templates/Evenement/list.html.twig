@@ -1,63 +1,201 @@
 {% extends 'base-back.html.twig' %}
-
-{% block title %}Liste des evenement{% endblock %}
-
-{% block stylesheets %}
-    <style>
-        .table-separator td {
-            border-right: 1px solid #ccc; /* Bordure droite */
-            padding: 8px; /* Espacement */
-        }
-        .table-separator th {
-            border-right: 1px solid #ccc; /* Bordure droite */
-            padding: 8px; /* Espacement */
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
-    <h1>Liste des Evenement</h1>
-    <table class="table-separator">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom de l'evenement</th>
-                 <th>Catégorie</th>
-                <th>Objectif</th>
-                <th>Nombre de place</th>
-                <th>Date</th>
-                <th>Time</th>
-               
-                <th>État</th>
-                <th>Utilisateur</th>
-                <th>Actions</th> <!-- Ajout de la colonne pour les actions -->
-            </tr>
-        </thead>
-        <tbody>
+
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <!-- bootstrap datepicker -->
+
+        <link href="{{asset('back-office/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet">
+ <!-- DataTables -->
+        <link href="{{asset('back-office/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Responsive datatable examples -->
+        <link href="{{asset('back-office/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" /> 
+
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+    </head>
+   <body>
+
+    <!-- <body data-layout="horizontal" data-topbar="colored"> -->
+
+        <!-- Begin page -->
+        
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Liste des evenement</h4>
+
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div>
+                                 <form method="get" action="{{ path('ajouter_evenement' )}}">
+
+                                    <button type="submit"  class="btn btn-success waves-effect waves-light mb-3">Ajouter Evenement</button>
+                                                     </form>
+
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="float-end">
+                                    <div class=" mb-3">
+                                        <div class="input-daterange input-group" id="datepicker6" data-date-format="dd M, yyyy" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
+                                            <input type="text" class="form-control text-start" placeholder="From" name="From" />
+                                            <input type="text" class="form-control text-start" placeholder="To" name="To" />
+                                            
+                                            <button type="button" class="btn btn-primary"><i class="mdi mdi-filter-variant"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                
+                                <div class="table-responsive mb-4">
+                                    <table class="table table-centered datatable dt-responsive nowrap table-card-list" style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                        <thead>
+                                            <tr class="bg-transparent">
+                                              
+                                                <th>ID</th>
+                                                <th>Nom de l'evenement</th>
+                                                 <th>Catégorie</th>
+                                                <th>Objectif</th>
+                                                <th>Nombre de place</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>État</th>
+                                                <th>Utilisateur</th>
+                                                <th style="width: 120px;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
             {% for e in evenement %}
-                <tr>
-                    <td>{{ e.id }}</td>
-                    <td>{{ e.nomEvenement}}</td>
-                    <td>{{ e.categorie }}</td>
-                    <td>{{ e.Objectif }}</td>
-                    <td>{{ e.nbrPlace }}</td>
-                    <td>{{ e.Date|date('Y-m-d')}}</td>
-                    <td>{{ e.Time|date('H:i:s') }}</td>
-                    <td>{{ e.etat ? 'Actif' : 'Inactif' }}</td>
-                    <td>{{ e.user.username }}</td>
-                    <td>
-                        <form method="post" action="{{ path('Evenement_supprimer', {'id': e.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet evenement?')">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ e.id) }}">
-                            <button type="submit">Supprimer</button>
-                        </form>
-                    </td>
-                    <td>
-                        <form method="get" action="{{ path('Evenement_modifier', {'id': e.id}) }}">
-                            <button type="submit">Modifier</button>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check text-center font-size-16">
+                                                      {{ e.id }}
+                                                    </div>
+                                                </td>
+                                                
+                                                <td>{{ e.nomEvenement}}</td>
+                                                <td>
+                                                  {{ e.categorie }}
+                                                </td>
+                                                <td>{{ e.Objectif }}</td>
+                                                
+                                                <td>
+                                                  {{ e.nbrPlace }}
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-success font-size-12">{{ e.Date|date('Y-m-d')}}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-success font-size-12">{{ e.Time|date('H:i:s') }}</div>
+                                                </td>
+                                                 <td>
+                                                  {{ e.etat ? 'Actif' : 'Inactif' }}
+                                                </td>
+                                                  <td>
+                                                  {{ e.user.username }}
+                                                </td>
+                                                
+                                               <td>
+            <td>
+    <div class="d-flex align-items-center">
+
+            <!-- Icône de modification -->
+            <a href="{{ path('Evenement_modifier', {'id': e.id}) }}" class="px-3 text-primary"><i class="fas fa-pen"></i></a>
+       
+            <!-- Icône de suppression -->
+            <form method="post" action="{{ path('Evenement_supprimer', {'id': e.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet événement?')">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ e.id) }}">
+                <button type="submit" class="btn btn-link text-danger"><i class="fas fa-trash"></i></button>
+            </form>
+            </div>
+        </td>
+
+                                            </tr>
+                                            
+                                                      {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+               
+         
+    
+
+        <!-- JAVASCRIPT -->
+        <script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+
+        <!-- bootstrap datepicker -->
+        <script src="{{asset('back-office/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+
+        <!-- Required datatable js -->
+        <script src="{{asset('back-office/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+        
+        <!-- Responsive examples -->
+        <script src="{{asset('back-office/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
+
+        <!-- init js -->
+        <script src="{{asset('back-office/js/pages/ecommerce-datatables.init.js')}}"></script>
+
+        <!-- App js -->
+        <script src="{{asset('back-office/js/app.js')}}"></script>
+
+    </body>
+
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+</html>
 {% endblock %}
