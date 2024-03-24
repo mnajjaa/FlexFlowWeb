@@ -45,7 +45,7 @@ class CourAdminController extends AbstractController
             $this->addFlash('success', 'Le cours a été ajouté avec succès.');
 
             // Redirection vers la page d'accueil ou une autre page de votre choix
-            return $this->redirectToRoute('cour_ajouter');
+            return $this->redirectToRoute('cour_liste');
         }
 
         return $this->render('ajouter.html.twig', [

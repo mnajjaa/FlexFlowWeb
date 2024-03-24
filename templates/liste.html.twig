@@ -131,68 +131,83 @@
 
  $(document).ready(function() {
     $('.btn-supprimer').click(function(e) {
-                e.preventDefault();
-                var id = $(this).data('id');
-                var url = $('#form-delete-' + id).attr('action');
+        e.preventDefault();
+        var id = $(this).data('id');
+        var url = $('#form-delete-' + id).attr('action');
+        Swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: "Vous ne pourrez pas revenir en arrière !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Soumettre le formulaire si l'utilisateur confirme
+                $('#form-delete-' + id).submit();
+            } else {
+                // Afficher un message d'erreur si l'utilisateur annule la suppression
                 Swal.fire({
-                    title: 'Êtes-vous sûr ?',
-                    text: "Vous ne pourrez pas revenir en arrière !",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Oui, supprimer !'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Soumettre le formulaire si l'utilisateur confirme
-                        $('#form-delete-' + id).submit();
-                    }
-                });
-            });
-
-            // Écouter l'événement de soumission du formulaire de suppression
-            $('form[id^="form-delete-"]').submit(function(e) {
-                e.preventDefault(); // Empêcher la soumission du formulaire par défaut
-
-                var form = $(this);
-                var id = form.attr('id').replace('form-delete-', ''); // Récupérer l'ID du formulaire
-
-                // Envoyer une requête AJAX pour supprimer l'élément
-                $.ajax({
-                    url: form.attr('action'), // Récupérer l'URL d'action du formulaire
-                    method: 'POST',
-                    data: form.serialize(), // Sérialiser les données du formulaire
-                    success: function(response) {
-                        // Si la suppression réussit, afficher un message de succès avec animation
-                        Swal.fire({
-                            title: 'Supprimé !',
-                            text: 'Le cours a été supprimé.',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 1500,
-                            showClass: {
-                                popup: 'animate__animated animate__fadeInDown'
-                            },
-                            hideClass: {
-                                popup: 'animate__animated animate__fadeOutUp'
-                            }
-                        }).then(() => {
-                            // Recharger la page après l'animation
-                            location.reload();
-                        });
+                    title: 'Annulé',
+                    text: 'La suppression a été annulée.',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
                     },
-                    error: function(xhr, status, error) {
-                        // Si une erreur se produit lors de la suppression, afficher un message d'erreur
-                        Swal.fire({
-                            title: 'Erreur !',
-                            text: 'Une erreur s\'est produite lors de la suppression.',
-                            icon: 'error',
-                            confirmButtonText: 'Ok'
-                        });
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
                     }
                 });
-            });
+            }
         });
-    
+    });
+
+    // Écouter l'événement de soumission du formulaire de suppression
+    $('form[id^="form-delete-"]').submit(function(e) {
+        e.preventDefault(); // Empêcher la soumission du formulaire par défaut
+
+        var form = $(this);
+        var id = form.attr('id').replace('form-delete-', ''); // Récupérer l'ID du formulaire
+
+        // Envoyer une requête AJAX pour supprimer l'élément
+        $.ajax({
+            url: form.attr('action'), // Récupérer l'URL d'action du formulaire
+            method: 'POST',
+            data: form.serialize(), // Sérialiser les données du formulaire
+            success: function(response) {
+                // Si la suppression réussit, afficher un message de succès avec animation
+                Swal.fire({
+                    title: 'Supprimé !',
+                    text: 'Le cours a été supprimé.',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                }).then(() => {
+                    // Recharger la page après l'animation
+                    location.reload();
+                });
+            },
+            error: function(xhr, status, error) {
+                // Si une erreur se produit lors de la suppression, afficher un message d'erreur
+                Swal.fire({
+                    title: 'Erreur !',
+                    text: 'Une erreur s\'est produite lors de la suppression.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            }
+        });
+    });
+});
+
     </script>
 {% endblock %}
