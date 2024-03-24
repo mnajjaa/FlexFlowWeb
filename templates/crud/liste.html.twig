@@ -144,28 +144,38 @@
 <!-- Inclure les fichiers JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-    function confirmWithSweetAlert(event) {
-        event.preventDefault();
-        Swal.fire({
-            title: 'Êtes-vous sûr?',
-            text: 'Vous ne pourrez pas revenir en arrière!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Oui, supprimer!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                event.target.submit();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Suppression réussie',
-                    showConfirmButton: false,
-                    timer: 5000
-                });
-            }
-        });
-    }
+   function confirmWithSweetAlert(event) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Êtes-vous sûr?',
+        text: 'Vous ne pourrez pas revenir en arrière!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oui, supprimer!',
+        cancelButtonText: 'Annuler' // Texte du bouton d'annulation
+    }).then((result) => {
+        if (result.isConfirmed) {
+            event.target.submit();
+            Swal.fire({
+                icon: 'success',
+                title: 'Suppression réussie',
+                showConfirmButton: false,
+                timer: 5000
+            });
+        } else {
+            // L'utilisateur a annulé, vous pouvez ajouter un comportement supplémentaire ici si nécessaire
+            Swal.fire({
+                icon: 'info',
+                title: 'Action annulée',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+    });
+}
+
 
     // Filtrer les produits par nom
     document.getElementById("searchInput").addEventListener("input", function() {

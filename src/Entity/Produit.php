@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use App\Repository\ProduitRepository;
 use Doctrine\DBAL\Types\Types;
@@ -21,6 +22,9 @@ class Produit
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le champ 'Prix' ne peut pas être vide")]
+    #[Assert\Type(type: "float", message: "Le champ 'Prix' doit être un nombre décimal")]
+    #[Assert\PositiveOrZero(message: "Le champ 'Prix' ne peut pas être négatif")]
     private ?float $prix = null;
 
     #[ORM\Column(length: 255)]
