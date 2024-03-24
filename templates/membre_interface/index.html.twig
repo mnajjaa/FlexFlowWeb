@@ -74,6 +74,40 @@
         .button:hover {
             background-color: #5ab6c9; /* A darker shade of the button color for hover state */
         }
+
+         <style>
+        #addButton {
+            position: relative; /* ou 'absolute' si vous souhaitez le placer en dehors du flux normal */
+            top: -50px; /* ajustez en fonction de la mise en page */
+            left: 50%; /* pour centrer le bouton */
+            transform: translateX(-50%); /* pour centrer parfaitement le bouton */
+            z-index: 10; /* pour s'assurer qu'il est au-dessus des autres éléments */
+        }
+
+        /* Add styles for the animated button */
+    @keyframes changeColor {
+        0% { background-color: #49a9ee; }
+
+        50% { background-color: #f9bf3b; }
+        75% { background-color: #16a085; }
+        100% { background-color: #49a9ee; }
+    }
+
+    .request-coaching-btn {
+        display: block;
+        width: 200px; /* Adjust the width as needed */
+        padding: 10px;
+        margin: 20px auto; /* This will center the button */
+        background-color: #49a9ee;
+        color: white;
+        text-align: center;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        animation: changeColor 1s infinite; /* The animation */
+    }
+
+    </style>
     </style>
 {% endblock %}
 
@@ -89,6 +123,8 @@
             <p>Enhance your strength with tailored muscle building programs.</p>
             <a href="{{ path('muscle_building') }}" class="button">Read More</a>
         </div>
+         <!-- Button below the cards -->
+    <button class="request-coaching-btn">Request Private Coaching</button>
     </div>
 
     <div class="card">
@@ -100,6 +136,8 @@
             <p>Improve your cardiovascular health with specialized cardio workouts.</p>
             <a href="{{ path('cardio') }}" class="button">Read More</a>
         </div>
+         <!-- Button below the cards -->
+    <button class="request-coaching-btn">Request Private Coaching</button>
     </div>
 
     <div class="card">
@@ -111,6 +149,8 @@
             <p>Learn boxing techniques and improve your overall fitness and coordination.</p>
             <a href="{{ path('boxing') }}" class="button">Read More</a>
         </div>
+         <!-- Button below the cards -->
+    <button class="request-coaching-btn">Request Private Coaching</button>
     </div>
     <div class="card">
     <img src="{{ asset('images/image.png') }}" alt="Yoga" class="card-header-img">
@@ -121,6 +161,8 @@
         <p>Find inner peace and flexibility with our yoga classes.</p>
         <a href="{{ path('yoga') }}" class="button">Read More</a>
     </div>
+     <!-- Button below the cards -->
+    <button class="request-coaching-btn">Request Private Coaching</button>
 </div>
 </div>
 {% endblock %}

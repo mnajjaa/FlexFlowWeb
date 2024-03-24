@@ -24,10 +24,10 @@ class Demande
     private ?string $But = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $NiveauPhysique = null;
+    private ?string $niveauphysique = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $MaladieChronique = null;
+    private ?string $maladie_chronique = null;
 
     #[ORM\Column]
     private ?int $nombreheure = null;
@@ -185,4 +185,6 @@ class Demande
 
         return $this;
     }
+
+    
 }

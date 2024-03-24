@@ -1,0 +1,29 @@
+{# templates/form_demande/demande_success.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de demande de coaching privé{% endblock %}
+
+{% block body %}
+    <h1>Confirmation de demande de coaching privé</h1>
+    
+    {% if form_errors(form) %}
+        <div class="alert alert-danger">
+            {{ form_errors(form) }}
+        </div>
+    {% endif %}
+    
+    {{ form_start(form) }}
+    {{ form_row(form.nom) }}
+    {{ form_row(form.age) }}
+    {{ form_row(form.but) }}
+    {{ form_row(form.niveauPhysique) }}
+    {{ form_row(form.maladieChronique) }}
+    {{ form_row(form.nombreheure) }}
+    {{ form_row(form.etat) }}
+    {{ form_row(form.horaire) }}
+    {{ form_row(form.lesjours) }}
+    {{ form_row(form.user) }}
+    {{ form_row(form.offre) }}
+    {{ form_end(form) }}
+{% endblock %}
