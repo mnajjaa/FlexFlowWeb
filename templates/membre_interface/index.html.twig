@@ -124,7 +124,9 @@
             <a href="{{ path('muscle_building') }}" class="button">Read More</a>
         </div>
          <!-- Button below the cards -->
-    <button class="request-coaching-btn">Request Private Coaching</button>
+        <button class="request-coaching-btn" onclick="window.location.href='{{ path('app_form_demande') }}'">Request Private Coaching</button>
+
+
     </div>
 
     <div class="card">
@@ -137,7 +139,7 @@
             <a href="{{ path('cardio') }}" class="button">Read More</a>
         </div>
          <!-- Button below the cards -->
-    <button class="request-coaching-btn">Request Private Coaching</button>
+        <button class="request-coaching-btn" onclick="window.location.href='{{ path('app_form_demande') }}'">Request Private Coaching</button>
     </div>
 
     <div class="card">
@@ -150,7 +152,7 @@
             <a href="{{ path('boxing') }}" class="button">Read More</a>
         </div>
          <!-- Button below the cards -->
-    <button class="request-coaching-btn">Request Private Coaching</button>
+        <button class="request-coaching-btn" onclick="window.location.href='{{ path('app_form_demande') }}'">Request Private Coaching</button>
     </div>
     <div class="card">
     <img src="{{ asset('images/image.png') }}" alt="Yoga" class="card-header-img">
@@ -162,7 +164,7 @@
         <a href="{{ path('yoga') }}" class="button">Read More</a>
     </div>
      <!-- Button below the cards -->
-    <button class="request-coaching-btn">Request Private Coaching</button>
+    <button class="request-coaching-btn" onclick="window.location.href='{{ path('app_form_demande') }}'">Request Private Coaching</button>
 </div>
 </div>
 {% endblock %}

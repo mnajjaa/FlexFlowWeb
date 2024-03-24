@@ -24,7 +24,7 @@ class Demande
     private ?string $But = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $niveauphysique = null;
+    private ?string $niveau_physique = null;
 
     #[ORM\Column(length: 255)]
     private ?string $maladie_chronique = null;
@@ -90,36 +90,37 @@ class Demande
         return $this;
     }
 
-    public function getNiveauPhysique(): ?string
-    {
-        return $this->NiveauPhysique;
-    }
+   
+public function getNiveauPhysique(): ?string
+{
+    return $this->niveau_physique;
+}
 
-    public function setNiveauPhysique(string $NiveauPhysique): static
-    {
-        $this->NiveauPhysique = $NiveauPhysique;
+public function setNiveauPhysique(string $niveau_physique): self
+{
+    $this->niveau_physique = $niveau_physique;
 
-        return $this;
-    }
+    return $this;
+}
 
-    public function getMaladieChronique(): ?string
-    {
-        return $this->MaladieChronique;
-    }
+public function getMaladieChronique(): ?string
+{
+    return $this->maladie_chronique;
+}
 
-    public function setMaladieChronique(string $MaladieChronique): static
-    {
-        $this->MaladieChronique = $MaladieChronique;
+public function setMaladieChronique(string $maladie_chronique): self
+{
+    $this->maladie_chronique = $maladie_chronique;
 
-        return $this;
-    }
+    return $this;
+}
 
-    public function getNombreheure(): ?int
+    public function getNombreHeure(): ?int
     {
         return $this->nombreheure;
     }
 
-    public function setNombreheure(int $nombreheure): static
+    public function setNombreHeure(int $nombreheure): static
     {
         $this->nombreheure = $nombreheure;
 

@@ -3,7 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Demande;
+use App\Entity\User;
+use App\Entity\Offre;
+
 use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -37,16 +41,25 @@ class DemandeFormType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('maladie_chronique', TextType::class ,[
+            ->add('maladieChronique', TextType::class ,[
                 'constraints' => [
                 new NotBlank(),
             ],
         ])
-            ->add('nombre_heure', IntegerType::class, [
+            ->add('nombreHeure', IntegerType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
             ])
+            ->add('user', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'username',
+            ])
+            ->add('offre', EntityType::class, [
+                'class' => Offre::class,
+                'choice_label' => 'nom', // Remplacez 'nom' par le champ approprié de l'entité Offre à afficher dans la liste déroulante
+            ])
+        
             ->add('etat', ChoiceType::class, [
                 'choices' => [
                     'En attente' => 'en_attente',
