@@ -20,8 +20,13 @@
         <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
         {% endblock %}
     </head>
-
     <body>
-    <h5> welcome ADMIN </h5>
+    <h1>Coaches List</h1>
+    <ul>
+        {% for coach in coaches %}
+            <li>{{ coach.nom }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('coach_add') }}">Add a coach</a>
     </body>
 {% endblock %}
