@@ -18,7 +18,17 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\User;
+use App\Form\RegistrationFormType;
+use App\Security\EmailVerifier;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
+use Symfony\Component\Mime\Address;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 
 
@@ -29,7 +39,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ProduitController extends AbstractController
 {
-    #[Route('/', name: 'produits')]
+    #[Route('/vitrine', name: 'produits')]
     public function index(): Response
     {
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
@@ -327,7 +337,10 @@ $pdfContent = $pdfGeneratorService->generatePDF($productsForPDF);
 
 // Vérifier le contenu généré du PDF
 //($pdfContent);
-
+ // kifeh tejbed luser m session
+ $user = new User();
+        $email1=$request->getSession()->get(Security::LAST_USERNAME);
+        $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$email1]);
 // Envoyer un e-mail à l'utilisateur avec le PDF en pièce jointe
 $email = (new Email())
     ->from('votre@email.com')
@@ -368,7 +381,15 @@ $mailer->send($email);
 
 
 
-
+    #[Route('/360', name: '360')]
+    public function votreAction(): Response
+    {
+        // Appel du template Twig 'votre_template.html.twig' avec éventuellement des variables à passer
+        return $this->render('360.html.twig', [
+            
+            // Ajoutez d'autres variables si nécessaire
+        ]);
+    }
 
 
 

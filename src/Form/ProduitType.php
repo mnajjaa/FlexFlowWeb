@@ -31,6 +31,9 @@ class ProduitType extends AbstractType
             'choices' => [
                 'Accesoires' => 'Accessoires',
                 'jeux' => 'jeux',
+                'Vitamines' => 'Vitamines',
+                'Proteine' => 'Proteine',
+
                 'vetements' => 'vetements',
             ],
         ])
