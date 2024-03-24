@@ -65,23 +65,23 @@ class CourAdminController extends AbstractController
     }
     
 
-#[Route('/admin/cours/supprimer/{id}', name: 'cour_supprimer', methods: ['POST'])]
-public function supprimer(Request $request, int $id, CoursRepository $coursRepository): Response
-{
-    $cour = $coursRepository->find($id);
-
-    if (!$cour) {
-        throw $this->createNotFoundException('Le cours avec l\'ID '.$id.' n\'existe pas.');
+    #[Route('/admin/cours/supprimer/{id}', name: 'cour_supprimer', methods: ['POST'])]
+    public function supprimer(Request $request, int $id, CoursRepository $coursRepository): Response
+    {
+        $cour = $coursRepository->find($id);
+    
+        if (!$cour) {
+            throw $this->createNotFoundException('Le cours avec l\'ID '.$id.' n\'existe pas.');
+        }
+    
+        if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($cour);
+            $entityManager->flush();
+        }
+    
+        return $this->redirectToRoute('cour_liste');
     }
-
-    if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($cour);
-        $entityManager->flush();
-    }
-
-    return $this->redirectToRoute('cour_liste');
-}
 
 #[Route('/admin/cours/modifier/{id}', name: 'cour_modifier')]
 public function modifier(Request $request, int $id, CoursRepository $coursRepository): Response
