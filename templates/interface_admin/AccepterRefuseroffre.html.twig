@@ -68,42 +68,40 @@
 {% block body %}
     <div class="container">
         <h1>Liste des offres</h1>
-        {% block content %}
-            <div class="table-container">
-                <table class="table">
-                    <thead>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Spécialité</th>
+                        <th>Tarif / heure</th>
+                        <th>État de l'offre</th>
+                        <th>Coach</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for offre in offres %}
                         <tr>
-                            <th>Nom</th>
-                            <th>Spécialité</th>
-                            <th>Tarif / heure</th>
-                            <th>État de l'offre</th>
-                            <th>Coach</th>
-                            <th>Email</th>
-                            <th>Action</th>
+                            <td>{{ offre.nom }}</td>
+                            <td>{{ offre.specialite }}</td>
+                            <td>{{ offre.tarif_heure }}</td>
+                            <td>{{ offre.etat_offre }}</td>
+                            <td>{{ offre.coach.email }}</td>
+                            <td>{{ offre.email }}</td>
+                            <td>
+                                <a href="{{ path('accepter_offre', {'id': offre.id}) }}" class="action-btn edit-btn">
+                                    Accepter
+                                </a>
+                                <a href="{{ path('refuser_offre', {'id': offre.id}) }}" class="action-btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir refuser cette offre ?')">
+                                    Refuser
+                                </a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for offre in offres %}
-                            <tr>
-                                <td>{{ offre.nom }}</td>
-                                <td>{{ offre.specialite }}</td>
-                                <td>{{ offre.tarif_heure }}</td>
-                                <td>{{ offre.etat_offre }}</td>
-                                <td>{{ offre.coach }}</td>
-                                <td>{{ offre.email }}</td>
-                                <td>
-                                    <a href="{{ path('accepter_offre', {'id': offre.id}) }}" class="action-btn edit-btn">
-                                        Accepter
-                                    </a>
-                                    <a href="{{ path('refuser_offre', {'id': offre.id}) }}" class="action-btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir refuser cette offre ?')">
-                                        Refuser
-                                    </a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endblock %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

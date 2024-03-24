@@ -88,7 +88,7 @@
                             <td>{{ offre.specialite }}</td>
                             <td>{{ offre.tarif_heure }}</td>
                             <td>{{ offre.etat_offre }}</td>
-                            <td>{{ offre.coach }}</td>
+                            <td>{{ offre.coach.email }}</td>
                             <td>{{ offre.email }}</td>
                             <td>
                                 <a href="{{ path('modifier_offre', {'id': offre.id}) }}" class="action-btn edit-btn">
