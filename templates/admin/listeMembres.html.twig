@@ -1,6 +1,7 @@
 {% extends 'base-back.html.twig' %}
 
 {% block body %}
+
 <head>
 
         <meta charset="utf-8" />
@@ -20,8 +21,12 @@
         <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
         {% endblock %}
     </head>
-
-    <body>
-    <h5> welcome ADMIN </h5>
+<body
+    <h1>Members List</h1>
+    <ul>
+        {% for member in membres %}
+            <li>{{ member.email }}</li>
+        {% endfor %}
+    </ul>
     </body>
 {% endblock %}

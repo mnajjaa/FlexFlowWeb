@@ -8,13 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final class RoleEnum
-{
-    public const ROLE_MEMBRE = 'ROLE_MEMBRE';
-    public const ROLE_ADMIN = 'ROLE_ADMIN';
-    public const ROLE_COACH = 'ROLE_COACH';
 
-    }
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -40,6 +34,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
+    #[ORM\Column]
+    private ?int $telephone = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
     
 
@@ -138,6 +141,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?int
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(int $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }
