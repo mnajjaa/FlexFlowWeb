@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Cours;
+use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,6 +16,15 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CoursType extends AbstractType
 {
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -87,11 +97,18 @@ class CoursType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'email',
                 'label' => 'Coach',
-                'attr' => ['class' => 'form-control'] // Champ à afficher dans le formulaire
+                'choice_label' => 'email',
+                'choices' => $this->getCoachUsers(),
+                'attr' => ['class' => 'form-control']
             ]);
             
+    }
+
+    private function getCoachUsers()
+    {
+        // Récupérez les utilisateurs ayant le rôle "COACH"
+        return $this->userRepository->findByRole('COACH');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
