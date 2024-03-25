@@ -64,7 +64,7 @@ class EvenementController extends AbstractController
             $entityManager->flush();
     
             // Rediriger vers une page de confirmation ou une autre page après l'ajout de l'événement
-            return $this->redirectToRoute('ajouter_evenement');
+            return $this->redirectToRoute('evenements_list');
         }
     
         // Afficher le formulaire
