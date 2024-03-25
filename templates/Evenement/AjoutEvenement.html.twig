@@ -46,9 +46,9 @@
                             <div class="col-8">
                                 <div class="card">
                                     <div class="card-body">
-        
+
                                         <h4 class="card-title">Ajouter un événement</h4>
-                                        <form action="{{ path('ajouter_evenement') }}" method="post" enctype="multipart/form-data">
+                                        <form action="{{ path('ajouter_evenement') }}" method="post" enctype="multipart/form-data" >
                         {{ form_start(form, {'method': 'POST'}) }}
                         {{ form_row(form._token) }} {# Ajout du jeton CSRF #}
                                         <div class="mb-3 row">
@@ -171,6 +171,9 @@
 
         <!-- App js -->
         <script src="{{asset('back-office/js/app.js')}}"></script>
+
+
+  
 
     </body>
 

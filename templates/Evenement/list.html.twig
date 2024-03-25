@@ -141,9 +141,9 @@
             <a href="{{ path('Evenement_modifier', {'id': e.id}) }}" class="px-3 text-primary"><i class="fas fa-pen"></i></a>
        
             <!-- Icône de suppression -->
-            <form method="post" action="{{ path('Evenement_supprimer', {'id': e.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet événement?')">
+            <form id="form-delete-{{ e.id }}" method="post" action="{{ path('Evenement_supprimer', {'id': e.id}) }}" >
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ e.id) }}">
-                <button type="submit" class="btn btn-link text-danger"><i class="fas fa-trash"></i></button>
+                <button type="submit" class="btn btn-link text-danger btn-supprimer" ><i class="fas fa-trash"></i></button>
             </form>
             </div>
         </td>
@@ -194,6 +194,94 @@
         <!-- App js -->
         <script src="{{asset('back-office/js/app.js')}}"></script>
 
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <script>
+
+
+$(document).ready(function() {
+    $('.btn-supprimer').click(function(e) {
+        e.preventDefault();
+        var id = $(this).closest('form').attr('id').replace('form-delete-', '');
+        var url = $('#form-delete-' + id).attr('action');
+        Swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: "Vous ne pourrez pas revenir en arrière !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Soumettre le formulaire si l'utilisateur confirme
+                $('#form-delete-' + id).submit();
+            } else {
+                // Afficher un message d'erreur si l'utilisateur annule la suppression
+                Swal.fire({
+                    title: 'Annulé',
+                    text: 'La suppression a été annulée.',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+            }
+        });
+    });
+
+    // Écouter l'événement de soumission du formulaire de suppression
+    $('form[id^="form-delete-"]').submit(function(e) {
+        e.preventDefault(); // Empêcher la soumission du formulaire par défaut
+
+        var form = $(this);
+
+        // Récupérer l'ID du formulaire
+        var id = form.attr('id').replace('form-delete-', '');
+
+        // Envoyer une requête AJAX pour supprimer l'élément
+        $.ajax({
+            url: form.attr('action'), // Récupérer l'URL d'action du formulaire
+            method: 'POST',
+            data: form.serialize(), // Sérialiser les données du formulaire
+            success: function(response) {
+                // Si la suppression réussit, afficher un message de succès avec animation
+                Swal.fire({
+                    title: 'Supprimé !',
+                    text: 'Le cours a été supprimé.',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                }).then(() => {
+                    // Recharger la page après l'animation
+                    location.reload();
+                });
+            },
+            error: function(xhr, status, error) {
+                // Si une erreur se produit lors de la suppression, afficher un message d'erreur
+                Swal.fire({
+                    title: 'Erreur !',
+                    text: 'Une erreur s\'est produite lors de la suppression.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            }
+        });
+    });
+});
+
+</script>
     </body>
 
 <!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
