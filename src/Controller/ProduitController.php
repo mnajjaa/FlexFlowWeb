@@ -31,6 +31,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 
+use App\Repository\ProduitRepository;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -43,17 +44,53 @@ class ProduitController extends AbstractController
     public function index(): Response
     {
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
-
         foreach ($produits as $produit) {
             // Convertir l'image BLOB en données binaires base64
             $produit->image = base64_encode(stream_get_contents($produit->getImage()));
         }
 
-        return $this->render('produit/index.html.twig', [
+        // Comptez le nombre de produits de type "Accessoires"
+        $accessoiresCount = 0;
+        $jeuxCount = 0;
+        $vitaminesCount = 0;
+        $proteineCount = 0;
+        $vetementsCount = 0;
+        foreach ($produits as $produit) {
+            if ($produit->getType() === 'Accessoires') {
+                $accessoiresCount++;
+            }
+            if ($produit->getType() === 'jeux') {
+                $jeuxCount++;
+            }
+            if ($produit->getType() === 'Vitamines') {
+                $vitaminesCount++;
+            }
+            if ($produit->getType() === 'Proteine') {
+                $proteineCount++;
+            }
+            if ($produit->getType() === 'vetements') {
+                $vetementsCount++;
+            }
+        }
+
+        usort($produits, function ($a, $b) {
+            return $b->getQuantiteVendues() - $a->getQuantiteVendues();
+        });
+    
+        // Récupérer les trois premiers produits (les plus vendus)
+        $topProduits = array_slice($produits, 0, 3);
+
+        return $this->render('GestionProduit/produit/index.html.twig', [
             'produits' => $produits,
+            'accessoiresCount' => $accessoiresCount,
+            'jeuxCount' => $jeuxCount,
+            'vitaminesCount' => $vitaminesCount,
+            'proteineCount' => $proteineCount,
+            'vetementsCount' => $vetementsCount,
+        'topProduits' => $topProduits,
+
         ]);
     }
-
 
 
 
@@ -63,18 +100,19 @@ class ProduitController extends AbstractController
         // Récupérer les éléments du panier depuis la session
         $panier = $this->get('session')->get('panier', []);
 
+        
         // Calculer le total du prix de tous les achats dans le panier
         $total = $this->calculerTotalPanier($panier);
 
         // Vous pouvez passer le panier et le total à la vue pour l'afficher
-        return $this->render('panier/index.html.twig', [
+        return $this->render('GestionProduit/panierFront.html.twig', [
             'panier' => $panier,
             'total' => $total, // Passer le total à la vue
         ]);
     }
 
 
-
+    
 
 
 
@@ -222,7 +260,7 @@ class ProduitController extends AbstractController
     #[Route('/payment', name: 'payment')]
     public function index1(): Response
     {
-        return $this->render('payment/index.html.twig', [
+        return $this->render('GestionProduit/payment/index.html.twig', [
             'controller_name' => 'PaymentController',
         ]);
     }
@@ -364,7 +402,7 @@ $mailer->send($email);
         // Redirection vers la page des produits après le téléchargement du PDF
        // return new Response("oooo");
         // Retourner la réponse rendue par Twig
-        return new Response($twig->render('success.html.twig'));
+        return new Response($twig->render('GestionProduit/success.html.twig'));
     }
     
 
@@ -372,7 +410,7 @@ $mailer->send($email);
     #[Route('/cancel-url', name: 'cancel_url')]
     public function cancelUrl(): Response
     {
-        return $this->render('payment/cancel.html.twig', []);
+        return $this->render('GestionProduit/payment/cancel.html.twig', []);
     }
 
 
@@ -381,16 +419,7 @@ $mailer->send($email);
 
 
 
-    #[Route('/360', name: '360')]
-    public function votreAction(): Response
-    {
-        // Appel du template Twig 'votre_template.html.twig' avec éventuellement des variables à passer
-        return $this->render('360.html.twig', [
-            
-            // Ajoutez d'autres variables si nécessaire
-        ]);
-    }
-
+   
 
 
 

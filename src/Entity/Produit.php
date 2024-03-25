@@ -22,9 +22,6 @@ class Produit
     private ?string $description = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Le champ 'Prix' ne peut pas être vide")]
-    #[Assert\Type(type: "float", message: "Le champ 'Prix' doit être un nombre décimal")]
-    #[Assert\PositiveOrZero(message: "Le champ 'Prix' ne peut pas être négatif")]
     private ?float $prix = null;
 
     #[ORM\Column(length: 255)]
@@ -127,4 +124,8 @@ class Produit
 
         return $this;
     }
+
+
+
+    
 }

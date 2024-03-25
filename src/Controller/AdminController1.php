@@ -59,7 +59,7 @@ class AdminController1 extends AbstractController
 
 
     
-        return $this->render('crud/ajouter.html.twig', [
+        return $this->render('GestionProduit/crud/ajouter.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -79,7 +79,7 @@ class AdminController1 extends AbstractController
                 $produit->setImage($imageData);
             }
         }
-        return $this->render('crud/liste.html.twig', [
+        return $this->render('GestionProduit/crud/liste.html.twig', [
             'produits' => $produits, // Passer les produits récupérés à la vue
         ]);
     }
@@ -126,7 +126,7 @@ class AdminController1 extends AbstractController
             return $this->redirectToRoute('produit-liste');
         }
     
-        return $this->render('crud/modifier.html.twig', [
+        return $this->render('GestionProduit/crud/modifier.html.twig', [
             'form' => $form->createView(),
         ]);
     }

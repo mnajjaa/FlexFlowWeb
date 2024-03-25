@@ -296,6 +296,8 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   line-height: 1.2;
   color: var(--bs-heading-color, inherit); }
 
+  
+
 h1, .h1 {
   font-size: calc(1.3875rem + 1.65vw); }
   @media (min-width: 1200px) {
@@ -465,6 +467,13 @@ th {
   border-color: inherit;
   border-style: solid;
   border-width: 0; }
+
+
+
+
+
+
+
 
 label {
   display: inline-block; }
