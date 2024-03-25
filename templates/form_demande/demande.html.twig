@@ -1,33 +1,78 @@
-{# templates/form_demande/demande_success.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Confirmation de demande de coaching privé{% endblock %}
 
 {% block body %}
-    <h1>Confirmation de demande de coaching privé</h1>
-    
-    {% if form_errors(form) %}
-        <div class="alert alert-danger">
-            {{ form_errors(form) }}
-        </div>
-    {% endif %}
-    
-    {{ form_start(form) }}
-    {{ form_row(form.nom) }}
-    {{ form_row(form.age) }}
-    {{ form_row(form.but) }}
-    {{ form_row(form.niveauPhysique) }}
-    {{ form_row(form.maladieChronique) }}
-    {{ form_row(form.nombreHeure) }}
-    {{ form_row(form.etat) }}
-    {{ form_row(form.horaire) }}
-    {{ form_row(form.lesjours) }}
-    {{ form_row(form.user) }}
-    {{ form_row(form.offre) }}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
 
-    <button type="submit" class="btn btn-primary">Ajouter demande de coaching</button>
-    {{ form_end(form) }}
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    
+        .alert {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #f00;
+            background-color: #ffebeb;
+            border-radius: 5px;
+            color: #f00;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <div class="container">
+        <h1>Confirmation de demande de coaching privé</h1>
+        
+        {% if form_errors(form) %}
+            <div class="alert alert-danger">
+                {{ form_errors(form) }}
+            </div>
+        {% endif %}
+        
+        {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.age) }}
+        {{ form_row(form.but) }}
+        {{ form_row(form.niveauPhysique) }}
+        {{ form_row(form.maladieChronique) }}
+        {{ form_row(form.nombreHeure) }}
+        {{ form_row(form.etat) }}
+        {{ form_row(form.horaire) }}
+        {{ form_row(form.lesjours) }}
+        {{ form_row(form.user) }}
+        {{ form_row(form.offre) }}
+
+        <button id="submit-btn" type="submit" class="btn btn-primary">Ajouter demande de coaching</button>
+        {{ form_end(form) }}
+    </div>
+
+    <script>
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            alert("L'IA effectue une analyse en temps réel de votre demande de coaching.");
+        });
+    </script>
 {% endblock %}
