@@ -58,7 +58,27 @@ class CoursType extends AbstractType
                     'S\'entrainer en dansant' => 'S\'entrainer en dansant',
                 ],
             ])
-            ->add('etat')
+            ->add('etat', ChoiceType::class, [
+                'label' => 'État',
+                'choices' => [
+                    'Actif' => true,
+                    'Inactif' => false,
+                ],
+                'expanded' => false,
+                'multiple' => false,
+                'choice_attr' => function($choice, $key, $value) {
+                    if ($value) {
+                        // Ajouter un espace entre les options "Actif" et "Inactif"
+                        return ['style' => 'margin-right: 10px;']; // Ajustez la valeur selon vos besoins
+                    } else {
+                        return [];
+                    }
+                },
+            ])
+            
+            
+            
+            
             ->add('capacite')
             ->add('imageFile', FileType::class, [
                 //'label' => 'Uploader une image',

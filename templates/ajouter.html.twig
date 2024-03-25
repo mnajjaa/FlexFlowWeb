@@ -1,14 +1,93 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
-{% block title %}Ajouter un cours{% endblock %}
+{% block stylesheets %}
+    {# Incluez les fichiers CSS Bootstrap ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .custom-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .custom-form-label {
+            font-weight: bold;
+        }
+    </style>
+    
+{% endblock %}
+
+
 
 {% block body %}
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+
+
+<!-- jebtou mel base.html.twig-->
+      
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-pnLDlS50xL34ul5+xeRuJusv/1dmbd3W7pUT2F+QfJtadgFU1mX6lYb/0J2a9UcCpJw5f1ADmMBmBVmg+R2nGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+         <link rel="shortcut icon" href="assets/images/favicon.ico">
+        
+        <!-- Sweet Alert-->
+        <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- Bootstrap Css -->
+        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
+		<!-- Feuilles de styles -->
+		<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    
+		<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+
+		<!-- Fichiers JS -->
+		<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
+		{% block javascripts %}{% endblock %}
+		<script src="{{ asset('assets/js/scripts.js') }}" defer></script>
+
+    </head>
+
+
+<body>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Ajouter un cours</h5>
+                    
                     
                     {% for message in app.flashes('success') %}
                         <div class="alert alert-success" role="alert">
@@ -60,7 +139,7 @@
                             <label for="user" class="form-label">Coach</label>
                             {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
                         </div>
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                       <center> <button type="submit" class="btn btn-primary">Ajouter</button> </center>
                         {{ form_end(form) }}
                     </form>
                 </div>
@@ -68,4 +147,6 @@
         </div>
     </div>
 </div>
+</body>
+</html>
 {% endblock %}
