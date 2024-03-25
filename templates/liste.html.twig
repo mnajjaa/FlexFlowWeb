@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
 {% block title %}Liste des Cours{% endblock %}
 
@@ -32,6 +32,34 @@
 
 
 {% block body %}
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="assets/libs/toastr/build/toastr.min.css">
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+        
+
+    </head>
+
+<body>
     <h1>Liste des Cours</h1>
     <div class="container-fluid">
         <div class="row">
@@ -40,8 +68,17 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             
-                            <div id="datatable_filter" class="dataTables_filter">
-                                <label>Search:<input id="tableSearch" type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label>
+                           <div id="datatable_filter" class="dataTables_filter">
+    <label for="tableSearch" class="input-group mb-0">
+        <input id="tableSearch" type="search" class="form-control form-control-sm" placeholder="Chercher par nom..." aria-controls="datatable">
+        <span class="input-group-text"><i class="fas fa-search"></i></span>
+    </label>
+</div>
+
+                             <!-- Bouton Ajouter -->
+                            <div class="ml-auto">
+                                <a href="{{ path('cour_ajouter') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Ajouter</a>
+
                             </div>
                         </div>
 
@@ -98,9 +135,9 @@
             </div> <!-- end col -->
         </div> <!-- end row -->
     </div> <!-- end container-fluid -->
-{% endblock %}
 
-{% block javascripts %}
+
+
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- DataTables -->
@@ -210,4 +247,5 @@
 });
 
     </script>
+    </body>
 {% endblock %}
