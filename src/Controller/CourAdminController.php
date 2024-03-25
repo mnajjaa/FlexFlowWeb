@@ -48,7 +48,7 @@ class CourAdminController extends AbstractController
             return $this->redirectToRoute('cour_liste');
         }
 
-        return $this->render('ajouter.html.twig', [
+        return $this->render('GestionCours/ajouterCour.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -59,7 +59,7 @@ class CourAdminController extends AbstractController
     {
         $cours = $coursRepository->findAll(); // Récupérer tous les cours depuis la base de données
     
-        return $this->render('liste.html.twig', [
+        return $this->render('GestionCours/listeCour.html.twig', [
             'cours' => $cours, // Passer les cours récupérés à la vue
         ]);
     }
@@ -102,7 +102,7 @@ public function modifier(Request $request, int $id, CoursRepository $coursReposi
         return $this->redirectToRoute('cour_liste');
     }
 
-    return $this->render('modifier.html.twig', [
+    return $this->render('GestionCours/modifierCour.html.twig', [
         'form' => $form->createView(),
     ]);
 }
