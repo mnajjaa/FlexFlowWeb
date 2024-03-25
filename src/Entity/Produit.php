@@ -22,15 +22,24 @@ class Produit
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'numeric')]
+    #[Assert\Range(min: 0)]
     private ?float $prix = null;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'numeric')]
+    #[Assert\Range(min: 0)]
     private ?int $quantite = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'numeric')]
+    #[Assert\Range(min: 0)]
     private ?int $quantiteVendues = null;
 
     #[ORM\Column(type: Types::BLOB)]

@@ -384,14 +384,14 @@ $email = (new Email())
     ->from('votre@email.com')
     ->to('houssinebenarous48@gmail.com')
     ->subject("Confirmation d'achat")
-    ->html("<p>Bonjour,
+    ->html("<p>Bonjour,</p>
 
-    Votre commande sera prête à être retirée. Vous pouvez venir la récupérer à tout moment.
+    <p>Votre commande sera prête à être retirée. Vous pouvez venir la récupérer à tout moment.</p>
 
-    Votre commande est valable pendant une semaine à partir d'aujourd'hui  $dateActuelle.
+   <p> Votre commande est valable pendant une semaine à partir d'aujourd'hui  $dateActuelle.</p>
 
-    Cordialement,
-    Votre application</p>")
+    <p>Cordialement,</p>
+    <p>Votre application</p>")
     // Ajouter le PDF en pièce jointe
     ->attach($pdfContent, $fileName, 'application/pdf');
 
@@ -415,19 +415,8 @@ $mailer->send($email);
 
 
 
-
-
-
-
    
-
-
-
-
-
-
-
-
+    
 
 }
 

@@ -46,43 +46,66 @@
             <div class="card">
                 <div class="card-body">
                     <center><h1>Ajouter un produit</h1></center>
-                    <form action="{{ path('produit_ajouter') }}" method="post" enctype="multipart/form-data">
-                        {{ form_start(form, {'method': 'POST'}) }}
-                        {{ form_row(form._token) }} {# Ajout du jeton CSRF #}
-                        <div class="mb-3">
-                            <label for="nom" class="form-label">Nom du produit</label>
-                            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        <div class="mb-3">
-                            <label for="Description" class="form-label">Description</label>
-                            {{ form_widget(form.Description, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        <div class="mb-3">
-                            <label for="Prix" class="form-label">Prix</label>
-                            {{ form_widget(form.Prix, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        <div class="mb-3">
-                            <label for="Type" class="form-label">Type</label>
-                            {{ form_widget(form.Type, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        <div class="mb-3">
-                            <label for="quantite" class="form-label">quantite</label>
-                            {{ form_widget(form.quantite, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        <div class="mb-3">
-                            <label for="quantite_Vendues" class="form-label">quantite Vendues</label>
-                            {{ form_widget(form.quantite_Vendues, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                      
-                        <div class="mb-3">
-                            <label for="imageFile" class="form-label">Image</label>
-                            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        
-                       
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
-                        {{ form_end(form) }}
-                    </form>
+                   <form action="{{ path('produit_ajouter') }}" method="post" enctype="multipart/form-data">
+    {{ form_start(form, {'method': 'POST'}) }}
+    {{ form_row(form._token) }}
+
+    <div class="mb-3">
+    <label for="nom" class="form-label">Nom du produit</label>
+    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+    <div class="text-danger">
+        {{ form_errors(form.nom) }}
+    </div>
+</div>
+
+<div class="mb-3">
+    <label for="Description" class="form-label">Description</label>
+    {{ form_widget(form.Description, {'attr': {'class': 'form-control'}}) }}
+    <div class="text-danger">
+        {{ form_errors(form.Description) }}
+    </div>
+</div>
+
+    <div class="mb-3">
+    <label for="prix" class="form-label">Prix</label>
+    {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+    <div class="text-danger">
+        {{ form_errors(form.prix) }}
+    </div>
+</div>
+
+    <div class="mb-3">
+        <label for="Type" class="form-label">Type</label>
+        {{ form_widget(form.Type, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.Type) }} {# Affichage des erreurs pour le champ Type #}
+    </div>
+
+   <div class="mb-3">
+    <label for="quantite" class="form-label">Quantité</label>
+    {{ form_widget(form.quantite, {'attr': {'class': 'form-control'}}) }}
+    <div class="text-danger">
+        {{ form_errors(form.quantite) }}
+    </div>
+</div>
+
+<div class="mb-3">
+    <label for="quantiteVendues" class="form-label">Quantité vendues</label>
+    {{ form_widget(form.quantiteVendues, {'attr': {'class': 'form-control'}}) }}
+    <div class="text-danger">
+        {{ form_errors(form.quantiteVendues) }}
+    </div>
+</div>
+
+    <div class="mb-3">
+        <label for="imageFile" class="form-label">Image</label>
+        {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.imageFile) }} {# Affichage des erreurs pour le champ imageFile #}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+    {{ form_end(form) }}
+</form>
+
                 </div>
             </div>
         </div>
