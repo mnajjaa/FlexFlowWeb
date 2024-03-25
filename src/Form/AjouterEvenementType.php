@@ -66,7 +66,7 @@ class AjouterEvenementType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id', // Champ à afficher dans le formulaire
+                'choice_label' => 'email', // Champ à afficher dans le formulaire
             ])
             ->add('etat', CheckboxType::class, [
                 'label' => 'Activer l\'état',
