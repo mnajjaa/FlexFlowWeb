@@ -42,16 +42,21 @@
         .btn:hover {
             background-color: #0056b3;
         }
+  
+
     </style>
 
     <div class="container">
         <h1>Confirmation de demande de coaching privé</h1>
+
+
+              {# Affichage des messages d'erreur flash #}
+        {% for flash_message in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
         
-        {% if form_errors(form) %}
-            <div class="alert alert-danger">
-                {{ form_errors(form) }}
-            </div>
-        {% endif %}
         
         {{ form_start(form) }}
         {{ form_row(form.nom) }}
@@ -65,14 +70,40 @@
         {{ form_row(form.lesjours) }}
         {{ form_row(form.user) }}
         {{ form_row(form.offre) }}
+        
+        <div id="errorMessageContainer" style="color: red;"></div>
 
         <button id="submit-btn" type="submit" class="btn btn-primary">Ajouter demande de coaching</button>
         {{ form_end(form) }}
     </div>
 
     <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            const maladieChroniqueField = document.getElementById('demande_maladieChronique');
+            const offreField = document.getElementById('demande_offre');
+            const errorMessageContainer = document.getElementById('errorMessageContainer');
+
+            maladieChroniqueField.addEventListener('change', function () {
+                const maladie = maladieChroniqueField.value;
+                const offre = offreField.value;
+
+                if ((maladie === 'Maladies infectieuses contagieuses' || maladie === 'Maladies oculaires graves' || maladie === 'Troubles musculo-squelettiques graves' || maladie === 'Problèmes neurologiques' || maladie === 'Hypertension artérielle non contrôlée') && (offre === 'Yoga')) {
+                    errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner au yoga en raison de votre maladie.';
+                } else if ((maladie === 'Problèmes cardiaques graves' || maladie === 'Hypertension artérielle non contrôlée' || maladie === 'Problèmes musculo-squelettiques graves' || maladie === 'Maladies inflammatoires' || maladie === 'Maladies infectieuses' || maladie === 'Problèmes respiratoires graves' || maladie === 'Troubles de l\'alimentation') && (offre === 'Boxe')) {
+                    errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner à la boxe en raison de votre maladie.';
+                } else if ((maladie === 'Maladies cardiaques graves' || maladie === 'Hypertension artérielle non contrôlée' || maladie === 'Problèmes respiratoires sévères' || maladie === 'Maladies vasculaires périphériques' || maladie === 'Problèmes neurologiques graves' || maladie === 'Diabète non contrôlé' || maladie === 'Infections actives') && (offre === 'Musculation')) {
+                    errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner à la musculation en raison de votre maladie.';
+                } else if ((maladie === 'Maladies cardiaques graves' || maladie === 'Hypertension artérielle non contrôlée' || maladie === 'Problèmes respiratoires sévères' || maladie === 'Maladies vasculaires périphériques' || maladie === 'Problèmes neurologiques graves' || maladie === 'Diabète non contrôlé' || maladie === 'Infections actives') && (offre === 'Cardio')) {
+                    errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner au cardio en raison de votre maladie.';
+                } else {
+                    errorMessageContainer.textContent = '';
+                }
+            });
+        });
+
         document.getElementById('submit-btn').addEventListener('click', function() {
-            alert("L'IA effectue une analyse en temps réel de votre demande de coaching.");
+            alert("uen analyse s'effectue  en temps réel de votre demande de coaching.");
         });
     </script>
 {% endblock %}

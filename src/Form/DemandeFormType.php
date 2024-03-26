@@ -36,16 +36,40 @@ class DemandeFormType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('niveauPhysique', TextType::class, [
+            ->add('niveauPhysique', ChoiceType::class, [
+                'choices' => [
+                    'Débutant '=> 'Débutant ',
+                    'Intermédiaire'=> 'Intermédiaire',
+                    'Avancé'=>'Avancé'],
+
+                    'placeholder' => 'Sélectionnez votre niveau',
                 'constraints' => [
                     new NotBlank(),
                 ],
             ])
-            ->add('maladieChronique', TextType::class ,[
+            ->add('maladieChronique', ChoiceType::class, [
+                'choices' => [
+                    'Je suis en bonne santé'=>'Je suis en bonne santé',
+                    'Maladies infectieuses contagieuses' => 'Maladies infectieuses contagieuses',
+                    'Maladies oculaires graves' => 'Maladies oculaires graves',
+                    'Troubles musculo-squelettiques graves' => 'Troubles musculo-squelettiques graves',
+                    'Problèmes neurologiques' => 'Problèmes neurologiques',
+                    'Hypertension artérielle non contrôlée' => 'Hypertension artérielle non contrôlée',
+                    'Problèmes cardiaques graves' => 'Problèmes cardiaques graves',
+                    'Maladies cardiaques graves'=> 'Maladies cardiaques graves',
+                    'Hypertension artérielle non contrôlée'=> 'Hypertension artérielle non contrôlée',
+                    'Problèmes respiratoires sévères'=> 'Problèmes respiratoires sévères',
+                    'Maladies vasculaires périphériques'=> 'Maladies vasculaires périphériques',
+                    'Diabète non contrôlé'=> 'Diabète non contrôlé',
+                    'Infections actives'=> 'Infections actives',
+                     
+               
+                ],
+                'placeholder' => 'Sélectionnez une maladie chronique',
                 'constraints' => [
-                new NotBlank(),
-            ],
-        ])
+                    new NotBlank(),
+                ],
+            ])
             ->add('nombreHeure', IntegerType::class, [
                 'constraints' => [
                     new NotBlank(),
@@ -57,15 +81,12 @@ class DemandeFormType extends AbstractType
             ])
             ->add('offre', EntityType::class, [
                 'class' => Offre::class,
-                'choice_label' => 'nom', // Remplacez 'nom' par le champ approprié de l'entité Offre à afficher dans la liste déroulante
+                'choice_label' => 'nom',
             ])
-        
-            ->add('etat', ChoiceType::class, [
-                'choices' => [
-                    'En attente' => 'en_attente',
-                    'Acceptée' => 'acceptee',
-                    'Refusée' => 'refusee',
-                ],
+            ->add('etat', TextType::class, [
+                'label' => 'État de la demande',
+                'data' => 'En attente', // Valeur par défaut
+                'disabled' => true, // Désactiver le champ pour empêcher les modifications
             ])
             ->add('horaire', DateTimeType::class, [
                 'widget' => 'single_text',

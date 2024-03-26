@@ -33,7 +33,7 @@ class Demande
     private ?int $nombreheure = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $etat = null;
+    private ?string $etat = 'En attente';
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $horaire = null;
