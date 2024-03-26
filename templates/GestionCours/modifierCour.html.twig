@@ -158,7 +158,8 @@
             <div class="col-md-8">
                 <div class="card custom-card">
                     <div class="card-body">
-                        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                        {{ form_start(form, {'attr': {'class': 'form-horizontal', 'enctype': 'multipart/form-data'}}) }}
+
                             <div class="form-group row">
                                 <label for="{{ form.nomCour.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Nom du cours :</label>
                                 <div class="col-sm-9">

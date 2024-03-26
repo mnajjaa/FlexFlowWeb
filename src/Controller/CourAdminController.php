@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
 
+
 class CourAdminController extends AbstractController
 {
     #[Route('/admin/cours/ajouter', name: 'cour_ajouter')]
@@ -96,6 +97,18 @@ public function modifier(Request $request, int $id, CoursRepository $coursReposi
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+        /** @var UploadedFile $imageFile */
+        $imageFile = $form->get('imageFile')->getData();
+
+        // Vérifie si un nouveau fichier a été uploadé
+        if ($imageFile) {
+            // Lire le contenu du fichier en tant que flux
+            $imageContent = file_get_contents($imageFile->getPathname());
+
+            // Stocker le contenu du nouveau fichier dans l'entité Cours
+            $cour->setImage($imageContent);
+        }
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
 
@@ -106,6 +119,7 @@ public function modifier(Request $request, int $id, CoursRepository $coursReposi
         'form' => $form->createView(),
     ]);
 }
+
 
 
 
