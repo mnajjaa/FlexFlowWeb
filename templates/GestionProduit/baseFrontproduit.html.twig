@@ -1,8 +1,9 @@
- <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html
+	lang="en">
 
-<!-- Mirrored from powerzone.dexignzone.com/xhtml/shop-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 23 Mar 2024 22:02:54 GMT -->
-<head>
+	<!-- Mirrored from powerzone.dexignzone.com/xhtml/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 23 Mar 2024 22:01:42 GMT -->
+	<head>
 
 		<!-- Title -->
 		<title>
@@ -401,211 +402,283 @@
 				</div>
 			</div>
 			<!-- Banner End -->
-		
-		<!-- Our Shop Cart-->
-		<section class="content-inner">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8">
-						<div class="table-responsive">
-							<table class="table check-tbl wow fadeInUp" data-wow-delay="0.4s">
-								<thead>
-									<tr>
-										<th>Produit</th>
-										<th>Prix unitaire</th>
-										<th>Quantite</th>
-										<th>Prix total</th>
-										<th></th>
-									</tr>
-								</thead>
-                                 {% for item in panier %}
-								<tbody>
-								<tr>
 
-    <td class="product-item-name"><a href="product-detail.html">{{ item.produit.nom }} </a></td>
-    <td class="product-item-price">{{ item.produit.prix }} dnt</td>
-    <td class="product-item-quantity">
-    <a href="#" class="quantity-control plus" onclick="incrementerQuantite({{ item.produit.id }})"><i class="fas fa-plus"></i></a>
+			<!-- Our Shop -->
+			<section class="content-inner">
+				<div class="container">
+					<div class="row">
+						<div class="col-xl-8 col-lg-12 m-b30">
+							<div class="filter-wrapper row">
+								<div class="col-lg-8 col-md-8 col-sm-6 m-b20 wow fadeInUp" data-wow-delay="0.2s">
+									<span class="para">You’ve Viewed 9 Of 27 Products</span>
+								</div>
+								<div class="form-group col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.4s">
+									<select id="productFilter" class="default-select">
+										<option value="all">Tous</option>
+										<option value="Accessoires">Accessoires</option>
+										<option value="Jeux">Jeux</option>
+										<option value="Vitamines">Vitamines</option>
+										<option value="Proteine">Proteine</option>
+										<option value="Vetements">Vetements</option>
+									</select>
+								</div>
+							</div>
 
-    <span>{{ item.quantite }}</span>
-
-    <a href="#" class="quantity-control minus" onclick="decrementerQuantite({{ item.produit.id }})"><i class="fas fa-minus"></i></a>
-</td>
-
-    <td class="product-item-total">{{ item.produit.prix * item.quantite }} dnt</td>
-    <td class="product-item-close"><a href="#" onclick="supprimerAchat({{ item.produit.id }})"><i class="ti-close"></i></a></td>
-</tr>
-
- {% set total = total + item.produit.prix * item.quantite %}
-
-                        {% else %}
-                            <tr>
-                                <td colspan="5">Votre panier est vide</td>
-                            </tr>    
+							<div class="row">
 
 
+								{% for produit in produits %}
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 product-card" data-type="{{ produit.type }}">
+
+										<div class="shop-card style-1 hover-aware wow fadeInUp" data-wow-delay="0.6s">
+											<div class="dz-media">
+												<img src="data:image/jpeg;base64,{{ produit.image }}" class="card-img-top" alt="{{ produit.nom }}">
+												<div class="shop-meta">
+													<ul>
+														<li><a href="javascript:void(0)">Quick View</a></li>
+														<li><a href="javascript:void(0)"><i class="yith-wcwl-icon fa fa-heart"></i></a></li>
+														<li><a href="{{ path('consulter_panier') }}"><i class="fa-solid fa-cart-shopping"></i></a></li>
+													</ul>
+												</div>
+												<div class="effect"></div>
+											</div>
+											<div class="dz-content">
+												<h5 class="product-title">Nom:
+													<span style="color: black;">{{ produit.nom }}</span>
+												</h5>
+												<p class="product-price">Prix:
+													<span style="color: navy;">{{ produit.prix }}
+														dnt</span>
+												</p>
+												<br>
+												<form action="{{ path('ajouter_au_panier', {'id': produit.id}) }}" method="post" class="d-flex">
+													<button type="submit" class="btn btn-primary mr-2" style="width: 290px;">Ajout</button>
+													<select name="quantite" class="custom-select custom-select-sm">
+														{% for i in 1..5 %}
+															<option value="{{ i }}">{{ i }}</option>
+														{% endfor %}
+													</select>
+												</form>
+											</div>
+										</div>
+									</div>
+								{% endfor %}
 
 
-									 {% endfor %}
+							</div>
+							<div class="row page wow fadeInUp" data-wow-delay="2.4s">
+								<div class="col-sm-6 m-b15">
+									<p class="page-text">Showing 1–5 Of 50 Results</p>
+								</div>
+								<div class="col-sm-6 m-b15">
+									<nav aria-label="Shop Pagination">
+										<ul class="pagination style-1">
+											<li class="page-item">
+												<a class="page-link prev" href="javascript:void(0);">Prev</a>
+											</li>
+											<li class="page-item">
+												<a class="page-link active" href="javascript:void(0);">1</a>
+											</li>
+											<li class="page-item">
+												<a class="page-link" href="javascript:void(0);">2</a>
+											</li>
+											<li class="page-item">
+												<a class="page-link" href="javascript:void(0);">3</a>
+											</li>
+											<li class="page-item">
+												<a class="page-link next" href="javascript:void(0);">Next</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-12">
+							<div class="shop-filter side-bar sticky-top">
+								<aside>
+									<div class="search-bx wow fadeInUp" data-wow-delay="0.2s">
+										<form role="search" method="post">
+											<div class="input-group">
+												<div class="input-side">
+													<input id="searchInput" name="text" class="form-control" placeholder="Search..." type="text">
+													<div class="input-group-btn">
+														<button type="submit" class="btn">
+															<i class="flaticon-magnifying-glass"></i>
+														</button>
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="widget"></div>
+									<div class="widget widget_categories">
+										<div class="widget-title wow fadeInUp" data-wow-delay="0.8s">
+											<h4 class="title">Categories</h4>
+										</div>
+										<ul class="wow fadeInUp" data-wow-delay="1.0s">
+
+											<li class="cat-item cat-item-26">
+												<a href="javascript:void(0);">Accessoires</a>
+												({{ accessoiresCount }})
+											</li>
+
+											<li class="cat-item cat-item-26">
+												<a href="javascript:void(0);">Jeux</a>
+												({{ jeuxCount }})
+											</li>
+
+											<li class="cat-item cat-item-26">
+												<a href="javascript:void(0);">Vitamines</a>
+												({{ vitaminesCount }})
+											</li>
+
+											<li class="cat-item cat-item-26">
+												<a href="javascript:void(0);">Proteine</a>
+												({{ proteineCount }})
+											</li>
+
+
+											<li class="cat-item cat-item-26">
+												<a href="javascript:void(0);">Vetements</a>
+												({{ vetementsCount }})
+											</li>
+										</ul>
+									</div>
+
+									<div class="widget recent-posts-entry style-1">
+										<div class="widget-title wow fadeInUp" data-wow-delay="1.2s">
+											<h4 class="title">Meilleurs produits vendues</h4>
+										</div>
+										<div class="widget-post-bx">
+											{% for produit in topProduits %}
+												<div class="widget-post wow fadeInUp" data-wow-delay="1.4s">
+													<div class="dz-media">
+														<img src="data:image/png;base64,{{ produit.image }}" alt="Image du produit">
+													</div>
+													<div class="dz-info">
+														<h5 class="title">
+															<a href="">{{ produit.getNom() }}</a>
+														</h5>
+														<p>{{ produit.getPrix() }}
+															dnt</p>
+													</div>
+												</div>
+											{% endfor %}
+										</div>
+									</div>
+
+
+								</aside>
 
 
 
-<script>
-    function incrementerQuantite(id) {
-        fetch("{{ path('incrementer_quantite', {'id': 'ID_PLACEHOLDER'}) }}".replace("ID_PLACEHOLDER", id), {
-            method: 'POST',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                console.error('L\'incrémentation de la quantité a échoué.');
-            }
-        }).then(data => {
-            if (data.message) {
-                alert(data.message); // Affichez le message
-            } else {
-                location.reload(); // Recharge la page après l'incrémentation
-            }
-        }).catch(error => {
-            console.error('Une erreur est survenue lors de l\'incrémentation de la quantité :', error);
-        });
-    }
 
 
-  // Fonction pour décrémenter la quantité d'un produit dans le panier
-     function decrementerQuantite(id) {
-        fetch("{{ path('decrementer_quantite', {'id': 'ID_PLACEHOLDER'}) }}".replace("ID_PLACEHOLDER", id), {
-            method: 'POST',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }).then(response => {
-            if (response.ok) {
-                location.reload(); // Recharge la page après la décrémentation
-            } else {
-                console.error('La décrémentation de la quantité a échoué.');
-            }
-        }).catch(error => {
-            console.error('Une erreur est survenue lors de la décrémentation de la quantité :', error);
-        });
-    }
 
-    function supprimerAchat(id) {
-            if (confirm('Êtes-vous sûr de vouloir supprimer cet achat ?')) {
-                fetch("{{ path('supprimer_achat', {'id': 'ID_PLACEHOLDER'}) }}".replace("ID_PLACEHOLDER", id), {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        location.reload(); // Recharge la page après la suppression
-                    } else {
-                        console.error('La suppression de l\'achat a échoué.');
-                    }
-                }).catch(error => {
-                    console.error('Une erreur est survenue lors de la suppression de l\'achat :', error);
-                });
-            }
-        }
-    </script>		
+
+
+								<script>
+									// Fonction pour filtrer les produits en fonction du texte de recherche
+function filterProducts() {
+var input,
+filter,
+productCards,
+productName,
+i;
+input = document.getElementById("searchInput");
+filter = input.value.toUpperCase();
+productCards = document.getElementsByClassName("shop-card");
+
+// Parcourir toutes les cartes de produits et masquer celles qui ne correspondent pas à la recherche
+for (i = 0; i < productCards.length; i++) {
+productName = productCards[i].getElementsByClassName("product-title")[0];
+if (productName.innerText.toUpperCase().indexOf(filter) > -1) {
+productCards[i].style.display = "";
+} else {
+productCards[i].style.display = "none";
+}
+}
+}
+
+// Ajouter un écouteur d'événements pour détecter les changements dans le champ de recherche
+document.getElementById("searchInput").addEventListener("keyup", filterProducts);
+
+
+// Fonction pour filtrer les produits en fonction du type sélectionné
+function filterProductsByType() {
+var selectedType = document.getElementById("productFilter").value;
+var productCards = document.getElementsByClassName("product-card");
+
+// Parcourir toutes les cartes de produits et afficher celles qui correspondent au type sélectionné, ou toutes si "Tous" est sélectionné
+for (var i = 0; i < productCards.length; i++) {
+if (selectedType === "all" || productCards[i].getAttribute("data-type") === selectedType) {
+productCards[i].style.display = "";
+} else {
+productCards[i].style.display = "none";
+}
+}
+}
+
+// Ajouter un écouteur d'événements pour détecter les changements dans la sélection de filtrage
+document.getElementById("productFilter").addEventListener("change", filterProductsByType);
+								</script>
+
+
+
+
+
+
+
 
 
 
 								
-								</tbody>
-							</table>
-						</div>
-						<div class="row shop-form m-t30 align-items-center">
-							<div class="col-md-6">
-								<div class="form-group wow fadeInUp" data-wow-delay="0.6s">
-									<div class="input-group mb-0">
-										<input name="dzEmail" required="required" type="text" class="form-control" placeholder="Coupon Code">
-										<div class="input-group-addon">
-											<button name="submit" value="Submit" type="submit" class="btn coupon">
-												Apply Coupon
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 text-lg-end text-md-end text-center m-b30">
-								<a href="{{ path('vider_panier') }}" class="btn  btn-secondary wow fadeInUp" data-wow-delay="0.8s">Vider le panier</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4">
-						<div class="cart-sidebar side-bar sticky-top wow fadeInUp" data-wow-delay="0.4s">
-							<h6 class="title">Panier</h6>
-							<div class="cart-detail m-b20">
-								<table>
-									<tbody>
-										
-										
-										
-										<tr>
+				</div>
+			</section>
+			<!-- Our Shop-->
 
-											<td>
-												<h6 class="mb-0">Total</h6>
-											</td>
-											<td class="price">
-												{{ total / 2 }} Dnt
-											</td>
-										</tr>
-									</tbody>
-								</table>
+			<!-- Call To Action -->
+			<section class="call-action style-2 bg-img-fix bg-primary">
+				<div class="container">
+					<div class="inner-content">
+						<div class="row justify-content-between align-items-center">
+							<div class="text-center text-lg-start col-xl-6 m-lg-b20 wow fadeInUp" data-wow-delay="0.2s">
+								<h2 class="title m-0">
+									<span class="font-weight-400">Subscribe To Our
+									</span>Newsletter</h2>
 							</div>
-							<form action="/checkout" method="post">
-    <button type="submit" class="btn btn-primary">Payer</button>
-</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- Our Shop Cart-->
-		
-		<!-- Call To Action -->
-		<section class="call-action style-2 bg-img-fix bg-primary">
-			<div class="container">
-				<div class="inner-content">
-					<div class="row justify-content-between align-items-center">
-						<div class="text-center text-lg-start col-xl-6 m-lg-b20 wow fadeInUp" data-wow-delay="0.2s">
-							<h2 class="title m-0"><span class="font-weight-400">Subscribe To Our </span>Newsletter</h2>
-						</div>
-						<div class="text-center text-lg-end col-xl-6 wow fadeInUp" data-wow-delay="0.4s">
-							<form class="dzSubscribe" action="https://powerzone.dexignzone.com/xhtml/assets/script/mailchamp.php" method="post">
-								<div class="dzSubscribeMsg"></div>
-								<div class="form-group">
-									<div class="input-group mb-0"> 
-										<div class="input-skew">
-											<input name="dzEmail" required="required" type="email" class="form-control" placeholder="Your Email Address">
-										</div>
-										<div class="input-group-addon">
-											<button name="submit" value="Submit" type="submit" class="btn btn-secondary btn-lg btn-skew h-100"><span class="skew-inner"><span class="text">Subscribe Now</span></span></button>
+							<div class="text-center text-lg-end col-xl-6 wow fadeInUp" data-wow-delay="0.4s">
+								<form class="dzSubscribe" action="https://powerzone.dexignzone.com/xhtml/assets/script/mailchamp.php" method="post">
+									<div class="dzSubscribeMsg"></div>
+									<div class="form-group">
+										<div class="input-group mb-0">
+											<div class="input-skew">
+												<input name="dzEmail" required="required" type="email" class="form-control" placeholder="Your Email Address">
+											</div>
+											<div class="input-group-addon">
+												<button name="submit" value="Submit" type="submit" class="btn btn-secondary btn-lg btn-skew h-100">
+													<span class="skew-inner">
+														<span class="text">Subscribe Now</span>
+													</span>
+												</button>
+											</div>
 										</div>
 									</div>
-								</div>
-							</form>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</section>
-		<!-- Call To Action -->
-	</div>
-	
-	<!-- Footer -->
-    <footer class="site-footer style-1 bg-parallax" style="background-image: url(front-office/images/background/footer-bg-2.jpg);" id="footer">
+			</section>
+			<!-- Call To Action -->
+
+		</div>
+
+		<!-- Footer -->
+		<footer class="site-footer style-1 bg-parallax" style="background-image: url(front-office/images/background/footer-bg-2.jpg);" id="footer">
 			<div class="footer-top">
 				<div class="container">
 					<div class="row">
@@ -748,37 +821,44 @@
 				</div>
 			</div>
 		</footer>
-    <!-- Footer End -->
-	
-	<div class="scroltop-progress scroltop-primary active-progress">
-		<svg width="100%" height="100%" viewBox="-1 -1 102 102">
-			<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 24.3299px;"></path>
-		</svg>
+		<!-- Footer End -->
+
+		<div class="scroltop-progress scroltop-primary active-progress">
+			<svg width="100%" height="100%" viewbox="-1 -1 102 102">
+				<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 24.3299px;"></path>
+			</svg>
+		</div>
+
 	</div>
-	
-</div>
-<!-- JAVASCRIPT FILES ========================================= -->
-<script src="assets/js/jquery.min.js"></script><!-- JQUERY.MIN JS -->
 
+	<!-- JAVASCRIPT FILES ========================================= -->
+	{% block javascript %}
 
-{% block javascript %}
-
-<script src="{{asset('front-office/js/jquery.min.js')}}"></script><!-- JQUERY.MIN JS -->
-<script src="{{asset('front-office/vendor/wow/wow.js')}}"></script><!-- WOW.JS -->
-<script src="{{asset('front-office/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script><!-- BOOTSTRAP.MIN JS -->
-<script src="{{asset('front-office/vendor/splitting/dist/splitting.min.js')}}"></script><!-- Splitting -->
-<script src="{{asset('front-office/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script><!-- BOOTSTRAP SELEECT -->
-<script src="{{asset('front-office/vendor/magnific-popup/magnific-popup.js')}}"></script><!-- MAGNIFIC POPUP JS -->
-<script src="{{asset('front-office/vendor/counter/waypoints-min.js')}}"></script><!-- WAYPOINTS JS -->
-<script src="{{asset('front-office/vendor/counter/counterup.min.js')}}"></script><!-- COUNTERUP JS -->
-<script src="{{asset('front-office/vendor/swiper/swiper-bundle.min.js')}}"></script><!-- SWIPER -->
-<script src="{{asset('front-office/vendor/rangeslider/rangeslider.js')}}"></script><!-- RANGESLIDER -->
-<script src="{{asset('front-office/vendor/switcher/switcher.js')}}"></script><!-- SWITCHER -->
-<script src="{{asset('front-office/js/dz.carousel.js')}}"></script><!-- OWL-CAROUSEL -->
-<script src="{{asset('front-office/js/dz.ajax.js')}}"></script><!-- AJAX -->
-<script src="{{asset('front-office/js/custom.js')}}"></script><!-- CUSTOM JS -->
-{% endblock %}
-</body>
-
-<!-- Mirrored from powerzone.dexignzone.com/xhtml/shop-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 23 Mar 2024 22:02:56 GMT -->
-</html>
+		<script src="{{asset('front-office/js/jquery.min.js')}}"></script>
+		<!-- JQUERY.MIN JS -->
+		<script src="{{asset('front-office/vendor/wow/wow.js')}}"></script>
+		<!-- WOW.JS -->
+		<script src="{{asset('front-office/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+		<!-- BOOTSTRAP.MIN JS -->
+		<script src="{{asset('front-office/vendor/splitting/dist/splitting.min.js')}}"></script>
+		<!-- Splitting -->
+		<script src="{{asset('front-office/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
+		<!-- BOOTSTRAP SELEECT -->
+		<script src="{{asset('front-office/vendor/magnific-popup/magnific-popup.js')}}"></script>
+		<!-- MAGNIFIC POPUP JS -->
+		<script src="{{asset('front-office/vendor/counter/waypoints-min.js')}}"></script>
+		<!-- WAYPOINTS JS -->
+		<script src="{{asset('front-office/vendor/counter/counterup.min.js')}}"></script>
+		<!-- COUNTERUP JS -->
+		<script src="{{asset('front-office/vendor/swiper/swiper-bundle.min.js')}}"></script>
+		<!-- SWIPER -->
+		<script src="{{asset('front-office/vendor/rangeslider/rangeslider.js')}}"></script>
+		<!-- RANGESLIDER -->
+		<script src="{{asset('front-office/vendor/switcher/switcher.js')}}"></script>
+		<!-- SWITCHER -->
+		<script src="{{asset('front-office/js/dz.carousel.js')}}"></script>
+		<!-- OWL-CAROUSEL -->
+		<script src="{{asset('front-office/js/dz.ajax.js')}}"></script>
+		<!-- AJAX -->
+		<script src="{{asset('front-office/js/custom.js')}}"></script><!-- CUSTOM JS -->{% endblock %}
+</html></body><!-- Mirrored from powerzone.dexignzone.com/xhtml/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 23 Mar 2024 22:02:08 GMT --></html>

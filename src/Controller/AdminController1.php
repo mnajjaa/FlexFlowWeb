@@ -4,8 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Cours;
 use App\Entity\Produit;
+use App\Entity\Commande;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
+use App\Repository\CommandeRepository;
+use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,6 +87,65 @@ class AdminController1 extends AbstractController
             'produits' => $produits, // Passer les produits récupérés à la vue
         ]);
     }
+
+
+    #[Route('/admin/listecommande', name: 'commande-liste')]
+    public function listecommande(CommandeRepository $commandeRepository, ProduitRepository $produitRepository, EntityManagerInterface $entityManager): Response
+    {
+
+        
+
+        // Récupérer la date d'aujourd'hui
+    // Récupérer la date d'aujourd'hui
+    $aujourdHui = new \DateTime();
+
+    // Récupérer les commandes passées aujourd'hui
+    $commandesAujourdHui = $commandeRepository->findBy([
+        'dateCommande' => $aujourdHui
+    ]);
+
+    // Calculer le montant total des commandes d'aujourd'hui
+    $montantTotalAujourdHui = 0;
+    foreach ($commandesAujourdHui as $commande) {
+        $montantTotalAujourdHui += $commande->getMontant();
+    }
+
+        $commandes = $commandeRepository->findAll();
+        $montantTotal = 0;
+    
+        foreach ($commandes as $commande) {
+            $montantTotal += $commande->getMontant();
+        }
+
+        $nomsUtilisateurs = $entityManager->createQueryBuilder()
+        ->select('c.nomUser')
+        ->from(Commande::class, 'c')
+        ->getQuery()
+        ->getResult();
+
+    // Compter la fréquence de chaque nom d'utilisateur
+    $nomsUtilisateursCounts = array_count_values(array_column($nomsUtilisateurs, 'nomUser'));
+
+    // Trouver le nom d'utilisateur le plus fréquemment répété
+    $nomUtilisateurPlusRepete = array_search(max($nomsUtilisateursCounts), $nomsUtilisateursCounts);
+    
+        // Récupérer le produit le plus vendu
+        $produitPlusVendu = $produitRepository->findMostSoldProduct();
+        $produitMoinsVendu = $produitRepository->findLeastSoldProduct();
+
+        return $this->render('GestionProduit/crud/commandeTable.html.twig', [
+            'commandes' => $commandes,
+            'montantTotal' => $montantTotal,
+            'montantTotalAujourdHui' => $montantTotalAujourdHui,
+            'nomUtilisateurPlusRepete' => $nomUtilisateurPlusRepete,
+
+            'produitPlusVendu' => $produitPlusVendu,
+            'produitMoinsVendu' => $produitMoinsVendu,  
+        ]);
+    }
+
+
+
 
 
 

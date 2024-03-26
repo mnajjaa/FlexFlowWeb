@@ -53,7 +53,6 @@ class ProduitType extends AbstractType
                 'jeux' => 'jeux',
                 'Vitamines' => 'Vitamines',
                 'Proteine' => 'Proteine',
-
                 'vetements' => 'vetements',
             ],
         ])

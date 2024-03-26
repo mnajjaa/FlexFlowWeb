@@ -320,10 +320,10 @@ class ProduitController extends AbstractController
             // Récupérer l'ID et la quantité achetée du produit
             $produitId = $item['produit']->getId();
             $quantiteAchete = $item['quantite'];
-    
+
             // Trouver le produit dans la base de données par son ID
             $produit = $entityManager->getRepository(Produit::class)->find($produitId);
-    
+
             // Si le produit existe
             if ($produit) {
                 // Vérifier si la quantité en stock est suffisante
@@ -338,6 +338,10 @@ class ProduitController extends AbstractController
                     // Gérer le cas où la quantité en stock est insuffisante
                     // Par exemple, afficher un message d'erreur à l'utilisateur
                 }
+               // kifeh tejbed luser m session
+               $user = new User();
+        $email=$request->getSession()->get(Security::LAST_USERNAME);
+        $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$email]);
     
                 // Créer une nouvelle entité Commande
                 $commande = new Commande();
@@ -345,7 +349,8 @@ class ProduitController extends AbstractController
                 $commande->setIdProduit($produit->getId());
                 $commande->setNom($produit->getNom());
                 $commande->setMontant($produit->getPrix() * $quantiteAchete);
-    
+                $commande->setNomUser($user->getNom());
+
                 // Enregistrer la commande dans la base de données
                 $entityManager->persist($commande);
     
@@ -382,7 +387,7 @@ $pdfContent = $pdfGeneratorService->generatePDF($productsForPDF);
 // Envoyer un e-mail à l'utilisateur avec le PDF en pièce jointe
 $email = (new Email())
     ->from('votre@email.com')
-    ->to('houssinebenarous48@gmail.com')
+    ->to($email1)
     ->subject("Confirmation d'achat")
     ->html("<p>Bonjour,</p>
 
