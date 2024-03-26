@@ -64,15 +64,23 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
     // Find the course based on the ID
     $cours = $coursRepository->find($id);
 
-    $participation = new Participation();
-    $participation->setNomCour($cours->getNomCour());
-    $participation->setNomParticipant($user->getNom());
-    $participation->setUser($user);
-        // Persist the participation
-    $entityManager->persist($participation);
-    $entityManager->flush();
-    // Redirect to the confirmation page
-    return $this->redirectToRoute('liste_cours');    
+    if ($cours->getCapacite() > 0) {
+        // Decrement the course capacity by 1
+        $cours->setCapacite($cours->getCapacite() - 1);
+
+        // Create a new Participation entity
+        $participation = new Participation();
+        $participation->setNomCour($cours->getNomCour());
+        $participation->setNomParticipant($user->getNom());
+        $participation->setUser($user);
+
+        // Persist the participation and update the course
+        $entityManager->persist($participation);
+        $entityManager->flush();
+
+        // Redirect to the confirmation page
+        return $this->redirectToRoute('liste_cours');
+    }    
 
 }
 
