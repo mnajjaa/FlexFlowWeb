@@ -89,10 +89,10 @@
                                                         <div class="badge bg-pill bg-soft-success font-size-12">Active</div>
                                                     </td>
                                                     <td>
-                                                        <a href="javascript:void(0);" class="px-3 text-primary"><i class="uil uil-pen font-size-18"></i></a>
-                                                        <a href="javascript:void(0);" class="px-3 text-danger"><i class="uil uil-trash-alt font-size-18"></i></a>
-                                                        <button type="submit" class="btn btn-danger btn-sm mr-2"><i class="fas fa-trash-alt"></i></button>
-
+                                                        {# <a href="javascript:void(0);" class="px-3 text-primary"><i class="uil uil-pen font-size-18"></i></a>
+                                                        <a href="javascript:void(0);" class="px-3 text-danger"><i class="uil uil-trash-alt font-size-18"></i></a> #}
+                                                        <a href="{{ path('edit_membre', {'id': membre.id}) }}" class="px-3 text-primary"><i class="fas fa-edit"></i></a>
+                                                        <a href="{{ path('delete_membre', {'id': membre.id}) }}" class="px-3 text-danger"><i class="fas fa-trash-alt"></i></a>
                                                     </td>
                                                 </tr>
 
