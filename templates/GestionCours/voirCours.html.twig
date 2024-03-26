@@ -11,7 +11,7 @@
         <li>Catégorie: {{ cours.getCategorie() }}</li>
         <li>Objectif: {{ cours.getObjectif() }}</li>
         <li>Capacité: {{ cours.getCapacite() }}</li>
-
+<a href="{{ path('participer_cours', {'id': cours.getId()}) }}" class="btn btn-primary">Participer</a>
         <!-- Ajoutez d'autres détails du cours ici -->
     </ul>
 {% endblock %}

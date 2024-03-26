@@ -8,7 +8,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CoursRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\User;
+use Symfony\Component\Security\Core\Security;
+use App\Entity\Participation;
 use App\Entity\Cours;
+
+
+
 
 class CourMembreController extends AbstractController
 {
@@ -42,6 +50,30 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
     return $this->render('GestionCours/voirCours.html.twig', [
         'cours' => $cours,
     ]);
+}
+
+#[Route('/cours/{id}/participer', name: 'participer_cours')]
+public function participerCours(int $id, CoursRepository $coursRepository, Request $request, EntityManagerInterface $entityManager): Response
+{
+    // Get the current user's email from the session
+    $email =  $request->getSession()->get(Security::LAST_USERNAME);
+
+    // Find the user entity based on the email
+    $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+
+    // Find the course based on the ID
+    $cours = $coursRepository->find($id);
+
+    $participation = new Participation();
+    $participation->setNomCour($cours->getNomCour());
+    $participation->setNomParticipant($user->getNom());
+    $participation->setUser($user);
+        // Persist the participation
+    $entityManager->persist($participation);
+    $entityManager->flush();
+    // Redirect to the confirmation page
+    return $this->redirectToRoute('voir_cours', ['id' => $id]);    
+
 }
 
         
