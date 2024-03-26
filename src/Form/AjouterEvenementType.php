@@ -83,7 +83,7 @@ class AjouterEvenementType extends AbstractType
                 'class' => User::class,
                 'label' => 'Coach',
                 'choice_label' => 'email', // Champ à afficher dans le formulaire
-                'choices' => $this->getCoachUsers(),
+                
                 'attr' => ['class' => 'form-control']
             ])
             ->add('etat', CheckboxType::class, [
