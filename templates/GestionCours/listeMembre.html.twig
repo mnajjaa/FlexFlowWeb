@@ -38,7 +38,8 @@
                     <img src="data:image/jpeg;base64,{{ cour.getImage }}" class="card-img-top" alt="{{ cour.getNomCour() }}">
                     <div class="card-body">
                         <h2 class="card-title">{{ cour.getNomCour() }}</h2>
-                        <center><a href="#" class="btn btn-primary btn-participer">Participer</a></center>
+                       <center> <a href="{{ path('voir_cours', {'id': cour.getId()}) }}" class="btn btn-primary btn-participer">Voir plus</a></center>
+
                     </div>
                 </div>
             </div>
