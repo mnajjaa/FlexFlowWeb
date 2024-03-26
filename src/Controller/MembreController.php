@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MembreController extends AbstractController
 {
-    #[Route('/membre', name: 'app_membre')]
+    #[Route('/membre', name: 'membre_dashboard')]
     public function index(): Response
     {
         return $this->render('membre/index.html.twig', [
