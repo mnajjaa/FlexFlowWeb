@@ -102,17 +102,29 @@ if (!$coach) {
     throw $this->createNotFoundException(
         'No coach found for id '.$id
     );
+
 }
-$form = $this->createForm(UserType::class, $coach);
-$form->handleRequest($request);
-if ($form->isSubmitted() && $form->isValid()) {
+if($request->isMethod('POST')){
+    $email= $request->request->get('email');
+    $nom= $request->request->get('name');
+    $telephone= $request->request->get('telephone');
+   
+    $coach->setEmail($email);
+    $coach->setNom($nom);
+    $coach->setTelephone($telephone);
+    $coach->setRoles(["COACH"]);
+    $coach->setPassword($coach->getPassword());
+    
+    $entityManager->persist($coach);
     $entityManager->flush();
-    return $this->redirectToRoute('liste_coaches');
+ return $this->redirectToRoute('liste_coaches');
 }
 return $this->render('admin/editCoach.html.twig', [
-    'form' => $form->createView(),
+   
+    'coach'=>$coach
 ]);
 }
+
 
 #[Route('/deleteCoach/{id}', name: 'delete_coach')]
   public function deleteCoach(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
@@ -128,7 +140,6 @@ return $this->render('admin/editCoach.html.twig', [
       return $this->redirectToRoute('liste_coaches');
   }
 
-  
   #[Route('/editMembre/{id}', name: 'edit_membre')]
 public function editMembre(Request $request, int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
 {
@@ -138,17 +149,28 @@ if (!$membre) {
         'No membre found for id '.$id
     );
 }
-$form = $this->createForm(UserType::class, $membre);
-$form->handleRequest($request);
-if ($form->isSubmitted() && $form->isValid()) {
+if($request->isMethod('POST')){
+    $email= $request->request->get('email');
+    $nom= $request->request->get('name');
+    $telephone= $request->request->get('telephone');
+   
+    $membre->setEmail($email);
+    $membre->setNom($nom);
+    $membre->setTelephone($telephone);
+    $membre->setRoles(["MEMBRE"]);
+    $membre->setPassword($membre->getPassword());
+    
+    $entityManager->persist($membre);
     $entityManager->flush();
-    return $this->redirectToRoute('liste_membres');
+ return $this->redirectToRoute('liste_membres');
 }
 return $this->render('admin/editMembre.html.twig', [
-    'form' => $form->createView(),
+   
+    'membre'=>$membre
 ]);
-
 }
+
+
 
 #[Route('/deleteMembre/{id}', name: 'delete_membre')]
   public function deleteMembre(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response

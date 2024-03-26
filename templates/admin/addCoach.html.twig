@@ -1,17 +1,75 @@
-    
-    <form action="{{ path('coach_add') }}" method="POST">
-        <div>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div>
-            <label for="phone">telephone:</label>
-            <input type="text" id="telephone" name="telephone" required>
-        </div>
-      
-        <button type="submit">Add Coach</button>
-    </form>
+{% extends 'base-back.html.twig' %}
+  {% block body %}
+  <head>
+        
+        <meta charset="utf-8" />
+        <title>Customers | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+        <!-- DataTables -->
+        <link href="{{asset('back-office/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Responsive datatable examples -->
+        <link href="{{asset('back-office/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />  
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+    </head>
+<body>
+    <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body">
+        
+                                        <h4 class="card-title">Ajouter un Coach </h4>
+                                        <p class="card-title-desc">Ajouter un  Coach dans votre Equipe . </p>
+        
+                                        <form action="{{ path('coach_add') }}" method="POST" class="custom-validation">
+        
+                                            <div class="mb-3">
+                                                <label class="form-label">Nom et Prenom</label>
+                                                <div>
+                                                    <input type="text" id="name" name="name" class="form-control" required
+                                                            data-parsley-minlength="6" placeholder="Min 6 chars."/>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Telephone</label>
+                                                <div>
+                                                    <input type="text" id="telephone" name="telephone" class="form-control"  required
+                                                            data-parsley-maxlength="6" placeholder="Max 6 chars."/>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Email</label>
+                                                <div>
+                                                    <input type="email" id="email" name="email" class="form-control" required
+                                                            data-parsley-length="[5,10]"
+                                                            placeholder="Text between 5 - 10 chars length"/>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                                        Submit
+                                                    </button>
+                                                    <button type="reset" class="btn btn-secondary waves-effect">
+                                                        Cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+        
+                                    </div>
+                                </div>
+    </div> <!-- end col -->
+</body>
+    {% endblock %}
