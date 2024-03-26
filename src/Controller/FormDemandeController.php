@@ -14,51 +14,41 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Demande;
 use App\Entity\Offre;
 use App\Form\DemandeFormType;
+use Symfony\Component\Security\Core\Security;
+use Doctrine\ORM\EntityManagerInterface;
+
+
 
 class FormDemandeController extends AbstractController
 {
     #[Route('/form/demande', name: 'app_form_demande')]
-    public function new(Request $request, MailerInterface $mailer): Response
+    public function new(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
+        $email =  $request->getSession()->get(Security::LAST_USERNAME);
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+
         $demande = new Demande();
+        $demande->setUser($user);
+        $demande->setNom($user->getNom());
         $form = $this->createForm(DemandeFormType::class, $demande);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupérer la maladie sélectionnée par l'utilisateur
-            $maladie = $demande->getMaladieChronique();
+            $entityManager->persist($demande);
+            $entityManager->flush();
 
-            // Récupérer l'offre sélectionnée par l'utilisateur
-            $offre = $demande->getOffre();
+            // Send email notification
+            $email = (new Email())
+                ->from('noreply@example.com')
+                ->to($user->getEmail())
+                ->subject('Demande submitted')
+                ->html($this->renderView('emails/demande_notification.html.twig', [
+                    'demande' => $demande,
+                ]));
 
-            // Vérifier si la maladie correspond à la spécialité de l'offre
-            if ($this->isMaladieMatchingSpecialite($maladie, $offre)) {
-                // Afficher un message d'erreur à l'utilisateur
-                $this->addFlash('error', 'Vous ne pouvez pas vous entraîner dans cette spécialité à cause de votre maladie.');
-                return $this->redirectToRoute('app_form_demande'); // Rediriger vers le formulaire pour empêcher l'enregistrement de la demande
-            } 
-            else {
-                // Assurez-vous que l'état est correctement défini avant la persistance
-                $demande->setEtat('En attente');
+            $mailer->send($email);
 
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($demande);
-                $entityManager->flush();
-
-                // Envoyer un e-mail à l'utilisateur s'il est défini sur la demande
-                $user = $demande->getUser();
-                if ($user !== null) {
-                    $email = (new Email())
-                        ->from('votre@email.com')
-                        ->to($user->getEmail())
-                        ->subject('Confirmation de votre demande de coaching privé')
-                        ->html('<p>Votre demande a été enregistrée avec succès.</p>');
-
-                    $mailer->send($email);
-                }
-
-                return $this->redirectToRoute('demande_success');
-            }
+            return $this->redirectToRoute('demande_success');
         }
 
         return $this->render('form_demande/demande.html.twig', [

@@ -58,7 +58,7 @@
     {% endfor %}
         
         
-        {{ form_start(form) }}
+        {# {{ form_start(form) }}
         {{ form_row(form.nom) }}
         {{ form_row(form.age) }}
         {{ form_row(form.but) }}
@@ -74,7 +74,26 @@
         <div id="errorMessageContainer" style="color: red;"></div>
 
         <button id="submit-btn" type="submit" class="btn btn-primary">Ajouter demande de coaching</button>
+        {{ form_end(form) }} #}
+
+       {{ form_start(form) }}
+        {{ form_row(form.age) }}
+        {{ form_row(form.but) }}
+        {{ form_row(form.niveauPhysique) }}
+        {{ form_row(form.maladieChronique) }}
+        {{ form_row(form.nombreHeure) }}
+        {{ form_row(form.etat) }}
+        {{ form_row(form.horaire) }}
+        {{ form_row(form.lesjours) }}
+        {{ form_row(form.user) }}
+        {{ form_row(form.offre) }}
+        
+  <div id="errorMessageContainer" style="color: red;"></div>
+
+        <button id="submit-btn" type="submit" class="btn btn-primary">Ajouter demande de coaching</button>
         {{ form_end(form) }}
+
+        {# ////////////////////////////////// #}
     </div>
 
     <script>
