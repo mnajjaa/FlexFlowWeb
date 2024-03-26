@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\File; // Ajoutez cette ligne pour importer la classe File
 
 class EvenementController extends AbstractController
 {
@@ -41,18 +42,9 @@ class EvenementController extends AbstractController
             // Vérifier si une image a été téléchargée
             if ($imageFile) {
                 // Générer un nom de fichier unique
-                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                $newFilename = file_get_contents($imageFile->getPathname());
     
-                // Déplacer le fichier téléchargé vers le répertoire souhaité
-                try {
-                    $imageFile->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // Gérer l'erreur si le déplacement du fichier échoue
-                }
-    
+              
                 // Mettre à jour le champ image de l'événement avec le nom du fichier
                 $evenement->setImage($newFilename);
             }
@@ -115,25 +107,30 @@ class EvenementController extends AbstractController
     
         return $this->redirectToRoute('evenements_list');
     }
-    #[Route('/admin/modifier/{id}', name: 'Evenement_modifier')]
+   #[Route('/admin/modifier/{id}', name: 'Evenement_modifier')]
 public function modifier(Request $request, int $id, EvenementRepository $EvenementRepository): Response
 {
     $evenement = $EvenementRepository->find($id);
 
     if (!$evenement) {
-        throw $this->createNotFoundException('l\'evenement avec l\'ID '.$id.' n\'existe pas.');
+        throw $this->createNotFoundException('L\'événement avec l\'ID '.$id.' n\'existe pas.');
     }
 
+    // Créer le formulaire de modification
     $form = $this->createForm(AjouterEvenementType::class, $evenement);
+
+    // Gérer la soumission du formulaire
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->flush();
+        // Si le formulaire est soumis et valide, enregistrer les modifications dans la base de données
+        $this->getDoctrine()->getManager()->flush();
 
+        // Rediriger vers la liste des événements
         return $this->redirectToRoute('evenements_list');
     }
 
+    // Afficher le formulaire de modification
     return $this->render('Evenement/modifier.html.twig', [
         'form' => $form->createView(),
     ]);

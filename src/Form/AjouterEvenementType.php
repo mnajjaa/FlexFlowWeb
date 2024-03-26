@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Evenement;
 use App\Entity\User;
 use PhpParser\Node\Stmt\Label;
+use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -17,14 +18,28 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class AjouterEvenementType extends AbstractType
 {
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('nomEvenement',TextType::class,[
-                'label'=>"Nom du l'evenement"
+                'label'=>"Nom du l'evenement",
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}])[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}]+$/',
+                        'message' => 'Le nom du produit doit contenir au moins une lettre.',
+                    ]),
+                ],
             ])
             ->add('categorie',ChoiceType::class,[
                 'label'=>" Catégorie",
@@ -66,7 +81,10 @@ class AjouterEvenementType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
+                'label' => 'Coach',
                 'choice_label' => 'email', // Champ à afficher dans le formulaire
+                'choices' => $this->getCoachUsers(),
+                'attr' => ['class' => 'form-control']
             ])
             ->add('etat', CheckboxType::class, [
                 'label' => 'Activer l\'état',
