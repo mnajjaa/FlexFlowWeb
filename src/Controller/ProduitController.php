@@ -384,19 +384,59 @@ $pdfContent = $pdfGeneratorService->generatePDF($productsForPDF);
  $user = new User();
         $email1=$request->getSession()->get(Security::LAST_USERNAME);
         $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$email1]);
+        $nomUtilisateur = $user->getNom();
+
+$emailContent = "
+<!DOCTYPE html>
+<html lang='fr'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>Confirmation d'achat</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  h1 {
+    color: #333;
+    text-align: center;
+  }
+  p {
+    margin-bottom: 15px;
+  }
+  .signature {
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class='container'>
+  <h1>Confirmation d'achat</h1>
+  <p>Bonjour $nomUtilisateur,</p>
+  <p>Votre commande sera prête à être retirée. Vous pouvez venir la récupérer à tout moment.</p>
+  <p>Votre commande est valable pendant une semaine à partir d'aujourd'hui $dateActuelle.</p>
+  <p class='signature'>Cordialement,<br>Votre application</p>
+</div>
+</body>
+</html>";
+
+
 // Envoyer un e-mail à l'utilisateur avec le PDF en pièce jointe
 $email = (new Email())
     ->from('votre@email.com')
     ->to($email1)
     ->subject("Confirmation d'achat")
-    ->html("<p>Bonjour,</p>
-
-    <p>Votre commande sera prête à être retirée. Vous pouvez venir la récupérer à tout moment.</p>
-
-   <p> Votre commande est valable pendant une semaine à partir d'aujourd'hui  $dateActuelle.</p>
-
-    <p>Cordialement,</p>
-    <p>Votre application</p>")
+    ->html($emailContent)
     // Ajouter le PDF en pièce jointe
     ->attach($pdfContent, $fileName, 'application/pdf');
 
