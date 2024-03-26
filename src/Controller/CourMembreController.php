@@ -72,7 +72,7 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
     $entityManager->persist($participation);
     $entityManager->flush();
     // Redirect to the confirmation page
-    return $this->redirectToRoute('voir_cours', ['id' => $id]);    
+    return $this->redirectToRoute('liste_cours');    
 
 }
 
