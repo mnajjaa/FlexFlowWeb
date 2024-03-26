@@ -1,0 +1,12 @@
+# config/packages/assets.yaml
+framework:
+    assets:
+        base_urls: ['http://example.com']
+        base_path: '/build'
+        version: '1.0'
+        version_strategy: 'auto'
+        packages:
+            images:
+                base_path: '/images'
+            css:
+                base_path: '/css'

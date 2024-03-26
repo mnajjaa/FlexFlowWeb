@@ -53,23 +53,23 @@
 	<header class="site-header mo-left header header-transparent style-1">
 		
 		<!-- Top Header -->
-		<div class="top-bar">
-			<div class="container">
-				<div class="dz-topbar-inner d-flex justify-content-between align-items-center">
-					<div class="dz-topbar-left">
-						<ul>
-							<li><i class="fa-regular fa-envelope"></i> info@example.com</li>
-						</ul>
-					</div>
-					<div class="dz-topbar-right">
-						<ul>
-							<li><i class="fa-regular fa-clock"></i> Time 06:00 AM To 08:00 PM</li>
-							<li><i class="fa fa-phone"></i> +91-1234567890</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
+<div class="top-bar">
+<div class="container">
+    <div class="dz-topbar-inner d-flex justify-content-between align-items-center">
+        <div class="dz-topbar-left">
+            <ul>
+                <li><i class="fa-regular fa-envelope"></i> info@example.com</li>
+                <li><i class="fa-regular fa-clock"></i> Time 06:00 AM To 08:00 PM</li>
+            </ul>
+        </div>
+        <div class="dz-topbar-right">
+            <ul>
+                <li><i class="fa fa-phone"></i> +91-1234567890</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
 		
 		<!-- Main Header -->
 		<div class="sticky-header main-bar-wraper navbar-expand-lg">
@@ -301,12 +301,15 @@
 					</div>
 				</div>	
 				<div class="banner-media">
-					<img src="assets/images/banner/pic3.png" alt="/">
+					<img src="public\images\pic3.png" alt="/">
 				</div>
 			</div>	
 		</div>
 		<!-- Banner End -->
-        {% set imagePath = asset('images/image.png') %}
+        {% set imagePath = asset('images/musculation.png') %}
+        {% set imagePathyoga = asset('images/yoga.png') %}
+        {% set imagePathboxe = asset('images/boxe.png') %}
+        {% set imagePathcardio = asset('images/cardio.png') %}
         {% set muscleBuildingPath = path('muscle_building') %}
         {% set appFormPath = path('app_form_demande') %}
         {% set boxingPath = path('boxing') %}
@@ -316,25 +319,51 @@
         <style>
             .container {
                 display: flex;
-                justify-content: space-around; /* Adjusts spacing around items */
+                justify-content: space-around;
                 flex-wrap: wrap;
             }
+        
             .card {
-                flex: 0 1 calc(25% - 20px); /* Adjusts width to be a bit smaller, including margin */
-                margin: 10px; /* Provides space between cards */
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow for depth */
-                transition: transform 0.2s; /* Optional: Adds a simple hover effect */
+                flex: 0 1 calc(25% - 20px);
+                margin: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s;
             }
+        
             .card:hover {
-                transform: scale(1.05); /* Optional: Scales up card on hover */
+                transform: scale(1.05);
             }
+        
             .card-header-img {
                 max-width: 100%;
-                height: auto; /* Ensures the image scales correctly */
+                height: auto;
             }
+        
             .card-content {
-                padding: 15px; /* Adjusts padding inside the card */
+                padding: 15px;
             }
+        
+            .request-coaching-btn {
+                color: black;
+                transition: background-color 1s ease;
+            }
+        
+            .first-color { 
+                background: #ff6f3c; 
+            }
+        
+            .second-color { 
+                background: #ff9a3c;
+            }
+        
+            .third-color { 
+                background: #ffc93c; 
+                
+            }
+            
+    
+
+            
         </style>
     
         </style>
@@ -343,47 +372,49 @@
             <div class="card">
                 <img src="{{ imagePath }}" alt="Muscle Building" class="card-header-img">
                 <div class="card-header">
-                    Muscle Building
+                    Musculation
                 </div>
                 <div class="card-content">
-                    <p>Enhance your strength with tailored muscle building programs.</p>
-                    <a href="{{ muscleBuildingPath }}" class="button">Read More</a>
+                    <p>"Force intérieure sculptée par l'effort constant."</p>
+                    <a href="{{ muscleBuildingPath }}" class="button">Voir nos offres</a>
                 </div>
                 <button class="request-coaching-btn" onclick="window.location.href='{{ appFormPath }}'">Request Private Coaching</button>
             </div>
         
             <div class="card">
-                <img src="{{ imagePath }}" alt="Boxing" class="card-header-img">
+                <img src="{{ imagePathboxe }}" alt="Boxing" class="card-header-img">
                 <div class="card-header">
-                    Boxing
+                    Boxe
                 </div>
                 <div class="card-content">
-                    <p>Learn boxing techniques and improve your overall fitness and coordination.</p>
-                    <a href="{{ boxingPath }}" class="button">Read More</a>
+                   
+            <p>"Apprenez les techniques de boxe et améliorez votre condition".</p>
+                    <a href="{{ boxingPath }}" class="button">Voir nos offres</a>
                 </div>
                 <button class="request-coaching-btn" onclick="window.location.href='{{ appFormPath }}'">Request Private Coaching</button>
             </div>
         
             <div class="card">
-                <img src="{{ imagePath }}" alt="Yoga" class="card-header-img">
+                <img src="{{ imagePathyoga }}" alt="Yoga" class="card-header-img">
                 <div class="card-header">
                     Yoga
                 </div>
                 <div class="card-content">
-                    <p>Find inner peace and flexibility with our yoga classes.</p>
-                    <a href="{{ yogaPath }}" class="button">Read More</a>
+                    <p>Trouvez la paix intérieure et la flexibilité grâce à nos cours de yoga.</p>
+                    <a href="{{ yogaPath }}" class="button"> Voir nos offres</a>
                 </div>
                 <button class="request-coaching-btn" onclick="window.location.href='{{ appFormPath }}'">Request Private Coaching</button>
             </div>
             
             <div class="card">
-                <img src="{{ imagePath }}" alt="cardio" class="card-header-img">
+                <img src="{{ imagePathcardio }}" alt="cardio" class="card-header-img">
                 <div class="card-header">
                     cardio
                 </div>
                 <div class="card-content">
-                    <p>Find inner peace and flexibility with our cardio classes.</p>
-                    <a href="{{ cardioPath }}" class="button">Read More</a>
+                    <p>
+                    "Trouvez la paix intérieure et développez votre flexibilité grâce à nos cours de cardio.".</p>
+                    <a href="{{ cardioPath }}" class="button"> Voir nos offres</a>
                 </div>
                 <button class="request-coaching-btn" onclick="window.location.href='{{ appFormPath }}'">Request Private Coaching</button>
             </div>
@@ -391,8 +422,19 @@
         </div>
         </div>
         
+        <script>
+            const buttons = document.querySelectorAll('.request-coaching-btn');
+            const colors = ['first-color', 'second-color', 'third-color'];
+            let currentIndex = 0;
         
-    
+            setInterval(() => {
+                buttons.forEach(button => {
+                    button.classList.remove(colors[currentIndex]);
+                    currentIndex = (currentIndex + 1) % colors.length;
+                    button.classList.add(colors[currentIndex]);
+                });
+            }, 1000);
+        </script>
 	
 		<!-- Our Team -->
 		
@@ -428,7 +470,7 @@
 	</div>
 	
 	<!-- Footer -->
-    <footer class="site-footer style-1 bg-parallax"  style="background-image: url(assets/images/background/footer-bg-2.jpg);" id="footer">
+    <footer class="site-footer style-1 bg-parallax"  style="background-image: url(images/footer-bg-2.jpg);" id="footer">
 		<div class="footer-top">
             <div class="container">
 				<div class="row">
