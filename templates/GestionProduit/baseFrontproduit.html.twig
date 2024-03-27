@@ -43,6 +43,18 @@
 			<link href="{{asset('front-office/vendor/magnific-popup/magnific-popup.min.css')}}" rel="stylesheet">
 			<link href="{{asset('front-office/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">
 			<link href="{{asset('front-office/vendor/rangeslider/rangeslider.css')}}" rel="stylesheet">
+
+			<link href="{{asset('front-office/vendor/switcher/switcher.css')}}" rel="stylesheet">
+			<link href="{{asset('front-office/vendor/animate/animate.css')}}" rel="stylesheet">
+			<link href="{{asset('front-office/vendor/nouislider/nouislider.min.css')}}" rel="stylesheet">
+			<link href="{{asset('front-office/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+			<link href="{{asset('front-office/vendor/magnific-popup/magnific-popup.min.css')}}" rel="stylesheet">
+			<link href="{{asset('front-office/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">
+			<link href="{{asset('front-office/vendor/lightgallery/dist/css/lightgallery.css')}}" rel="stylesheet">
+			<link href="{{asset('front-office/vendor/lightgallery/dist/css/lg-thumbnail.css')}}" rel="stylesheet">
+			<link href="{{asset('front-office/vendor/lightgallery/dist/css/lg-zoom.css')}}" rel="stylesheet">
+
+
 			<link
 			href="{{asset('front-office/vendor/switcher/switcher.css')}}" rel="stylesheet">
 
@@ -397,20 +409,21 @@
 						</div>
 					</div>
 					<div class="banner-media">
-						<img src="{{asset('assets/images/banner/pic1.png')}}" alt="/">
+						<img src="{{asset('front-office/images/banner/pic1.png')}}" alt="/">
 					</div>
 				</div>
 			</div>
 			<!-- Banner End -->
 
 			<!-- Our Shop -->
-			<section class="content-inner">
-				<div class="container">
+
+			<!-- Our Shop-->
+				<section class="content-inner"> <div class="container">
 					<div class="row">
 						<div class="col-xl-8 col-lg-12 m-b30">
 							<div class="filter-wrapper row">
 								<div class="col-lg-8 col-md-8 col-sm-6 m-b20 wow fadeInUp" data-wow-delay="0.2s">
-									<span class="para">You’ve Viewed 9 Of 27 Products</span>
+									<span class="para"></span>
 								</div>
 								<div class="form-group col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.4s">
 									<select id="productFilter" class="default-select">
@@ -420,16 +433,15 @@
 										<option value="Vitamines">Vitamines</option>
 										<option value="Proteine">Proteine</option>
 										<option value="Vetements">Vetements</option>
+										<option value="Fruits">Fruits</option>
+
 									</select>
 								</div>
 							</div>
 
 							<div class="row">
-
-
-								{% for produit in produits %}
+								{% for produit in pagination %}
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 product-card" data-type="{{ produit.type }}">
-
 										<div class="shop-card style-1 hover-aware wow fadeInUp" data-wow-delay="0.6s">
 											<div class="dz-media">
 												<img src="data:image/jpeg;base64,{{ produit.image }}" class="card-img-top" alt="{{ produit.nom }}">
@@ -443,10 +455,10 @@
 												<div class="effect"></div>
 											</div>
 											<div class="dz-content">
-												<h5 class="product-title">Nom:
-													<span style="color: black;">{{ produit.nom }}</span>
-												</h5>
-												<p class="product-price">Prix:
+												<h4 class="title">
+													{{ produit.nom }}
+												</h4>
+												<p class="product-price">
 													<span style="color: navy;">{{ produit.prix }}
 														dnt</span>
 												</p>
@@ -463,36 +475,49 @@
 										</div>
 									</div>
 								{% endfor %}
-
-
 							</div>
+							{% set currentPage = pagination.getCurrentPageNumber() %}
+							{% set pageCount = pagination.getPageCount() %}
+
 							<div class="row page wow fadeInUp" data-wow-delay="2.4s">
 								<div class="col-sm-6 m-b15">
-									<p class="page-text">Showing 1–5 Of 50 Results</p>
+									<p class="para">Showing
+										{{ pagination.getPaginationData().firstItemNumber }}–{{ pagination.getPaginationData().lastItemNumber }}
+										Of
+										{{ pagination.getTotalItemCount() }}
+										Results</p>
 								</div>
 								<div class="col-sm-6 m-b15">
 									<nav aria-label="Shop Pagination">
 										<ul class="pagination style-1">
-											<li class="page-item">
-												<a class="page-link prev" href="javascript:void(0);">Prev</a>
-											</li>
-											<li class="page-item">
-												<a class="page-link active" href="javascript:void(0);">1</a>
-											</li>
-											<li class="page-item">
-												<a class="page-link" href="javascript:void(0);">2</a>
-											</li>
-											<li class="page-item">
-												<a class="page-link" href="javascript:void(0);">3</a>
-											</li>
-											<li class="page-item">
-												<a class="page-link next" href="javascript:void(0);">Next</a>
-											</li>
+											{% if currentPage != 1 %}
+												<li class="page-item">
+													<a class="page-link prev" href="{{ path('produits', {'page': currentPage - 1 }) }}">Prev</a>
+												</li>
+											{% endif %}
+											{% for page in 1..pageCount %}
+												{% if page == currentPage %}
+													<li class="page-item active">
+														<span class="page-link">{{ page }}</span>
+													</li>
+												{% else %}
+													<li class="page-item">
+														<a class="page-link" href="{{ path('produits', {'page': page }) }}">{{ page }}</a>
+													</li>
+												{% endif %}
+											{% endfor %}
+											{% if currentPage != pageCount %}
+												<li class="page-item">
+													<a class="page-link next" href="{{ path('produits', {'page': currentPage + 1 }) }}">Next</a>
+												</li>
+											{% endif %}
 										</ul>
 									</nav>
 								</div>
 							</div>
 						</div>
+
+
 						<div class="col-xl-4 col-lg-12">
 							<div class="shop-filter side-bar sticky-top">
 								<aside>
@@ -510,6 +535,34 @@
 											</div>
 										</form>
 									</div>
+
+
+								
+			<script>						
+function filterProducts() {
+    var input = document.getElementById("searchInput");
+    var filter = input.value.toUpperCase();
+    var productCards = document.querySelectorAll('.product-card');
+
+    productCards.forEach(function(card) {
+        var productName = card.querySelector('.title');
+        if (productName) {
+            var name = productName.innerText.toUpperCase();
+            if (name.indexOf(filter) > -1) {
+                card.style.display = "";
+            } else {
+                card.style.display = "none";
+            }
+        }
+    });
+}
+
+
+
+// Ajouter un écouteur d'événements pour détecter les changements dans le champ de recherche
+document.getElementById("searchInput").addEventListener("keyup", filterProducts);
+
+</script>
 									<div class="widget"></div>
 									<div class="widget widget_categories">
 										<div class="widget-title wow fadeInUp" data-wow-delay="0.8s">
@@ -542,6 +595,10 @@
 												<a href="javascript:void(0);">Vetements</a>
 												({{ vetementsCount }})
 											</li>
+											<li class="cat-item cat-item-26">
+												<a href="javascript:void(0);">Fruits</a>
+												({{ FruitsCount }})
+											</li>
 										</ul>
 									</div>
 
@@ -571,37 +628,7 @@
 								</aside>
 
 
-
-
-
-
-
-
-								<script>
-									// Fonction pour filtrer les produits en fonction du texte de recherche
-function filterProducts() {
-var input,
-filter,
-productCards,
-productName,
-i;
-input = document.getElementById("searchInput");
-filter = input.value.toUpperCase();
-productCards = document.getElementsByClassName("shop-card");
-
-// Parcourir toutes les cartes de produits et masquer celles qui ne correspondent pas à la recherche
-for (i = 0; i < productCards.length; i++) {
-productName = productCards[i].getElementsByClassName("product-title")[0];
-if (productName.innerText.toUpperCase().indexOf(filter) > -1) {
-productCards[i].style.display = "";
-} else {
-productCards[i].style.display = "none";
-}
-}
-}
-
-// Ajouter un écouteur d'événements pour détecter les changements dans le champ de recherche
-document.getElementById("searchInput").addEventListener("keyup", filterProducts);
+<script>
 
 
 // Fonction pour filtrer les produits en fonction du type sélectionné
@@ -624,22 +651,11 @@ document.getElementById("productFilter").addEventListener("change", filterProduc
 								</script>
 
 
-
-
-
-
-
-
-
-
-								
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
-			<!-- Our Shop-->
-
 			<!-- Call To Action -->
 			<section class="call-action style-2 bg-img-fix bg-primary">
 				<div class="container">

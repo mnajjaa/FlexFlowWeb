@@ -54,6 +54,8 @@ class ProduitType extends AbstractType
                 'Vitamines' => 'Vitamines',
                 'Proteine' => 'Proteine',
                 'vetements' => 'vetements',
+                'Fruits' => 'Fruits',
+
             ],
         ])
         ->add('quantite', NumberType::class, [

@@ -23,7 +23,7 @@ use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Security;
@@ -41,20 +41,30 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class ProduitController extends AbstractController
 {
     #[Route('/vitrine', name: 'produits')]
-    public function index(): Response
+    public function index(Request $request, PaginatorInterface $paginator, ProduitRepository $produitRepository): Response
     {
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
+       
+
+   
+
         foreach ($produits as $produit) {
             // Convertir l'image BLOB en données binaires base64
             $produit->image = base64_encode(stream_get_contents($produit->getImage()));
         }
-
+      // Pagination
+      $pagination = $paginator->paginate(
+        $produits,
+        $request->query->getInt('page', 1),
+        6 // Limite par page
+    );
         // Comptez le nombre de produits de type "Accessoires"
         $accessoiresCount = 0;
         $jeuxCount = 0;
         $vitaminesCount = 0;
         $proteineCount = 0;
         $vetementsCount = 0;
+        $FruitsCount = 0;
         foreach ($produits as $produit) {
             if ($produit->getType() === 'Accessoires') {
                 $accessoiresCount++;
@@ -71,6 +81,9 @@ class ProduitController extends AbstractController
             if ($produit->getType() === 'vetements') {
                 $vetementsCount++;
             }
+            if ($produit->getType() === 'Fruits') {
+                $FruitsCount++;
+            }
         }
 
         usort($produits, function ($a, $b) {
@@ -81,6 +94,8 @@ class ProduitController extends AbstractController
         $topProduits = array_slice($produits, 0, 3);
 
         return $this->render('GestionProduit/produit/index.html.twig', [
+            'pagination' => $pagination,
+
             'produits' => $produits,
             'accessoiresCount' => $accessoiresCount,
             'jeuxCount' => $jeuxCount,
@@ -88,6 +103,7 @@ class ProduitController extends AbstractController
             'proteineCount' => $proteineCount,
             'vetementsCount' => $vetementsCount,
         'topProduits' => $topProduits,
+        'FruitsCount' => $FruitsCount,
 
         ]);
     }
