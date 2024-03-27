@@ -6,8 +6,11 @@ use App\Repository\EvenementRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
+#[UniqueEntity('nomEvenement', message: 'Ce nom d\'événement est déjà utilisé. Veuillez en choisir un autre.')]
+
 class Evenement
 {
     #[ORM\Id]
@@ -17,6 +20,7 @@ class Evenement
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+
     private ?string $nomEvenement = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -49,7 +53,6 @@ class Evenement
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
-
     private ?User $user = null;
 
     public function getId(): ?int

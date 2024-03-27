@@ -149,6 +149,7 @@ class AjouterEvenementType extends AbstractType
                 ],
             ]);
     }
+    
    private function getCoachUsers()
     {
         // Récupérez les utilisateurs ayant le rôle "COACH"
