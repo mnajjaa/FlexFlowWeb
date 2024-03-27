@@ -307,35 +307,20 @@
 								<div class="swiper-wrapper">
 									<div class="swiper-slide">
 										<div class="dz-media DZoomImage wow fadeInUp" data-wow-delay="0.4s">
-											<a class="mfp-link lg-item" href="assets/images/product/product-detail/pic1.jpg" data-src="assets/images/product/product-detail/pic1.jpg">
+											<a class="mfp-link lg-item" href="data:image/jpeg;base64,{{ produit.image }}" data-src="data:image/jpeg;base64,{{ produit.image }}">
 												<i class="feather icon-maximize dz-maximize top-right"></i>
 											</a>
 											<img src="data:image/jpeg;base64,{{ produit.image }}" alt="{{ produit.nom }}">
 										</div>
 									</div>
-									<div class="swiper-slide">
-										<div class="dz-media DZoomImage wow fadeInUp" data-wow-delay="0.6s">
-											<a class="mfp-link lg-item" href="assets/images/product/product-detail/pic2.jpg" data-src="assets/images/product/product-detail/pic2.jpg">
-												<i class="feather icon-maximize dz-maximize top-right"></i>
-											</a>
-											<img src="data:image/jpeg;base64,{{ produit.image }}" alt="{{ produit.nom }}">
-										</div>
-									</div>
-									<div class="swiper-slide">
-										<div class="dz-media DZoomImage wow fadeInUp" data-wow-delay="0.8s">
-											<a class="mfp-link lg-item" href="assets/images/product/product-detail/pic3.jpg" data-src="assets/images/product/product-detail/pic3.jpg">
-												<i class="feather icon-maximize dz-maximize top-right"></i>
-											</a>
-											<img src="data:image/jpeg;base64,{{ produit.image }}" alt="{{ produit.nom }}">
-										</div>
-									</div>
+									
+									
 								</div>
 							</div>
 							
 											
 						</div>	
 					</div>
-                      {% for item in panier %}
 					<div class="col-lg-6 col-md-6">
 						<div class="dz-product-detail style-1">
 							<div class="dz-content">
@@ -435,7 +420,6 @@
 								</div>
 							</div>
 						</div>
-						 {% endfor %}
                     
                     
                     
