@@ -45,7 +45,7 @@ class CourMembreController extends AbstractController
             return $cour->getCapacite() > 0;
         });
     
-        return $this->render('GestionCours/listeMembre.html.twig', [
+        return $this->render('GestionCours/imageffect.html.twig', [
             'cours' => $cours,
         ]);
     }
