@@ -62,7 +62,7 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
     }
 
     // Afficher les détails du cours dans un nouveau template
-    return $this->render('GestionCours/voirCours.html.twig', [
+    return $this->render('GestionCours/voirPlus.html.twig', [
         'cours' => $cours,
     ]);
 }
