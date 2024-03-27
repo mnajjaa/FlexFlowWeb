@@ -390,7 +390,21 @@ class ProduitController extends AbstractController
     
         // Vérifier que $productsForPDF contient les données correctes
 //var_dump($productsForPDF);
+//Api sms 
+/*$number="29678226";
+$name="FlexFlow";
 
+$text = "Bonjour,
+
+Votre commande sera prête à être retirée. Vous pouvez venir la récupérer à tout moment.
+
+Votre commande est valable pendant une semaine à partir d'aujourd'hui " . date('d/m/Y');
+
+
+$number_test=$_ENV['twilio_to_number'];// Numéro vérifier par twilio. Un seul numéro autorisé pour la version de test.
+
+//Appel du service
+$smsGenerator->sendSms($number_test ,$name,$text);*/
 // Générer le contenu du PDF avec les détails des produits achetés
 $pdfContent = $pdfGeneratorService->generatePDF($productsForPDF);
 
@@ -449,7 +463,7 @@ $emailContent = "
 
 // Envoyer un e-mail à l'utilisateur avec le PDF en pièce jointe
 $email = (new Email())
-    ->from('votre@email.com')
+     ->from('FlexFlow <your_email@example.com>')
     ->to($email1)
     ->subject("Confirmation d'achat")
     ->html($emailContent)

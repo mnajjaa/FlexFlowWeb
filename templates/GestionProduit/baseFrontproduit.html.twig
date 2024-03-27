@@ -62,6 +62,10 @@
 			<link rel="stylesheet" href="{{asset('front-office/css/style.css')}}">
 			<link class="skin" rel="stylesheet" href="{{asset('front-office/css/skin/skin-1.css')}}">
 		{% endblock %}
+		<!-- Inclure la bibliothèque noUiSlider -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
+
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com/">
 		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -536,8 +540,33 @@
 										</form>
 									</div>
 
+	<div class="widget-title wow fadeInUp" data-wow-delay="0.4s">
+										<h4 class="title">Price</h4>
+									</div>
+			 <!-- Double curseur de plage de prix -->
+   <div id="priceSlider"></div>
+<div id="priceDisplay"></div> <!-- Ajoutez cet élément où vous voulez afficher le prix -->
 
-								
+<style>
+    /* Personnalisation du slider */
+    #priceSlider {
+        width: 350px;
+        height: 10px; /* Hauteur réduite */
+        background-color: black;
+    }
+
+    /* Personnalisation de la barre de plage */
+    #priceSlider .noUi-connect {
+        background: black;
+    }
+
+    /* Personnalisation des curseurs */
+    #priceSlider .noUi-handle {
+        background-color: black;
+        width: 20px; /* Largeur du curseur */
+        height: 20px; /* Hauteur du curseur */
+    }
+</style>
 			<script>						
 function filterProducts() {
     var input = document.getElementById("searchInput");
@@ -557,8 +586,36 @@ function filterProducts() {
     });
 }
 
+    var priceSlider = document.getElementById('priceSlider');
+    var priceDisplay = document.getElementById('priceDisplay');
 
+    noUiSlider.create(priceSlider, {
+        start: [0, 1000],
+        connect: true,
+        range: {
+            'min': 0,
+            'max': 1000
+        }
+    });
 
+    priceSlider.noUiSlider.on('update', function(values, handle) {
+        var minPrice = parseInt(values[0]);
+        var maxPrice = parseInt(values[1]);
+
+        var priceText = 'Min Prix: $' + minPrice + ' Max Prix: $' + maxPrice;
+
+        priceDisplay.innerText = priceText;
+
+        var productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(function(card) {
+            var productPrice = parseInt(card.querySelector('.product-price').innerText);
+            if (productPrice >= minPrice && productPrice <= maxPrice) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
 // Ajouter un écouteur d'événements pour détecter les changements dans le champ de recherche
 document.getElementById("searchInput").addEventListener("keyup", filterProducts);
 
