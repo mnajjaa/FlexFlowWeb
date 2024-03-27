@@ -279,7 +279,7 @@
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="rounded-circle header-profile-user" src="{{asset('back-office/images/users/avatar-4.jpg')}}"
                                     alt="Header Avatar">
-                                <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Marcus</span>
+                                <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">{{app.user.nom}}</span>
                                 <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
@@ -334,8 +334,9 @@
                     <!--- Sidemenu -->
                     <div id="sidebar-menu">
                         <!-- Left Menu Start -->
-                        {#{% if is_granted("COACH") %}#}
+                        
                         <ul class="metismenu list-unstyled" id="side-menu">
+                        {% if app.user.getRoles()[0]=="COACH" %}
                             <li class="menu-title">Users</li>
 
                             <li>
@@ -373,7 +374,9 @@
                                     </li>
                                 </ul>
                             </li>
-
+                          {% else %}
+                        <p>Vous n'avez pas les droits pour accéder à cette page</p>
+                        {% endif  %} 
                             <li class="menu-title">Apps</li>
 
                             <li>
@@ -597,9 +600,7 @@
                             </li>
 
                         </ul>
-                       {# {% else %}
-                        <p>Vous n'avez pas les droits pour accéder à cette page</p>
-                        {% endif  %} #} 
+                       
                        
 
                         

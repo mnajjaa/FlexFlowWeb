@@ -39,7 +39,8 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
           - { path: ^/verify/email, roles: IS_AUTHENTICATEDFULLY }
-          - { path: ^/listeMembres, roles: ADMIN }
+          # atheya m habech tet3ada 9ali access denied !!!!!!!!!!!!!!!!!
+          #- { path: ^/listeMembres, roles: ADMIN }
           
 
 

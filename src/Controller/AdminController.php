@@ -10,9 +10,12 @@ use Symfony\Component\HttpClient\Response\ResponseStream;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
+use App\Form\RegistrationFormType;
+use App\Form\UserType;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class AdminController extends AbstractController
 {
@@ -88,8 +91,103 @@ class AdminController extends AbstractController
             
         
         return $this->redirectToRoute('liste_coaches');
-        
-        
     }
+
+
+#[Route('/editCoach/{id}', name: 'edit_coach')]
+public function editCoach(Request $request, int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+{
+    $coach = $userRepository->find($id);
+if (!$coach) {
+    throw $this->createNotFoundException(
+        'No coach found for id '.$id
+    );
+
+}
+if($request->isMethod('POST')){
+    $email= $request->request->get('email');
+    $nom= $request->request->get('name');
+    $telephone= $request->request->get('telephone');
+   
+    $coach->setEmail($email);
+    $coach->setNom($nom);
+    $coach->setTelephone($telephone);
+    $coach->setRoles(["COACH"]);
+    $coach->setPassword($coach->getPassword());
+    
+    $entityManager->persist($coach);
+    $entityManager->flush();
+ return $this->redirectToRoute('liste_coaches');
+}
+return $this->render('admin/editCoach.html.twig', [
+   
+    'coach'=>$coach
+]);
+}
+
+
+#[Route('/deleteCoach/{id}', name: 'delete_coach')]
+  public function deleteCoach(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+  {
+      $coach = $userRepository->find($id);
+      if (!$coach) {
+          throw $this->createNotFoundException(
+              'No coach found for id '.$id
+          );
+      }
+      $entityManager->remove($coach);
+      $entityManager->flush();
+      return $this->redirectToRoute('liste_coaches');
+  }
+
+  #[Route('/editMembre/{id}', name: 'edit_membre')]
+public function editMembre(Request $request, int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+{
+    $membre = $userRepository->find($id);
+if (!$membre) { 
+    throw $this->createNotFoundException(
+        'No membre found for id '.$id
+    );
+}
+if($request->isMethod('POST')){
+    $email= $request->request->get('email');
+    $nom= $request->request->get('name');
+    $telephone= $request->request->get('telephone');
+   
+    $membre->setEmail($email);
+    $membre->setNom($nom);
+    $membre->setTelephone($telephone);
+    $membre->setRoles(["MEMBRE"]);
+    $membre->setPassword($membre->getPassword());
+    
+    $entityManager->persist($membre);
+    $entityManager->flush();
+ return $this->redirectToRoute('liste_membres');
+}
+return $this->render('admin/editMembre.html.twig', [
+   
+    'membre'=>$membre
+]);
+}
+
+
+
+#[Route('/deleteMembre/{id}', name: 'delete_membre')]
+  public function deleteMembre(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+  {
+      $membre = $userRepository->find($id);
+      if (!$membre) {
+          throw $this->createNotFoundException(
+              'No membre found for id '.$id
+          );
+      }
+      $entityManager->remove($membre);
+      $entityManager->flush();
+      return $this->redirectToRoute('liste_membres');
+  }
+
+  
+
+
 }
 
