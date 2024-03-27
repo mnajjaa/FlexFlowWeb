@@ -14,12 +14,22 @@ use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\Participation;
 use App\Entity\Cours;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 
 
 
 class CourMembreController extends AbstractController
 {
+    private $mailer;
+
+    public function __construct(MailerInterface $mailer)
+    {
+        $this->mailer = $mailer;
+    }
+
+
     #[Route('/cours', name: 'liste_cours')]
     public function listeCours(CoursRepository $coursRepository): Response
     {
@@ -29,6 +39,11 @@ class CourMembreController extends AbstractController
             // Convertir l'image BLOB en données binaires base64
             $cour->setImage(base64_encode(stream_get_contents($cour->getImage())));
         }
+
+         // Filtrer les cours dont la capacité est supérieure à 0
+         $cours = array_filter($cours, function($cour) {
+            return $cour->getCapacite() > 0;
+        });
     
         return $this->render('GestionCours/listeMembre.html.twig', [
             'cours' => $cours,
@@ -53,7 +68,7 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
 }
 
 #[Route('/cours/{id}/participer', name: 'participer_cours')]
-public function participerCours(int $id, CoursRepository $coursRepository, Request $request, EntityManagerInterface $entityManager): Response
+public function participerCours(int $id, CoursRepository $coursRepository, Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
 {
     // Get the current user's email from the session
     $email =  $request->getSession()->get(Security::LAST_USERNAME);
@@ -78,11 +93,25 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
         $entityManager->persist($participation);
         $entityManager->flush();
 
+        // Send email confirmation
+        $email = (new Email())
+        ->from('FlexFlow <your_email@example.com>')
+        ->to($email)
+        ->subject('Confirmation de participation à un cours')
+        ->html($this->renderView('GestionCours/email_confirmation.html.twig', [
+            'user' => $user,
+            'cours' => $cours,
+        ]));
+
+    $this->mailer->send($email);
+
         // Redirect to the confirmation page
         return $this->redirectToRoute('liste_cours');
     }    
 
 }
+
+
 
         
 }
