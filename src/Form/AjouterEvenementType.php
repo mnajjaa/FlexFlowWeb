@@ -19,6 +19,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\File;
 
 class AjouterEvenementType extends AbstractType
 {
@@ -36,24 +41,27 @@ class AjouterEvenementType extends AbstractType
                 'label'=>"Nom du l'evenement",
                 'constraints' => [
                     new Regex([
-                        'pattern' => '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}])[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}]+$/',
-                        'message' => 'Le nom du produit doit contenir au moins une lettre.',
+                        'pattern' => '/^[A-Za-z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}]+$/',
+                        'message' => 'Le nom est composé que par des lettres .',
                     ]),
                 ],
             ])
-            ->add('categorie',ChoiceType::class,[
-                'label'=>" Catégorie",
+            ->add('categorie', ChoiceType::class, [
+                'label' => "Catégorie",
                 'choices' => [
-                    "Fitness"=>"Fitness",
-                    "Cycling"=>"Cycling",
-                    "Powerlifting"=>" Powerlifting",
-                    "Yoga"=>" Yoga",
-                     "Gymnastics"=>"  Gymnastics",
-                    "Cardio"=>"Cardio",
-
+                    "Fitness" => "Fitness",
+                    "Cycling" => "Cycling",
+                    "Powerlifting" => "Powerlifting",
+                    "Yoga" => "Yoga",
+                    "Gymnastics" => "Gymnastics",
+                    "Cardio" => "Cardio",
                 ],
-                ]
-                )
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez sélectionner une catégorie',
+                    ]),
+                ],
+            ])
 
             ->add('Objectif',ChoiceType::class,[
                 'label'=>" Objectif",
@@ -64,27 +72,61 @@ class AjouterEvenementType extends AbstractType
                     "Renforcement de l'esprit d'équipe "=>" Renforcement de l'esprit d'équipe ",
                   
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez sélectionner un Objectif',
+                    ]),
+                ],
 
             ])
-            ->add('nbrPlace',TextType::class,[
-                'label'=>"Nombre de place"
+            ->add('nbrPlace', NumberType::class, [
+                'label' => "Nombre de place",
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^\d+$/',
+                        'message' => 'Le nombre de place doit être un nombre entier.',
+                    ]),
+                    new Range([
+                        'min' => 10,
+                        'max' => 40,
+                        'notInRangeMessage' => 'Le nombre de place doit être compris entre {{ min }} et {{ max }}.',
+                    ]),
+                ],
             ])
             ->add('Date', DateType::class, [
                 'label' => "Date ",
                 'widget' => 'single_text',
                 'attr' => ['class' => 'datepicker'],
+                'constraints' => [
+                    new GreaterThan([
+                        'value' => 'today', // Date actuelle
+                        'message' => 'La date doit être ultérieure à aujourd\'hui.',
+                    ]),
+                ],
             ])
             ->add('Time', TimeType::class, [ // Ajoutez le champ TimeType
                 'label' => 'Heure',
                 'widget' => 'single_text', // Utilisez le widget de type texte
                 'attr' => ['class' => 'timepicker'], // Ajoutez une classe pour l'initialisation du time picker
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez sélectionner le temps',
+                    ]),
+                ],
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'label' => 'Coach',
                 'choice_label' => 'email', // Champ à afficher dans le formulaire
-                
-                'attr' => ['class' => 'form-control']
+                'choices' => $this->getCoachUsers(),
+
+                'attr' => ['class' => 'form-control'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez sélectionner un coach',
+                    ]),
+                ],
+    
             ])
             ->add('etat', CheckboxType::class, [
                 'label' => 'Activer l\'état',
@@ -94,9 +136,24 @@ class AjouterEvenementType extends AbstractType
                 'label' => 'Image de l\'événement',
                 'mapped' => false, // Indique que ce champ n'est pas associé à une propriété de l'entité
                 'required' => false, // Le champ n'est pas requis, il peut être vide
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez télécharger une image.']),
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez télécharger une image au format JPG ou PNG.',
+                    ]),
+                ],
             ]);
     }
-
+   private function getCoachUsers()
+    {
+        // Récupérez les utilisateurs ayant le rôle "COACH"
+        return $this->userRepository->findByRole('COACH');
+    }
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

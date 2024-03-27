@@ -54,7 +54,8 @@ class EvenementController extends AbstractController
             // Persist et flush l'entité Evenement dans la base de données
             $entityManager->persist($evenement);
             $entityManager->flush();
-    
+            $this->addFlash('success', 'Evenement a été ajouté avec succès.');
+
             // Rediriger vers une page de confirmation ou une autre page après l'ajout de l'événement
             return $this->redirectToRoute('evenements_list');
         }

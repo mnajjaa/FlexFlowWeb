@@ -20,21 +20,27 @@ class Evenement
     private ?string $nomEvenement = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank]
     private ?\DateTimeInterface $Date = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    
     private ?int $nbrPlace = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $categorie = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $Objectif = null;
 
     #[ORM\Column]
     private ?bool $etat = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Assert\NotBlank]
     private ?\DateTimeInterface $Time = null;
 
     #[ORM\Column(type: Types::BLOB)]
@@ -42,6 +48,8 @@ class Evenement
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
+
     private ?User $user = null;
 
     public function getId(): ?int

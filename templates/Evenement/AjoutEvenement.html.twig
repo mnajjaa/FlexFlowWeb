@@ -63,7 +63,9 @@
 											<label class="col-md-2 col-form-label">Categorie</label>
 											<div class="col-md-10">
 												{{ form_widget(form.categorie, {'attr': {'class': 'form-select'}}) }}
-
+	<div class="text-danger">
+        {{ form_errors(form.categorie) }}
+    </div>
 
 											</div>
 										</div>
@@ -72,7 +74,9 @@
 											<div class="col-md-10">
 
 												{{ form_widget(form.Objectif, {'attr': {'class': 'form-select'}}) }}
-
+	<div class="text-danger">
+        {{ form_errors(form.Objectif) }}
+    </div>
 
 											</div>
 										</div>
@@ -81,14 +85,19 @@
 											<label for="example-number-input" class="col-md-2 col-form-label">Nombre de Place</label>
 											<div class="col-md-10">
 												{{ form_widget(form.nbrPlace, {'attr': {'class': 'form-control'}}) }}
-											</div>
+												<div class="text-danger">
+        {{ form_errors(form.nbrPlace) }}
+    </div>
+                                            </div>
 										</div>
 
 										<div class="mb-3 row">
 											<label for="example-date-input" class="col-md-2 col-form-label">Date</label>
 											<div class="col-md-10">
 												{{ form_widget(form.Date, {'attr': {'class': 'form-control'}}) }}
-
+<div class="text-danger">
+        {{ form_errors(form.Date) }}
+    </div>
 											</div>
 										</div>
 
@@ -96,6 +105,9 @@
 											<label for="example-time-input" class="col-md-2 col-form-label">Time</label>
 											<div class="col-md-10">
 												{{ form_widget(form.Time, {'attr': {'class': 'form-control'}}) }}
+												<div class="text-danger">
+        {{ form_errors(form.Time) }}
+    </div>
 											</div>
 										</div>
 
@@ -103,7 +115,9 @@
 											<label class="col-md-2 col-form-label">User</label>
 											<div class="col-md-10">
 												{{ form_widget(form.user, {'attr': {'class': 'form-select'}}) }}
-
+<div class="text-danger">
+        {{ form_errors(form.user) }}
+    </div>
 											</div>
 										</div>
 										<div class="mb-3 row">
@@ -128,6 +142,9 @@
 											<label for="image" class="col-md-2 col-form-label">Image</label>
 											<div class="col-md-10">
 												{{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+												<div class="text-danger">
+        {{ form_errors(form.image) }}
+    </div>
 											</div>
 										</div>
 
