@@ -1,156 +1,96 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Créer une nouvelle offre{% endblock %}
-
-{% block stylesheets %}
-{{ parent() }}
-<style>
-    body {
-        background-color: #1a2b4c; /* Deep blue background */
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: white;
-    }
-    /* Neon effect for the glow */
-    .glow {
-        border: 1px solid rgba(25, 100, 150, 0.2);
-        box-shadow: 0 0 10px rgba(25, 100, 150, 0.5), 0 0 20px rgba(25, 100, 150, 0.3), 0 0 30px rgba(25, 100, 150, 0.2);
-    }
-    /* Form container with a modern glass effect */
-    .form-container {
-        max-width: 500px;
-        margin: 50px auto;
-        padding: 30px;
-        border-radius: 15px;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
-    }
-    h1 {
-        text-align: center;
-        font-size: 28px;
-        margin-bottom: 30px;
-        color: #06BCC1; /* Bright blue color */
-    }
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    label {
-        display: block;
-        margin-bottom: 8px;
-        color: #d3d3d3; /* Light grey color for text */
-    }
-    input[type="text"],
-    input[type="email"],
-    select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        background: transparent;
-        border: 2px solid #06BCC1; /* Bright blue border */
-        border-radius: 5px;
-        color: white;
-        outline: none;
-        transition: all 0.3s ease-in-out;
-    }
-    input[type="text"]:focus,
-    input[type="email"]:focus,
-    select:focus {
-        box-shadow: 0 0 10px #06BCC1; /* Adding glow effect on focus */
-    }
-    .form-buttons {
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-    }
-    button[type="submit"],
-    .btn-secondary {
-        padding: 12px 25px;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        letter-spacing: 1px;
-        margin-left: 10px;
-        outline: none;
-    }
-    button[type="submit"] {
-        background-color: #06BCC1; /* Bright blue */
-        color: white;
-    }
-    button[type="submit"]:hover,
-    button[type="submit"]:focus {
-        background-color: #028090; /* Darker shade of blue */
-        box-shadow: 0 0 15px #06BCC1; /* Adding glow effect on hover/focus */
-        transform: translateY(-3px);
-    }
-    .btn-secondary {
-        background-color: #5D7290; /* Secondary button color */
-        color: white;
-    }
-    .btn-secondary:hover,
-    .btn-secondary:focus {
-        background-color: #486581; /* Darker shade for secondary button */
-        box-shadow: 0 0 15px #5D7290; /* Adding glow effect on hover/focus */
-        transform: translateY(-3px);
-    }
-    a {
-        text-decoration: none;
-        color: inherit;
-        transition: color 0.3s;
-    }
-    a:hover,
-    a:focus {
-        color: #06BCC1; /* Bright blue hover color for links */
-    }
-    /* Hide the image container */
-    #imageContainer {
-        display: none;
-    }
-</style>
-{% endblock %}
-
+{% extends 'base-back.html.twig' %}
 {% block body %}
-<div class="form-container glow">
-    <h1 id="titreOffre">Créer une nouvelle offre</h1>
-    {{ form_start(form) }}
-    {{ form_row(form.nom) }}
-    <div>
-        <label for="specialite">Spécialité</label>
-        {{ form_widget(form.specialite, {'attr': {'class': 'form-control'}}) }}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Login | Minible - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+    <!-- Bootstrap Css -->
+    <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+    <style>
+        /* Style pour le formulaire */
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            max-width: 90%;
+            margin: 50px auto; /* Centrer horizontalement */
+        }
+
+        /* Titre du formulaire */
+        .form-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #343a40;
+        }
+
+        /* Champs de formulaire */
+        input[type="text"], input[type="email"], select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        /* Effet de survol pour les champs de formulaire */
+        input[type="text"]:focus, input[type="email"]:focus, select:focus {
+            border-color: #4e73df;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+        }
+
+        /* Bouton de soumission */
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #4e73df;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        /* Effet de survol pour le bouton de soumission */
+        .submit-btn:hover {
+            background-color: #375a7f;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-title">Créer une nouvelle offre</h1>
+        {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        <div>
+            <label for="specialite">Spécialité</label>
+            {{ form_widget(form.specialite, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        {{ form_row(form.tarif_heure) }}
+        {{ form_row(form.etat_offre)}}
+        {{ form_row(form.email) }}
+        {{ form_row(form.coach) }}
+        <div class="form-buttons">
+            <button type="submit" id="submitButton" class="submit-btn">Créer</button>
+            <a href="{{ path('app_consulter_offres') }}" class="btn-secondary" id="consulterOffres">Consulter les offres</a>
+        </div>
+        {{ form_end(form) }}
     </div>
-    {{ form_row(form.tarif_heure) }}
-    {{ form_row(form.etat_offre)}}
-    {{ form_row(form.email) }}
-    {{ form_row(form.coach) }}
-    <div class="form-buttons">
-        <button type="submit" id="submitButton" class="glow">Créer</button>
-        <a href="{{ path('app_consulter_offres') }}" class="btn-secondary glow" id="consulterOffres">Consulter les offres</a>
-    </div>
-    {{ form_end(form) }}
-</div>
-<script>
-    // Script to add additional interactivity or animations if necessary
-    document.addEventListener('DOMContentLoaded', function() {
-        // Example: Animate the submit button on click
-        var submitButton = document.getElementById('submitButton');
-        submitButton.addEventListener('click', function() {
-            this.classList.add('clicked');
-            setTimeout(() => this.classList.remove('clicked'), 200);
-        });
-        
-        // Example: Add a simple scale animation to buttons on hover
-        var buttons = document.querySelectorAll('button, .btn-secondary');
-        buttons.forEach(function(button) {
-            button.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.1)';
-            });
-            button.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-            });
-        });
-    });
-</script>
+</body>
+</html>
 {% endblock %}

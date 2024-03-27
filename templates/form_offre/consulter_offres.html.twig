@@ -1,107 +1,113 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Consulter les offres{% endblock %}
-
-{% block stylesheets %}
-    <style>
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f8f8f8;
-        }
-
-        tr:hover {
-            background-color: #e2e2e2;
-        }
-
-        .action-btn {
-            display: inline-block;
-            padding: 8px 12px;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #fff;
-            background-color: #007bff;
-            transition: background-color 0.3s ease;
-        }
-
-        .action-btn:hover {
-            background-color: #0056b3;
-        }
-
-        .edit-btn {
-            background-color: #28a745;
-        }
-
-        .delete-btn {
-            background-color: #dc3545;
-        }
-
-        .action-btn + .action-btn {
-            margin-left: 5px;
-        }
-    </style>
-{% endblock %}
-
+{% extends 'base-back.html.twig' %}
 {% block body %}
+
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <!-- bootstrap datepicker -->
+
+        <link href="{{asset('back-office/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet">
+ <!-- DataTables -->
+        <link href="{{asset('back-office/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Responsive datatable examples -->
+        <link href="{{asset('back-office/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" /> 
+
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body>
+
+        <!-- <body data-layout="horizontal" data-topbar="colored"> -->
+    
+            <!-- Begin page -->
     <div class="container">
-        <h1>Consulter les offres</h1>
-        <div class="table-container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Spécialité</th>
-                        <th>Tarif / heure</th>
-                        <th>État de l'offre</th>
-                        <th>Coach</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for offre in offres %}
-                        <tr>
-                            <td>{{ offre.nom }}</td>
-                            <td>{{ offre.specialite }}</td>
-                            <td>{{ offre.tarif_heure }}</td>
-                            <td>{{ offre.etat_offre }}</td>
-                            <td>{{ offre.coach.email }}</td>
-                            <td>{{ offre.email }}</td>
-                            <td>
-                                <a href="{{ path('modifier_offre', {'id': offre.id}) }}" class="action-btn edit-btn">
-                                    Modifier
-                                </a>
-                                <a href="{{ path('supprimer_offre', {'id': offre.id}) }}" class="action-btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')">
-                                    Supprimer
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+<h1>Consulter les offres</h1>
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Spécialité</th>
+                <th>Tarif / heure</th>
+                <th>État de l'offre</th>
+                <th>Coach</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for offre in offres %}
+                <tr>
+                    <td>{{ offre.nom }}</td>
+                    <td>{{ offre.specialite }}</td>
+                    <td>{{ offre.tarif_heure }}</td>
+                    <td>{{ offre.etat_offre }}</td>
+                    <td>{{ offre.coach.email }}</td>
+                    <td>{{ offre.email }}</td>
+                    <td>
+                        <a href="{{ path('modifier_offre', {'id': offre.id}) }}" class="action-btn edit-btn">
+                            Modifier
+                        </a>
+                        <a href="{{ path('supprimer_offre', {'id': offre.id}) }}" class="action-btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+ <!-- JAVASCRIPT -->
+<script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+<script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+<script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+<script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+<script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+
+<!-- bootstrap datepicker -->
+<script src="{{asset('back-office/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+
+<!-- Required datatable js -->
+<script src="{{asset('back-office/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('back-office/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+
+<!-- Responsive examples -->
+<script src="{{asset('back-office/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('back-office/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
+
+<!-- init js -->
+<script src="{{asset('back-office/js/pages/ecommerce-datatables.init.js')}}"></script>
+
+<!-- App js -->
+<script src="{{asset('back-office/js/app.js')}}"></script>
+
+</body>
+
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+</html>
 {% endblock %}
