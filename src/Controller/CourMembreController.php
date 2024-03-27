@@ -54,13 +54,15 @@ class CourMembreController extends AbstractController
 public function voirCours(int $id, CoursRepository $coursRepository, Request $request): Response
 {
     // Récupérer le cours depuis le référentiel en fonction de l'ID
-    $cours = $coursRepository->find($id);
+    //$cours = $coursRepository->find($id);
+    $cours = $this->getDoctrine()->getRepository(cours::class)->find($id);
 
     // Vérifier si le cours existe
     if (!$cours) {
         throw new NotFoundHttpException('Cours non trouvé');
     }
 
+    $cours->image = base64_encode(stream_get_contents($cours->getImage()));
     // Afficher les détails du cours dans un nouveau template
     return $this->render('GestionCours/voirPlus.html.twig', [
         'cours' => $cours,

@@ -45,7 +45,7 @@ class Cours
     private ?User $user = null;
 
     #[ORM\Column(type: Types::BLOB)]
-    private $image = null;
+    public $image = null;
 
     public function getId(): ?int
     {

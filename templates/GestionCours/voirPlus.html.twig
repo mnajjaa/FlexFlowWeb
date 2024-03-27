@@ -48,7 +48,8 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com/">
 	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
-	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-jOyJRFA4v9p2w4jQJ6qrceHOHrH42FcplM60yL/YwJZTrgMwo2xxWI8WJ8aOc4adT6M6nMk0tbr63vD3y2eZ8g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body id="bg" class="data-typography-1">
 <div id="loading-area" class="loading-page-1">
@@ -302,25 +303,32 @@
 		<section class="content-inner">
 			<div class="container">
 				<div class="row">
+                
 					<div class="col-lg-8">
 						<div class="event-single">
 							<div class="dz-media wow fadeInUp" data-wow-delay="0.4s">
-                            
-								<img src="{{asset('front-office/images/event/large/pic1.jpg')}}" alt="/">
+                                <img src="data:image/jpeg;base64,{{ cours.getImage }}" class="card-img-top" alt="{{ cours.getNomCour() }}">
 							</div>
-							<div class="dz-info">
-								<h1 class="dz-title wow fadeInUp" data-wow-delay="0.6s">Personal Journeys to a Healthier Lifestyle</h1>
-								<p class="event-text wow fadeInUp" data-wow-delay="0.8s">There are many variations of passages of Lorem Ipsum available, but the majority have some a form suffered alteration in , by injected humour, or randomised words which don't look even the slightly believable. If you are going to use a passage Lorem Ipsum, you need to be sure there at isn't anything hidden in the middle of text.</p>
-							</div>
+					<div class="dz-info">
+    <h1 class="dz-title wow fadeInUp" data-wow-delay="0.6s">Pour qui ?</h1>
+    {% if cours.getCible() == "Adulte" %}
+        <p class="event-text wow fadeInUp" data-wow-delay="0.8s">18-50 ans. Personnes ayant déjà une bonne condition physique. Personnes cherchant à brûler le max de calories dans une grande ambiance musicale et de défoulement.</p>
+    {% elseif cours.getCible() == "Enfant" %}
+        <p class="event-text wow fadeInUp" data-wow-delay="0.8s">Enfants âgés de 3 ans et plus. Convient aux enfants en bonne santé et énergiques. Parfait pour ceux qui cherchent à s'amuser tout en restant actifs et en développant leurs compétences physiques et sociales dans un environnement ludique et sécurisé.</p>
+    {% endif %}
+</div>
+
+
 							<ul class="pr-list style-2 dark m-b30 wow fadeInUp" data-wow-delay="1.0s">
-								<li><i class="flaticon-check-mark"></i>Overall Health and Wellness</li>
-								<li><i class="flaticon-check-mark"></i>Progress Evaluation</li>
-								<li><i class="flaticon-check-mark"></i>Rewards and Incentives</li>
-								<li><i class="flaticon-check-mark"></i>Tracking Technology</li>
-								<li><i class="flaticon-check-mark"></i>Motivation and Competition</li>
-								<li><i class="flaticon-check-mark"></i>Community Engagement</li>
-								<li><i class="flaticon-check-mark"></i>Tracking Progress</li>
-								<li><i class="flaticon-check-mark"></i>Variety of Activities</li>
+								<li><i class="flaticon-check-mark"></i>Santé globale et bien-être</li>
+<li><i class="flaticon-check-mark"></i>Évaluation des progrès</li>
+<li><i class="flaticon-check-mark"></i>Récompenses et incitations</li>
+<li><i class="flaticon-check-mark"></i>Technologie de suivi</li>
+<li><i class="flaticon-check-mark"></i>Motivation et compétition</li>
+<li><i class="flaticon-check-mark"></i>Engagement communautaire</li>
+<li><i class="flaticon-check-mark"></i>Suivi des progrès</li>
+<li><i class="flaticon-check-mark"></i>Variété d'activités</li>
+
 							</ul>
 							<p class="event-text wow fadeInUp" data-wow-delay="1.2s">There are many variations of passages of Lorem Ipsum available, but the majority have some a form suffered alteration in , by injected humour,</p>
 							<figure class="wp-container-5 wp-block-gallery-2 wp-block-gallery has-nested-images columns-2 is-cropped">
@@ -341,7 +349,7 @@
 										<tbody>
 											<tr>
 												<td>
-													<h6 class="mb-0">Durée</h6>
+													  <h6 class="mb-0"><i class="fas fa-clock"></i> Durée</h6>
 												</td>
 												<td class="price">
 													{{ cours.getDuree() }} minutes
@@ -349,7 +357,7 @@
 											</tr>
 											<tr>
 												<td>
-													<h6 class="mb-0">Intensité</h6>
+													<h6 class="mb-0"><i class="fas fa-fire"></i> Intensité</h6>
 												</td>
 												<td class="price">
 													{{ cours.getIntensite() }}
@@ -357,7 +365,7 @@
 											</tr>
 											<tr>
 												<td>
-													<h6 class="mb-0">Cible</h6>
+													<h6 class="mb-0"><i class="fas fa-bullseye"></i> Cible</h6>
 												</td>
 												<td class="price">
 													{{ cours.getCible() }}
@@ -365,7 +373,7 @@
 											</tr>
 											<tr>
 												<td>
-													<h6 class="mb-0">Catégorie</h6>
+													<h6 class="mb-0"><i class="fas fa-list-alt"></i> Catégorie</h6>
 												</td>
 												<td class="price">
 													{{ cours.getCategorie() }}
@@ -373,7 +381,7 @@
 											</tr>
 											<tr>
 												<td>
-													<h6 class="mb-0">Objectif</h6>
+													<h6 class="mb-0"><i class="fas fa-trophy"></i> Objectif</h6>
 												</td>
 												<td class="price">
 													{{ cours.getObjectif() }}
@@ -381,7 +389,7 @@
 											</tr>
 											<tr>
 												<td>
-													<h6 class="mb-0">Capacité</h6>
+													<h6 class="mb-0"><i class="fas fa-user"></i> Capacité</h6>
 												</td>
 												<td class="price">
 													{{ cours.getCapacite() }}
@@ -397,12 +405,13 @@
 									</div>
 									<div class="dz-content">
 										<h3 class="title">Gym Training And Event</h3>
-										<a href="javascript:void(0);" class="btn btn-primary btn-skew"><span class="skew-inner"><span class="text">Learn More</span></span></a>
+										<a href="{{ path('participer_cours', {'id': cours.getId()}) }}" class="btn btn-primary btn-skew"><span class="skew-inner"><span class="text">Participer</span></span></a>
 									</div>
 								</div>
 							</div>
 						</aside>
 					</div>
+                    
 				</div>
 			</div>
 		</section>
