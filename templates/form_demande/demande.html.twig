@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Confirmation de demande de coaching privé{% endblock %}
-
 {% block body %}
     <style>
         body {
@@ -10,7 +8,6 @@
             margin: 0;
             padding: 0;
         }
-
         .container {
             max-width: 600px;
             margin: 20px auto;
@@ -19,7 +16,6 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
         .alert {
             padding: 10px;
             margin-bottom: 20px;
@@ -28,7 +24,6 @@
             border-radius: 5px;
             color: #f00;
         }
-
         .btn {
             padding: 10px 20px;
             background-color: #007bff;
@@ -38,12 +33,10 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
         .btn:hover {
             background-color: #0056b3;
         }
   
-
     </style>
 
     <div class="container">
@@ -56,73 +49,50 @@
             {{ flash_message }}
         </div>
     {% endfor %}
-        
-        
-        {# {{ form_start(form) }}
-        {{ form_row(form.nom) }}
-        {{ form_row(form.age) }}
-        {{ form_row(form.but) }}
-        {{ form_row(form.niveauPhysique) }}
-        {{ form_row(form.maladieChronique) }}
-        {{ form_row(form.nombreHeure) }}
-        {{ form_row(form.etat) }}
-        {{ form_row(form.horaire) }}
-        {{ form_row(form.lesjours) }}
-        {{ form_row(form.user) }}
-        {{ form_row(form.offre) }}
-        
-        <div id="errorMessageContainer" style="color: red;"></div>
 
-        <button id="submit-btn" type="submit" class="btn btn-primary">Ajouter demande de coaching</button>
-        {{ form_end(form) }} #}
+    {{ form_start(form) }}
+    {{ form_row(form.nom) }}
+    {{ form_row(form.age) }}
+    {{ form_row(form.but) }}
+    {{ form_row(form.niveauPhysique) }}
+    {{ form_row(form.maladieChronique) }}
+    {{ form_row(form.nombreHeure) }}
+    {{ form_row(form.etat) }}
+    {{ form_row(form.horaire) }}
+    {{ form_row(form.lesjours) }}
+    {{ form_row(form.user) }}
+    {{ form_row(form.offre) }}
 
-       {{ form_start(form) }}
-        {{ form_row(form.age) }}
-        {{ form_row(form.but) }}
-        {{ form_row(form.niveauPhysique) }}
-        {{ form_row(form.maladieChronique) }}
-        {{ form_row(form.nombreHeure) }}
-        {{ form_row(form.etat) }}
-        {{ form_row(form.horaire) }}
-        {{ form_row(form.lesjours) }}
-        {{ form_row(form.user) }}
-        {{ form_row(form.offre) }}
-        
-  <div id="errorMessageContainer" style="color: red;"></div>
+    <div id="errorMessageContainer" style="color: red;"></div>
 
-        <button id="submit-btn" type="submit" class="btn btn-primary">Ajouter demande de coaching</button>
-        {{ form_end(form) }}
+    <button id="submit-btn" type="submit" class="btn btn-primary">Ajouter demande de coaching</button>
+    {{ form_end(form) }}
+</div>
 
-        {# ////////////////////////////////// #}
-    </div>
-
-    <script>
-        
-        document.addEventListener('DOMContentLoaded', function () {
-            const maladieChroniqueField = document.getElementById('demande_maladieChronique');
-            const offreField = document.getElementById('demande_offre');
-            const errorMessageContainer = document.getElementById('errorMessageContainer');
-
-            maladieChroniqueField.addEventListener('change', function () {
-                const maladie = maladieChroniqueField.value;
-                const offre = offreField.value;
-
-                if ((maladie === 'Maladies infectieuses contagieuses' || maladie === 'Maladies oculaires graves' || maladie === 'Troubles musculo-squelettiques graves' || maladie === 'Problèmes neurologiques' || maladie === 'Hypertension artérielle non contrôlée') && (offre === 'Yoga')) {
-                    errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner au yoga en raison de votre maladie.';
-                } else if ((maladie === 'Problèmes cardiaques graves' || maladie === 'Hypertension artérielle non contrôlée' || maladie === 'Problèmes musculo-squelettiques graves' || maladie === 'Maladies inflammatoires' || maladie === 'Maladies infectieuses' || maladie === 'Problèmes respiratoires graves' || maladie === 'Troubles de l\'alimentation') && (offre === 'Boxe')) {
-                    errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner à la boxe en raison de votre maladie.';
-                } else if ((maladie === 'Maladies cardiaques graves' || maladie === 'Hypertension artérielle non contrôlée' || maladie === 'Problèmes respiratoires sévères' || maladie === 'Maladies vasculaires périphériques' || maladie === 'Problèmes neurologiques graves' || maladie === 'Diabète non contrôlé' || maladie === 'Infections actives') && (offre === 'Musculation')) {
-                    errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner à la musculation en raison de votre maladie.';
-                } else if ((maladie === 'Maladies cardiaques graves' || maladie === 'Hypertension artérielle non contrôlée' || maladie === 'Problèmes respiratoires sévères' || maladie === 'Maladies vasculaires périphériques' || maladie === 'Problèmes neurologiques graves' || maladie === 'Diabète non contrôlé' || maladie === 'Infections actives') && (offre === 'Cardio')) {
-                    errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner au cardio en raison de votre maladie.';
-                } else {
-                    errorMessageContainer.textContent = '';
-                }
-            });
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        const maladieChroniqueField = document.getElementById('demande_maladieChronique');
+        const offreField = document.getElementById('demande_offre');
+        const errorMessageContainer = document.getElementById('errorMessageContainer');
+        maladieChroniqueField.addEventListener('change', function () {
+            const maladie = maladieChroniqueField.value;
+            const offre = offreField.value;
+            if ((maladie === 'Maladies infectieuses contagieuses' || maladie === 'Maladies oculaires graves' || maladie === 'Troubles musculo-squelettiques graves' || maladie === 'Problèmes neurologiques' || maladie === 'Hypertension artérielle non contrôlée') && (offre === 'Yoga')) {
+                errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner au yoga en raison de votre maladie.';
+            } else if ((maladie === 'Problèmes cardiaques graves' || maladie === 'Hypertension artérielle non contrôlée' || maladie === 'Problèmes musculo-squelettiques graves' || maladie === 'Maladies inflammatoires' || maladie === 'Maladies infectieuses' || maladie === 'Problèmes respiratoires graves' || maladie === 'Troubles de l\'alimentation') && (offre === 'Boxe')) {
+                errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner à la boxe en raison de votre maladie.';
+            } else if ((maladie === 'Maladies cardiaques graves' || maladie === 'Hypertension artérielle non contrôlée' || maladie === 'Problèmes respiratoires sévères' || maladie === 'Maladies vasculaires périphériques' || maladie === 'Problèmes neurologiques graves' || maladie === 'Diabète non contrôlé' || maladie === 'Infections actives') && (offre === 'Musculation')) {
+                errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner à la musculation en raison de votre maladie.';
+            } else if ((maladie === 'Maladies cardiaques graves' || maladie === 'Hypertension artérielle non contrôlée' || maladie === 'Problèmes respiratoires sévères' || maladie === 'Maladies vasculaires périphériques' || maladie === 'Problèmes neurologiques graves' || maladie === 'Diabète non contrôlé' || maladie === 'Infections actives') && (offre === 'Cardio')) {
+                errorMessageContainer.textContent = 'Malheureusement, vous ne pouvez pas vous entraîner au cardio en raison de votre maladie.';
+            } else {
+                errorMessageContainer.textContent = '';
+            }
         });
+    });
 
-        document.getElementById('submit-btn').addEventListener('click', function() {
-            alert("uen analyse s'effectue  en temps réel de votre demande de coaching.");
-        });
-    </script>
+    document.getElementById('submit-btn').addEventListener('click', function() { alert("uen analyse s'effectue  en temps réel de votre demande de coaching.");
+    });
+</script>
 {% endblock %}

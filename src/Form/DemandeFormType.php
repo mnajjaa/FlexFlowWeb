@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Form;
-
 use App\Entity\Demande;
 use App\Entity\User;
 use App\Entity\Offre;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -15,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-
 class DemandeFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -62,27 +58,27 @@ class DemandeFormType extends AbstractType
                     'Maladies vasculaires périphériques'=> 'Maladies vasculaires périphériques',
                     'Diabète non contrôlé'=> 'Diabète non contrôlé',
                     'Infections actives'=> 'Infections actives',
-                     
-               
+
+
                 ],
                 'placeholder' => 'Sélectionnez une maladie chronique',
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                'constraints' => [            new NotBlank(),
+            ],
+        ])
+        ->add('nombreHeure', IntegerType::class, [
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ])
+        ->add('user', EntityType::class, [
+            'class' => User::class,
+            'choice_label' => 'username',
+        ])
+        ->add('offre', EntityType::class, [
+            'class' => Offre::class,  
+               'choice_label' => 'nom',
             ])
-            ->add('nombreHeure', IntegerType::class, [
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'username',
-            ])
-            ->add('offre', EntityType::class, [
-                'class' => Offre::class,
-                'choice_label' => 'nom',
-            ])
+
             ->add('etat', TextType::class, [
                 'label' => 'État de la demande',
                 'data' => 'En attente', // Valeur par défaut
@@ -100,7 +96,6 @@ class DemandeFormType extends AbstractType
                 ],
             ]);
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
