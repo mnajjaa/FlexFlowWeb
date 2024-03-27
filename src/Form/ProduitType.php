@@ -22,24 +22,25 @@ class ProduitType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('nom', TextType::class, [
-            'label' => 'Nom du produit',
-            'constraints' => [
-                new Regex([
-                    'pattern' => '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}])[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}]+$/',
-                    'message' => 'Le nom du produit doit contenir au moins une lettre.',
-                ]),
-            ],
-        ])
-        ->add('Description', TextType::class, [
-            'label' => 'Description',
-            'constraints' => [
-                new Regex([
-                    'pattern' => '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}])[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}]+$/',
-                    'message' => 'La description doit contenir au moins une lettre.',
-                ]),
-            ],
-        ])
+    ->add('nom', TextType::class, [
+        'label' => 'Nom du produit',
+        'constraints' => [
+            new Regex([
+                'pattern' => '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç])+[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç]*$/u',
+                'message' => 'Le nom du produit doit contenir au moins une lettre.',
+            ]),
+        ],
+    ])
+    ->add('Description', TextType::class, [
+        'label' => 'Description',
+        'constraints' => [
+            new Regex([
+                'pattern' => '/^[\p{L}\p{M}\p{N}\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç]*$/u',
+                'message' => 'La description ne peut être vide et peut contenir divers caractères spéciaux.',
+            ]),
+        ],
+    ])
+
         ->add('prix', NumberType::class, [
             'label' => 'prix',
             'invalid_message' => 'Veuillez saisir un prix valide (chiffres uniquement et supérieur à zéro)',

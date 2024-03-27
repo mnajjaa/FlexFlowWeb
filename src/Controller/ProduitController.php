@@ -109,6 +109,24 @@ class ProduitController extends AbstractController
     }
 
 
+    #[Route('/produit/{id}', name: 'produit_detail')]
+    public function showProductDetail($id): Response
+    {
+        $produit = $this->getDoctrine()->getRepository(Produit::class)->find($id);
+    
+        // Vérifiez si le produit existe
+        if (!$produit) {
+            throw $this->createNotFoundException('Produit non trouvé');
+        }
+    
+        // Convertir l'image BLOB en données binaires base64
+        $produit->image = base64_encode(stream_get_contents($produit->getImage()));
+    
+        return $this->render('GestionProduit/produit/detailProduit.html.twig', [
+            'produit' => $produit,
+        ]);
+    }
+    
 
     #[Route('/panier', name: 'consulter_panier')]
     public function consulterPanier(): Response

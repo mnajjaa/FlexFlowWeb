@@ -451,7 +451,8 @@
 												<img src="data:image/jpeg;base64,{{ produit.image }}" class="card-img-top" alt="{{ produit.nom }}">
 												<div class="shop-meta">
 													<ul>
-														<li><a href="javascript:void(0)">Quick View</a></li>
+													<li><a href="{{ path('produit_detail', {'id': produit.id}) }}">Quick View</a></li>
+
 														<li><a href="javascript:void(0)"><i class="yith-wcwl-icon fa fa-heart"></i></a></li>
 														<li><a href="{{ path('consulter_panier') }}"><i class="fa-solid fa-cart-shopping"></i></a></li>
 													</ul>
@@ -562,8 +563,8 @@
 
     /* Personnalisation des curseurs */
     #priceSlider .noUi-handle {
-        background-color: black;
-        width: 20px; /* Largeur du curseur */
+        background-color: #FFBD13;
+        width: 18px; /* Largeur du curseur */
         height: 20px; /* Hauteur du curseur */
     }
 </style>
