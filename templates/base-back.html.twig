@@ -12,6 +12,7 @@
         <meta content="Themesdesign" name="author" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
 
         {% block css %}
         <!-- Bootstrap Css -->
@@ -1406,6 +1407,9 @@
 
         <!-- App js -->
         <script src="{{asset('back-office/js/app.js')}}"></script>
+                <script src="{{asset('back-office/js/pages/calendar.init.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
+
        {% endblock %}
     </body>
 
