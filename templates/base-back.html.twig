@@ -277,10 +277,10 @@
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="rounded-circle header-profile-user" src="{{asset('back-office/images/users/avatar-4.jpg')}}"
+                                <img class="rounded-circle header-profile-user" src="{{app.user.image}}"
                                     alt="Header Avatar">
                                 <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">{{app.user.nom}}</span>
-                                <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i>
+                                <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
@@ -336,24 +336,24 @@
                         <!-- Left Menu Start -->
                         
                         <ul class="metismenu list-unstyled" id="side-menu">
-                        {% if app.user.getRoles()[0]=="COACH" %}
+                        {% if app.user.getRoles()[0]=="ADMIN" %}
                             <li class="menu-title">Users</li>
 
                             <li>
                                 <a href="index.html">
-                                    <i class="uil-home-alt"></i><span class="badge rounded-pill bg-primary float-end">01</span>
-                                    <span>Membres</span>
+                                    <i class="dripicons-home"></i><span class="badge rounded-pill bg-primary float-end">01</span>
+                                    <span>Dashboard</span>
                                 </a>
                             </li>
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="uil-window-section"></i>
-                                    <span>Coachs</span>
+                                    <span>Utilisateurs</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
                                     <li>
-                                        <a href="javascript: void(0);" class="has-arrow">Vertical</a>
+                                        <a href="javascript: void(0);" class="has-arrow">Listes des coach</a>
                                         <ul class="sub-menu" aria-expanded="true">
                                             <li><a href="layouts-dark-sidebar.html">Dark Sidebar</a></li>
                                             <li><a href="layouts-compact-sidebar.html">Compact Sidebar</a></li>
@@ -364,7 +364,7 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="javascript: void(0);" class="has-arrow">Horizontal</a>
+                                        <a href="javascript: void(0);" class="has-arrow">Listes des membres</a>
                                         <ul class="sub-menu" aria-expanded="true">
                                             <li><a href="layouts-horizontal.html">Horizontal</a></li>
                                             <li><a href="layouts-hori-topbar-dark.html">Topbar Dark</a></li>
@@ -377,12 +377,13 @@
                           {% else %}
                         <p>Vous n'avez pas les droits pour accéder à cette page</p>
                         {% endif  %} 
+                         {% if app.user.getRoles()[0]=="ADMIN" %}
                             <li class="menu-title">Apps</li>
 
                             <li>
                                 <a href="calendar.html" class="waves-effect">
                                     <i class="uil-calender"></i>
-                                    <span>Calendar</span>
+                                    <span>Events</span>
                                 </a>
                             </li>
 
@@ -397,7 +398,7 @@
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="uil-store"></i>
-                                    <span>Ecommerce</span>
+                                    <span>Store</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="ecommerce-products.html">Products</a></li>
@@ -425,10 +426,10 @@
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="uil-invoice"></i>
-                                    <span>Invoices</span>
+                                    <span>Cours</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="invoices-list.html">Invoice List</a></li>
+                                    <li><a href="invoices-list.html"> List des cours</a></li>
                                     <li><a href="invoices-detail.html">Invoice Detail</a></li>
                                 </ul>
                             </li>
@@ -444,17 +445,19 @@
                                     <li><a href="contacts-profile.html">Profile</a></li>
                                 </ul>
                             </li>
-
-                            <li class="menu-title">Pages</li>
+                           {% else %}
+                           <p>Vous n'avez pas les droits pour accéder à cette page</p>
+                        {% endif  %} 
+                            <li class="menu-title">Utilisateurs</li>
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="uil-user-circle"></i>
-                                    <span>Authentication</span>
+                                    <span>Coaches</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="auth-login.html">Login</a></li>
-                                    <li><a href="auth-register.html">Register</a></li>
+                                    <li><a href="auth-login.html">Liste</a></li>
+                                    <li><a href="auth-register.html">ajouter un coach</a></li>
                                     <li><a href="auth-recoverpw.html">Recover Password</a></li>
                                     <li><a href="auth-lock-screen.html">Lock Screen</a></li>
                                 </ul>
@@ -463,10 +466,10 @@
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="uil-file-alt"></i>
-                                    <span>Utility</span>
+                                    <span>Membres</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="pages-starter.html">Starter Page</a></li>
+                                    <li><a href="pages-starter.html">Liste</a></li>
                                     <li><a href="pages-maintenance.html">Maintenance</a></li>
                                     <li><a href="pages-comingsoon.html">Coming Soon</a></li>
                                     <li><a href="pages-timeline.html">Timeline</a></li>
@@ -546,7 +549,7 @@
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="uil-chart"></i>
-                                    <span>Charts</span>
+                                    <span>Stats</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="charts-apex.html">Apex</a></li>
