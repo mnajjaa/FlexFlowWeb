@@ -331,11 +331,37 @@
 
 							</ul>
 							<p class="event-text wow fadeInUp" data-wow-delay="1.2s">There are many variations of passages of Lorem Ipsum available, but the majority have some a form suffered alteration in , by injected humour,</p>
-							<figure class="wp-container-5 wp-block-gallery-2 wp-block-gallery has-nested-images columns-2 is-cropped">
-                            
-								<figure class="wp-block-image size-large wow fadeInUp" data-wow-delay="1.4s"><img src="{{asset('front-office/images/event/grid2/pic1.jpg')}}" alt="/"></figure>
-								<figure class="wp-block-image size-large wow fadeInUp" data-wow-delay="1.6s"><img src="{{asset('front-office/images/event/grid2/pic2.jpg')}}" alt="/"></figure>
-							</figure>
+							
+
+{% if cours.getCategorie() == "Aquatique" %}
+							<video class="wow fadeInUp" data-wow-delay="1.0s" controls autoplay muted loop>
+  <source src="{{ asset('videos/aquatique.mp4') }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+{% elseif cours.getCategorie() == "Cardio" %}
+<video class="wow fadeInUp" data-wow-delay="1.0s" controls autoplay muted loop>
+  <source src="{{ asset('videos/cardio.mp4') }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+{% endif %}
+{% if cours.getCategorie() == "Force" %}
+<video class="wow fadeInUp" data-wow-delay="1.0s" controls autoplay muted loop>
+  <source src="{{ asset('videos/musculation.mp4') }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+{% elseif cours.getCategorie() == "Kids Island" %}
+<video class="wow fadeInUp" data-wow-delay="1.0s" controls autoplay muted loop>
+  <source src="{{ asset('videos/kids1.mp4') }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+{% endif %}
+{% if cours.getCategorie() == "Danse" %}
+<video class="wow fadeInUp" data-wow-delay="1.0s" controls autoplay muted loop>
+  <source src="{{ asset('videos/zumba.mp4') }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+{% endif %}
+							
 							<h4 class="title wow fadeInUp" data-wow-delay="1.8s">Trainer Suggestion And Going</h4>
 							<p class="event-text wow fadeInUp" data-wow-delay="2.0s">If you use this site regularly and would like to help keep the site on the Internet, please consider donating a small sum to help pay for the hosting and bandwidth bill. make a type specimen book. It has survived not only five centuries but also the leap into the electronic typesetting, remaining essentially unchanged.</p>
 						</div>
