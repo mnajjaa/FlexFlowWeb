@@ -101,9 +101,13 @@
         </div>
         <div>
             {{ form_row(form.nom) }}
-            <label for="specialite">Spécialité</label>
-            {{ form_widget(form.specialite, {'attr': {'class': 'form-control'}}) }}
-        </div>
+            <label for="specialite">Spécialité </i></label>
+            <div style="position: relative;">
+    {{ form_widget(form.specialite, {'attr': {'class': 'form-control', 'placeholder': 'Spécialité'}}) }}
+    <i class="fas fa-chevron-down" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"></i>
+</div>
+
+
         <div>
             {{ form_row(form.tarif_heure) }}
             {{ form_row(form.etat_offre)}}
@@ -112,7 +116,12 @@
         </div>
         <div class="form-buttons">
             <button type="submit" id="submitButton" class="submit-btn">Créer</button>
-            <a href="{{ path('app_consulter_offres') }}" class="btn-secondary" id="consulterOffres">Consulter les offres</a>
+            
+            <a href="{{ path('app_consulter_offres') }}" class="btn btn-secondary" id="consulterOffres">
+    <i class="fas fa-location-arrow"></i> Consulter les offres
+</a>
+
+    
         </div>
         {{ form_end(form) }}
     </div>

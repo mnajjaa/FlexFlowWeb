@@ -64,12 +64,14 @@
                     <td>{{ offre.coach.email }}</td>
                     <td>{{ offre.email }}</td>
                     <td>
-                        <a href="{{ path('modifier_offre', {'id': offre.id}) }}" class="action-btn edit-btn">
-                            Modifier
+                        <a href="{{ path('modifier_offre', {'id': offre.id}) }}" class="px-3 text-primary"><i class="fas fa-edit"></i></a>
+                            
                         </a>
                         <a href="{{ path('supprimer_offre', {'id': offre.id}) }}" class="action-btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')">
-                            Supprimer
-                        </a>
+                        
+                        <button class="btn btn-link text-danger btn-supprimer"><i class="fas fa-trash"></i></button>
+                    </a>
+                    
                     </td>
                 </tr>
             {% endfor %}

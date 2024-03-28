@@ -64,10 +64,11 @@
                         <td>{{ offre.email }}</td>
                         <td>
                             <a href="{{ path('accepter_offre', {'id': offre.id}) }}" class="action-btn edit-btn">
-                                Accepter
-                            </a>
+                       <i class="far fa-check-circle"></i>
+                    </a>
+                    
                             <a href="{{ path('refuser_offre', {'id': offre.id}) }}" class="action-btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir refuser cette offre ?')">
-                                Refuser
+                        <i class="fas fa-times-circle"></i>
                             </a>
                         </td>
                     </tr>
