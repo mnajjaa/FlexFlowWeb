@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Evenement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @extends ServiceEntityRepository<Evenement>
@@ -45,4 +46,18 @@ class EvenementRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function filtrerParDate(Date $fromDate, Date $toDate): array
+{
+    // Implémentez la logique de filtrage des événements en fonction des dates "From" et "To"
+    // Par exemple, vous pouvez utiliser une requête DQL pour récupérer les événements dans la plage de dates spécifiée
+    
+    return $this->createQueryBuilder('e')
+        ->where('e.date >= :fromDate')
+        ->andWhere('e.date <= :toDate')
+        ->setParameter('fromDate', $fromDate)
+        ->setParameter('toDate', $toDate)
+        ->getQuery()
+        ->getResult();
+}
 }

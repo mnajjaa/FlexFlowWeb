@@ -70,8 +70,8 @@
                                 <div class="float-end">
                                     <div class=" mb-3">
                                         <div class="input-daterange input-group" id="datepicker6" data-date-format="dd M, yyyy" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
-                                            <input type="text" class="form-control text-start" placeholder="From" name="From" />
-                                            <input type="text" class="form-control text-start" placeholder="To" name="To" />
+                                            <input type="text" class="form-control text-start" placeholder="From" name="From" id="From" />
+                                            <input type="text" class="form-control text-start" placeholder="To" name="To" id="To" />
                                             
                                             <button type="button" class="btn btn-primary"><i class="mdi mdi-filter-variant"></i></button>
                                         </div>
@@ -282,6 +282,34 @@ $(document).ready(function() {
 });
 
 </script>
+<script>
+    $(document).ready(function() {
+        // Écoutez les changements dans les champs de date
+        $('[name="From"], [name="To"]').change(function() {
+            // Récupérez les valeurs des champs "From" et "To"
+            var fromDate = $('[name="From"]').val();
+            var toDate = $('[name="To"]').val();
+
+            // Envoie d'une requête AJAX au serveur pour récupérer les événements filtrés
+            $.ajax({
+                url: "{{ path('filtrer_evenements') }}", // Remplacez par votre propre route
+                method: 'GET',
+                data: {
+                    from: fromDate,
+                    to: toDate
+                },
+                success: function(response) {
+                    // Mettre à jour la liste des événements dans le tableau HTML avec les données filtrées
+                    // Assurez-vous d'avoir un mécanisme pour mettre à jour le contenu de votre tableau avec les données de la réponse AJAX
+                },
+                error: function(xhr, status, error) {
+                    // Gérer les erreurs éventuelles
+                }
+            });
+        });
+    });
+</script>
+
     </body>
 
 <!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->

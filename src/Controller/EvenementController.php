@@ -170,50 +170,6 @@ public function calendrier(EvenementRepository $evenementRepository): Response
     ]);
 }
 
-#[Route("/admin/modifier-date-evenement/{id}", name:"modifier_date_evenement")]
-public function modifierDateEvenement(Request $request, int $id, EvenementRepository $evenementRepository): JsonResponse
-{
-    // Récupérer l'événement depuis le repository
-    $evenement = $evenementRepository->find($id);
-
-    // Vérifier si l'événement existe
-    if (!$evenement) {
-        return new JsonResponse(['success' => false, 'message' => 'Événement non trouvé.'], 404);
-    }
-
-    // Récupérer la nouvelle date depuis la requête
-    $newDate = new \DateTime($request->request->get('newDate'));
-
-    // Mettre à jour la date de l'événement
-    $evenement->setDate($newDate);
-
-    // Enregistrer les modifications dans la base de données
-    $entityManager = $this->getDoctrine()->getManager();
-    $entityManager->flush();
-
-    // Retourner une réponse JSON
-    return new JsonResponse(['success' => true, 'message' => 'Date de l\'événement mise à jour avec succès.']);
-}
-
-#[Route("/admin/supprimer-evenement/{id}", name:"supprimer_evenement")]
-public function supprimerEvenementClender(Request $request, int $id, EvenementRepository $evenementRepository): JsonResponse
-{
-    // Récupérer l'événement depuis le repository
-    $evenement = $evenementRepository->find($id);
-
-    // Vérifier si l'événement existe
-    if (!$evenement) {
-        return new JsonResponse(['success' => false, 'message' => 'Événement non trouvé.'], 404);
-    }
-
-    // Supprimer l'événement de la base de données
-    $entityManager = $this->getDoctrine()->getManager();
-    $entityManager->remove($evenement);
-    $entityManager->flush();
-
-    // Retourner une réponse JSON
-    return new JsonResponse(['success' => true, 'message' => 'Événement supprimé avec succès.']);
-}
 
 
  
@@ -290,6 +246,40 @@ public function supprimerEvenementClender(Request $request, int $id, EvenementRe
             return new JsonResponse(['success' => false, 'message' => 'Données incomplètes.'], 400);
         }
     }
+    #[Route("/filtrer-evenements", name: "filtrer_evenements")]
+    public function filtrerEvenements(Request $request, EvenementRepository $evenementRepository): JsonResponse
+    {
+        // Récupérer les dates "From" et "To" de la requête
+        $fromDate = new \DateTime($request->query->get('from'));
+        $toDate = new \DateTime($request->query->get('to'));
+        
+        // Effectuer la logique de filtrage des événements en fonction de ces dates
+        // Vous devrez implémenter cette logique en fonction de votre modèle de données et de votre logique métier
+        
+        // Supposons que vous récupériez les événements filtrés de votre repository d'événements
+        $evenements = $evenementRepository->filtrerParDate($fromDate, $toDate);
+        
+        // Convertir les événements filtrés en un tableau associatif pour la réponse JSON
+        $formattedEvents = [];
+        foreach ($evenements as $evenement) {
+            $formattedEvents[] = [
+                'id' => $evenement->getId(),
+                'nomEvenement' => $evenement->getNomEvenement(),
+                'categorie' => $evenement->getCategorie(),
+                'objectif' => $evenement->getObjectif(),
+                'nbrPlace' => $evenement->getNbrPlace(),
+                'Date' => $evenement->getDate()->format('Y-m-d'),
+                'Time' => $evenement->getTime()->format('H:i:s'),
+                'etat' => $evenement->isEtat() ? 'Actif' : 'Inactif',
+                'user' => $evenement->getUser()->getUsername(),
+                // Ajoutez d'autres propriétés d'événement si nécessaire
+            ];
+        }
+        
+        // Retourner les événements filtrés au format JSON
+        return new JsonResponse($formattedEvents);
+    }
     
-
+    
+ 
 }
