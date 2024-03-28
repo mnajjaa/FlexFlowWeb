@@ -42,7 +42,8 @@
     <link rel="stylesheet" href="{{asset('front-office/css/style.css')}}">
 	<link class="skin" rel="stylesheet" href="{{asset('front-office/css/skin/skin-1.css')}}">
     {% endblock %}
-	
+	<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 	<!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com/">
 	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -336,41 +337,40 @@
     <div class="container container-offset">
         <div class="row">
             <!-- Colonne des dropdowns de filtre -->
-            <div class="col-lg-3">
-                <h3>Filtrer par</h3>
-                <div class="form-group">
-                    <label for="categorieDropdown">Catégorie</label>
-                    <select class="form-control" id="categorieDropdown">
-                        <option value="">Toutes les catégories</option>
-                        {% for category in categories %}
-                        <option value="{{ category }}" {% if category == selectedCategory %}selected{% endif %}>{{ category }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="objectifDropdown">Objectif</label>
-                    <select class="form-control" id="objectifDropdown">
-                        <option value="">Tous les objectifs</option>
-                        {% for objectif in objectifs %}
-                        <option value="{{ objectif }}" {% if objectif == selectedObjectif %}selected{% endif %}>{{ objectif }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="cibleDropdown">Cible</label>
-                    <select class="form-control" id="cibleDropdown">
-                        <option value="">Toutes les cibles</option>
-                        {% for cible in cibles %}
-                        <option value="{{ cible }}" {% if cible == selectedCible %}selected{% endif %}>{{ cible }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
+           <div class="col-lg-3">
+    <h3>Filtrer par</h3>
+    <div class="form-group">
+        <select class="form-control" id="categorieDropdown">
+            <option value=""><i class="fas fa-plus"></i> Catégorie</option>
+            {% for category in categories %}
+            <option value="{{ category }}" {% if category == selectedCategory %}selected{% endif %}><i class="fas fa-minus"></i> {{ category }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <select class="form-control" id="objectifDropdown">
+            <option value=""><i class="fas fa-plus"></i> Objectif</option>
+            {% for objectif in objectifs %}
+            <option value="{{ objectif }}" {% if objectif == selectedObjectif %}selected{% endif %}><i class="fas fa-minus"></i> {{ objectif }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <select class="form-control" id="cibleDropdown">
+            <option value=""><i class="fas fa-plus"></i> Cible</option>
+            {% for cible in cibles %}
+            <option value="{{ cible }}" {% if cible == selectedCible %}selected{% endif %}><i class="fas fa-minus"></i> {{ cible }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button class="btn btn-primary mt-3" id="resetFilter">Réinitialiser</button>
+</div>
+
 			
             <!-- Colonne des cartes de cours -->
             <div class="col-lg-9 mt-4 mt-lg-0"> <!-- Ajout de la classe mt-4 mt-lg-0 pour ajouter une marge supérieure -->
                 <div class="row">
-                    {% for cour in cours %}
+                    {% for cour in pagination %}
                     <div class="col-lg-4 col-md-6 m-b30">
                         <div class="card">
                             <div class="dz-box dz-overlay-effect2 overflow-hidden">
@@ -385,12 +385,20 @@
                                 </div>
                             </div>
                         </div>
+						
                     </div>
-                    {% endfor %}
-                </div>
+                 {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="col-lg-12 mt-4">
+            <div class="pagination justify-content-end">
+                {{ knp_pagination_render(pagination, 'GestionCours/pagination.html.twig') }}
             </div>
         </div>
     </div>
+</div>
 
     <script>
         // Ajouter des écouteurs d'événements aux dropdowns pour détecter les changements de sélection
@@ -408,9 +416,19 @@
             var selectedCible = this.value;
             window.location.href = "{{ path('liste_cours') }}?cible=" + selectedCible;
         });
+
+
+		  // Ajouter un gestionnaire d'événements au bouton de réinitialisation
+    document.getElementById('resetFilter').addEventListener('click', function() {
+        // Rediriger vers la page initiale des cours
+        window.location.href = "{{ path('liste_cours') }}";
+    });
     </script>
+
+	
 </div>
 
+                        
 
 		
 		

@@ -16,7 +16,7 @@ use App\Entity\Participation;
 use App\Entity\Cours;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-
+use Knp\Component\Pager\PaginatorInterface;
 
 
 
@@ -31,7 +31,7 @@ class CourMembreController extends AbstractController
 
 
     #[Route('/cours', name: 'liste_cours')]
-public function listeCours(Request $request, CoursRepository $coursRepository): Response
+public function listeCours(Request $request, CoursRepository $coursRepository, PaginatorInterface $paginator): Response
 {
     $categories = $coursRepository->findDistinctCategories();
     $objectifs = $coursRepository->findDistinctObjectifs();
@@ -67,8 +67,15 @@ public function listeCours(Request $request, CoursRepository $coursRepository): 
         return $cour->getCapacite() > 0;
     });
 
+     // Pagination
+     $pagination = $paginator->paginate(
+        $cours, // Requête à paginer
+        $request->query->getInt('page', 1), // Numéro de page par défaut
+        6 // Nombre d'éléments par page
+    );
+
     return $this->render('GestionCours/imageffect.html.twig', [
-        'cours' => $cours,
+        'pagination' => $pagination,
         'categories' => $categories,
         'objectifs' => $objectifs,
         'cibles' => $cibles,
