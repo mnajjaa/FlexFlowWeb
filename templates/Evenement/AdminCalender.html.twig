@@ -66,9 +66,8 @@
         let calendarElt = document.querySelector("#calendar")
 
         let calendar = new FullCalendar.Calendar(calendarElt, {
-            initialView: 'timeGridWeek',
-            locale: 'fr',
-            timeZone: 'Europe/Paris',
+            initialView: 'dayGridMonth',
+            
             headerToolbar: {
                 start: 'prev,next today',
                 center: 'title',
@@ -77,6 +76,26 @@
             events: {{ data|raw }},
             editable: true,
             eventResizableFromStart: true
+        })
+         calendar.on('eventChange', (e) => {
+            let url = `/api/${e.event.id}/edit`
+            let donnees = {
+                "title": e.event.title,
+                "start": e.event.start,
+                "categorie":e.event.extendedProps.categorie,
+                "objectif":e.event.extendedProps.objectif,
+                "nbrdePlace":e.event.extendedProps.nbrdePlace,
+                "id":e.event.id,
+                "Etat":e.event.extendedProps.Etat,
+                "user":e.event.extendedProps.User,
+                  "_method":"PUT"
+
+            }
+            
+            let xhr = new XMLHttpRequest
+
+            xhr.open("PUT", url)
+            xhr.send(JSON.stringify(donnees))
         })
         calendar.render();
 

@@ -6,6 +6,7 @@ use App\Entity\Evenement;
 use App\Form\AjouterEvenementType;
 use App\Form\EvenementType;
 use App\Repository\EvenementRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -226,9 +227,23 @@ public function supprimerEvenementClender(Request $request, int $id, EvenementRe
         // Convertissez les événements en un tableau JSON
         $rdvs = [];
         foreach ($events as $event) {
+            // Récupérez la date et l'heure séparément
+            $date = $event->getDate()->format('Y-m-d');
+            $time = $event->getTime()->format('H:i:s');
+    
+            $start = $date . 'T' . $time;
+    
             $rdvs[] = [
+                'id'=>$event->getId(),
                 'title' => $event->getNomEvenement(),
-                'start' => $event->getdate()->format('Y-m-d'),
+                'start' => $start,
+                'categorie'=>$event->getCategorie(),
+                'objectif'=>$event->getObjectif(),
+                "nbrdePlace"=>$event->getNbrPlace(),
+                'Etat'=>$event->isEtat(),
+                'user'=>$event->getUser(),
+                
+
                 // Ajoutez d'autres propriétés d'événement si nécessaire
             ];
         }
@@ -238,6 +253,43 @@ public function supprimerEvenementClender(Request $request, int $id, EvenementRe
         return $this->render('Evenement/AdminCalender.html.twig', [
             'data' => $data,
         ]);
-
     }
+
+  
+    #[Route("/api/{id}/edit", name: "api_event_edit")]
+    public function majEvent(?Evenement $evenement, Request $request): JsonResponse
+    {
+        // On récupère les données
+        $donnees = json_decode($request->getContent());
+    
+        if (
+            isset($donnees->title) && !empty($donnees->title) &&
+            isset($donnees->start) && !empty($donnees->start) 
+        ) {
+            // Les données sont complètes
+            // On initialise un code
+            $code = 200;
+    
+            // On vérifie si l'événement existe
+            if (!$evenement) {
+                return new JsonResponse(['success' => false, 'message' => 'Événement non trouvé.'], 404);
+            }
+    
+            // On met à jour uniquement les champs nécessaires
+            $evenement->setNomEvenement($donnees->title);
+            $evenement->setDate(new \DateTime($donnees->start));
+    
+            // Enregistrer les modifications dans la base de données
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+    
+            // On retourne le code
+            return new JsonResponse(['success' => true, 'message' => 'Événement mis à jour avec succès.']);
+        } else {
+            // Les données sont incomplètes
+            return new JsonResponse(['success' => false, 'message' => 'Données incomplètes.'], 400);
+        }
+    }
+    
+
 }
