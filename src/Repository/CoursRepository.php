@@ -21,6 +21,52 @@ class CoursRepository extends ServiceEntityRepository
         parent::__construct($registry, Cours::class);
     }
 
+
+    public function findDistinctCategories(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('cours')
+            ->select('DISTINCT cours.Categorie AS categorie')
+            ->getQuery();
+
+        $result = $queryBuilder->getResult();
+
+        $categories = array_map(function($item) {
+            return $item['categorie'];
+        }, $result);
+
+        return $categories;
+    }
+
+    public function findDistinctObjectifs(): array
+{
+    $queryBuilder = $this->createQueryBuilder('cours')
+        ->select('DISTINCT cours.Objectif AS objectif')
+        ->getQuery();
+
+    $result = $queryBuilder->getResult();
+
+    $objectifs = array_map(function($item) {
+        return $item['objectif'];
+    }, $result);
+
+    return $objectifs;
+}
+
+public function findDistinctCibles(): array
+{
+    $queryBuilder = $this->createQueryBuilder('cours')
+        ->select('DISTINCT cours.Cible AS cible')
+        ->getQuery();
+
+    $result = $queryBuilder->getResult();
+
+    $cibles = array_map(function($item) {
+        return $item['cible'];
+    }, $result);
+
+    return $cibles;
+}
+
 //    /**
 //     * @return Cours[] Returns an array of Cours objects
 //     */

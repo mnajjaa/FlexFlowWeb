@@ -297,76 +297,121 @@
 	</header>
 	<!-- Header -->
 	
-	<div class="page-content bg-white">
+	
 		<!-- Banner  -->
-		<div class="dz-bnr-inr style-2" style="background-image: url('{{asset('front-office/images/banner/banner-2.png')}}')">
-			<div class="banner-gradient"></div>
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8">
-						<div class="dz-bnr-inr-entry">
-							<h1>Image Effects</h1>
-							<!-- Breadcrumb Row -->
-							<nav aria-label="breadcrumb" class="breadcrumb-row">
-								<ul class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Image Effects</li>
-								</ul>
-							</nav>
-							<!-- Breadcrumb Row End -->
-						</div>
-					</div>
-				</div>	
-				<div class="banner-media">
-					<img src="{{asset('front-office/images/banner/pic5.png')}}" alt="/">
-                    
-				</div>
-			</div>	
-		</div>
-		<!-- Banner End -->
-		
-
-		<!-- Image effect 1 -->
-		
-		<!-- Image effect 1 -->
-		
-		<!-- Image effect 2 -->
-		
-		<!-- Image effect 2 -->
-		
-		<!-- Image effect 3 -->
-		<section class="content-inner p-b0">
-			<div class="container">
-				<div class="text-center m-b30">
-					
-				</div>
-                
-				<div class="row">
-                {% for cour in cours %}
-					<div class="col-lg-4 col-md-6 m-b30">
-                    <div class="card">
-                    <div class="dz-box dz-overlay-effect2 overflow-hidden">
-							<div class="dz-media">
-                    <img src="data:image/jpeg;base64,{{ cour.getImage }}" class="card-img-top" alt="{{ cour.getNomCour() }}">
-						
-                            <div class="card-body">
-                            <center><h2>{{ cour.getNomCour() }}</h2></center>
-                            </div>
-                            
-								
-							</div>
-							<div class="overlay-bx">
-								<a href="{{ path('voir_cours', {'id': cour.getId()}) }}" class="btn btn-secondary">Voir plus</a>
-							</div>
+	<div class="page-content bg-white">
+    <!-- Banner  -->
+    <div class="dz-bnr-inr style-2" style="background-image: url('{{asset('front-office/images/banner/banner-2.png')}}')">
+        <div class="banner-gradient"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="dz-bnr-inr-entry">
+                        <h1>Nos cours</h1>
+                        <!-- Breadcrumb Row -->
+                        <nav aria-label="breadcrumb" class="breadcrumb-row">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Cours</li>
+                            </ul>
+                        </nav>
+                        <!-- Breadcrumb Row End -->
                     </div>
-						</div>
-					</div>
-					{% endfor %}
-				</div>
+                </div>
+            </div>    
+            <div class="banner-media">
+                <img src="{{asset('front-office/images/banner/pic5.png')}}" alt="/">
+            </div>
+        </div>  
+    </div>
+    <!-- Banner End -->
+
+	<style>
+    /* Style pour décaler le conteneur plus bas */
+    .container-offset {
+        margin-top: 50px; /* Ajustez la marge supérieure selon vos besoins */
+    }
+</style>
+
+    <div class="container container-offset">
+        <div class="row">
+            <!-- Colonne des dropdowns de filtre -->
+            <div class="col-lg-3">
+                <h3>Filtrer par</h3>
+                <div class="form-group">
+                    <label for="categorieDropdown">Catégorie</label>
+                    <select class="form-control" id="categorieDropdown">
+                        <option value="">Toutes les catégories</option>
+                        {% for category in categories %}
+                        <option value="{{ category }}" {% if category == selectedCategory %}selected{% endif %}>{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="objectifDropdown">Objectif</label>
+                    <select class="form-control" id="objectifDropdown">
+                        <option value="">Tous les objectifs</option>
+                        {% for objectif in objectifs %}
+                        <option value="{{ objectif }}" {% if objectif == selectedObjectif %}selected{% endif %}>{{ objectif }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cibleDropdown">Cible</label>
+                    <select class="form-control" id="cibleDropdown">
+                        <option value="">Toutes les cibles</option>
+                        {% for cible in cibles %}
+                        <option value="{{ cible }}" {% if cible == selectedCible %}selected{% endif %}>{{ cible }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+			
+            <!-- Colonne des cartes de cours -->
+            <div class="col-lg-9 mt-4 mt-lg-0"> <!-- Ajout de la classe mt-4 mt-lg-0 pour ajouter une marge supérieure -->
+                <div class="row">
+                    {% for cour in cours %}
+                    <div class="col-lg-4 col-md-6 m-b30">
+                        <div class="card">
+                            <div class="dz-box dz-overlay-effect2 overflow-hidden">
+                                <div class="dz-media">
+                                    <img src="data:image/jpeg;base64,{{ cour.getImage }}" class="card-img-top" alt="{{ cour.getNomCour() }}">
+                                    <div class="card-body">
+                                        <center><h2>{{ cour.getNomCour() }}</h2></center>
+                                    </div>
+                                </div>
+                                <div class="overlay-bx">
+                                    <a href="{{ path('voir_cours', {'id': cour.getId()}) }}" class="btn btn-secondary">Voir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Ajouter des écouteurs d'événements aux dropdowns pour détecter les changements de sélection
+        document.getElementById('categorieDropdown').addEventListener('change', function() {
+            var selectedCategory = this.value;
+            window.location.href = "{{ path('liste_cours') }}?categorie=" + selectedCategory;
+        });
+
+        document.getElementById('objectifDropdown').addEventListener('change', function() {
+            var selectedObjectif = this.value;
+            window.location.href = "{{ path('liste_cours') }}?objectif=" + selectedObjectif;
+        });
+
+        document.getElementById('cibleDropdown').addEventListener('change', function() {
+            var selectedCible = this.value;
+            window.location.href = "{{ path('liste_cours') }}?cible=" + selectedCible;
+        });
+    </script>
+</div>
 
 
-			</div>
-		</section>
 		
 		
 		<!-- Call To Action -->

@@ -31,24 +31,53 @@ class CourMembreController extends AbstractController
 
 
     #[Route('/cours', name: 'liste_cours')]
-    public function listeCours(CoursRepository $coursRepository): Response
-    {
-        $cours = $coursRepository->findBy(['etat' => 1]); // Récupérer tous les cours avec un état égal à 1 depuis le repository
-        // Convertir l'image BLOB en données binaires base64
-        foreach ($cours as $cour) {
-            // Convertir l'image BLOB en données binaires base64
-            $cour->setImage(base64_encode(stream_get_contents($cour->getImage())));
-        }
+public function listeCours(Request $request, CoursRepository $coursRepository): Response
+{
+    $categories = $coursRepository->findDistinctCategories();
+    $objectifs = $coursRepository->findDistinctObjectifs();
+    $cibles = $coursRepository->findDistinctCibles();
+    $selectedCategory = $request->query->get('categorie');
+    $selectedObjectif = $request->query->get('objectif');
+    $selectedCible = $request->query->get('cible');
+    $cours = $coursRepository->findBy(['etat' => 1]);
 
-         // Filtrer les cours dont la capacité est supérieure à 0
-         $cours = array_filter($cours, function($cour) {
-            return $cour->getCapacite() > 0;
+    if ($selectedCategory) {
+        $cours = array_filter($cours, function ($cour) use ($selectedCategory) {
+            return $cour->getCategorie() === $selectedCategory;
         });
-    
-        return $this->render('GestionCours/imageffect.html.twig', [
-            'cours' => $cours,
-        ]);
     }
+
+    if ($selectedObjectif) {
+        $cours = array_filter($cours, function ($cour) use ($selectedObjectif) {
+            return $cour->getObjectif() === $selectedObjectif;
+        });
+    }
+
+    if ($selectedCible) {
+        $cours = array_filter($cours, function ($cour) use ($selectedCible) {
+            return $cour->getCible() === $selectedCible;
+        });
+    }
+
+    foreach ($cours as $cour) {
+        $cour->setImage(base64_encode(stream_get_contents($cour->getImage())));
+    }
+
+    $cours = array_filter($cours, function ($cour) {
+        return $cour->getCapacite() > 0;
+    });
+
+    return $this->render('GestionCours/imageffect.html.twig', [
+        'cours' => $cours,
+        'categories' => $categories,
+        'objectifs' => $objectifs,
+        'cibles' => $cibles,
+        'selectedCategory' => $selectedCategory,
+        'selectedObjectif' => $selectedObjectif,
+        'selectedCible' => $selectedCible,
+    ]);
+}
+
 
     #[Route('/cours/{id}', name: 'voir_cours')]
 public function voirCours(int $id, CoursRepository $coursRepository, Request $request): Response
