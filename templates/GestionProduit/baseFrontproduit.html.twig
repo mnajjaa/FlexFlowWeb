@@ -451,9 +451,9 @@
 												<img src="data:image/jpeg;base64,{{ produit.image }}" class="card-img-top" alt="{{ produit.nom }}">
 												<div class="shop-meta">
 													<ul>
-													<li><a href="{{ path('produit_detail', {'id': produit.id}) }}">Quick View</a></li>
+													<li><a href="{{ path('produit_detail', {'id': produit.id}) }}">Plus details</a></li>
 
-														<li><a href="javascript:void(0)"><i class="yith-wcwl-icon fa fa-heart"></i></a></li>
+													<!--	<li><a href="javascript:void(0)"><i class="yith-wcwl-icon fa fa-heart"></i></a></li>-->
 														<li><a href="{{ path('consulter_panier') }}"><i class="fa-solid fa-cart-shopping"></i></a></li>
 													</ul>
 												</div>
@@ -530,7 +530,7 @@
 										<form role="search" method="post">
 											<div class="input-group">
 												<div class="input-side">
-													<input id="searchInput" name="text" class="form-control" placeholder="Search..." type="text">
+													<input id="searchInput" name="text" class="form-control" placeholder="Recherche..." type="text">
 													<div class="input-group-btn">
 														<button type="submit" class="btn">
 															<i class="flaticon-magnifying-glass"></i>
@@ -542,7 +542,7 @@
 									</div>
 
 	<div class="widget-title wow fadeInUp" data-wow-delay="0.4s">
-										<h4 class="title">Price</h4>
+										<h4 class="title">Prix</h4>
 									</div>
 			 <!-- Double curseur de plage de prix -->
    <div id="priceSlider"></div>
@@ -551,8 +551,8 @@
 <style>
     /* Personnalisation du slider */
     #priceSlider {
-        width: 350px;
-        height: 10px; /* Hauteur réduite */
+        width: 290px;
+        height: 7px; /* Hauteur réduite */
         background-color: black;
     }
 
@@ -565,7 +565,7 @@
     #priceSlider .noUi-handle {
         background-color: #FFBD13;
         width: 18px; /* Largeur du curseur */
-        height: 20px; /* Hauteur du curseur */
+        height: 18px; /* Hauteur du curseur */
     }
 </style>
 			<script>						

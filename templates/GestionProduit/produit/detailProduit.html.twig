@@ -368,19 +368,21 @@
 
                                 
 								<div class="meta-content wow fadeInUp" data-wow-delay="1.6s">
-									<div class="btn-quantity quantity-sm d-sm-block me-0">
-										<label class="form-label">Quantité</label>
-										<input  type="text" value="1" name="demo_vertical2">
-									</div>
+									
 									<div class="">
 										<span class="price-name">Prix</span>
-										<span class="price-num">{{ produit.prix }} dnt <del>$132.17</del></span>
+										<span class="price-num">{{ produit.prix }} dnt <del>20%</del></span>
 									</div>
 								</div>
 								<div class="cart-btn wow fadeInUp" data-wow-delay="1.7s">
-									<a href="shop-cart.html" class="btn btn-secondary text-uppercase btn-lg">Add To Cart</a>
+									<a href="{{ path('produits') }}" class="btn btn-secondary text-uppercase btn-lg">Retour au store</a>
 									
 								</div>
+
+
+
+
+								
 								<div class="dz-info wow fadeInUp" data-wow-delay="1.7s">
 									<ul>
 										<li>
@@ -489,7 +491,7 @@
 	</div>
 	
 	<!-- Footer -->
-    <footer class="site-footer style-1 bg-parallax"  style="background-image: url(front-office/images/background/footer-bg-2.jpg);" id="footer">
+		<footer class="site-footer style-1 bg-parallax" style="background-image: url(front-office/images/background/footer-bg-2.jpg);" id="footer">
 		<div class="footer-top">
             <div class="container">
 				<div class="row">
