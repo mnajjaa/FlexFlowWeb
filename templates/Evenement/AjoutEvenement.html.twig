@@ -1,5 +1,10 @@
 {% extends 'base-back.html.twig' %}
-
+{% block stylesheets %}
+    {# Inclure les fichiers CSS Bootstrap et SweetAlert2 ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
+{% endblock %}
 {% block body %}
 
 
@@ -151,7 +156,7 @@
 										<div class="mb-3 row">
 											<div class="col-md-2"></div>
 											<div class="col-md-10">
-												<button type="submit" class="btn btn-primary waves-effect waves-light w-md">Envoyer</button>
+												<button type="submit" id="submit-btn" class="btn btn-primary waves-effect waves-light w-md">Envoyer</button>
 												<button type="reset" class="btn btn-outline-danger waves-effect waves-light w-md">Annuler</button>
 											</div>
 										</div>
@@ -184,7 +189,25 @@
 			<!-- App js -->
 			<script src="{{asset('back-office/js/app.js')}}"></script>
 
+<!-- Inclure le script de SweetAlert2 à la fin du body -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('submit-btn').addEventListener('click', function(event) {
+        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+        Swal.fire({
+            icon: 'success',
+            title: 'Evenement a été ajouté avec succès !',
+            showConfirmButton: false,
+            timer: 3000
+        }).then(() => {
+            // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
+            document.querySelector('form').submit();
+        });
+    });
+});
+</script>
 		</body>
 
 		<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->

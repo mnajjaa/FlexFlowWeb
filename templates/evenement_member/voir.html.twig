@@ -32,12 +32,12 @@
 						<div class="row justify-content-center">
                                 {% for evenement in evenements %}
 
-							<div class="col-xl-6 col-lg-8">
+							<div class="col-lg-5 col-md-4 col-sm-6">
 								<div class="dz-card style-1 blog-half m-b30 overlay-shine wow fadeInUp" data-wow-delay="0.1s">
 									<div class="dz-media">
                         <img src="data:image;base64,{{ evenement.image }}" alt="{{ evenement.nomEvenement }}" style="max-width: 100%; height: auto;">
 									</div>
-									<div class="dz-info">
+									<div class="dz-info" >
 										<div class="dz-meta">
 											<ul>
 												 <li class="dz-date">
@@ -51,7 +51,7 @@
 										<h4 class="dz-title"><a href="event-detail.html">{{evenement.nomEvenement }}</a></h4>
                                         <p>{{evenement.categorie }}</p>
 
-										<a class="read-btn btn-link" href="event-detail.html">Read More</a>
+<a class="read-btn btn-link" href="{{ path('voir_evenements', {'id': evenement.getId()}) }}">Read More</a>
 									</div>
 								</div>
 							</div>
