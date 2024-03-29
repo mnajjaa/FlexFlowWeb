@@ -1,0 +1,96 @@
+{% extends 'base-front.html.twig' %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from powerzone.dexignzone.com/xhtml/events.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 23 Mar 2024 22:02:42 GMT -->
+<head>
+	
+	<!-- Title -->
+	<title>PowerZone - Fitness, Workout & Gym HTML Template</title>
+	
+	<!-- Meta -->
+	
+</head>
+<body id="bg" class="data-typography-1">
+
+<div class="page-wraper">
+
+	
+	
+	<div class="page-content bg-white">
+		
+		
+		
+		<!-- Our Events -->
+		<section class="content-inner">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-lg-12">
+						<div class="row justify-content-center">
+                                {% for evenement in evenements %}
+
+							<div class="col-xl-6 col-lg-8">
+								<div class="dz-card style-1 blog-half m-b30 overlay-shine wow fadeInUp" data-wow-delay="0.1s">
+									<div class="dz-media">
+                        <img src="data:image;base64,{{ evenement.image }}" alt="{{ evenement.nomEvenement }}" style="max-width: 100%; height: auto;">
+									</div>
+									<div class="dz-info">
+										<div class="dz-meta">
+											<ul>
+												 <li class="dz-date">
+                                    <span>{{ evenement.date|date('d') }}</span> {{ evenement.date|date('M') }}
+                                </li>
+												<li class="dz-time">
+                                    <a href="javascript:void(0);">{{ evenement.time|date('H:i') }}</a>
+												</li>
+											</ul>
+										</div> 
+										<h4 class="dz-title"><a href="event-detail.html">{{evenement.nomEvenement }}</a></h4>
+                                        <p>{{evenement.categorie }}</p>
+
+										<a class="read-btn btn-link" href="event-detail.html">Read More</a>
+									</div>
+								</div>
+							</div>
+						        {% endfor %}
+
+							
+						
+							
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Our Events -->
+	
+		
+	</div>
+	
+
+	
+	<div class="scroltop-progress scroltop-primary active-progress">
+		<svg width="100%" height="100%" viewBox="-1 -1 102 102">
+			<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 24.3299px;"></path>
+		</svg>
+	</div>
+	
+</div>
+<!-- JAVASCRIPT FILES ========================================= -->
+<script src="assets/js/jquery.min.js"></script><!-- JQUERY.MIN JS -->
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script><!-- BOOTSTRAP.MIN JS -->
+<script src="assets/vendor/wow/wow.js"></script><!-- WOW.JS -->
+<script src="assets/js/dz.carousel.js"></script><!-- OWL-CAROUSEL -->
+<script src="assets/js/dz.ajax.js"></script><!-- AJAX -->
+<script src="assets/js/custom.js"></script><!-- CUSTOM JS -->
+<script src="assets/vendor/rangeslider/rangeslider.js"></script><!-- RANGESLIDER -->
+<script src="assets/vendor/switcher/switcher.js"></script><!-- SWITCHER -->
+</body>
+
+<!-- Mirrored from powerzone.dexignzone.com/xhtml/events.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 23 Mar 2024 22:02:44 GMT -->
+</html>
+{% endblock %}
