@@ -21,7 +21,7 @@ class MembreController extends AbstractController
         ]);
     }
 
-    #[Route('/profile', name: 'membre_profile')]
+    #[Route('/profileMembre', name: 'membre_profile')]
     public function profile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $user = new User();
@@ -36,7 +36,7 @@ class MembreController extends AbstractController
         ]);
     }
 
-    #[Route('/editProfile', name: 'membre_edit_profile')]
+    #[Route('/editProfileMembre', name: 'membre_edit_profile')]
     public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $user = new User();

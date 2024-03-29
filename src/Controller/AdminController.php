@@ -30,7 +30,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/profile', name: 'admin_profile')]
+    #[Route('/profileAdmin', name: 'admin_profile')]
     public function profile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $user = new User();
@@ -45,7 +45,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/editProfile', name: 'admin_edit_profile')]
+    #[Route('/editProfileAdmin', name: 'admin_edit_profile')]
     public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $user = new User();
@@ -71,7 +71,7 @@ if ($request->isMethod('POST')) {
             $entityManager->flush();
             return $this->redirectToRoute('admin_profile');
         }        
-        return $this->render('admin/editProfile.html.twig', [
+        return $this->render('admin/editProfileAdmin.html.twig', [
             'admin' => $user,
         ]);
     }

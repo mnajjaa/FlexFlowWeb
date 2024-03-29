@@ -277,8 +277,8 @@
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="rounded-circle header-profile-user" src="{{app.user.image}}"
-                                    alt="Header Avatar">
+                                <img class="rounded-circle header-profile-user" src="{{asset('uploads/users/' ~app.user.image)}}" >
+                                    
                                 <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">{{app.user.nom}}</span>
                                 <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15"></i>
                             </button>

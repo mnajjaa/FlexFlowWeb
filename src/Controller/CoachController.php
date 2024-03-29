@@ -21,7 +21,7 @@ class CoachController extends AbstractController
         ]);
     }
 
-#[Route('/profile', name: 'coach_profile')]
+#[Route('/profileCoach', name: 'coach_profile')]
     public function profile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $user = new User();
@@ -36,7 +36,7 @@ class CoachController extends AbstractController
         ]);
     }
 
-    #[Route('/editProfile', name: 'coach_edit_profile')]
+    #[Route('/editProfileCoach', name: 'coach_edit_profile')]
     public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $user = new User();
@@ -50,21 +50,38 @@ class CoachController extends AbstractController
 
         
 if ($request->isMethod('POST')) {
-           
+    
+    
+          //code ajout image
+          //les images sont stockées dans le dossier public/uploads/users 
+
+            $file = $request->files->get('image');
+            if ($file) {
+                $fileName = (string)md5(uniqid()) . '.' . $file->guessExtension();
+                $file->move($this->getParameter('uploads'), $fileName);
+
+                // Update the user's image
+                $user->setimage($fileName);
+            }
+
 
 
             $user->setNom($request->request->get('nom'));
+            // var_dump($request->request->get('nom'));
             $user->setTelephone($request->request->get('telephone'));
-            $user->setimage($request->request->get('image'));
+            //$user->setimage($fileName);
             $user->setEmail($request->request->get('email'));
+            //var_dump($user);
 
             $entityManager->persist($user);
             $entityManager->flush();
             return $this->redirectToRoute('coach_profile');
+            
         }        
-        return $this->render('coach/editProfile.html.twig', [
+        return $this->render('coach/editProfileCoach.html.twig', [
             'coach' => $user,
         ]);
+    
     }
 }
  /* $email=$request->getSession()->get(Security::LAST_USERNAME);
