@@ -30,7 +30,7 @@ class CoachController extends AbstractController
         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
         // $id = $user->getId();
         // Remove the unused variable $id
-        
+
         return $this->render('coach/profile.html.twig', [
             'coach' => $user,
         ]);

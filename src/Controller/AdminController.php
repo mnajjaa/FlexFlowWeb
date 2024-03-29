@@ -15,6 +15,9 @@ use App\Form\UserType;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 
 class AdminController extends AbstractController
@@ -26,6 +29,53 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
+    #[Route('/profile', name: 'admin_profile')]
+    public function profile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
+    {
+        $user = new User();
+        
+        $email =  $request->getSession()->get(Security::LAST_USERNAME);
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        // $id = $user->getId();
+        // Remove the unused variable $id
+        
+        return $this->render('admin/profile.html.twig', [
+            'admin' => $user,
+        ]);
+    }
+
+    #[Route('/editProfile', name: 'admin_edit_profile')]
+    public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
+    {
+        $user = new User();
+        
+        $email = $request->getSession()->get(Security::LAST_USERNAME);
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        
+        if (!$user) {
+            throw $this->createNotFoundException('User not found.');
+        }
+
+        
+if ($request->isMethod('POST')) {
+           
+
+
+            $user->setNom($request->request->get('nom'));
+            $user->setTelephone($request->request->get('telephone'));
+            $user->setimage($request->request->get('image'));
+            $user->setEmail($request->request->get('email'));
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_profile');
+        }        
+        return $this->render('admin/editProfile.html.twig', [
+            'admin' => $user,
+        ]);
+    }
+
     #[Route('/listeMembres', name: 'liste_membres')]
     public function membres(UserRepository  $userRepository): Response
     {  
@@ -169,8 +219,6 @@ return $this->render('admin/editMembre.html.twig', [
     'membre'=>$membre
 ]);
 }
-
-
 
 #[Route('/deleteMembre/{id}', name: 'delete_membre')]
   public function deleteMembre(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
