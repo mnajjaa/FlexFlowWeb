@@ -12,19 +12,40 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ProduitType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('nom', TextType::class, [
-            'label' => 'nom'
+    ->add('nom', TextType::class, [
+        'label' => 'Nom du produit',
+        'constraints' => [
+            new Regex([
+                'pattern' => '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç])+[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç]*$/u',
+                'message' => 'Le nom du produit doit contenir au moins une lettre.',
+            ]),
+        ],
+    ])
+    ->add('Description', TextType::class, [
+        'label' => 'Description',
+        'constraints' => [
+            new Regex([
+                'pattern' => '/^[\p{L}\p{M}\p{N}\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç]*$/u',
+                'message' => 'La description ne peut être vide et peut contenir divers caractères spéciaux.',
+            ]),
+        ],
+    ])
+
+        ->add('prix', NumberType::class, [
+            'label' => 'prix',
+            'invalid_message' => 'Veuillez saisir un prix valide (chiffres uniquement et supérieur à zéro)',
+            'attr' => ['min' => 0],
         ])
-        ->add('Description', TextType::class, [
-            'label' => 'Description'
-        ])
-        ->add('Prix')
 
         ->add('Type', ChoiceType::class, [
             'label' => 'Type',
@@ -33,19 +54,37 @@ class ProduitType extends AbstractType
                 'jeux' => 'jeux',
                 'Vitamines' => 'Vitamines',
                 'Proteine' => 'Proteine',
-
                 'vetements' => 'vetements',
+                'Fruits' => 'Fruits',
+
             ],
         ])
-            ->add('quantite')
-            ->add('quantite_Vendues')
-            ->add('imageFile', FileType::class, [
-                'label' => 'Uploader une image',
-                'mapped' => false, // Ce champ ne sera pas mappé à une propriété de l'entité Cours
-                'required' => false, // Le champ n'est pas obligatoire
-            ])
-            
-        ;
+        ->add('quantite', NumberType::class, [
+            'label' => 'Quantité',
+            'invalid_message' => 'Veuillez saisir une quantité valide (chiffres uniquement et supérieur à zéro)',
+            'attr' => ['min' => 0],
+        ])
+        ->add('quantiteVendues', NumberType::class, [
+            'label' => 'Quantité vendues',
+            'invalid_message' => 'Veuillez saisir une quantité vendue valide (chiffres uniquement et supérieur à zéro)',
+            'attr' => ['min' => 0],
+        ])
+        ->add('imageFile', FileType::class, [
+            'label' => 'Uploader une image',
+            'mapped' => false,
+            'required' => true,
+            'constraints' => [
+                new NotBlank(['message' => 'Veuillez télécharger une image.']),
+                new File([
+                    'maxSize' => '1024k',
+                    'mimeTypes' => [
+                        'image/jpeg',
+                        'image/png',
+                    ],
+                    'mimeTypesMessage' => 'Veuillez télécharger une image au format JPG ou PNG.',
+                ]),
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -54,4 +93,18 @@ class ProduitType extends AbstractType
             'data_class' => Produit::class,
         ]);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 }  

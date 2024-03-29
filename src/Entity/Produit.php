@@ -18,22 +18,28 @@ class Produit
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 500)]
     private ?string $description = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Le champ 'Prix' ne peut pas être vide")]
-    #[Assert\Type(type: "float", message: "Le champ 'Prix' doit être un nombre décimal")]
-    #[Assert\PositiveOrZero(message: "Le champ 'Prix' ne peut pas être négatif")]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'numeric')]
+    #[Assert\Range(min: 0)]
     private ?float $prix = null;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'numeric')]
+    #[Assert\Range(min: 0)]
     private ?int $quantite = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'numeric')]
+    #[Assert\Range(min: 0)]
     private ?int $quantiteVendues = null;
 
     #[ORM\Column(type: Types::BLOB)]
@@ -127,4 +133,8 @@ class Produit
 
         return $this;
     }
+
+
+
+    
 }

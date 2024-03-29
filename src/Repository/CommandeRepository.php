@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Commande;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @extends ServiceEntityRepository<Commande>
@@ -45,4 +46,12 @@ class CommandeRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findPaginatedCommandes($page, $pageSize): Query
+{
+    return $this->createQueryBuilder('c')
+        ->orderBy('c.dateCommande', 'DESC')
+        ->setMaxResults($pageSize)
+        ->setFirstResult(($page - 1) * $pageSize)
+        ->getQuery();
+}
 }

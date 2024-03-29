@@ -4,8 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Cours;
 use App\Entity\Produit;
+use App\Entity\Commande;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
+use App\Repository\CommandeRepository;
+use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +20,7 @@ use App\Repository\CoursRepository;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 class AdminController1 extends AbstractController
@@ -59,7 +64,7 @@ class AdminController1 extends AbstractController
 
 
     
-        return $this->render('crud/ajouter.html.twig', [
+        return $this->render('GestionProduit/crud/ajouter.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -79,11 +84,116 @@ class AdminController1 extends AbstractController
                 $produit->setImage($imageData);
             }
         }
-        return $this->render('crud/liste.html.twig', [
+        return $this->render('GestionProduit/crud/liste.html.twig', [
             'produits' => $produits, // Passer les produits récupérés à la vue
         ]);
     }
 
+
+    #[Route('/admin/listecommande', name: 'commande-liste')]
+    public function listecommande(Request $request, CommandeRepository $commandeRepository,PaginatorInterface $paginator , ProduitRepository $produitRepository, EntityManagerInterface $entityManager): Response
+    {
+
+        
+
+        // Récupérer la date d'aujourd'hui
+    // Récupérer la date d'aujourd'hui
+    $aujourdHui = new \DateTime();
+
+    // Récupérer les commandes passées aujourd'hui
+    $commandesAujourdHui = $commandeRepository->findBy([
+        'dateCommande' => $aujourdHui
+    ]);
+
+    // Calculer le montant total des commandes d'aujourd'hui
+    $montantTotalAujourdHui = 0;
+    foreach ($commandesAujourdHui as $commande) {
+        $montantTotalAujourdHui += $commande->getMontant();
+    }
+
+         // Récupérer toutes les commandes
+    $commandes = $commandeRepository->findAll();
+
+    // Paginer les commandes avec un maximum de 8 commandes par page
+    $commandesPaginated = $paginator->paginate(
+        $commandes, // Requête à paginer
+        $request->query->getInt('page', 1), // Numéro de page par défaut
+        8 // Nombre d'éléments par page
+    );
+        $montantTotal = 0;
+    
+        foreach ($commandes as $commande) {
+            $montantTotal += $commande->getMontant();
+        }
+
+        $nomsUtilisateurs = $entityManager->createQueryBuilder()
+        ->select('c.nomUser')
+        ->from(Commande::class, 'c')
+        ->getQuery()
+        ->getResult();
+
+    // Compter la fréquence de chaque nom d'utilisateur
+    $nomsUtilisateursCounts = array_count_values(array_column($nomsUtilisateurs, 'nomUser'));
+
+    // Trouver le nom d'utilisateur le plus fréquemment répété
+    $nomUtilisateurPlusRepete = array_search(max($nomsUtilisateursCounts), $nomsUtilisateursCounts);
+    $montantParJour = [];
+    
+    // Parcourir les commandes pour calculer le montant total par jour
+    foreach ($commandes as $commande) {
+        $date = $commande->getDateCommande()->format('Y-m-d');
+        $montant = $commande->getMontant();
+
+        if (!isset($montantParJour[$date])) {
+            $montantParJour[$date] = 0;
+        }
+
+        $montantParJour[$date] += $montant;
+        // Récupérer le produit le plus vendu
+        $produitPlusVendu = $produitRepository->findMostSoldProduct();
+        $produitMoinsVendu = $produitRepository->findLeastSoldProduct();
+
+        return $this->render('GestionProduit/crud/commandeTable.html.twig', [
+            'commandes' => $commandesPaginated,
+            'montantTotal' => $montantTotal,
+            'montantTotalAujourdHui' => $montantTotalAujourdHui,
+            'nomUtilisateurPlusRepete' => $nomUtilisateurPlusRepete,
+            'montantParJour' => $montantParJour,
+            'produitPlusVendu' => $produitPlusVendu,
+            'produitMoinsVendu' => $produitMoinsVendu,  
+        ]);
+    }
+
+
+   }
+
+
+
+   #[Route('/chart', name: 'charte_commandes')]
+public function charteCommandes(CommandeRepository $commandeRepository): Response
+{
+    // Récupérer toutes les commandes avec leurs dates et montants associés
+    $commandes = $commandeRepository->findAll();
+
+    // Initialiser un tableau pour stocker le montant total par jour
+    $montantParJour = [];
+
+    // Parcourir les commandes pour calculer le montant total par jour
+    foreach ($commandes as $commande) {
+        $date = $commande->getDateCommande()->format('Y-m-d');
+        $montant = $commande->getMontant();
+
+        if (!isset($montantParJour[$date])) {
+            $montantParJour[$date] = 0;
+        }
+
+        $montantParJour[$date] += $montant;
+    }
+
+    return $this->render('GestionProduit/crud/chartChiffre.html.twig', [
+        'montantParJour' => $montantParJour,
+    ]);
+}
 
 
     #[Route('/admin/cours/supprimer/{id}', name: 'produit-supprimer', methods: ['POST'])]
@@ -126,7 +236,7 @@ class AdminController1 extends AbstractController
             return $this->redirectToRoute('produit-liste');
         }
     
-        return $this->render('crud/modifier.html.twig', [
+        return $this->render('GestionProduit/crud/modifier.html.twig', [
             'form' => $form->createView(),
         ]);
     }

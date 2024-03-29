@@ -1,3 +1,7 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+execute_python:
+    path: /execute-python
+    controller: App\Controller\ProduitController::executePython
