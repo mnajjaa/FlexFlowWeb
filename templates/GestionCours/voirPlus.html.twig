@@ -454,9 +454,9 @@ document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'success',
             title: 'Participation avec succès !',
-			html: 'Un e-mail vous a été envoyé',
-            showConfirmButton: false,
-            timer: 4500
+			html: 'Un e-mail vous a été envoyé.',
+            showConfirmButton: true, // Affiche le bouton "OK"
+            confirmButtonText: 'OK', // Texte du bouton "OK"
         }).then(() => {
             // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
             document.querySelector('form').submit();
