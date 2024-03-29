@@ -90,6 +90,8 @@ class AdminController1 extends AbstractController
     }
 
 
+
+
     #[Route('/admin/listecommande', name: 'commande-liste')]
     public function listecommande(Request $request, CommandeRepository $commandeRepository,PaginatorInterface $paginator , ProduitRepository $produitRepository, EntityManagerInterface $entityManager): Response
     {
@@ -137,37 +139,44 @@ class AdminController1 extends AbstractController
 
     // Trouver le nom d'utilisateur le plus fréquemment répété
     $nomUtilisateurPlusRepete = array_search(max($nomsUtilisateursCounts), $nomsUtilisateursCounts);
-    $montantParJour = [];
     
-    // Parcourir les commandes pour calculer le montant total par jour
-    foreach ($commandes as $commande) {
-        $date = $commande->getDateCommande()->format('Y-m-d');
-        $montant = $commande->getMontant();
+     // Initialiser un tableau pour stocker le montant total par jour
+     $montantParJour = [];
 
-        if (!isset($montantParJour[$date])) {
-            $montantParJour[$date] = 0;
-        }
+     // Parcourir les commandes pour calculer le montant total par jour
+     foreach ($commandes as $commande) {
+         $date = $commande->getDateCommande()->format('Y-m-d');
+         $montant = $commande->getMontant();
+ 
+         if (!isset($montantParJour[$date])) {
+             $montantParJour[$date] = 0;
+         }
+ 
+         $montantParJour[$date] += $montant;
+     }
+   
 
-        $montantParJour[$date] += $montant;
+       
         // Récupérer le produit le plus vendu
         $produitPlusVendu = $produitRepository->findMostSoldProduct();
         $produitMoinsVendu = $produitRepository->findLeastSoldProduct();
 
         return $this->render('GestionProduit/crud/commandeTable.html.twig', [
+            'montantParJour' => $montantParJour,
             'commandes' => $commandesPaginated,
             'montantTotal' => $montantTotal,
             'montantTotalAujourdHui' => $montantTotalAujourdHui,
             'nomUtilisateurPlusRepete' => $nomUtilisateurPlusRepete,
-            'montantParJour' => $montantParJour,
             'produitPlusVendu' => $produitPlusVendu,
             'produitMoinsVendu' => $produitMoinsVendu,  
         ]);
-    }
+    
 
 
    }
 
 
+/*
 
    #[Route('/chart', name: 'charte_commandes')]
 public function charteCommandes(CommandeRepository $commandeRepository): Response
@@ -190,11 +199,11 @@ public function charteCommandes(CommandeRepository $commandeRepository): Respons
         $montantParJour[$date] += $montant;
     }
 
-    return $this->render('GestionProduit/crud/chartChiffre.html.twig', [
+    return $this->render('GestionProduit/crud/commandeTable.html.twig', [
         'montantParJour' => $montantParJour,
     ]);
 }
-
+*/
 
     #[Route('/admin/cours/supprimer/{id}', name: 'produit-supprimer', methods: ['POST'])]
     public function supprimer(Request $request, int $id, ProduitRepository $produitRepository): Response
@@ -229,12 +238,26 @@ public function charteCommandes(CommandeRepository $commandeRepository): Respons
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
     
+       
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('imageFile')->getData();
+    
+            // Vérifie si un nouveau fichier a été uploadé
+            if ($imageFile) {
+                // Lire le contenu du fichier en tant que flux
+                $imageContent = file_get_contents($imageFile->getPathname());
+    
+                // Stocker le contenu du nouveau fichier dans l'entité Cours
+                $produit->setImage($imageContent);
+            }
+    
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
     
             return $this->redirectToRoute('produit-liste');
         }
+
     
         return $this->render('GestionProduit/crud/modifier.html.twig', [
             'form' => $form->createView(),

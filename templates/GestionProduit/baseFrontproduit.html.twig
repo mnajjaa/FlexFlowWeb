@@ -427,9 +427,54 @@
 
 			<!-- Our Shop-->
 				<section class="content-inner"> <div class="container">
+				
 					<div class="row">
+
 						<div class="col-xl-8 col-lg-12 m-b30">
+
 							<div class="filter-wrapper row">
+
+							<style>
+						 .icon-cart {
+        font-size: 26px;
+        color: whitesmoke;
+    }
+
+    .cart-container {
+        background-color: #212529;
+        padding: 10px; /* Augmenter la taille du padding */
+        border-radius: 10px; /* Augmenter le rayon de bordure */
+            position: relative;
+			        display: inline-block; /* Permettre au cadre de s'ajuster à la taille de son contenu */
+
+ /* Permettre au cadre de s'ajuster à la taille de son contenu */
+    }
+	.notification {
+    position: absolute;
+    top: -5px; /* Ajustez la position verticale du cercle */
+    right: -5px; /* Ajustez la position horizontale du cercle */
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+
+
+							</style>
+				<div class="col-lg-1 col-md-1 col-sm-6 m-b20 wow fadeInUp" data-wow-delay="0.2s">
+    <div class="cart-container">
+        <a href="{{ path('consulter_panier') }}">
+
+            <i class="fa-solid fa-cart-shopping icon-cart"></i>
+        </a>
+    </div>
+</div>
+
+
+
+
+
 								<div class="col-lg-8 col-md-8 col-sm-6 m-b20 wow fadeInUp" data-wow-delay="0.2s">
 									<span class="para"></span>
 								</div>
@@ -479,7 +524,10 @@
                 </p>
                 <br>
                 <form action="{{ path('ajouter_au_panier', {'id': produit.id}) }}" method="post" class="d-flex" onsubmit="return checkQuantity({{ produit.quantite }}, this.quantite.value);">
-                    <button type="submit" class="btn btn-primary mr-2" style="width: 290px;">Ajout</button>
+                 <button type="submit" class="btn btn-primary mr-2" style="width: 290px;">Ajout</button>
+
+
+
                     <select name="quantite" class="custom-select custom-select-sm">
                         {% for i in 1..5 %}
                             <option value="{{ i }}">{{ i }}</option>
@@ -491,6 +539,7 @@
     </div>
 {% endfor %}
 </div>
+
 <script>
     function checkQuantity(quantiteDisponible, quantiteSelectionnee) {
         if (quantiteSelectionnee > quantiteDisponible) {
@@ -779,6 +828,7 @@ document.getElementById("productFilter").addEventListener("change", filterProduc
 						</div>
 					</div>
 				</div>
+			
 			</section>
 			<!-- Call To Action -->
 

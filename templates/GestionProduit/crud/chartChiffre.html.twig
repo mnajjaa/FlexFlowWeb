@@ -2,7 +2,7 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Charte des commandes{% endblock %}
+{% block title %}Chart des commandes{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -20,7 +20,7 @@
                     {% endfor %}
                 ],
                 datasets: [{
-                    label: 'Montant total par jour',
+                    label: 'Montant totale par jour',
                     data: [
                         {% for date, montant in montantParJour %}
                             {{ montant }},
