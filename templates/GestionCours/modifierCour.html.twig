@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {# Inclure les fichiers CSS Bootstrap #}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
      {{ parent() }}
     <style>
@@ -226,7 +227,7 @@
                             </div>
                             <!-- Ajouter d'autres champs du formulaire ici -->
                              <center>
-                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            <button type="submit" class="btn btn-primary" id="submit-btn">Enregistrer</button>
                         </center>
                         {{ form_end(form) }}
                     </div>
@@ -234,6 +235,28 @@
             </div>
         </div>
     </div>
+
+    <!-- Inclure le script de SweetAlert2 à la fin du body -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('submit-btn').addEventListener('click', function(event) {
+        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+        Swal.fire({
+            icon: 'success',
+            title: 'Le cours a été modifié avec succès !',
+            showConfirmButton: false,
+            timer: 3000
+        }).then(() => {
+            // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
+            document.querySelector('form').submit();
+        });
+    });
+});
+</script>
+
+
 
     </body>
 <!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->

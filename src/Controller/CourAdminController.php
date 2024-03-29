@@ -46,7 +46,7 @@ class CourAdminController extends AbstractController
             $this->addFlash('success', 'Le cours a été ajouté avec succès.');
 
             // Redirection vers la page d'accueil ou une autre page de votre choix
-            return $this->redirectToRoute('cour_liste');
+           return $this->redirectToRoute('cour_liste');
         }
 
         return $this->render('GestionCours/ajouterCour.html.twig', [
@@ -59,6 +59,27 @@ class CourAdminController extends AbstractController
     public function liste(CoursRepository $coursRepository): Response
     {
         $cours = $coursRepository->findAll(); // Récupérer tous les cours depuis la base de données
+
+        // Vérifier la capacité de chaque cours
+     // Initialiser un tableau pour stocker les noms des cours épuisés
+     $coursEpuises = [];
+
+     // Vérifier la capacité de chaque cours
+     foreach ($cours as $cour) {
+         if ($cour->getCapacite() <= 0) {
+             // Capacité inférieure ou égale à zéro, ajouter le nom du cours au tableau
+             $coursEpuises[] = $cour->getNomCour();
+         }
+     }
+ 
+     // Si des cours épuisés sont trouvés, afficher une notification pour chaque cours épuisé
+     foreach ($coursEpuises as $nomCour) {
+         $message = sprintf(
+             'La capacité du cours "%s" est maintenant épuisée.',
+             $nomCour
+         );
+         $this->addFlash('warning', $message);
+     }
     
         return $this->render('GestionCours/listeCour.html.twig', [
             'cours' => $cours, // Passer les cours récupérés à la vue
@@ -111,6 +132,9 @@ public function modifier(Request $request, int $id, CoursRepository $coursReposi
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
+
+         // Ajout d'un message flash de succès
+         $this->addFlash('success', 'Le cours a été modifié avec succès.');
 
         return $this->redirectToRoute('cour_liste');
     }

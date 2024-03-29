@@ -1,8 +1,9 @@
 {% extends 'base-back.html.twig' %}
 
 {% block stylesheets %}
-    {# Incluez les fichiers CSS Bootstrap ici #}
+    {# Inclure les fichiers CSS Bootstrap et SweetAlert2 ici #}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
         .custom-card {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -12,74 +13,42 @@
             font-weight: bold;
         }
     </style>
-    
 {% endblock %}
-
-
 
 {% block body %}
 <!doctype html>
 <html lang="en">
 
-    
-<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
-<head>
-        
-        <meta charset="utf-8" />
-        <title>Login | Minible - Admin & Dashboard Template</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-        <meta content="Themesdesign" name="author" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+<head>      
+    <meta charset="utf-8" />
+    <title>Login | Minible - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
 
-        <!-- Bootstrap Css -->
-        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-        <!-- Icons Css -->
-        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-        <!-- App Css-->
-        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap Css -->
+    <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
 
+    <!-- Sweet Alert-->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-<!-- jebtou mel base.html.twig-->
-      
-    
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-pnLDlS50xL34ul5+xeRuJusv/1dmbd3W7pUT2F+QfJtadgFU1mX6lYb/0J2a9UcCpJw5f1ADmMBmBVmg+R2nGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Feuilles de styles -->
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 
-       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-         <link rel="shortcut icon" href="assets/images/favicon.ico">
-        
-        <!-- Sweet Alert-->
-        <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
-
-        <!-- Bootstrap Css -->
-        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-        <!-- Icons Css -->
-        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-        <!-- App Css-->
-        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
-
-		<!-- Feuilles de styles -->
-		<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    
-		<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
-
-		<!-- Fichiers JS -->
-		<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
-		{% block javascripts %}{% endblock %}
-		<script src="{{ asset('assets/js/scripts.js') }}" defer></script>
-
-    </head>
-
+    <!-- Fichiers JS -->
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
+    {% block javascripts %}{% endblock %}
+    <script src="{{ asset('assets/js/scripts.js') }}" defer></script>
+</head>
 
 <body>
 <div class="container">
@@ -87,14 +56,6 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    
-                    
-                    {% for message in app.flashes('success') %}
-                        <div class="alert alert-success" role="alert">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                    
                     <form action="{{ path('cour_ajouter') }}" method="post" enctype="multipart/form-data">
                         {{ form_start(form, {'method': 'POST'}) }}
                         {{ form_row(form._token) }} {# Ajout du jeton CSRF #}
@@ -139,7 +100,7 @@
                             <label for="user" class="form-label">Coach</label>
                             {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
                         </div>
-                       <center> <button type="submit" class="btn btn-primary">Ajouter</button> </center>
+                       <center> <button type="submit" class="btn btn-primary" id="submit-btn">Ajouter</button> </center>
                         {{ form_end(form) }}
                     </form>
                 </div>
@@ -147,6 +108,28 @@
         </div>
     </div>
 </div>
+
+<!-- Inclure le script de SweetAlert2 à la fin du body -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('submit-btn').addEventListener('click', function(event) {
+        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+        Swal.fire({
+            icon: 'success',
+            title: 'Le cours a été ajouté avec succès !',
+            showConfirmButton: false,
+            timer: 3000
+        }).then(() => {
+            // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
+            document.querySelector('form').submit();
+        });
+    });
+});
+</script>
+
 </body>
+
 </html>
 {% endblock %}
