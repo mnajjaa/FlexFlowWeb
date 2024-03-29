@@ -2,21 +2,25 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use App\Entity\Cours;
+use App\Entity\Participation;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Mime\Email;
+use App\Repository\CoursRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\CoursRepository;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\UX\Notify\NotifierInterface;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\User;
-use Symfony\Component\Security\Core\Security;
-use App\Entity\Participation;
-use App\Entity\Cours;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Knp\Component\Pager\PaginatorInterface;
+
 
 
 
@@ -109,7 +113,7 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
 public function participerCours(int $id, CoursRepository $coursRepository, Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
 {
     // Get the current user's email from the session
-    $email =  $request->getSession()->get(Security::LAST_USERNAME);
+    $email = $request->getSession()->get(Security::LAST_USERNAME);
 
     // Find the user entity based on the email
     $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
@@ -117,6 +121,19 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
     // Find the course based on the ID
     $cours = $coursRepository->find($id);
 
+    // Check if the user has already participated in this course
+    $existingParticipation = $entityManager->getRepository(Participation::class)->findOneBy([
+        'user' => $user,
+        'nomCour' => $cours->getNomCour()
+    ]);
+
+    // If the user has already participated, redirect with an error message
+    if ($existingParticipation) {
+        $this->addFlash('error', 'Vous avez déjà participé à ce cours.');
+        return $this->redirectToRoute('liste_cours');
+    }
+
+    // If the course still has capacity
     if ($cours->getCapacite() > 0) {
         // Decrement the course capacity by 1
         $cours->setCapacite($cours->getCapacite() - 1);
@@ -141,12 +158,15 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
             'cours' => $cours,
         ]));
 
-    $this->mailer->send($email);
+        $this->mailer->send($email);
 
         // Redirect to the confirmation page
         return $this->redirectToRoute('liste_cours');
-    }    
-
+    } else {
+        // Redirect with an error message if the course is full
+        $this->addFlash('error', 'Désolé, ce cours est déjà complet.');
+        return $this->redirectToRoute('liste_cours');
+    }
 }
 
 
