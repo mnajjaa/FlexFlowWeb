@@ -45,36 +45,82 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/editProfileAdmin', name: 'admin_edit_profile')]
-    public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
-    {
-        $user = new User();
+//     #[Route('/editProfileAdmin', name: 'admin_edit_profile')]
+//     public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
+//     {
+//         $user = new User();
         
-        $email = $request->getSession()->get(Security::LAST_USERNAME);
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+//         $email = $request->getSession()->get(Security::LAST_USERNAME);
+//         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
         
-        if (!$user) {
-            throw $this->createNotFoundException('User not found.');
+//         if (!$user) {
+//             throw $this->createNotFoundException('User not found.');
+//         }
+
+        
+// if ($request->isMethod('POST')) {
+           
+//             $user->setNom($request->request->get('nom'));
+//             $user->setTelephone($request->request->get('telephone'));
+//             $user->setimage($request->request->get('image'));
+//             $user->setEmail($request->request->get('email'));
+
+//             $entityManager->persist($user);
+//             $entityManager->flush();
+//             return $this->redirectToRoute('admin_profile');
+//         }        
+//         return $this->render('admin/editProfileAdmin.html.twig', [
+//             'admin' => $user,
+//         ]);
+//     }
+
+#[Route('/editProfileAdmin', name: 'admin_edit_profile')]
+public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
+{
+    $user = new User();
+    
+    $email = $request->getSession()->get(Security::LAST_USERNAME);
+    $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+    
+    if (!$user) {
+        throw $this->createNotFoundException('User not found.');
+    }
+
+    
+if ($request->isMethod('POST')) {
+
+
+      //code ajout image
+      //les images sont stockées dans le dossier public/uploads/users 
+
+        $file = $request->files->get('image');
+        if ($file) {
+            $fileName = (string)md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('uploads'), $fileName);
+
+            // Update the user's image
+            $user->setimage($fileName);
         }
 
+
+
+        $user->setNom($request->request->get('nom'));
+        // var_dump($request->request->get('nom'));
+        $user->setTelephone($request->request->get('telephone'));
+        //$user->setimage($fileName);
+        $user->setEmail($request->request->get('email'));
+        //var_dump($user);
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+        return $this->redirectToRoute('admin_profile');
         
-if ($request->isMethod('POST')) {
-           
+    }        
+    return $this->render('admin/editProfileAdmin.html.twig', [
+        'admin' => $user,
+    ]);
 
-
-            $user->setNom($request->request->get('nom'));
-            $user->setTelephone($request->request->get('telephone'));
-            $user->setimage($request->request->get('image'));
-            $user->setEmail($request->request->get('email'));
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-            return $this->redirectToRoute('admin_profile');
-        }        
-        return $this->render('admin/editProfileAdmin.html.twig', [
-            'admin' => $user,
-        ]);
-    }
+}
 
     #[Route('/listeMembres', name: 'liste_membres')]
     public function membres(UserRepository  $userRepository): Response

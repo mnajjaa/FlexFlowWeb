@@ -1,23 +1,99 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
-{% block title %}Edit Profile{% endblock %}
 
-{% block body %}
-    <h1>Edit Profile</h1>
+  {% block body %}
+ <head>
+        
+        <meta charset="utf-8" />
+        <title>Customers | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
 
-    <form method="post">
-        <label for="nom">Name:</label>
-        <input type="text" id="nom" name="nom" value="{{ admin.nom }}" required>
+        <!-- DataTables -->
+        <link href="{{asset('back-office/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
 
-        <label for="telephone">Phone:</label>
-        <input type="number" id="telephone" name="telephone" value="{{ admin.telephone }}" required>
+        <!-- Responsive datatable examples -->
+        <link href="{{asset('back-office/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />  
 
-        <label for="image">Image:</label>
-        <input type="text" id="image" name="image" value="{{ admin.image }}" required>
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="{{ admin.email }}" required>
+    </head>
+<body>
+        <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Bootstrap Validation - Normal</h4>
+                                        {# <p class="card-title-desc">Provide valuable, actionable feedback to your users with HTML5 form validation–available in all our supported browsers.</p> #}
+                                        <form  method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+                                        <div class="row">
+                                              <div class="col-md-6">
+                                                  <div class="text-end">
+                                                        <img src="{{ asset('uploads/users/' ~admin.image) }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                                                  </div>  
+                                                </div>
+                                                <div class="col-md-6">
 
-        <button type="submit">Save</button>
-    </form>
+                                                  <label for="image">Choose Image:</label>
+                                                  <input type="file" id="image" name="image">
+                                                </div>
+                                        </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="nom">Nom Complet</label>
+                                                        <input type="text" class="form-control" id="nom" name="nom"  placeholder="First name" value="{{ admin.nom }}" required>
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="email">email</label>
+                                                        <input type="text" class="form-control" id="email" name="email" placeholder="email" value="{{ admin.email }}" required>
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="telephone">Telephone</label>
+                                                        <input type="text" class="form-control" name="telephone" id="telephone" placeholder="Telephone" value="{{ admin.telephone }}" required>
+                                                        <div class="invalid-feedback">
+                                                            Please provide a valid city.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="mb-3">
+                                                        <input type="image" class="form-control" name="image" id="image" placeholder="image" value="{{ coach.image }}" required>
+                                                            <div class="invalid-feedback">
+                                                                You must agree before submitting.
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div> #}
+                                            <button class="btn btn-primary" type="submit">Submit form</button>
+                                            <button type="reset" class="btn btn-secondary waves-effect">
+                                                        Cancel
+                                                    </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+        </div> <!-- end col -->
+  </body>
 {% endblock %}
