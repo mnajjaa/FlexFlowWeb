@@ -26,15 +26,9 @@
                             {{ montant }},
                         {% endfor %}
                     ],
-                    fill: false,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
                     borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 2,
-                    pointRadius: 5,
-                    pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-                    pointBorderColor: 'rgba(54, 162, 235, 1)',
-                    pointHoverRadius: 7,
-                    pointHoverBackgroundColor: 'rgba(54, 162, 235, 1)',
-                    pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+                    borderWidth: 1
                 }]
             };
 
@@ -45,14 +39,29 @@
                             beginAtZero: true
                         }
                     }]
-                }
+                },
+                barThickness: calculateBarThickness({{ montantParJour|length }}) // Calcul de la largeur des barres
             };
 
             var chart = new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: chartData,
                 options: chartOptions
             });
+
+            // Fonction pour calculer la largeur des barres en fonction du nombre de jours
+            function calculateBarThickness(numDays) {
+                // Ajustez cette valeur selon vos préférences
+                var maxBarThickness = 50;
+                var minBarThickness = 20;
+                var defaultBarThickness = 30;
+
+                var barThickness = defaultBarThickness;
+                if (numDays > 0) {
+                    barThickness = Math.min(maxBarThickness, Math.max(minBarThickness, Math.floor(400 / numDays)));
+                }
+                return barThickness;
+            }
         });
     </script>
 {% endblock %}

@@ -495,6 +495,8 @@ $mailer->send($email);
         // Redirection vers la page des produits après le téléchargement du PDF
        // return new Response("oooo");
         // Retourner la réponse rendue par Twig
+        $session->set('panier', []);
+
         return new Response($twig->render('GestionProduit/success.html.twig'));
     }
     
