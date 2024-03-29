@@ -434,7 +434,7 @@
     {% if dejaParticipe %}
         <a href="#" class="btn btn-primary btn-skew disabled" style="pointer-events: none;"><span class="skew-inner"><span class="text">Déjà participé</span></span></a>
     {% else %}
-        <a href="{{ path('participer_cours', {'id': cours.getId()}) }}" class="btn btn-primary btn-skew"><span class="skew-inner"><span class="text">Participer</span></span></a>
+        <a href="{{ path('participer_cours', {'id': cours.getId()}) }}" class="btn btn-primary btn-skew" id="submit-btn"><span class="skew-inner"><span class="text">Participer</span></span></a>
     {% endif %}
     {% set participationError = app.flashes('error') %}
     {% if participationError %}
@@ -443,6 +443,28 @@
         </div>
     {% endif %}
 </div>
+
+ <!-- Inclure le script de SweetAlert2 à la fin du body -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('submit-btn').addEventListener('click', function(event) {
+        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+        Swal.fire({
+            icon: 'success',
+            title: 'Participation avec succès !',
+			html: 'Un e-mail vous a été envoyé',
+            showConfirmButton: false,
+            timer: 4500
+        }).then(() => {
+            // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
+            document.querySelector('form').submit();
+        });
+    });
+});
+</script>
+
 
 						</aside>
 					</div>

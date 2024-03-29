@@ -162,6 +162,10 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
         $entityManager->persist($participation);
         $entityManager->flush();
 
+         // Ajout d'un message flash de succès
+         $this->addFlash('success', 'Participation succès.');
+         
+
         // Send email confirmation
         $email = (new Email())
         ->from('FlexFlow <your_email@example.com>')
@@ -176,11 +180,7 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
 
         // Redirect to the confirmation page
         return $this->redirectToRoute('liste_cours');
-    } else {
-        // Redirect with an error message if the course is full
-        $this->addFlash('error', 'Désolé, ce cours est déjà complet.');
-        return $this->redirectToRoute('liste_cours');
-    }
+    } 
 }
 
 
