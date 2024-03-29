@@ -23,7 +23,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 
-
 class CourMembreController extends AbstractController
 {
     private $mailer;
@@ -91,7 +90,7 @@ public function listeCours(Request $request, CoursRepository $coursRepository, P
 
 
     #[Route('/cours/{id}', name: 'voir_cours')]
-public function voirCours(int $id, CoursRepository $coursRepository, Request $request): Response
+public function voirCours(int $id, CoursRepository $coursRepository, Request $request, EntityManagerInterface $entityManager): Response
 {
     // Récupérer le cours depuis le référentiel en fonction de l'ID
     //$cours = $coursRepository->find($id);
@@ -102,10 +101,22 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
         throw new NotFoundHttpException('Cours non trouvé');
     }
 
+    // Vérifier si l'utilisateur a déjà participé à ce cours
+    $email = $request->getSession()->get(Security::LAST_USERNAME);
+    $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+    $existingParticipation = $entityManager->getRepository(Participation::class)->findOneBy([
+        'user' => $user,
+        'nomCour' => $cours->getNomCour()
+    ]);
+
+    // Ajouter une variable pour indiquer si le membre a déjà participé
+    $dejaParticipe = ($existingParticipation !== null);
+
     $cours->image = base64_encode(stream_get_contents($cours->getImage()));
     // Afficher les détails du cours dans un nouveau template
     return $this->render('GestionCours/voirPlus.html.twig', [
         'cours' => $cours,
+        'dejaParticipe' => $dejaParticipe,
     ]);
 }
 
@@ -126,6 +137,9 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
         'user' => $user,
         'nomCour' => $cours->getNomCour()
     ]);
+
+     // Ajoutez une variable pour indiquer si le membre a déjà participé
+     $dejaParticipe = ($existingParticipation !== null);
 
     // If the user has already participated, redirect with an error message
     if ($existingParticipation) {
@@ -168,6 +182,7 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
         return $this->redirectToRoute('liste_cours');
     }
 }
+
 
 
 

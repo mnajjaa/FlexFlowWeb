@@ -430,11 +430,20 @@
 										<img src="{{asset('front-office/images/event/grid2/pic3.jpg')}}" alt="/">
 									</div>
 									<div class="dz-content">
-										<h3 class="title">Gym Training And Event</h3>
-										<a href="{{ path('participer_cours', {'id': cours.getId()}) }}" class="btn btn-primary btn-skew"><span class="skew-inner"><span class="text">Participer</span></span></a>
-									</div>
-								</div>
-							</div>
+    <h3 class="title">Gym Training And Event</h3>
+    {% if dejaParticipe %}
+        <a href="#" class="btn btn-primary btn-skew disabled" style="pointer-events: none;"><span class="skew-inner"><span class="text">Déjà participé</span></span></a>
+    {% else %}
+        <a href="{{ path('participer_cours', {'id': cours.getId()}) }}" class="btn btn-primary btn-skew"><span class="skew-inner"><span class="text">Participer</span></span></a>
+    {% endif %}
+    {% set participationError = app.flashes('error') %}
+    {% if participationError %}
+        <div class="alert alert-danger">
+            {{ participationError[0] }}
+        </div>
+    {% endif %}
+</div>
+
 						</aside>
 					</div>
                     
