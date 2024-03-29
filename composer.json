@@ -53,6 +53,8 @@
         "symfony/web-link": "5.4.*",
         "symfony/yaml": "5.4.*",
         "symfonycasts/verify-email-bundle": "^1.17",
+        "twig/extra-bundle": "*",
+        "twig/twig": "^2.12|^3.0"
         "tecnickcom/tcpdf": "^6.7",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",

@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f202de7d09b83e2633b916b69a1e3f16",
+
+    "content-hash": "d8f3d71b01ca50f817045205b06b91a4",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -1595,6 +1596,7 @@
             "time": "2022-08-28T14:42:14+00:00"
         },
         {
+
             "name": "knplabs/knp-snappy",
             "version": "v1.5.0",
             "source": {
@@ -1623,11 +1625,14 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "3.x-dev"
+
                 }
             },
             "autoload": {
                 "psr-4": {
+                    "Knp\\Component\\": "src/Knp/Component"
+
                     "Knp\\Snappy\\": "src/Knp/Snappy"
                 }
             },
@@ -1637,6 +1642,70 @@
             ],
             "authors": [
                 {
+                    "name": "KnpLabs Team",
+                    "homepage": "https://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/KnpLabs/knp-components/contributors"
+                }
+            ],
+            "description": "Knplabs component library",
+            "homepage": "http://github.com/KnpLabs/knp-components",
+            "keywords": [
+                "components",
+                "knp",
+                "knplabs",
+                "pager",
+                "paginator"
+            ],
+            "support": {
+                "issues": "https://github.com/KnpLabs/knp-components/issues",
+                "source": "https://github.com/KnpLabs/knp-components/tree/v3.6.0"
+            },
+            "time": "2022-08-18T06:36:14+00:00"
+        },
+        {
+            "name": "knplabs/knp-paginator-bundle",
+            "version": "v5.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
+                "reference": "7879916a8af4f4d4668535cb0b71f55cc416da66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/7879916a8af4f4d4668535cb0b71f55cc416da66",
+                "reference": "7879916a8af4f4d4668535cb0b71f55cc416da66",
+                "shasum": ""
+            },
+            "require": {
+                "knplabs/knp-components": "^2.4 || ^3.0",
+                "php": "^7.3 || ^8.0",
+                "symfony/config": "^4.4 || ^5.4 || ^6.0",
+                "symfony/dependency-injection": "^4.4 || ^5.4 || ^6.0",
+                "symfony/event-dispatcher": "^4.4 || ^5.4 || ^6.0",
+                "symfony/http-foundation": "^4.4 || ^5.4 || ^6.0",
+                "symfony/http-kernel": "^4.4 || ^5.4 || ^6.0",
+                "symfony/routing": "^4.4 || ^5.4 || ^6.0",
+                "symfony/translation": "^4.4 || ^5.4 || ^6.0",
+                "twig/twig": "^2.0 || ^3.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.2",
+                "phpunit/phpunit": "^8.5 || ^9.5",
+                "symfony/expression-language": "^4.4 || ^5.4 || ^6.0",
+                "symfony/templating": "^4.4 || ^5.4 || ^6.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Knp\\Bundle\\PaginatorBundle\\": "src"
                     "name": "KNP Labs Team",
                     "homepage": "http://knplabs.com"
                 },
@@ -1701,6 +1770,11 @@
                 },
                 {
                     "name": "Symfony Community",
+                    "homepage": "http://github.com/KnpLabs/KnpPaginatorBundle/contributors"
+                }
+            ],
+            "description": "Paginator bundle for Symfony to automate pagination and simplify sorting and other features",
+            "homepage": "http://github.com/KnpLabs/KnpPaginatorBundle",
                     "homepage": "http://github.com/KnpLabs/KnpSnappyBundle/contributors"
                 }
             ],
@@ -1710,6 +1784,17 @@
                 "bundle",
                 "knp",
                 "knplabs",
+                "pager",
+                "pagination",
+                "paginator",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/KnpLabs/KnpPaginatorBundle/issues",
+                "source": "https://github.com/KnpLabs/KnpPaginatorBundle/tree/v5.9.0"
+            },
+            "time": "2022-08-28T14:42:14+00:00"
+
                 "pdf",
                 "snappy"
             ],
