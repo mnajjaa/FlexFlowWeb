@@ -183,7 +183,7 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
     } 
 }
 
-////commentaire////
+////commentaire aprés merge////
 
 
         
