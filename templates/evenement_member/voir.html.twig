@@ -68,15 +68,17 @@
   {% for evenement in evenements %}
     <div class="col-md-4">
       <div class="card card-plain card-blog mt-4">
-        <div class="card-image border-radius-lg position-relative">
+        <div class="card-image border-radius-lg position-relative ">
         
-            <div class="blur-shadow-image overlay-shine wow fadeInUp">
+            <div class="blur-shadow-image overlay-shine wow fadeInUp ">
 												<div class="dz-media">
 
             <img class="img border-radius-lg move-on-hover" src="data:image/jpeg;base64,{{ evenement.image }}" style="width: 100%; height: 200px; object-fit: cover;">
             </div>
 			</div>
+			
           </div>
+		 
         <div class="card-body px-0">
           <h5>
             <a href="javascript:;" class="text-dark font-weight-bold">{{ evenement.nomEvenement }}</a>
