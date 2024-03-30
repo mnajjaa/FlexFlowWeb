@@ -109,4 +109,59 @@ public function events(EvenementRepository $eventRepository)
     ]);
 }
 
+
+#[Route('/Evenement/{id}/reserver', name: 'reserver_evenement')]
+public function participerEvenement(int $id, EvenementRepository $EvenementRepository, Request $request, EntityManagerInterface $entityManager): Response
+{
+    // Get the current user's email from the session
+    $email = $request->getSession()->get(Security::LAST_USERNAME);
+
+    // Find the user entity based on the email
+    $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+
+    // Find the course based on the ID
+    $evenements = $EvenementRepository->find($id);
+
+    // Check if the user has already participated in this course
+    $existingParticipation = $entityManager->getRepository(Reservation::class)->findOneBy([
+        'user' => $user,
+        'nomEvenement' => $evenements->getNomEvenement()
+    ]);
+
+     // Ajoutez une variable pour indiquer si le membre a déjà participé
+     $dejaParticipe = ($existingParticipation !== null);
+
+    // If the user has already participated, redirect with an error message
+    if ($existingParticipation) {
+        $this->addFlash('error', 'Vous avez déjà participé à cet Evenement.');
+        return $this->redirectToRoute('liste_evenement');
+    }
+
+    // If the course still has capacity
+    if ($evenements->getNbrPlace() > 0) {
+        // Decrement the course capacity by 1
+        $evenements->setNbrPlace($evenements->getNbrPlace() - 1);
+
+        // Create a new Participation entity
+        $participation = new Reservation();
+        $participation->setNomEvenement($evenements->getNomEvenement());
+        $participation->setNomParticipant($user->getNom());
+        $participation->setUser($user);
+        $participation->setDateReservation(new \DateTime()); // Set the current date
+
+        // Persist the participation and update the course
+        $entityManager->persist($participation);
+        $entityManager->flush();
+
+         // Ajout d'un message flash de succès
+         $this->addFlash('success', 'Réservation succès.');
+         
+
+       
+
+
+        // Redirect to the confirmation page
+        return $this->redirectToRoute('liste_evenement');
+    } 
+}
 }
