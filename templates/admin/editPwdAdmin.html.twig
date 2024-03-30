@@ -1,0 +1,65 @@
+{# {% extends 'base-back.html.twig' %}
+
+{% block body %}
+ <head>
+        
+        <meta charset="utf-8" />
+        <title>Customers | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+        <!-- DataTables -->
+        <link href="{{asset('back-office/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Responsive datatable examples -->
+        <link href="{{asset('back-office/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />  
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+    </head>
+<body>
+ <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Bootstrap Validation (Tooltips)</h4>
+                                        <p class="card-title-desc">If your form layout allows it, you can swap the <code>.{valid|invalid}-feedback</code> classes for <code>.{valid|invalid}-tooltip</code> classes to display validation feedback in a styled tooltip.</p>
+                                        <form class="needs-validation" novalidate method="post" action="{{ path('admin_edit_pwd') }}"  >
+                                      
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">New Password</label>
+                                                        <input type="password" class="form-control" id="userpassword" placeholder="Enter new password" name="plainPassword" required>
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">Repeat Password</label>
+                                                        <input type="password" class="form-control" id="userpasswordConfirm" placeholder="Repeat password" name="plainPasswordConfirm" required>
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Reset password</button>
+                                        </form>
+     
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            </div> <!-- end col -->
+</body>
+{% endblock %} #}

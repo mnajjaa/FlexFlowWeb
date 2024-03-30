@@ -10,6 +10,7 @@ use Symfony\Component\HttpClient\Response\ResponseStream;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
+use App\Form\ChangePasswordFormType;
 use App\Form\RegistrationFormType;
 use App\Form\UserType;
 use Symfony\Component\Mailer\MailerInterface;
@@ -17,6 +18,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 
 
@@ -44,35 +46,31 @@ class AdminController extends AbstractController
             'admin' => $user,
         ]);
     }
+#[Route('/editPwdAdmin', name: 'admin_edit_pwd')]
+public function editPwd(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, UserPasswordHasherInterface $passwordHasher): Response
+{
+    $email = $request->getSession()->get(Security::LAST_USERNAME);
+    $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+    
+    if($request->isMethod('POST')) {
+        if($request->get('plainPassword') != $request->get('plainPasswordConfirm')){
+            $this->addFlash('reset_password_error', 'Passwords do not match');
+            return $this->redirectToRoute('admin_edit_pwd');
+        }
+        $encodedPassword = $passwordHasher->hashPassword(
+            $user,
+            $request->get('plainPassword')
+        );
 
-//     #[Route('/editProfileAdmin', name: 'admin_edit_profile')]
-//     public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
-//     {
-//         $user = new User();
-        
-//         $email = $request->getSession()->get(Security::LAST_USERNAME);
-//         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-        
-//         if (!$user) {
-//             throw $this->createNotFoundException('User not found.');
-//         }
+        $user->setPassword($encodedPassword);
+            $entityManager->flush();
+            var_dump($user);
+            return $this->redirectToRoute('admin_edit_profile');
+    }
+    return $this->render('admin/editPwdAdmin.html.twig');
 
-        
-// if ($request->isMethod('POST')) {
-           
-//             $user->setNom($request->request->get('nom'));
-//             $user->setTelephone($request->request->get('telephone'));
-//             $user->setimage($request->request->get('image'));
-//             $user->setEmail($request->request->get('email'));
+}
 
-//             $entityManager->persist($user);
-//             $entityManager->flush();
-//             return $this->redirectToRoute('admin_profile');
-//         }        
-//         return $this->render('admin/editProfileAdmin.html.twig', [
-//             'admin' => $user,
-//         ]);
-//     }
 
 #[Route('/editProfileAdmin', name: 'admin_edit_profile')]
 public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
@@ -116,9 +114,9 @@ if ($request->isMethod('POST')) {
         return $this->redirectToRoute('admin_profile');
         
     }        
-    return $this->render('admin/editProfileAdmin.html.twig', [
+        return $this->render('admin/editProfileAdmin.html.twig', [
         'admin' => $user,
-    ]);
+            ]);
 
 }
 
