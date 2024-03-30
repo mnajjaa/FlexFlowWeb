@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\Reservation;
+use App\Entity\User;
 use App\Repository\EvenementRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class EvenementMemberController extends AbstractController
 {
@@ -22,22 +26,32 @@ class EvenementMemberController extends AbstractController
 
 
     #[Route('/evenements/{id}', name: 'voir_evenements')]
-    public function voirCours(int $id, EvenementRepository $EvenementRepository, Request $request): Response
+    public function voirCours(int $id, EvenementRepository $EvenementRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         // Récupérer le cours depuis le référentiel en fonction de l'ID
         //$cours = $coursRepository->find($id);
         $evenements = $this->getDoctrine()->getRepository(Evenement::class)->find($id);
     
+
         // Vérifier si le cours existe
         if (!$evenements) {
             throw new NotFoundHttpException('evenement non trouvé');
         }
-    
+     // Vérifier si l'utilisateur a déjà participé à ce cours
+    $email = $request->getSession()->get(Security::LAST_USERNAME);
+    $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+    $existingParticipation = $entityManager->getRepository(Reservation::class)->findOneBy([
+        'user' => $user,
+        'nomEvenement' => $evenements->getNomEvenement()
+    ]);
+
         $evenements->image = base64_encode(stream_get_contents($evenements->getImage()));
+        $dejaParticipe = ($existingParticipation !== null);
         // Afficher les détails du cours dans un nouveau template
         return $this->render('evenement_member/voir-plus.html.twig', [
             'evenements' => $evenements,
-           
+            'dejaParticipe' => $dejaParticipe,
+
         ]);
     }
     
