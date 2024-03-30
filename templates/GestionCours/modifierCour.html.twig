@@ -256,16 +256,14 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('submit-btn').addEventListener('click', function(event) {
         // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
         Swal.fire({
-            icon: 'success',
-            title: 'Le cours a été modifié avec succès !',
+            icon: 'info',
+            title: 'Vérification des données en cours !',
             showConfirmButton: false,
             timer: 3000
         }).then(() => {
             // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
             document.querySelector('form').submit();
         });
-
-        
     });
 });
 </script>

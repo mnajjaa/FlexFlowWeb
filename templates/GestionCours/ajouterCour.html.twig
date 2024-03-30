@@ -124,14 +124,13 @@
 
 <!-- Inclure le script de SweetAlert2 à la fin du body -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-   <script>
+ <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('submit-btn').addEventListener('click', function(event) {
         // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
         Swal.fire({
-            icon: 'success',
-            title: 'Le cours a été ajouté avec succès !',
+            icon: 'info',
+            title: 'Vérification des données en cours !',
             showConfirmButton: false,
             timer: 3000
         }).then(() => {
