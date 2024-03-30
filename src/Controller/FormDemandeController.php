@@ -20,9 +20,16 @@ use Doctrine\ORM\EntityManagerInterface;
 
 
 class FormDemandeController extends AbstractController
+
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
     #[Route('/form/demande', name: 'app_form_demande')]
-        #[Route('/form/demande', name: 'app_form_demande')]
+       
         public function new(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
         {
             $email1 =  $request->getSession()->get(Security::LAST_USERNAME);
@@ -35,29 +42,46 @@ class FormDemandeController extends AbstractController
             $form->handleRequest($request);
     
             if ($form->isSubmitted() && $form->isValid()) {
+                // Récupérer la maladie sélectionnée par l'utilisateur
+            $maladie = $demande->getMaladieChronique();
+
+            // Récupérer l'offre sélectionnée par l'utilisateur
+            $offre = $demande->getOffre();
+
+            // Vérifier si la maladie correspond à la spécialité de l'offre
+            if ($this->isMaladieMatchingSpecialite($maladie, $offre)) {
+                // Afficher un message d'erreur à l'utilisateur
+                $this->addFlash('error', 'Vous ne pouvez pas vous entraîner dans cette spécialité à cause de votre maladie.');
+                return $this->redirectToRoute('app_form_demande'); // Rediriger vers le formulaire pour empêcher l'enregistrement de la demande
+            } 
+            else {
+                // Assurez-vous que l'état est correctement défini avant la persistance
+                $demande->setEtat('En attente');
+
+                $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($demande);
                 $entityManager->flush();
-    
-                // Send email notification
-                $email = (new Email())
-                    ->from('noreply@example.com')
-                    ->to($email1)
-                    ->subject('Demande submitted')
-                    ->subject('Confirmation de votre demande de coaching privé')
-                        ->html('<p>Votre demande a été enregistrée avec succès.</p>');
-
-               
-    
-                $mailer->send($email);
-    
-                return $this->redirectToRoute('demande_success');
-            }
-    
-            return $this->render('form_demande/demande.html.twig', [
-                'form' => $form->createView(),
-            ]);
-        }
-    
+                  // Envoyer un e-mail à l'utilisateur s'il est défini sur la demande
+                  $user = $demande->getUser();
+                  if ($user !== null) {
+                      $email = (new Email())
+                          ->from('votre@email.com')
+                          ->to($user->getEmail())
+                          ->subject('Confirmation de votre demande de coaching privé')
+                          ->html('<p>Votre demande a été enregistrée avec succès.</p>');
+  
+                      $mailer->send($email);
+                  }
+  
+                  return $this->redirectToRoute('demande_success');
+              }
+          }
+  
+          return $this->render('form_demande/demande.html.twig', [
+              'form' => $form->createView(),
+          ]);
+      }
+  
         private function isMaladieMatchingSpecialite(string $maladie, Offre $offre): bool
     {
         $specialite = $offre->getSpecialite();
@@ -90,8 +114,7 @@ class FormDemandeController extends AbstractController
                     'Problèmes respiratoires sévères',
                     'Maladies vasculaires périphériques',
                     'Problèmes neurologiques graves',
-                    'Diabète non contrôlé',
-                    'Infections actives',
+                
                 ]);
             case 'Cardio':
                 return in_array($maladie, [

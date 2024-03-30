@@ -39,27 +39,27 @@ class MembreInterfaceController extends AbstractController
     public function muscleBuilding(OffreRepository $offreRepository): Response
     {
         $offres = $offreRepository->findBy(['specialite' => 'Musculation']);
-        return $this->render('form_offre/consulter_offres.html.twig', ['offres' => $offres]);
+        return $this->render('form_offre/consulter_offres2.html.twig', ['offres' => $offres]);
     }
 
     #[Route('/cardio', name: 'cardio')]
     public function cardio(OffreRepository $offreRepository): Response
     {
         $offres = $offreRepository->findBy(['specialite' => 'Cardio']);
-        return $this->render('form_offre/consulter_offres.html.twig', ['offres' => $offres]);
+        return $this->render('form_offre/consulter_offres2.html.twig', ['offres' => $offres]);
     }
 
     #[Route('/boxing', name: 'boxing')]
     public function boxing(OffreRepository $offreRepository): Response 
     {
         $offres = $offreRepository->findBy(['specialite' => 'Boxe']);
-        return $this->render('form_offre/consulter_offres.html.twig', ['offres' => $offres]);
+        return $this->render('form_offre/consulter_offres2.html.twig', ['offres' => $offres]);
     }
 
     #[Route('/yoga', name: 'yoga')]
     public function yoga(OffreRepository $offreRepository): Response
     {
         $offres = $offreRepository->findBy(['specialite' => 'Yoga']);
-        return $this->render('form_offre/consulter_offres.html.twig', ['offres' => $offres]);
+        return $this->render('form_offre/consulter_offres2.html.twig', ['offres' => $offres]);
     }
 }
