@@ -470,8 +470,43 @@
 								</div>
 							</div>
 							<div class="col-md-6 text-lg-end text-md-end text-center m-b30">
-								<a href="{{ path('vider_panier') }}" class="btn  btn-secondary wow fadeInUp" data-wow-delay="0.8s">Vider le panier</a>
-							</div>
+    <button onclick="viderPanier()" class="btn  btn-secondary wow fadeInUp" data-wow-delay="0.8s">Vider le panier</button>
+</div>
+<script>
+    function viderPanier() {
+        fetch("{{ path('vider_panier') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Afficher un message de succès avec SweetAlert
+            Swal.fire({
+                icon: 'success',
+                title: data.message,
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Rediriger vers la page du panier
+                    window.location.href = "{{ path('consulter_panier') }}";
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Une erreur s\'est produite:', error);
+            // Afficher un message d'erreur avec SweetAlert
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur!',
+                text: 'Une erreur s\'est produite lors du vidage du panier.',
+                confirmButtonText: 'OK'
+            });
+        });
+    }
+</script>
 						</div>
 					</div>
 					<div class="col-lg-4">

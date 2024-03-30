@@ -193,8 +193,9 @@ class ProduitController extends AbstractController
         ];
         $this->get('session')->set('panier', $panier);
 
-        // Redirection vers la page d'accueil ou une autre page
-        return $this->redirectToRoute('produits');
+         // Renvoyer le nombre total de produits dans le panier
+    $totalProduits = count($panier);
+    return $this->json(['totalProduits' => $totalProduits]);
     }
 
 
@@ -275,10 +276,9 @@ class ProduitController extends AbstractController
         // Supprimez tous les éléments du panier de la session
         $session->set('panier', []);
 
-        // Redirigez ou renvoyez une réponse appropriée
-        return $this->redirectToRoute('consulter_panier'); // Redirige vers la page du panier, par exemple
+        // Retournez une réponse JSON pour indiquer que le panier a été vidé
+        return new JsonResponse(['message' => 'Le panier a été vidé avec succès']);
     }
-
 
 
 
