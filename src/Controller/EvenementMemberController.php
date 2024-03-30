@@ -33,11 +33,11 @@ class EvenementMemberController extends AbstractController
             throw new NotFoundHttpException('evenement non trouvé');
         }
     
-      $image = base64_encode(stream_get_contents($evenements->getImage()));
+        $evenements->image = base64_encode(stream_get_contents($evenements->getImage()));
         // Afficher les détails du cours dans un nouveau template
         return $this->render('evenement_member/voir-plus.html.twig', [
             'evenements' => $evenements,
-            'image'=>$image,
+           
         ]);
     }
     

@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
-#[UniqueEntity('nomEvenement', message: 'Ce nom d\'événement est déjà utilisé. Veuillez en choisir un autre.')]
 
 class Evenement
 {
@@ -48,7 +47,7 @@ class Evenement
     private ?\DateTimeInterface $Time = null;
 
     #[ORM\Column(type: Types::BLOB)]
-    private $image = null;
+    public $image = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]

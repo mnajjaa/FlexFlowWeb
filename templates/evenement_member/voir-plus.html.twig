@@ -3,8 +3,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- Mirrored from powerzone.dexignzone.com/xhtml/events.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 23 Mar 2024 22:02:42 GMT -->
 <head>
 	
 	<!-- Title -->
@@ -30,80 +28,108 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<!-- Favicon icon -->
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="icon" type="image/png" href="{{asset('front-office/images/favicon.png')}}">
     
-	<link href="assets/vendor/nouislider/nouislider.min.css" rel="stylesheet">
-	<link href="assets/vendor/rangeslider/rangeslider.css" rel="stylesheet">
-	<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-	<link href="assets/vendor/magnific-popup/magnific-popup.min.css" rel="stylesheet">
-	<link href="assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-	<link href="assets/vendor/lightgallery/dist/css/lightgallery.css" rel="stylesheet">
-    <link href="assets/vendor/lightgallery/dist/css/lg-thumbnail.css" rel="stylesheet">
-    <link href="assets/vendor/lightgallery/dist/css/lg-zoom.css" rel="stylesheet">
+    
+	<link href="{{asset('front-office/vendor/nouislider/nouislider.min.css')}}" rel="stylesheet">
+	<link href="{{asset('front-office/vendor/rangeslider/rangeslider.css')}}" rel="stylesheet">
+	<link href="{{asset('front-office/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+	<link href="{{asset('front-office/vendor/magnific-popup/magnific-popup.min.css')}}" rel="stylesheet">
+	<link href="{{asset('front-office/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">
+	<link href="{{asset('front-office/vendor/lightgallery/dist/css/lightgallery.css')}}" rel="stylesheet">
+    <link href="{{asset('front-office/vendor/lightgallery/dist/css/lg-thumbnail.css')}}" rel="stylesheet">
+    <link href="{{asset('front-office/vendor/lightgallery/dist/css/lg-zoom.css')}}" rel="stylesheet">
 	<!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="assets/css/style.css">
-	<link class="skin" rel="stylesheet" href="assets/css/skin/skin-1.css">
-	<link href="assets/vendor/switcher/switcher.css" rel="stylesheet">
-	<link href="assets/vendor/animate/animate.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{asset('front-office/css/style.css')}}">
+	<link class="skin" rel="stylesheet" href="{{asset('front-office/css/skin/skin-1.css')}}">
+	<link href="{{asset('front-office/vendor/switcher/switcher.css')}}" rel="stylesheet">
+	<link href="{{asset('front-office/vendor/animate/animate.css')}}" rel="stylesheet">
 	<!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com/">
 	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
-	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-jOyJRFA4v9p2w4jQJ6qrceHOHrH42FcplM60yL/YwJZTrgMwo2xxWI8WJ8aOc4adT6M6nMk0tbr63vD3y2eZ8g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body id="bg" class="data-typography-1">
 
 <div class="page-wraper">
-
 	
 	<div class="page-content bg-white">
 		<!-- Our Event Detail -->
 		<section class="content-inner">
 			<div class="container">
 				<div class="row">
-                 {% for evenement in evenements %}
-
-
 					<div class="col-lg-8">
 						<div class="event-single">
 							<div class="dz-media wow fadeInUp" data-wow-delay="0.4s">
-							<img src="data:image;base64,{{ evenement.image }}" alt="/">
+                                <img src="data:image/jpeg;base64,{{ evenements.getImage()  }}" class="card-img-top" alt="{{ evenements.getnomEvenement()}}">
+							</div>						
 
-							</div>
+							
 						</div>
 					</div>
-					<div class="col-lg-4 ">
+					<div class="col-lg-4">
 						<aside class="side-bar sticky-top">
-							<h3 class="sidebar-title wow fadeInUp" data-wow-delay="0.4s">Event Details</h3>
+							<h3 class="sidebar-title wow fadeInUp" data-wow-delay="0.4s">Détails du Evenement -</h3>
 							<div class="cart-sidebar">
 								<div class="cart-detail m-b30 wow fadeInUp" data-wow-delay="0.6s">
 									<table>
 										<tbody>
-
-                                            
 											<tr>
 												<td>
-													<h6 class="mb-0">Catégorie</h6>
+													<h6 class="mb-0">Nom Evenemnt</h6>
 												</td>
 												<td class="price">
-													{{evenement.categorie}}
+													{{evenements.getnomEvenement()}}
+												
 												</td>
 											</tr>
-
-
 											<tr>
 												<td>
-													<h6 class="mb-0">Objectif</h6>
+													<h6 class="mb-0"> Catégorie</h6>
 												</td>
 												<td class="price">
-													{{evenement.Objectif}}
+												{{evenements.getCategorie()}}
+
 												</td>
 											</tr>
-											
-										
-										
-										
+											<tr>
+												<td>
+													<h6 class="mb-0"> Objectif</h6>
+												</td>
+												<td class="price">
+												{{evenements.getobjectif()}} 
 
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<h6 class="mb-0"> Nombre De Place </h6>
+												</td>
+												<td class="price">
+												{{evenements.getNbrPlace()}}
+
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<h6 class="mb-0"> Date</h6>
+												</td>
+												<td class="price">
+													{{ evenements.getDate()|date('Y-m-d') }}
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<h6 class="mb-0"> Time</h6>
+												</td>
+												<td class="price">
+													<p>Time: {{ evenements.getTime()|date(' H:i:s') }}</p>
+
+												</td>
+											</tr>
 										</tbody>
 									</table>
 								</div>
@@ -111,10 +137,7 @@
 							</div>
 						</aside>
 					</div>
-					                                            {% endfor %}
-
 				</div>
-
 			</div>
 		</section>
 		<div class="content-inner pt-0">
@@ -169,30 +192,31 @@
 			</div>
 		</div>
 		<!-- Our Event Detail -->
-		
-		
-		
 	</div>
-	
-
-	
+	    
 	<div class="scroltop-progress scroltop-primary active-progress">
 		<svg width="100%" height="100%" viewBox="-1 -1 102 102">
 			<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear 0s; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 24.3299px;"></path>
 		</svg>
 	</div>
-	
 </div>
 <!-- JAVASCRIPT FILES ========================================= -->
-<script src="assets/js/jquery.min.js"></script><!-- JQUERY.MIN JS -->
-<script src="assets/vendor/wow/wow.js"></script><!-- WOW.JS -->
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script><!-- BOOTSTRAP MIN JS -->
-<script src="assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script><!-- BOOTSTRAP SELECT MIN JS -->
-<script src="assets/js/dz.ajax.js"></script><!-- AJAX -->
-<script src="assets/js/custom.js"></script><!-- CUSTOM JS -->
-<script src="assets/vendor/rangeslider/rangeslider.js"></script><!-- RANGESLIDER -->
-<script src="assets/vendor/switcher/switcher.js"></script><!-- SWITCHER -->
+{% block javascript %}
+<script src="{{asset('front-office/js/jquery.min.js')}}"></script><!-- JQUERY.MIN JS -->
+<script src="{{asset('front-office/vendor/wow/wow.js')}}"></script><!-- WOW.JS -->
+<script src="{{asset('front-office/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script><!-- BOOTSTRAP.MIN JS -->
+<script src="{{asset('front-office/vendor/splitting/dist/splitting.min.js')}}"></script><!-- Splitting -->
+<script src="{{asset('front-office/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script><!-- BOOTSTRAP SELEECT -->
+<script src="{{asset('front-office/vendor/magnific-popup/magnific-popup.js')}}"></script><!-- MAGNIFIC POPUP JS -->
+<script src="{{asset('front-office/vendor/counter/waypoints-min.js')}}"></script><!-- WAYPOINTS JS -->
+<script src="{{asset('front-office/vendor/counter/counterup.min.js')}}"></script><!-- COUNTERUP JS -->
+<script src="{{asset('front-office/vendor/swiper/swiper-bundle.min.js')}}"></script><!-- SWIPER -->
+<script src="{{asset('front-office/vendor/rangeslider/rangeslider.js')}}"></script><!-- RANGESLIDER -->
+<script src="{{asset('front-office/vendor/switcher/switcher.js')}}"></script><!-- SWITCHER -->
+<script src="{{asset('front-office/js/dz.carousel.js')}}"></script><!-- OWL-CAROUSEL -->
+<script src="{{asset('front-office/js/dz.ajax.js')}}"></script><!-- AJAX -->
+<script src="{{asset('front-office/js/custom.js')}}"></script><!-- CUSTOM JS -->
+{% endblock %}
 </body>
-<!-- Mirrored from powerzone.dexignzone.com/xhtml/events.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 23 Mar 2024 22:02:44 GMT -->
 </html>
 {% endblock %}
