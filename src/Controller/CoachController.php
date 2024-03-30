@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
 class CoachController extends AbstractController
@@ -35,7 +35,30 @@ class CoachController extends AbstractController
             'coach' => $user,
         ]);
     }
-
+    #[Route('/editPwdCoach', name: 'coach_edit_pwd')]
+    public function editPwd(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $email = $request->getSession()->get(Security::LAST_USERNAME);
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        
+        if($request->isMethod('POST')) {
+            if($request->get('plainPassword') != $request->get('plainPasswordConfirm')){
+                $this->addFlash('reset_password_error', 'Passwords do not match');
+                return $this->redirectToRoute('coach_edit_pwd');
+            }
+            $encodedPassword = $passwordHasher->hashPassword(
+                $user,
+                $request->get('plainPassword')
+            );
+    
+            $user->setPassword($encodedPassword);
+                $entityManager->flush();
+                var_dump($user);
+                return $this->redirectToRoute('coach_edit_profile');
+        }
+        return $this->render('coach/editPwdCoach.html.twig');
+    
+    }
     #[Route('/editProfileCoach', name: 'coach_edit_profile')]
     public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {

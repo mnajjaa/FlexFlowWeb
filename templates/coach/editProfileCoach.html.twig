@@ -27,6 +27,8 @@
 
     </head>
 <body>
+ <div class="row">
+
         <div class="col-xl-6">
                                 <div class="card">
                                     <div class="card-body">
@@ -95,5 +97,40 @@
                                 </div>
                                 <!-- end card -->
         </div> <!-- end col -->
+        <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Bootstrap Validation (Tooltips)</h4>
+                                        <p class="card-title-desc">If your form layout allows it, you can swap the <code>.{valid|invalid}-feedback</code> classes for <code>.{valid|invalid}-tooltip</code> classes to display validation feedback in a styled tooltip.</p>
+                                    <form class="needs-validation" novalidate method="post" action="{{ path('coach_edit_pwd') }}"  >
+                                      
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">New Password</label>
+                                                        <input type="password" class="form-control" id="userpassword" placeholder="Enter new password" name="plainPassword" required>
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">Repeat Password</label>
+                                                        <input type="password" class="form-control" id="userpasswordConfirm" placeholder="Repeat password" name="plainPasswordConfirm" required>
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Reset password</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            </div> <!-- end col -->
+</div>  
   </body>
 {% endblock %}
