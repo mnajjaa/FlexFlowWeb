@@ -138,38 +138,6 @@ public function modifier(Request $request, int $id, EvenementRepository $Eveneme
         'form' => $form->createView(),
     ]);
 }
-#[Route("/admin/calendrier", name:"calendrier_evenements")]
-public function calendrier(EvenementRepository $evenementRepository): Response
-{
-    // Récupérer tous les événements depuis le repository
-    $evenements = $evenementRepository->findAll();
-
-    // Créer un tableau pour stocker les événements dans un format compréhensible par FullCalendar
-    $eventsArray = [];
-
-    foreach ($evenements as $evenement) {
-        // Convertir les dates en chaînes de caractères au format ISO 8601
-        $start = $evenement->getDate()->format('Y-m-d');
-        $end = $evenement->getDate()->format('Y-m-d');
-
-        // Ajouter l'événement au tableau
-        $eventsArray[] = [
-            'title' => $evenement->getNomEvenement(),
-            'start' => $start,
-            'end' => $end,
-            'id' => $evenement->getId(),
-        ];
-    }
-
-    // Convertir le tableau en JSON pour l'afficher dans FullCalendar
-    $eventsJson = json_encode($eventsArray);
-
-    // Rendre la vue en passant les événements au format JSON
-    return $this->render('Evenement/AdminCalender.html.twig', [
-        'eventsJson' => $eventsJson,
-    ]);
-}
-
 
 
  

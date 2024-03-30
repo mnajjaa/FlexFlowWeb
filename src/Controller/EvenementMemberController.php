@@ -57,6 +57,42 @@ public function listeEvenement(Request $request, EvenementRepository $EvenementR
 }
 
 
-   
+#[Route("/events/Member", name:"calendar_member")]
+
+public function events(EvenementRepository $eventRepository)
+{
+    // Récupérez les événements depuis la base de données
+    $events = $eventRepository->findAll(); // C'est un exemple, adaptez cette méthode en fonction de votre logique d'application
+    
+    // Convertissez les événements en un tableau JSON
+    $rdvs = [];
+    foreach ($events as $event) {
+        // Récupérez la date et l'heure séparément
+        $date = $event->getDate()->format('Y-m-d');
+        $time = $event->getTime()->format('H:i:s');
+
+        $start = $date . 'T' . $time;
+
+        $rdvs[] = [
+            'id'=>$event->getId(),
+            'title' => $event->getNomEvenement(),
+            'start' => $start,
+            'categorie'=>$event->getCategorie(),
+            'objectif'=>$event->getObjectif(),
+            "nbrdePlace"=>$event->getNbrPlace(),
+            'Etat'=>$event->isEtat(),
+            'user'=>$event->getUser(),
+            
+
+            // Ajoutez d'autres propriétés d'événement si nécessaire
+        ];
+    }
+    
+    // Renvoyez les événements au format JSON
+    $data = json_encode($rdvs);
+    return $this->render('evenement_member/calenderMember.html.twig', [
+        'data' => $data,
+    ]);
+}
 
 }

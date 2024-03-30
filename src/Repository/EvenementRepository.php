@@ -47,7 +47,7 @@ class EvenementRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-public function filtrerParDate(Date $fromDate, Date $toDate): array
+public function filtrerParDate(\DateTime $fromDate, \DateTime $toDate): array
 {
     // Implémentez la logique de filtrage des événements en fonction des dates "From" et "To"
     // Par exemple, vous pouvez utiliser une requête DQL pour récupérer les événements dans la plage de dates spécifiée
@@ -60,4 +60,5 @@ public function filtrerParDate(Date $fromDate, Date $toDate): array
         ->getQuery()
         ->getResult();
 }
+
 }
