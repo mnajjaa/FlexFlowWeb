@@ -454,9 +454,9 @@ document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'success',
             title: 'Participation avec succès !',
-			html: 'Un e-mail vous a été envoyé.',
-            showConfirmButton: true, // Affiche le bouton "OK"
-            confirmButtonText: 'OK', // Texte du bouton "OK"
+			html: 'Un e-mail vous a été envoyé',
+            showConfirmButton: false,
+            timer: 4500
         }).then(() => {
             // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
             document.querySelector('form').submit();
@@ -473,56 +473,32 @@ document.addEventListener('DOMContentLoaded', function() {
 			</div>
 		</section>
 		<div class="content-inner pt-0">
+		{% if autresCours is not empty %}
 			<div class="container">
-				<div class="row">
-					<h4 class="title font-weight-700 m-b30">Related Projects</h4>
-					<div class="col-xl-6 col-lg-8">
-						<div class="dz-card style-1 blog-half m-b30 wow fadeInUp" data-wow-delay="0.4s">
-							<div class="dz-media">
-								<a href="javascript:void(0);"><img src="{{asset('front-office/images/blog/blog-grid/pic1.jpg')}}" alt="/"></a>
-							</div>
-							<div class="dz-info">
-								<div class="dz-meta">
-									<ul>
-										<li class="dz-date">
-											<span>14</span> FEB
-										</li>
-										<li class="dz-time">
-											<a href="javascript:void(0);">9:00 am - 11:00 am</a>
-										</li>
-									</ul>
-								</div> 
-								<h4 class="dz-title"><a href="event.html">Personal Journeys to a Healthier Lifestyle</a></h4>
-								<p>Lorem Ipsum is simply dummy text of the printing and.</p>
-								<a class="read-btn btn-link" href="event.html">Read More</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-6 col-lg-8">
-						<div class="dz-card style-1 blog-half m-b30 wow fadeInUp" data-wow-delay="0.6s">
-							<div class="dz-media">
-                            
-								<a href="javascript:void(0);"><img src="{{asset('front-office/images/blog/blog-grid/pic2.jpg')}}" alt="/"></a>
-							</div>
-							<div class="dz-info">
-								<div class="dz-meta">
-									<ul>
-										<li class="dz-date">
-											<span>20</span> FEB
-										</li>
-										<li class="dz-time">
-											<a href="javascript:void(0);">9:00 am - 11:00 am</a>
-										</li>
-									</ul>
-								</div> 
-								<h4 class="dz-title"><a href="event.html">Maximizing Results with Time Workouts</a></h4>
-								<p>Lorem Ipsum is simply dummy text of the printing and.</p>
-								<a class="read-btn btn-link" href="event.html">Read More</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+    <div class="row">
+        <h4 class="title font-weight-700 m-b30">VOUS AIMEREZ PEUT-ÊTRE AUSSI…</h4>
+        {% for autreCours in autresCours %}
+        <div class="col-xl-6 col-lg-8">
+            <div class="dz-card style-1 blog-half m-b30 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="dz-media">
+                    <a href="{{ path('voir_cours', {'id': autreCours.id}) }}"><img src="data:image/jpeg;base64,{{ autreCours.image }}" alt=""></a>
+                </div>
+                <div class="dz-info">
+                    <div class="dz-meta">
+                        <ul>
+                            {# Ajouter les détails du cours comme la date et l'heure ici #}
+                        </ul>
+                    </div>
+                    <h4 class="dz-title"><a href="{{ path('voir_cours', {'id': autreCours.id}) }}">{{ autreCours.nomCour }}</a></h4>
+                    
+                    <a class="read-btn btn-link" href="{{ path('voir_cours', {'id': autreCours.id}) }}">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 		</div>
 		<!-- Our Event Detail -->
 		

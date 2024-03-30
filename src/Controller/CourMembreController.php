@@ -109,14 +109,27 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
         'nomCour' => $cours->getNomCour()
     ]);
 
+     $cours->image = base64_encode(stream_get_contents($cours->getImage()));
     // Ajouter une variable pour indiquer si le membre a déjà participé
     $dejaParticipe = ($existingParticipation !== null);
 
-    $cours->image = base64_encode(stream_get_contents($cours->getImage()));
+    // Récupérer la catégorie du cours visité
+    $categorie = $cours->getCategorie();
+
+    // Récupérer deux autres cours de la même catégorie que le cours visité
+    $autresCours = $coursRepository->findRandomCoursByCategory($categorie, 2, $id);
+
+    // Transformez les images en base64 pour les afficher dans le template Twig
+    foreach ($autresCours as $cour) {
+        $cour->setImage(base64_encode(stream_get_contents($cour->getImage())));
+    }
+
+   // $cours->image = base64_encode(stream_get_contents($cours->getImage()));
     // Afficher les détails du cours dans un nouveau template
     return $this->render('GestionCours/voirPlus.html.twig', [
         'cours' => $cours,
         'dejaParticipe' => $dejaParticipe,
+        'autresCours' => $autresCours,
     ]);
 }
 
