@@ -154,7 +154,7 @@
 
 <body>
     <div class="container mt-4">
-        <h1 class="text-center mb-4">Modifier un cours</h1>
+        <h1 class="text-center mb-4">Modifier un cour</h1>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card custom-card">
@@ -165,12 +165,18 @@
                                 <label for="{{ form.nomCour.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Nom du cours :</label>
                                 <div class="col-sm-9">
                                     {{ form_widget(form.nomCour, {'attr': {'class': 'form-control'}}) }}
+                                    <div class="text-danger">
+        {{ form_errors(form.nomCour) }}
+    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="{{ form.Duree.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Durée :</label>
                                 <div class="col-sm-9">
                                     {{ form_widget(form.Duree, {'attr': {'class': 'form-control'}}) }}
+                                     <div class="text-danger">
+        {{ form_errors(form.Duree) }}
+    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -211,12 +217,18 @@
                                 <label for="{{ form.Objectif.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Capacité :</label>
                                 <div class="col-sm-9">
                                     {{ form_widget(form.capacite, {'attr': {'class': 'form-control'}}) }}
+                                     <div class="text-danger">
+        {{ form_errors(form.capacite) }}
+    </div>
                                 </div>
                             </div>
                                  <div class="form-group row">
                                 <label for="{{ form.Objectif.vars.id }}" class="col-sm-3 col-form-label custom-form-label">ImageFile :</label>
                                 <div class="col-sm-9">
                                     {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                                    <div class="text-danger">
+        {{ form_errors(form.imageFile) }}
+    </div>
                                 </div>
                             </div>
                              <div class="form-group row">
@@ -252,6 +264,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
             document.querySelector('form').submit();
         });
+
+        
     });
 });
 </script>

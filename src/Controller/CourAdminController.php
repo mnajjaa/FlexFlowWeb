@@ -138,9 +138,12 @@ public function modifier(Request $request, int $id, CoursRepository $coursReposi
 
         return $this->redirectToRoute('cour_liste');
     }
+    
 
     return $this->render('GestionCours/modifierCour.html.twig', [
         'form' => $form->createView(),
+        
+      
     ]);
 }
 
