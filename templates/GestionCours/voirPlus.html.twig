@@ -364,6 +364,12 @@
 							
 							<h4 class="title wow fadeInUp" data-wow-delay="1.8s">Trainer Suggestion And Going</h4>
 							<p class="event-text wow fadeInUp" data-wow-delay="2.0s">If you use this site regularly and would like to help keep the site on the Internet, please consider donating a small sum to help pay for the hosting and bandwidth bill. make a type specimen book. It has survived not only five centuries but also the leap into the electronic typesetting, remaining essentially unchanged.</p>
+							<!-- Ajouter les icônes de like/dislike -->
+<div>
+   <button class="like-btn" data-rating="like"><i class="fas fa-thumbs-up"></i></button>
+<button class="dislike-btn" data-rating="dislike"><i class="fas fa-thumbs-down"></i></button>
+
+</div>
 						</div>
 					</div>
 					<div class="col-lg-4 ">
@@ -463,7 +469,42 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+
+
+
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.like-btn, .dislike-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var rating = this.dataset.rating;
+            var courseId = {{ cours.getId() }};
+            // Envoyer une requête AJAX au serveur pour enregistrer le rating
+            fetch(`/cours/${courseId}/evaluer`, { // Utilisation de l'URL de la nouvelle route
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ rating: rating }),
+            }).then(function(response) {
+                // Gérer la réponse du serveur si nécessaire
+                if (response.ok) {
+                    console.log('Evaluation enregistrée avec succès');
+                } else {
+                    console.error('Erreur lors de l\'enregistrement de l\'évaluation');
+                }
+            }).catch(function(error) {
+                console.error('Error:', error);
+            });
+        });
+    });
+});
+
+</script>
+
 
 
 						</aside>

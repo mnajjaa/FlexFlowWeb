@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Cours;
+use App\Entity\Rating;
 use App\Entity\Participation;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Mime\Email;
@@ -197,6 +198,49 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
 }
 
 ////commentaire aprés merge////
+
+#[Route('/cours/{id}/evaluer', name: 'evaluer_cours')]
+public function evaluerCours(int $id, Request $request, EntityManagerInterface $entityManager): JsonResponse
+{
+    // Récupérer l'utilisateur connecté
+    $user = $this->getUser();
+    
+    // Récupérer les données d'évaluation depuis la requête AJAX
+    $data = json_decode($request->getContent(), true);
+
+    // Récupérer le cours à partir de son ID
+    $cours = $entityManager->getRepository(Cours::class)->find($id);
+
+    // Vérifier si le cours existe
+    if (!$cours) {
+        return new JsonResponse(['error' => 'Cours non trouvé'], 404);
+    }
+
+    // Vérifier si l'utilisateur est connecté
+    if (!$user) {
+        return new JsonResponse(['error' => 'Utilisateur non authentifié'], 401);
+    }
+
+    // Récupérer la valeur de notation
+    $ratingValue = ($data['rating'] === 'like') ? 1 : -1;
+    $liked = ($ratingValue === 1);
+    $disliked = ($ratingValue === -1);
+
+    // Créer une nouvelle instance de l'entité Rating
+    $rating = new Rating();
+    $rating->setUser($user);
+    $rating->setNomCour($cours->getNomCour());
+    $rating->setRating($ratingValue);
+    $rating->setLiked($liked);
+    $rating->setDisliked($disliked);
+
+    // Persist et flush l'entité Rating
+    $entityManager->persist($rating);
+    $entityManager->flush();
+
+    // Réponse JSON pour indiquer que l'évaluation a été enregistrée avec succès
+    return new JsonResponse(['success' => true]);
+}
 
 
         
