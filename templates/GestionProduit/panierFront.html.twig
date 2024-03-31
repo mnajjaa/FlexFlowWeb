@@ -428,15 +428,15 @@
     <td class="product-item-name"><a href="product-detail.html">{{ item.produit.nom }} </a></td>
     <td class="product-item-price">{{ item.produit.prix }} dnt</td>
     <td class="product-item-quantity">
-    <a href="#" class="quantity-control plus" onclick="incrementerQuantite({{ item.produit.id }})"><i class="fas fa-plus"></i></a>
+    <a class="quantity-control plus" onclick="incrementerQuantite({{ item.produit.id }})"><i class="fas fa-plus"></i></a>
 
     <span>{{ item.quantite }}</span>
 
-    <a href="#" class="quantity-control minus" onclick="decrementerQuantite({{ item.produit.id }})"><i class="fas fa-minus"></i></a>
+    <a class="quantity-control minus" onclick="decrementerQuantite({{ item.produit.id }})"><i class="fas fa-minus"></i></a>
 </td>
 
     <td class="product-item-total">{{ item.produit.prix * item.quantite }} dnt</td>
-    <td class="product-item-close"><a href="#" onclick="supprimerAchat({{ item.produit.id }})"><i class="ti-close"></i></a></td>
+    <td class="product-item-close"><a onclick="supprimerAchat({{ item.produit.id }})"><i class="ti-close"></i></a></td>
 </tr>
 
  {% set total = total + item.produit.prix * item.quantite %}
@@ -568,30 +568,38 @@
 
 
 		<script>
-    function incrementerQuantite(id) {
-        fetch("{{ path('incrementer_quantite', {'id': 'ID_PLACEHOLDER'}) }}".replace("ID_PLACEHOLDER", id), {
-            method: 'POST',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                console.error('L\'incrémentation de la quantité a échoué.');
-            }
-        }).then(data => {
-            if (data.message) {
-                alert(data.message); // Affichez le message
-            } else {
-                location.reload(); // Recharge la page après l'incrémentation
-            }
-        }).catch(error => {
-            console.error('Une erreur est survenue lors de l\'incrémentation de la quantité :', error);
-        });
-    }
+   
+
+   function incrementerQuantite(id) {
+    fetch("{{ path('incrementer_quantite', {'id': 'ID_PLACEHOLDER'}) }}".replace("ID_PLACEHOLDER", id), {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            console.error('L\'incrémentation de la quantité a échoué.');
+        }
+    }).then(data => {
+        if (data.message) {
+            // Afficher un message SweetAlert si la quantité maximale est atteinte
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: data.message
+            });
+        } else {
+            location.reload(); // Recharge la page après l'incrémentation
+        }
+    }).catch(error => {
+        console.error('Une erreur est survenue lors de l\'incrémentation de la quantité :', error);
+    });
+}
+
 
 
   // Fonction pour décrémenter la quantité d'un produit dans le panier

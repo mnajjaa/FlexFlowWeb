@@ -139,7 +139,7 @@ class AdminController1 extends AbstractController
 
     // Trouver le nom d'utilisateur le plus fréquemment répété
     $nomUtilisateurPlusRepete = array_search(max($nomsUtilisateursCounts), $nomsUtilisateursCounts);
-    
+ 
      // Initialiser un tableau pour stocker le montant total par jour
      $montantParJour = [];
 

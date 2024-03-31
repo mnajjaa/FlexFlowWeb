@@ -48,7 +48,7 @@ class ProduitRepository extends ServiceEntityRepository
 public function findMostSoldProduct(): ?Produit
 {
     return $this->createQueryBuilder('p')
-        ->orderBy('p.quantiteVendues * p.prix', 'DESC')
+        ->orderBy('p.quantiteVendues', 'DESC')
         ->setMaxResults(1)
         ->getQuery()
         ->getOneOrNullResult();
@@ -57,7 +57,7 @@ public function findMostSoldProduct(): ?Produit
 public function findLeastSoldProduct(): ?Produit
 {
     return $this->createQueryBuilder('p')
-        ->orderBy('p.quantiteVendues * p.prix', 'ASC')
+        ->orderBy('p.quantiteVendues', 'ASC')
         ->setMaxResults(1)
         ->getQuery()
         ->getOneOrNullResult();

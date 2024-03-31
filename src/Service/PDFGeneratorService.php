@@ -24,7 +24,7 @@ class PDFGeneratorService
 
         // Ajout du logo en haut à droite de la page
         $image_file = 'C:\xampp\htdocs\FlexFlowWeb\public\uploads\logo.jpg'; // Chemin vers le fichier logo
-        $pdf->Image($image_file, 175, 11, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $pdf->Image($image_file, 175, 15, 25, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
         // Date de facture
         $pdf->SetFont('helvetica', 'B', 12);
