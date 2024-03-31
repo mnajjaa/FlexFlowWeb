@@ -6,12 +6,15 @@ use App\Entity\Offre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+
 class DemandeFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -22,14 +25,19 @@ class DemandeFormType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('age', IntegerType::class, [
-                'constraints' => [
-                    new NotBlank(),
-                ],
+         
+            ->add('age', NumberType::class, [
+                'label' => 'age',
+                'invalid_message' => 'Veuillez saisir un prix valide (chiffres uniquement et supérieur à zéro)',
+                'attr' => ['min' => 0],
             ])
             ->add('but', TextType::class, [
+                'label' => 'But',
                 'constraints' => [
-                    new NotBlank(),
+                    new Regex([
+                        'pattern' => '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç])+[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç]*$/u',
+                        'message' => 'Votre but doit contenir au moins une lettre.',
+                    ]),
                 ],
             ])
             ->add('niveauPhysique', ChoiceType::class, [
@@ -65,10 +73,11 @@ class DemandeFormType extends AbstractType
                 'constraints' => [            new NotBlank(),
             ],
         ])
-        ->add('nombreHeure', IntegerType::class, [
-            'constraints' => [
-                new NotBlank(),
-            ],
+       
+        ->add('nombreHeure', NumberType::class, [
+            'label' => 'nombreHeure',
+            'invalid_message' => 'Veuillez saisir un prix valide (chiffres uniquement et supérieur à zéro)',
+            'attr' => ['min' => 0],
         ])
         ->add('user', EntityType::class, [
             'class' => User::class,

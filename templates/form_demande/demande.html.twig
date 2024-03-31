@@ -369,11 +369,36 @@
         
              
                 {{ form_row(form.nom) }}
-                {{ form_row(form.age) }}
-                {{ form_row(form.but) }}
+                <div>
+					{{ form_label(form.age, 'Âge') }}
+					{{ form_widget(form.age) }}
+				
+					<div class="text-danger">
+						{{ form_errors(form.age) }}
+					</div>
+				</div>
+               <div>
+    {{ form_label(form.but, 'But') }}
+    {{ form_widget(form.but) }}
+
+    {% if form_errors(form.but) %}
+        <div class="text-danger">
+            {{ form_errors(form.but) }}
+        </div>
+    {% endif %}
+</div>
                 {{ form_row(form.niveauPhysique) }}
                 {{ form_row(form.maladieChronique) }}
-                {{ form_row(form.nombreHeure) }}
+				<div>
+					{{ form_label(form.nombreHeure, 'But') }}
+					{{ form_widget(form.nombreHeure) }}
+				
+					{% if form_errors(form.nombreHeure) %}
+						<div class="text-danger">
+							{{ form_errors(form.nombreHeure) }}
+						</div>
+					{% endif %}
+				</div>
                 {{ form_row(form.etat) }}
                 {{ form_row(form.horaire) }}
                 {{ form_row(form.lesjours) }}
