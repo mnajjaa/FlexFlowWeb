@@ -279,5 +279,39 @@ public function getLikesDislikes(int $id, EntityManagerInterface $entityManager)
 }
 
 
+
+
+#[Route('/cours/{id}/annuler-participation', name: 'annuler_participation_cours')]
+public function annulerParticipationCours(int $id, EntityManagerInterface $entityManager): Response
+{
+    // Récupérer l'utilisateur connecté
+    $user = $this->getUser();
+
+    // Récupérer le cours
+    $cours = $entityManager->getRepository(Cours::class)->find($id);
+
+    // Vérifier si l'utilisateur a déjà participé à ce cours
+    $participation = $entityManager->getRepository(Participation::class)->findOneBy([
+        'user' => $user,
+        'nomCour' => $cours->getNomCour()
+    ]);
+
+    // Si l'utilisateur a participé, annuler sa participation
+    if ($participation) {
+        // Augmenter la capacité du cours
+        $cours->setCapacite($cours->getCapacite() + 1);
+
+        // Supprimer l'entrée de participation
+        $entityManager->remove($participation);
+        $entityManager->flush();
+
+        // Rediriger avec un message de succès
+        $this->addFlash('success', 'Participation annulée avec succès.');
+    }
+
+    // Rediriger vers la liste des cours
+    return $this->redirectToRoute('voir_cours', ['id' => $id]);
+}
+
         
 }

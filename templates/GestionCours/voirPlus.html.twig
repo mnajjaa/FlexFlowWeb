@@ -479,6 +479,7 @@
     <h3 class="title">Prêt à relever le défi ? Rejoignez ce cour !</h3>
     {% if dejaParticipe %}
         <a href="#" class="btn btn-primary btn-skew disabled" style="pointer-events: none;"><span class="skew-inner"><span class="text">Déjà participé</span></span></a>
+		 <a href="{{ path('annuler_participation_cours', {'id': cours.getId()}) }}" class="btn btn-danger btn-skew" id="cancel-btn"><span class="skew-inner"><span class="text">Annuler Participation</span></span></a>
     {% else %}
         <a href="{{ path('participer_cours', {'id': cours.getId()}) }}" class="btn btn-primary btn-skew" id="submit-btn"><span class="skew-inner"><span class="text">Participer</span></span></a>
     {% endif %}
