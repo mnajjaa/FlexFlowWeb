@@ -320,6 +320,7 @@
 
 
 							<ul class="pr-list style-2 dark m-b30 wow fadeInUp" data-wow-delay="1.0s">
+							{% if cours.getCible() == "Adulte" %}
 								<li><i class="flaticon-check-mark"></i>Santé globale et bien-être</li>
 <li><i class="flaticon-check-mark"></i>Évaluation des progrès</li>
 <li><i class="flaticon-check-mark"></i>Récompenses et incitations</li>
@@ -328,11 +329,29 @@
 <li><i class="flaticon-check-mark"></i>Engagement communautaire</li>
 <li><i class="flaticon-check-mark"></i>Suivi des progrès</li>
 <li><i class="flaticon-check-mark"></i>Variété d'activités</li>
+ {% elseif cours.getCible() == "Enfant" %}
+ <li><i class="flaticon-check-mark"></i>Jeux actifs</li>
+<li><i class="flaticon-check-mark"></i>Défis amusants</li>
+<li><i class="flaticon-check-mark"></i>Suivi adapté</li>
+<li><i class="flaticon-check-mark"></i>Diversité des activités</li>
+<li><i class="flaticon-check-mark"></i>Développement physique</li>
+<li><i class="flaticon-check-mark"></i>Esprit d'équipe</li>
+<li><i class="flaticon-check-mark"></i>Activités familiales</li>
+<li><i class="flaticon-check-mark"></i>Variété d'activités</li>
+{% endif %}
 
 							</ul>
-							<p class="event-text wow fadeInUp" data-wow-delay="1.2s">There are many variations of passages of Lorem Ipsum available, but the majority have some a form suffered alteration in , by injected humour,</p>
 							
+							<h4 class="title wow fadeInUp" data-wow-delay="1.8s">Vidéo du Jour : Séances d'Entraînement Recommandées</h4>
 
+							<style>
+    .video-container {
+        margin-top: 20px; /* Espacement en haut */
+        margin-bottom: 20px; /* Espacement en bas */
+    }
+</style>
+
+<div class="video-container">							
 {% if cours.getCategorie() == "Aquatique" %}
 							<video class="wow fadeInUp" data-wow-delay="1.0s" controls autoplay muted loop>
   <source src="{{ asset('videos/aquatique.mp4') }}" type="video/mp4">
@@ -361,9 +380,11 @@
   Your browser does not support the video tag.
 </video>
 {% endif %}
+</div>
+    
 							
-							<h4 class="title wow fadeInUp" data-wow-delay="1.8s">Trainer Suggestion And Going</h4>
-							<p class="event-text wow fadeInUp" data-wow-delay="2.0s">If you use this site regularly and would like to help keep the site on the Internet, please consider donating a small sum to help pay for the hosting and bandwidth bill. make a type specimen book. It has survived not only five centuries but also the leap into the electronic typesetting, remaining essentially unchanged.</p>
+							<h4 class="title wow fadeInUp" data-wow-delay="1.8s">Conseils sportifs</h4>
+							<p class="event-text wow fadeInUp" data-wow-delay="2.0s">Pour maximiser vos séances d'entraînement, veillez à bien vous hydrater avant, pendant et après l'exercice. N'oubliez pas de vous échauffer correctement pour éviter les blessures, et écoutez votre corps pour savoir quand il est temps de ralentir ou de faire une pause.</p>
 							<!-- Ajouter les icônes de like/dislike -->
 <!-- Ajouter les icônes de like/dislike avec les classes d'animation directement dans le Twig -->
 
@@ -455,7 +476,7 @@
 										<img src="{{asset('front-office/images/event/grid2/pic3.jpg')}}" alt="/">
 									</div>
 									<div class="dz-content">
-    <h3 class="title">Gym Training And Event</h3>
+    <h3 class="title">Prêt à relever le défi ? Rejoignez ce cour !</h3>
     {% if dejaParticipe %}
         <a href="#" class="btn btn-primary btn-skew disabled" style="pointer-events: none;"><span class="skew-inner"><span class="text">Déjà participé</span></span></a>
     {% else %}
