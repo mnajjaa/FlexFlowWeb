@@ -9,15 +9,16 @@ use App\Entity\Participation;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Mime\Email;
 use App\Repository\CoursRepository;
+use App\Repository\RatingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\UX\Notify\NotifierInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\UX\Notify\NotifierInterface;
 
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -91,7 +92,7 @@ public function listeCours(Request $request, CoursRepository $coursRepository, P
 
 
     #[Route('/cours/{id}', name: 'voir_cours')]
-public function voirCours(int $id, CoursRepository $coursRepository, Request $request, EntityManagerInterface $entityManager): Response
+public function voirCours(int $id, CoursRepository $coursRepository, Request $request, EntityManagerInterface $entityManager, RatingRepository $ratingRepository): Response
 {
     // Récupérer le cours depuis le référentiel en fonction de l'ID
     //$cours = $coursRepository->find($id);
@@ -101,6 +102,10 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
     if (!$cours) {
         throw new NotFoundHttpException('Cours non trouvé');
     }
+
+     // Obtenir les totaux de likes et dislikes
+     $totalLikes = $ratingRepository->getTotalLikes($cours->getNomCour());
+     $totalDislikes = $ratingRepository->getTotalDislikes($cours->getNomCour());
 
     // Vérifier si l'utilisateur a déjà participé à ce cours
     $email = $request->getSession()->get(Security::LAST_USERNAME);
@@ -131,6 +136,9 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
         'cours' => $cours,
         'dejaParticipe' => $dejaParticipe,
         'autresCours' => $autresCours,
+        
+        'totalLikes' => $totalLikes,
+        'totalDislikes' => $totalDislikes,
     ]);
 }
 
@@ -240,6 +248,27 @@ public function evaluerCours(int $id, Request $request, EntityManagerInterface $
 
     // Réponse JSON pour indiquer que l'évaluation a été enregistrée avec succès
     return new JsonResponse(['success' => true]);
+}
+
+
+
+#[Route('/cours/{id}/likes', name: 'get_likes_dislikes')]
+public function getLikesDislikes(int $id, EntityManagerInterface $entityManager): JsonResponse
+{
+    // Récupérer le cours à partir de son ID
+    $cours = $entityManager->getRepository(Cours::class)->find($id);
+
+    // Vérifier si le cours existe
+    if (!$cours) {
+        return new JsonResponse(['error' => 'Cours non trouvé'], 404);
+    }
+
+    // Récupérer le nombre de likes et de dislikes pour le cours
+    $likesCount = $entityManager->getRepository(Rating::class)->count(['nomCour' => $cours->getNomCour(), 'liked' => true]);
+    $dislikesCount = $entityManager->getRepository(Rating::class)->count(['nomCour' => $cours->getNomCour(), 'disliked' => true]);
+
+    // Retourner le nombre de likes et de dislikes sous forme de réponse JSON
+    return new JsonResponse(['likes' => $likesCount, 'dislikes' => $dislikesCount]);
 }
 
 

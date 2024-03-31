@@ -365,11 +365,28 @@
 							<h4 class="title wow fadeInUp" data-wow-delay="1.8s">Trainer Suggestion And Going</h4>
 							<p class="event-text wow fadeInUp" data-wow-delay="2.0s">If you use this site regularly and would like to help keep the site on the Internet, please consider donating a small sum to help pay for the hosting and bandwidth bill. make a type specimen book. It has survived not only five centuries but also the leap into the electronic typesetting, remaining essentially unchanged.</p>
 							<!-- Ajouter les icônes de like/dislike -->
-<div>
-   <button class="like-btn" data-rating="like"><i class="fas fa-thumbs-up"></i></button>
-<button class="dislike-btn" data-rating="dislike"><i class="fas fa-thumbs-down"></i></button>
+<!-- Ajouter les icônes de like/dislike avec les classes d'animation directement dans le Twig -->
 
+
+<h4 class="title wow fadeInUp" data-wow-delay="1.8s">Votre avis compte pour nous <i class="far fa-comment"></i> </h4>
+
+<div class="reaction-buttons">
+    <!-- Bouton de like -->
+    <button class="like-btn" data-rating="like" style="background-color: transparent; border: none;"  id="rate-btn">
+        <i class="far fa-thumbs-up" style="font-size: 24px;"></i>
+        <span id="likes-count">{{ totalLikes }}</span>
+    </button>
+    
+    <!-- Ajout d'un espace -->
+    <span>&nbsp;</span>
+    
+    <!-- Bouton de dislike -->
+    <button class="dislike-btn" data-rating="dislike" style="background-color: transparent; border: none;" id="ratedis-btn">
+        <i class="far fa-thumbs-down" style="font-size: 24px;"></i>
+        <span id="dislikes-count">{{ totalDislikes }}</span>
+    </button>
 </div>
+
 						</div>
 					</div>
 					<div class="col-lg-4 ">
@@ -476,12 +493,66 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </script>
 
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('rate-btn').addEventListener('click', function(event) {
+        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+        Swal.fire({
+            icon: 'success',
+            title: 'Merci pour votre évaluation !',
+            showConfirmButton: false,
+            timer: 3000
+        }).then((result) => {
+            // Exécuter du code après la fermeture de l'alerte
+            if (result.dismiss === Swal.DismissReason.timer) {
+                // Recharger la page après 3 secondes si l'alerte a été fermée automatiquement
+                location.reload();
+            }
+			 });
+    });
+
+ // Recharger la page après 3 secondes
+       
+    });
+
+
+
+</script>
+
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('ratedis-btn').addEventListener('click', function(event) {
+        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+        Swal.fire({
+            icon: 'success',
+            title: 'Merci pour votre évaluation !',
+            showConfirmButton: false,
+            timer: 3000
+        }).then(() => {
+            // Exécuter du code après la fermeture de l'alerte
+            if (result.dismiss === Swal.DismissReason.timer) {
+                // Recharger la page après 3 secondes si l'alerte a été fermée automatiquement
+                location.reload();
+            }
+			 });
+    });
+});
+
+</script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.like-btn, .dislike-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
             var rating = this.dataset.rating;
             var courseId = {{ cours.getId() }};
+            // Ajouter la classe active au bouton cliqué
+            this.style.backgroundColor = rating === 'like' ? '#007bff' : '#dc3545';
+            this.style.color = '#fff';
+            // Supprimer la classe active de l'autre bouton
+            var otherBtn = rating === 'like' ? document.querySelector('.dislike-btn') : document.querySelector('.like-btn');
+            otherBtn.style.backgroundColor = 'transparent';
+            otherBtn.style.color = 'inherit';
             // Envoyer une requête AJAX au serveur pour enregistrer le rating
             fetch(`/cours/${courseId}/evaluer`, { // Utilisation de l'URL de la nouvelle route
                 method: 'POST',
@@ -502,7 +573,25 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+</script>
 
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Récupérer l'ID du cours actuel depuis les données Twig
+    var courseId = "{{ cours.getId() }}";
+
+    // Envoyer une requête AJAX pour récupérer le nombre de likes et de dislikes
+    fetch(`/cours/${courseId}/likes`)
+        .then(response => response.json())
+        .then(data => {
+            // Mettre à jour l'affichage du nombre de likes et de dislikes sur la page
+            document.getElementById('likes-count').innerText = data.likes;
+            document.getElementById('dislikes-count').innerText = data.dislikes;
+        })
+        .catch(error => console.error('Erreur lors de la récupération des likes et dislikes:', error));
+});
 </script>
 
 

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Rating;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Cours;
 
 /**
  * @extends ServiceEntityRepository<Rating>
@@ -20,6 +21,34 @@ class RatingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Rating::class);
     }
+
+
+    public function getTotalLikes(string $nomCour): int
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT COUNT(r)
+            FROM App\Entity\Rating r
+            WHERE r.nom_cour = :nomCour AND r.liked = true'
+        )->setParameter('nomCour', $nomCour);
+        
+        return (int) $query->getSingleScalarResult();
+    }
+    
+    public function getTotalDislikes(string $nomCour): int
+    {
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery(
+            'SELECT COUNT(r)
+            FROM App\Entity\Rating r
+            WHERE r.nom_cour = :nomCour AND r.disliked = true'
+        )->setParameter('nomCour', $nomCour);
+        
+        return (int) $query->getSingleScalarResult();
+    }
+    
 
 //    /**
 //     * @return Rating[] Returns an array of Rating objects
