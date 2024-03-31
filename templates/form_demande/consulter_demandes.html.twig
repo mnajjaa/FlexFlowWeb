@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -297,119 +296,66 @@
 		
 	</header>
     <div class="page-content bg-white">
-		
-    <!-- Banner  -->
     <div class="dz-bnr-inr style-2" style="background-image: url('assets/background/images/banner-2.png')">
-        <div class="banner-gradient"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="dz-bnr-inr-entry">
-                        <h1>Nos offres</h1>
-                        <!-- Breadcrumb Row -->
-                        <nav aria-label="breadcrumb" class="breadcrumb-row">
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Nos offres</li>
-                            </ul>
-                        </nav>
-                        <!-- Breadcrumb Row End -->
-                    </div>
-                </div>
-            </div>	
-
-        </div>	
-    </div>
-    <body>
-        <style>
-            .container {
-                display: flex;
-                justify-content: space-around;
-                flex-wrap: wrap;
-            }
-        
-           
-
-
-            .star-rating {
-                font-size: 0; /* Empêche les espaces entre les étoiles */
-            }
-            
-            .star-rating input[type="radio"] {
-                display: none; /* Masque les radios */
-            }
-            
-            .star-rating label {
-                font-size: 30px; /* Taille des étoiles */
-                cursor: pointer; /* Curseur pointer */
-                color: #ddd; /* Couleur de l'étoile vide */
-            }
-            
-            .star-rating label:before {
-                content: "\2605"; /* Code unicode pour une étoile pleine */
-            }
-            
-            .star-rating input[type="radio"]:checked ~ label {
-                color: #f90; /* Couleur de l'étoile pleine */
-            }
-
-      
-
-            
-        </style>
-    
-        <!-- <body data-layout="horizontal" data-topbar="colored"> -->
-    
-            <!-- Begin page -->
-            <div class="container">
-        <h1>Consulter les offres</h1>
-        <div class="table-container">
-            <table class="table">
-                <thead>
+			<div class="banner-gradient"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="dz-bnr-inr-entry">
+							<h1>Coaching privé dnas FlexFlow</h1>
+                    
+						</div>
+					</div>
+				</div>	
+              
+			</div>	
+		</div>
+<body>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Âge</th>
+                    <th>But</th>
+                    <th>Niveau Physique</th>
+                    <th>Maladie Chronique</th>
+                    <th>Nombre d'heures</th>
+                    <th>État</th>
+                    <th>Horaire</th>
+                    <th>Jours</th>
+                    <th>Offre</th>
+                    <th>Action</th>
+                    <!-- Ajoutez d'autres colonnes si nécessaire -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for demande in demandes %}
                     <tr>
-                        <th>Nom</th>
-                        <th>Spécialité</th>
-                        <th>Tarif / heure</th>
-                        <th>État de l'offre</th>
-                        <th>Coach</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for offre in offres %}
-                    <tr>
-                        <td>{{ offre.nom }}</td>
-                        <td>{{ offre.specialite }}</td>
-                        <td>{{ offre.tarif_heure }}</td>
-                        <td>{{ offre.etat_offre }}</td>
-                        <td>{{ offre.coach.email }}</td>
-                        <td>{{ offre.email }}</td>
+                        <td>{{ demande.nom }}</td>
+                        <td>{{ demande.age }}</td>
+                        <td>{{ demande.but }}</td>
+                        <td>{{ demande.niveau_physique }}</td>
+                        <td>{{ demande.maladie_chronique }}</td>
+                        <td>{{ demande.nombreheure }}</td>
+                        <td>{{ demande.etat }}</td>
+                        <td>{{ demande.horaire|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ demande.lesjours }}</td>
+                        <td>{{ demande.offre.id ?? 'Aucune offre associée' }}</td>
                         <td>
-                            <form action="{{ path('app_evaluation') }}" method="post">
-                                <input type="hidden" name="offre_id" value="{{ offre.id }}">
-                                <div class="star-rating">
-                                    <input type="radio" id="star5_{{ offre.id }}" name="rating" value="5"><label for="star5_{{ offre.id }}"></label>
-                                    <input type="radio" id="star4_{{ offre.id }}" name="rating" value="4"><label for="star4_{{ offre.id }}"></label>
-                                    <input type="radio" id="star3_{{ offre.id }}" name="rating" value="3"><label for="star3_{{ offre.id }}"></label>
-                                    <input type="radio" id="star2_{{ offre.id }}" name="rating" value="2"><label for="star2_{{ offre.id }}"></label>
-                                    <input type="radio" id="star1_{{ offre.id }}" name="rating" value="1"><label for="star1_{{ offre.id }}"></label>
-                                </div>
-                                <button type="submit">Soumettre l'évaluation</button>
-                            </form>
+                            <a href="{{ path('modifier_demande', {'id': demande.id}) }}" class="px-3 text-primary"><i class="fas fa-edit"></i> </a>
+                            <a href="{{ path('supprimer_demande', {'id': demande.id}) }}" class="action-btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')">
+                        
+                        <button class="btn btn-link text-danger btn-supprimer"><i class="fas fa-trash"></i></button>
+                    </a>
                         </td>
                     </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    
-    
-        
-
-</script>
-    
+</body>
+</html>
 <!-- Call To Action -->
 <section class="call-action style-2 bg-img-fix bg-primary">
 <div class="container">

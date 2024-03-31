@@ -29,3 +29,9 @@ refuser_offre:
     methods: ['GET', 'POST']
     requirements:
         id: '\d+'
+
+
+app_evaluation:
+    path: /evaluation
+    controller: App\Controller\EvaluationController::traiterEvaluation
+    methods: ['POST']

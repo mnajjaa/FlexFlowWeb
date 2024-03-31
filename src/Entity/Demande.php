@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\DemandeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DemandeRepository::class)]
 class Demande
@@ -16,43 +15,30 @@ class Demande
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Le nom est requis")]
     private ?string $nom = null;
 
     #[ORM\Column]
-    #[Assert\Type(type: 'numeric', message: "L'âge doit être un nombre")]
-    #[Assert\GreaterThan(value: 0, message: "L'âge doit être supérieur à 0")]
     private ?int $Age = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Le but est requis")]
-    #[Assert\Type(type: 'string', message: "Le but doit être une chaîne de caractères")]
     private ?string $But = null;
-    
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Le niveau physique est requis")]
     private ?string $niveau_physique = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "La maladie chronique est requise")]
     private ?string $maladie_chronique = null;
 
     #[ORM\Column]
-    #[Assert\Type(type: 'numeric', message: "Le nombre d'heures doit être un nombre")]
-    #[Assert\GreaterThan(value: 0, message: "Le nombre d'heures doit être supérieur à 0")]
     private ?int $nombreheure = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Choice(choices: ['En attente', 'Approuvé', 'Rejeté'], message: "Veuillez choisir un état valide")]
     private ?string $etat = 'En attente';
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $horaire = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Les jours sont requis")]
-    #[Assert\Type(type: 'string', message: "Les jours doivent être une chaîne de caractères")]
     private ?string $lesjours = null;
     
     #[ORM\ManyToOne]
@@ -120,12 +106,37 @@ class Demande
         return $this;
     }
 
+
+    public function getNiveau_Physique(): ?string
+    {
+        return $this->niveau_physique;
+    }
+
+    public function setNiveau_Physique(?string $niveau_physique): self
+    {
+        $this->niveau_physique = $niveau_physique;
+
+        return $this;
+    }
+
     public function getMaladieChronique(): ?string
     {
         return $this->maladie_chronique;
     }
 
     public function setMaladieChronique(?string $maladie_chronique): self
+    {
+        $this->maladie_chronique = $maladie_chronique;
+
+        return $this;
+    }
+
+    public function getMaladie_Chronique(): ?string
+    {
+        return $this->maladie_chronique;
+    }
+
+    public function setMaladie_Chronique(?string $maladie_chronique): self
     {
         $this->maladie_chronique = $maladie_chronique;
 

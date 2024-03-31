@@ -316,8 +316,40 @@
 			</div>	
 		</div>
 	<body>
+		<style>
+
+			.form-container {
+				background-color: #fff;
+				padding: 30px;
+				border-radius: 10px;
+				box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+				width: 90%;
+				max-width: 600px; /* Ajustez la taille maximale selon vos préférences */
+				margin: 0 auto; /* Centrer horizontalement */
+			}
+			{# .form-container {
+		background-color: #fff;
+		padding: 30px;
+		border-radius: 10px;
+		box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+		width: 90%;
+		max-width: 600px; /* Ajustez la taille maximale selon vos préférences */
+		margin: 0 auto; /* Centrer horizontalement */
+		} #}
+			/* Style pour agrandir et centrer l'image */
+			.center-image {
+				display: block;
+				margin: 0 auto;
+				max-width: 1000px; /* Largeur maximale de l'image */
+				width: 100%; /* Permet à l'image de s'adapter à la largeur de son conteneur jusqu'à 1000px */
+				height: auto;
+			}
+			
+			
+		</style>
+	
             <div class="container">
-                <h1>Ajouter Votre demande </h1>
+                <h1>Ajouter Votre demande de coaching privé</h1>
         
                 {# Affichage des messages d'erreur flash #}
                 {% for flash_message in app.flashes('error') %}
@@ -325,8 +357,17 @@
                         {{ flash_message }}
                     </div>
                 {% endfor %}
+
+				{{ form_start(form) }}
+				<div class="image-column"> <!-- Placer cette balise dans la première colonne -->
+					<div class="form-group"> <!-- Ajouter cette balise pour maintenir l'alignement des champs -->
+						<label></label>
+						<!-- Modifier l'image source selon vos besoins -->
+						<img src="{{ asset('images/co.png') }}" alt="Your Image" width="280">
+					</div>
+				</div>
         
-                {{ form_start(form) }}
+             
                 {{ form_row(form.nom) }}
                 {{ form_row(form.age) }}
                 {{ form_row(form.but) }}
@@ -343,6 +384,7 @@
         
                 <button id="submit-btn" type="submit" class="btn btn-primary">Ajouter demande de coaching</button>
                 {{ form_end(form) }}
+			<a href="{{ path('all_demandes') }}" class="btn btn-primary">Consulter vos demandes</a>
             </div>
         
           

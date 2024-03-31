@@ -18,6 +18,8 @@ class Evaluations
 
     #[ORM\Column]
     private ?int $note = null;
+    #[ORM\Column]
+private ?int $offreId = null;
 
     public function getId(): ?int
     {
@@ -47,4 +49,16 @@ class Evaluations
 
         return $this;
     }
+
+    public function getOffreId(): ?int
+{
+    return $this->offreId;
+}
+
+public function setOffreId(int $offreId): static
+{
+    $this->offreId = $offreId;
+
+    return $this;
+}
 }
