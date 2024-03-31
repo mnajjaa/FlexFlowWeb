@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Repository\CoursRepository;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use App\Repository\RatingRepository;
+use App\Repository\ParticipationRepository;
+use App\Entity\Participation;
 
 
 
@@ -147,6 +150,25 @@ public function modifier(Request $request, int $id, CoursRepository $coursReposi
     ]);
 }
 
+
+
+#[Route('/popular-cours', name: 'popular_cours')]
+    public function index(RatingRepository $ratingRepository,ParticipationRepository $ParticipationRepository ): Response
+    {
+        $mostLikedCours = $ratingRepository->getMostLikedCours();
+        $mostParticipant = $ParticipationRepository->getMostParticipant();
+        
+        return $this->render('GestionCours/rate.html.twig', [
+            'mostLikedCours' => $mostLikedCours,
+            'mostParticipant' => $mostParticipant,
+        ]);
+
+        
+
+
+    }
+
+    
 
 
 

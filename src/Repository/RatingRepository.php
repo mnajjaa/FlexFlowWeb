@@ -48,6 +48,23 @@ class RatingRepository extends ServiceEntityRepository
         
         return (int) $query->getSingleScalarResult();
     }
+
+    public function getMostLikedCours(): ?array
+    {
+        $entityManager = $this->getEntityManager();
+    
+        $query = $entityManager->createQuery(
+            'SELECT r.nom_cour, COUNT(r) as totalLikes
+            FROM App\Entity\Rating r
+            WHERE r.liked = true
+            GROUP BY r.nom_cour
+            ORDER BY totalLikes DESC'
+        )->setMaxResults(1);
+    
+        return $query->getOneOrNullResult();
+    }
+    
+
     
 
 //    /**
