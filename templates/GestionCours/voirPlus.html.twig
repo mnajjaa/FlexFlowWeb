@@ -372,7 +372,7 @@
 
 <div class="reaction-buttons">
     <!-- Bouton de like -->
-    <button class="like-btn" data-rating="like" style="background-color: transparent; border: none;"  id="rate-btn">
+    <button class="like-btn" data-rating="like" style="background-color: transparent; border: none;" id="rate-btn" {% if alreadyRated %}disabled{% endif %}>
         <i class="far fa-thumbs-up" style="font-size: 24px;"></i>
         <span id="likes-count">{{ totalLikes }}</span>
     </button>
@@ -381,11 +381,13 @@
     <span>&nbsp;</span>
     
     <!-- Bouton de dislike -->
-    <button class="dislike-btn" data-rating="dislike" style="background-color: transparent; border: none;" id="ratedis-btn">
+    <button class="dislike-btn" data-rating="dislike" style="background-color: transparent; border: none;" id="ratedis-btn" {% if alreadyRated %}disabled{% endif %}>
         <i class="far fa-thumbs-down" style="font-size: 24px;"></i>
         <span id="dislikes-count">{{ totalDislikes }}</span>
     </button>
 </div>
+
+
 
 						</div>
 					</div>
@@ -514,31 +516,32 @@ document.addEventListener('DOMContentLoaded', function() {
  // Recharger la page après 3 secondes
        
     });
-
-
-
 </script>
 
- <script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('ratedis-btn').addEventListener('click', function(event) {
-        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
-        Swal.fire({
-            icon: 'success',
-            title: 'Merci pour votre évaluation !',
-            showConfirmButton: false,
-            timer: 3000
-        }).then(() => {
-            // Exécuter du code après la fermeture de l'alerte
-            if (result.dismiss === Swal.DismissReason.timer) {
-                // Recharger la page après 3 secondes si l'alerte a été fermée automatiquement
-                location.reload();
-            }
-			 });
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('ratedis-btn').addEventListener('click', function(event) {
+            // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+            Swal.fire({
+                icon: 'success',
+                title: 'Merci pour votre évaluation !',
+                showConfirmButton: false,
+                timer: 3000
+            }).then((result) => {
+                // Exécuter du code après la fermeture de l'alerte
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    // Recharger la page après 3 secondes si l'alerte a été fermée automatiquement
+                    location.reload();
+                }
+            });
+        });
+
+        // Recharger la page après 3 secondes
     });
-});
-
 </script>
+
+
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

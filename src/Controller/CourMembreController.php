@@ -119,6 +119,12 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
     // Ajouter une variable pour indiquer si le membre a déjà participé
     $dejaParticipe = ($existingParticipation !== null);
 
+    // Vérifier si l'utilisateur a déjà évalué ce cours
+    $alreadyRated = $ratingRepository->findOneBy([
+        'user' => $user,
+        'nom_cour' => $cours->getNomCour()
+    ]);
+
     // Récupérer la catégorie du cours visité
     $categorie = $cours->getCategorie();
 
@@ -139,6 +145,7 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
         
         'totalLikes' => $totalLikes,
         'totalDislikes' => $totalDislikes,
+        'alreadyRated' => ($alreadyRated !== null),
     ]);
 }
 
