@@ -103,7 +103,24 @@
                                         <h4 class="card-title">Bootstrap Validation (Tooltips)</h4>
                                         <p class="card-title-desc">If your form layout allows it, you can swap the <code>.{valid|invalid}-feedback</code> classes for <code>.{valid|invalid}-tooltip</code> classes to display validation feedback in a styled tooltip.</p>
                                     <form class="needs-validation" novalidate method="post" action="{{ path('admin_edit_pwd') }}"  >
-                                      
+                                         {% if mdp is same as(false) %}
+                                         <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">Actual  Password</label>
+                                                        <input type="password" class="form-control" id="userpassword" placeholder="Enter new password" name="actualPassword" required>
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {# Remove the unnecessary if statement #}
+                                                {% if mdp is same as(true) %}
+                                                    {# <div class="alert alert-danger" role="alert">
+                                                        <strong>Erreur!</strong> Mot de passe incorrect
+                                                    </div> #}
+                                                
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="mb-3 position-relative">
@@ -125,6 +142,7 @@
                                                 </div>
                                             
                                             </div>
+                                            {% endif %}
                                             <button class="btn btn-primary" type="submit">Reset password</button>
                                         </form>
                                     </div>
