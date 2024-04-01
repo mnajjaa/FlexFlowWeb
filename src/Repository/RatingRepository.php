@@ -63,6 +63,21 @@ class RatingRepository extends ServiceEntityRepository
     
         return $query->getOneOrNullResult();
     }
+
+    public function getMostHatedCours(): ?array
+    {
+        $entityManager = $this->getEntityManager();
+    
+        $query = $entityManager->createQuery(
+            'SELECT r.nom_cour, COUNT(r) as totaldisLikes
+            FROM App\Entity\Rating r
+            WHERE r.disliked = true
+            GROUP BY r.nom_cour
+            ORDER BY totaldisLikes DESC'
+        )->setMaxResults(1);
+    
+        return $query->getOneOrNullResult();
+    }
     
 
     

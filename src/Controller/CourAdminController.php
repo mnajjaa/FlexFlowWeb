@@ -157,10 +157,12 @@ public function modifier(Request $request, int $id, CoursRepository $coursReposi
     {
         $mostLikedCours = $ratingRepository->getMostLikedCours();
         $mostParticipant = $ParticipationRepository->getMostParticipant();
+        $mostHatedCours = $ratingRepository->getMostHatedCours();
         
         return $this->render('GestionCours/rate.html.twig', [
             'mostLikedCours' => $mostLikedCours,
             'mostParticipant' => $mostParticipant,
+            'mostHatedCours' => $mostHatedCours,
         ]);
 
         
