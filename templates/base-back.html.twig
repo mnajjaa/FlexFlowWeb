@@ -64,7 +64,7 @@
                         <form class="app-search d-none d-lg-block">
                             <div class="position-relative">
                                 <input type="text" class="form-control" placeholder="Search...">
-                                <span class="uil-search"></span>
+                                <span class="fas fa-search"></span>
                             </div>
                         </form>
                     </div>
@@ -74,7 +74,7 @@
                         <div class="dropdown d-inline-block d-lg-none ms-2">
                             <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="uil-search"></i>
+                                <i class="fas fa-search"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                                 aria-labelledby="page-header-search-dropdown">
@@ -175,14 +175,14 @@
 
                         <div class="dropdown d-none d-lg-inline-block ms-1">
                             <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
-                                <i class="uil-minus-path"></i>
+                                <i class="fas fa-expand"></i>
                             </button>
                         </div>
 
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="uil-bell"></i>
+                                <i class="fas fa-bell"></i>
                                 <span class="badge bg-danger rounded-pill">3</span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -203,7 +203,7 @@
                                             <div class="flex-shrink-0 me-3">
                                                 <div class="avatar-xs">
                                                     <span class="avatar-title bg-primary rounded-circle font-size-16">
-                                                        <i class="uil-shopping-basket"></i>
+                                                        <i class="fas fa-shopping-cart"></i>
                                                     </span>
                                                 </div>
                                             </div>
@@ -284,17 +284,16 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
-                                <a class="dropdown-item" href="#"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">View Profile</span></a>
-                                <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">My Wallet</span></a>
-                                <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Settings</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a>
+                                <a class="dropdown-item" href="{{ path('admin_profile') }}"><i class="far fa-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">View Profile</span></a>
+                                <a class="dropdown-item d-block" href="#"><i class="uil fas fa-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Settings</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a>
                                 <a class="dropdown-item" href="#"><i class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Lock screen</span></a>
-                                <a class="dropdown-item" href="#"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a>
+                                <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a>
                             </div>
                         </div>
 
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
-                                <i class="uil-cog"></i>
+                                <i class="fas fa-cog"></i>
                             </button>
                         </div>
             
@@ -347,13 +346,18 @@
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="uil-window-section"></i>
+                                <a href="javascript: void(0);" >
+                                    <i class="fas fa-users "></i>
                                     <span>Utilisateurs</span>
+                                    <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
+
                                 </a>
-                                <ul class="sub-menu" aria-expanded="true">
+                                <ul class="sub-menu " aria-expanded="true" >
                                     <li>
-                                        <a href="javascript: void(0);" class="has-arrow">Listes des coach</a>
+                                        <a href="javascript: void(0);" >
+                                        <span>Listes des coach</span>
+                                        <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
+                                        </a>
                                         <ul class="sub-menu" aria-expanded="true">
                                             <li><a href="layouts-dark-sidebar.html">Dark Sidebar</a></li>
                                             <li><a href="layouts-compact-sidebar.html">Compact Sidebar</a></li>
@@ -364,7 +368,10 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="javascript: void(0);" class="has-arrow">Listes des membres</a>
+                                        <a href="javascript: void(0);">
+                                        <span>Listes des membres</span>
+                                        <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
+                                        </a>
                                         <ul class="sub-menu" aria-expanded="true">
                                             <li><a href="layouts-horizontal.html">Horizontal</a></li>
                                             <li><a href="layouts-hori-topbar-dark.html">Topbar Dark</a></li>

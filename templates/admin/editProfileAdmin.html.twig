@@ -34,7 +34,7 @@
                                     <div class="card-body">
                                         <h4 class="card-title">Bootstrap Validation - Normal</h4>
                                         {# <p class="card-title-desc">Provide valuable, actionable feedback to your users with HTML5 form validation–available in all our supported browsers.</p> #}
-                                        <form  method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+                                        <form  method="post" class="needs-validation" novalidate enctype="multipart/form-data" >
                                         <div class="row">
                                               <div class="col-md-6">
                                                   <div class="text-end">
@@ -109,10 +109,13 @@
                                                     <div class="mb-3 position-relative">
                                                         <label class="form-label" for="userpassword">Actual  Password</label>
                                                         <input type="password" class="form-control" id="userpassword" placeholder="Enter new password" name="actualPassword" required>
+                                                        {% if erreur is same as(true) %}
+                                                        <p style="color:red;">mot de passe incorrect</p>
+                                                        {% endif %}
                                                         <div class="valid-tooltip">
                                                             Looks good!
                                                         </div>
-                                                    </div>
+                                                    
                                                 </div>
                                                 {% endif %}
                                                 {# Remove the unnecessary if statement #}

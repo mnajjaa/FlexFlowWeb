@@ -50,6 +50,7 @@ class AdminController extends AbstractController
 #[Route('/editPwdAdmin', name: 'admin_edit_pwd')]
 public function editPwd(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, UserPasswordHasherInterface $passwordHasher): Response
 {
+    $erreur=false;
     
     $email = $request->getSession()->get(Security::LAST_USERNAME);
     $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
@@ -57,21 +58,44 @@ public function editPwd(Request $request, EntityManagerInterface $entityManager,
     
     if($request->isMethod('POST')) {
         
-        if( self::$mdp==true && !$passwordHasher->isPasswordValid($user, $request->get('actualPassword'))){
-            $this->addFlash('reset_password_error', 'Old password is incorrect');
-            return $this->redirectToRoute('admin_edit_pwd');
+        if ( $request->get('actualPassword') && !$passwordHasher->isPasswordValid($user, $request->get('actualPassword'))) {
+            // $this->addFlash('reset_password_error', 'Old password is incorrect');
+            ?>
+
+            <script>
+                alert("Old password is incorrect");
+                </script>
+            <?php
+            return $this->redirectToRoute('admin_edit_profile', ['erreur'=>true]);
+           
         }
         else {
+        ?>
+        
+        <?php
             self::$mdp=true;
-            return $this->render('admin/editProfileAdmin.html.twig', [
-                'mdp'=>self::$mdp,
-                'admin' => $user
-            ]);
+            // return $this->render('admin/editProfileAdmin.html.twig', [
+            //     'mdp'=>self::$mdp,
+            //     'admin' => $user
+            // ]);
         }
+        if($request->get('plainPassword')  && $request->get('plainPasswordConfirm')){
+          
+        
         if($request->get('plainPassword') != $request->get('plainPasswordConfirm')){
-            $this->addFlash('reset_password_error', 'Passwords do not match');
-            return $this->redirectToRoute('admin_edit_pwd');
+            ?>
+            <script>
+                alert("Passwords match");
+                </script>
+            <?php
+            return $this->redirectToRoute('admin_edit_profile');
         }
+        else{
+            ?>
+            <script>
+                alert("Passwords match");
+                </script>
+            <?php
         var_dump($request->get('plainPassword'));
         $encodedPassword = $passwordHasher->hashPassword(
             $user,
@@ -79,18 +103,27 @@ public function editPwd(Request $request, EntityManagerInterface $entityManager,
         );
 
         $user->setPassword($encodedPassword);
+        $entityManager->persist($user);
             $entityManager->flush();
             var_dump($user);
             return $this->redirectToRoute('admin_edit_profile');
     }
-    return $this->render('admin/editPwdAdmin.html.twig');
+    }
+    return $this->render('admin/editProfileAdmin.html.twig', [
+        'mdp'=>self::$mdp,
+        'admin' => $user,
+        'erreur'=>$erreur
+    ]);
 
+}
 }
 
 
 #[Route('/editProfileAdmin', name: 'admin_edit_profile')]
-public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
+public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session,UserPasswordHasherInterface $passwordHasher,bool $erreur=false): Response
 {
+
+    $erreur=false;
     $mdp=false;
     $user = new User();
     
@@ -104,6 +137,29 @@ public function editProfile(Request $request, EntityManagerInterface $entityMana
     
 if ($request->isMethod('POST')) {
 
+    //hatitha f cmnt khater edit profile maadch theb temchy !!!!!
+    
+    // if(  !$passwordHasher->isPasswordValid($user, $request->get('actualPassword'))){
+        
+      
+    //     $erreur=true;
+    //     return $this->render('admin/editProfileAdmin.html.twig', [
+    //         'admin' => $user,
+    //         'mdp'=>$mdp,
+    //         'erreur'=>$erreur
+    //             ]);
+    //     // $this->addFlash('reset_password_error', 'Old password is incorrect');
+    //     // return $this->redirectToRoute('admin_edit_profile');
+    // }
+    // else {
+    //     $mdp=true;
+    //     // $mdp=true;
+    //     return $this->render('admin/editProfileAdmin.html.twig', [
+    //         'mdp'=>$mdp,
+    //         'admin' => $user,
+    //         'erreur'=>$erreur
+    //     ]);
+    // }
 
       //code ajout image
       //les images sont stockées dans le dossier public/uploads/users 
@@ -128,12 +184,13 @@ if ($request->isMethod('POST')) {
 
         $entityManager->persist($user);
         $entityManager->flush();
-        return $this->redirectToRoute('admin_profile');
+        //return $this->redirectToRoute('admin_profile');
         
     }        
         return $this->render('admin/editProfileAdmin.html.twig', [
         'admin' => $user,
-        'mdp'=>$mdp
+        'mdp'=>$mdp,
+        'erreur'=>$erreur
             ]);
 
 }

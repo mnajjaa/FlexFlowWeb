@@ -22,7 +22,8 @@
         <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
-
+        <script src="{{asset('validationJs/formValidation.js')}}"></script>
+        
     </head>
 <body>
     <div class="col-xl-6">
@@ -32,28 +33,36 @@
                                         <h4 class="card-title">Ajouter un Coach </h4>
                                         <p class="card-title-desc">Ajouter un  Coach dans votre Equipe . </p>
         
-                                        <form action="{{ path('coach_add') }}" method="POST" class="custom-validation">
+                                        <form action="{{ path('coach_add') }}" method="POST" class="custom-validation" id="addCoachForm">
         
                                             <div class="mb-3">
-                                                <label class="form-label">Nom et Prenom</label>
+                                                <label class="form-label">Nom Complet</label>
                                                 <div>
                                                     <input type="text" id="name" name="name" class="form-control" required
-                                                            data-parsley-minlength="6" placeholder="Min 6 chars."/>
+                                                       oninput="isValidName()"      placeholder="Min 6 chars."/>
+                                                            {# <span class="text-danger">{{ form_errors(form.name) }}</span> #}
+                                                            <span id="error_name" class="text-danger" style="color: red;"></span>
+                                                            <span id="success_name" class="text-success" style="color: green;"></span>
+
                                                 </div>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Telephone</label>
                                                 <div>
                                                     <input type="text" id="telephone" name="telephone" class="form-control"  required
-                                                            data-parsley-maxlength="6" placeholder="Max 6 chars."/>
+                                                    oninput="isValidPhoneNumber()" placeholder="Min 8 chars."/>
+                                                 <span id="error_Telephone" class="text-danger" style="color: red;"></span>
+                                                 <span id="success_Telephone" class="text-success" style="color: green;"></span>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Email</label>
                                                 <div>
-                                                    <input type="email" id="email" name="email" class="form-control" required
-                                                            data-parsley-length="[5,10]"
-                                                            placeholder="Text between 5 - 10 chars length"/>
+                                                    <input type="email" id="email" name="email" class="form-control" required   
+                                                            placeholder="Text between 5 - 10 chars length" oninput="isValidEmail()"/>
+                                                            <span id="error_email" class="text-danger" style="color: red;"></span>
+                                                            <span id="success_email" class="text-success" style="color: green;"></span>
+
                                                 </div>
                                             </div>
                                             <div>
@@ -71,5 +80,7 @@
                                     </div>
                                 </div>
     </div> <!-- end col -->
+
+    
 </body>
     {% endblock %}
