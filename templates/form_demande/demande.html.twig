@@ -307,7 +307,7 @@
 				<div class="row">
 					<div class="col-lg-8">
 						<div class="dz-bnr-inr-entry">
-							<h1>Coaching privé dnas FlexFlow</h1>
+							<h1>Coaching privé dans FlexFlow</h1>
                     
 						</div>
 					</div>
@@ -317,6 +317,7 @@
 		</div>
 	<body>
 		<style>
+			
 
 			.form-container {
 				background-color: #fff;
@@ -327,15 +328,27 @@
 				max-width: 600px; /* Ajustez la taille maximale selon vos préférences */
 				margin: 0 auto; /* Centrer horizontalement */
 			}
-			{# .form-container {
-		background-color: #fff;
-		padding: 30px;
-		border-radius: 10px;
-		box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-		width: 90%;
-		max-width: 600px; /* Ajustez la taille maximale selon vos préférences */
-		margin: 0 auto; /* Centrer horizontalement */
-		} #}
+			.custom-form-background {
+				background-color: #333533;
+				padding: 20px; /* Ajoutez un remplissage pour séparer le contenu du bord */
+				border-radius: 5px; /* Arrondir les coins du formulaire */
+			}
+
+			/* CSS pour changer la couleur de fond des champs en gris */
+			.form-group input[type="text"],
+            .form-group input[type="number"],
+            .form-group input[type="time"],
+            .form-group select {
+           background-color: #F7F6CF; /* Gris clair */
+		    border-radius: 5px; /* Arrondir les coins */
+             }
+
+		
+			/* CSS pour changer la couleur du texte des champs en jaune */
+			.form-group label {
+				color: yellow;
+			}
+ 
 			/* Style pour agrandir et centrer l'image */
 			.center-image {
 				display: block;
@@ -344,6 +357,8 @@
 				width: 100%; /* Permet à l'image de s'adapter à la largeur de son conteneur jusqu'à 1000px */
 				height: auto;
 			}
+
+			
 			
 			
 		</style>
@@ -357,62 +372,161 @@
                         {{ flash_message }}
                     </div>
                 {% endfor %}
-
-				{{ form_start(form) }}
-				<div class="image-column"> <!-- Placer cette balise dans la première colonne -->
-					<div class="form-group"> <!-- Ajouter cette balise pour maintenir l'alignement des champs -->
-						<label></label>
-						<!-- Modifier l'image source selon vos besoins -->
-						<img src="{{ asset('images/co.png') }}" alt="Your Image" width="280">
-					</div>
-				</div>
-        
-             
-                {{ form_row(form.nom) }}
-                <div>
-					{{ form_label(form.age, 'Âge') }}
-					{{ form_widget(form.age) }}
-				
-					<div class="text-danger">
-						{{ form_errors(form.age) }}
-					</div>
-				</div>
-               <div>
-    {{ form_label(form.but, 'But') }}
-    {{ form_widget(form.but) }}
-
-    {% if form_errors(form.but) %}
-        <div class="text-danger">
-            {{ form_errors(form.but) }}
-        </div>
-    {% endif %}
-</div>
-                {{ form_row(form.niveauPhysique) }}
-                {{ form_row(form.maladieChronique) }}
-				<div>
-					{{ form_label(form.nombreHeure, 'But') }}
-					{{ form_widget(form.nombreHeure) }}
-				
-					{% if form_errors(form.nombreHeure) %}
-						<div class="text-danger">
-							{{ form_errors(form.nombreHeure) }}
+				{# {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }} #}
+				{{ form_start(form, {'attr': {'class': 'custom-form-background'}}) }}
+				<div class="container">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label></label>
+								<img src="{{ asset('images/co.png') }}" alt="Your Image" width="280">
+							</div>
 						</div>
-					{% endif %}
+						<div class="col-md-8">
+							<div class="form-group">
+								<label for="nom">Nom</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fas fa-user"></i></span>
+									</div>
+									{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+								</div>
+							</div>
+							<div class="form-group">
+								{{ form_label(form.age, 'Âge', {'label_attr': {'class': 'col-form-label'}}) }}
+								<div class="col-sm-10">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
+										</div>
+										{{ form_widget(form.age, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									<div class="text-danger">
+										{{ form_errors(form.age) }}
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								{{ form_label(form.but, 'But', {'label_attr': {'class': 'col-form-label'}}) }}
+								<div class="col-sm-10">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-bullseye"></i></span>
+										</div>
+										{{ form_widget(form.but, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									{% if form_errors(form.but) %}
+										<div class="text-danger">
+											{{ form_errors(form.but) }}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+							<div class="form-group">
+								{{ form_label(form.niveauPhysique, 'Niveau Physique', {'label_attr': {'class': 'col-form-label'}}) }}
+								<div class="col-sm-10">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-running"></i></span>
+										</div>
+										{{ form_widget(form.niveauPhysique, {'attr': {'class': 'form-control'}}) }}
+									<i class="fas fa-chevron-down" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"></i>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								{{ form_label(form.maladieChronique, 'Maladie Chronique', {'label_attr': {'class': 'col-form-label'}}) }}
+								<div class="col-sm-10">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-heartbeat"></i></span>
+										</div>
+										{{ form_widget(form.maladieChronique, {'attr': {'class': 'form-control'}}) }}
+									<i class="fas fa-chevron-down" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"></i>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								{{ form_label(form.nombreHeure, 'Nombre d\'heures', {'label_attr': {'class': 'col-form-label'}}) }}
+								<div class="col-sm-10">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="far fa-clock"></i></span>
+										</div>
+										{{ form_widget(form.nombreHeure, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									{% if form_errors(form.nombreHeure) %}
+										<div class="text-danger">
+											{{ form_errors(form.nombreHeure) }}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+							<div class="form-group">
+								{{ form_label(form.etat, 'État', {'label_attr': {'class': 'col-form-label'}}) }}
+								<div class="col-sm-10">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-check-circle"></i></span>
+										</div>
+										{{ form_widget(form.etat, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								{{ form_label(form.horaire, 'Horaire', {'label_attr': {'class': 'col-form-label'}}) }}
+								<div class="col-sm-10">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="far fa-clock"></i></span>
+										</div>
+										{{ form_widget(form.horaire, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								{{ form_label(form.lesjours, 'Jours', {'label_attr': {'class': 'col-form-label'}}) }}
+								<div class="col-sm-10">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+										</div>
+										{{ form_widget(form.lesjours, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								{{ form_label(form.user, 'Utilisateur', {'label_attr': {'class': 'col-form-label'}}) }}
+								<div class="col-sm-10">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-user"></i></span>
+										</div>
+										{{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								{{ form_label(form.offre, 'Offre', {'label_attr': {'class': 'col-form-label'}}) }}
+								<div class="col-sm-10">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-tags"></i></span>
+										</div>
+										{{ form_widget(form.offre, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>
+			
+							<div id="errorMessageContainer" style="color: red;"></div>
+			
+							<button id="submit-btn" type="submit" class="btn btn-primary">Ajouter demande de coaching</button>
+							<a href="{{ path('all_demandes') }}" class="btn btn-primary">Consulter vos demandes</a>
+						</div>
+					</div>
 				</div>
-                {{ form_row(form.etat) }}
-                {{ form_row(form.horaire) }}
-                {{ form_row(form.lesjours) }}
-                {{ form_row(form.user) }}
-                {{ form_row(form.offre) }}
-        
-                <div id="errorMessageContainer" style="color: red;"></div>
-        
-                <button id="submit-btn" type="submit" class="btn btn-primary">Ajouter demande de coaching</button>
-                {{ form_end(form) }}
-			<a href="{{ path('all_demandes') }}" class="btn btn-primary">Consulter vos demandes</a>
-            </div>
-        
-          
+			{{ form_end(form) }}
+			
         </body>
         </html>
 		<!-- Banner End -->

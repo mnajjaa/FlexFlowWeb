@@ -302,7 +302,7 @@
 				<div class="row">
 					<div class="col-lg-8">
 						<div class="dz-bnr-inr-entry">
-							<h1>Coaching privé dnas FlexFlow</h1>
+							<h1>Coaching privé dans FlexFlow</h1>
                     
 						</div>
 					</div>
@@ -311,49 +311,98 @@
 			</div>	
 		</div>
 <body>
-    <style>
+	<style>
+        /* Ajoutez votre propre style ici */
         .form-container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 600px; /* Ajustez la taille maximale selon vos préférences */
-    margin: 0 auto; /* Centrer horizontalement */
-}
-  
-
-        
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px; /* Ajustez la taille maximale selon vos préférences */
+            margin: 0 auto; /* Centrer horizontalement */
+        }
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            color: #333;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+		.form-group input[type="text"],
+		.form-group input[type="number"],
+	
+		.form-group select {
+			border-radius: 20px; /* Coins arrondis */
+		}
+		
+        .form-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .submit-btn {
+            font-size: 18px;
+        }
     </style>
-    <div class="form-container">
-        <h1 class="form-title">Modifier votre demande </h1>
-        {{ form_start(form) }}
-        <div class="image-column"> <!-- Placer cette balise dans la première colonne -->
-            <div class="form-group"> <!-- Ajouter cette balise pour maintenir l'alignement des champs -->
-                <label></label>
-                <!-- Modifier l'image source selon vos besoins -->
-                <img src="{{ asset('images/mo.png') }}" alt="Your Image" width="290">
-            </div>
+</head>
+<body>
+
+<div class="form-container">
+    <h1 class="form-title">Modifier votre demande</h1>
+    {{ form_start(form) }}
+    <div class="image-column"> <!-- Placer cette balise dans la première colonne -->
+        <div class="form-group"> <!-- Ajouter cette balise pour maintenir l'alignement des champs -->
+            <label> </label>
+            <!-- Modifier l'image source selon vos besoins -->
+            <img src="{{ asset('images/mo.png') }}" alt="Your Image" width="290">
         </div>
-        <div>
-            <!-- Ajouter les champs du formulaire correspondant aux attributs de l'entité Demande -->
-            {{ form_row(form.nom) }}
-            {{ form_row(form.age) }}
-            {{ form_row(form.but) }}
-            {{ form_row(form.niveauPhysique) }}
-            {{ form_row(form.maladieChronique) }}
-            {{ form_row(form.nombreHeure) }}
-            {{ form_row(form.etat) }}
-            {{ form_row(form.horaire) }}
-            {{ form_row(form.lesjours) }}
-            {{ form_row(form.user) }}
-            {{ form_row(form.offre) }}
-            
+    </div>
+    <div>
+        <!-- Ajouter les champs du formulaire correspondant aux attributs de l'entité Demande -->
+        <div class="form-group">
+            {{ form_row(form.nom, {'attr': {'class': 'form-control'}}) }}
         </div>
-        <div class="form-buttons">
-            <button type="submit" id="submitButton" class="submit-btn">Modifier</button>
+        <div class="form-group">
+            {{ form_row(form.age, {'attr': {'class': 'form-control'}}) }}
         </div>
-        {{ form_end(form) }}
+        <div class="form-group">
+            {{ form_row(form.but, {'attr': {'class': 'form-control'}}) }}
+        </div>
+		<div class="form-group position-relative">
+    {{ form_row(form.niveauPhysique, {'attr': {'class': 'form-control'}}) }}
+    <i class="fas fa-chevron-down" style="position: absolute; right: 10px; top: 65%; transform: translateY(-50%);"></i>
+</div>
+        
+<div class="form-group position-relative">
+    {{ form_row(form.maladieChronique, {'attr': {'class': 'form-control'}}) }}
+    <i class="fas fa-chevron-down" style="position: absolute; right: 10px; top: 65%; transform: translateY(-50%);"></i>
+</div>
+
+        <div class="form-group">
+            {{ form_row(form.nombreHeure, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.etat, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.horaire, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.lesjours, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.user, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.offre, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-buttons">
+        <button type="submit" id="submitButton" class="btn btn-primary submit-btn">Modifier votre demande</button>
+    </div>
+    {{ form_end(form) }}
     </div>
 </body>
 </html>

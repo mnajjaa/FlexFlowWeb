@@ -69,7 +69,7 @@ class FormDemandeController extends AbstractController
                           ->from('votre@email.com')
                           ->to($user->getEmail())
                           ->subject('Confirmation de votre demande de coaching privé')
-                          ->html('<p>Votre demande a été enregistrée avec succès.</p>');
+                          ->html('<p> Votre demande a été enregistrée avec succès.</p>');
   
                       $mailer->send($email);
                   }

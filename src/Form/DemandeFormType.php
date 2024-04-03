@@ -28,7 +28,7 @@ class DemandeFormType extends AbstractType
          
             ->add('age', NumberType::class, [
                 'label' => 'age',
-                'invalid_message' => 'Veuillez saisir un prix valide (chiffres uniquement et supérieur à zéro)',
+                'invalid_message' => 'Veuillez saisir un age valide (chiffres uniquement et supérieur à zéro)',
                 'attr' => ['min' => 0],
             ])
             ->add('but', TextType::class, [
@@ -76,7 +76,7 @@ class DemandeFormType extends AbstractType
        
         ->add('nombreHeure', NumberType::class, [
             'label' => 'nombreHeure',
-            'invalid_message' => 'Veuillez saisir un prix valide (chiffres uniquement et supérieur à zéro)',
+            'invalid_message' => 'Veuillez saisir un nombre des heures valide (chiffres uniquement et supérieur à zéro)',
             'attr' => ['min' => 0],
         ])
         ->add('user', EntityType::class, [

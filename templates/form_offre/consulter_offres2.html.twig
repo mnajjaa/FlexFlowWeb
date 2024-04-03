@@ -322,40 +322,28 @@
     </div>
     <body>
         <style>
-            .container {
-                display: flex;
-                justify-content: space-around;
-                flex-wrap: wrap;
-            }
+          /* Votre style personnalisé ici */
+        .star-rating {
+            font-size: 0; /* Empêche les espaces entre les étoiles */
+        }
         
-           
-
-
-            .star-rating {
-                font-size: 0; /* Empêche les espaces entre les étoiles */
-            }
-            
-            .star-rating input[type="radio"] {
-                display: none; /* Masque les radios */
-            }
-            
-            .star-rating label {
-                font-size: 30px; /* Taille des étoiles */
-                cursor: pointer; /* Curseur pointer */
-                color: #ddd; /* Couleur de l'étoile vide */
-            }
-            
-            .star-rating label:before {
-                content: "\2605"; /* Code unicode pour une étoile pleine */
-            }
-            
-            .star-rating input[type="radio"]:checked ~ label {
-                color: #f90; /* Couleur de l'étoile pleine */
-            }
-
-      
-
-            
+        .star-rating input[type="radio"] {
+            display: none; /* Masque les radios */
+        }
+        
+        .star-rating label {
+            font-size: 20px; /* Taille des étoiles */
+            cursor: pointer; /* Curseur pointer */
+            color: #ddd; /* Couleur de l'étoile vide */
+        }
+        
+        .star-rating label:before {
+            content: "\2605"; /* Code unicode pour une étoile pleine */
+        }
+        
+        .star-rating input[type="radio"]:checked ~ label {
+            color: #F5CB5C; /* Couleur de l'étoile pleine */
+        }
         </style>
     
         <!-- <body data-layout="horizontal" data-topbar="colored"> -->
@@ -363,6 +351,8 @@
             <!-- Begin page -->
             <div class="container">
         <h1>Consulter les offres</h1>
+			<div class="table-responsive">
+			<table class="table table-striped">
         <div class="table-container">
             <table class="table">
                 <thead>
@@ -395,7 +385,12 @@
                                     <input type="radio" id="star2_{{ offre.id }}" name="rating" value="2"><label for="star2_{{ offre.id }}"></label>
                                     <input type="radio" id="star1_{{ offre.id }}" name="rating" value="1"><label for="star1_{{ offre.id }}"></label>
                                 </div>
-                                <button type="submit">Soumettre l'évaluation</button>
+							<button type="submit" class="btn btn-primary btn-sm">
+                         Soumettre l'évaluation 
+                  <i class="fas fa-paper-plane" style="margin-left: 20px;"></i>
+                  </button>
+
+
                             </form>
                         </td>
                     </tr>
