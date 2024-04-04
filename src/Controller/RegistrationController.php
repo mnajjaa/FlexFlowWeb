@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
             );
            
             $user->setRoles(["MEMBRE"]);
-
+            $user->setImage("7c62c977256064c61946037d427a0e0c.png");
             $entityManager->persist($user);
             $entityManager->flush();
             $session->set('user',$user);

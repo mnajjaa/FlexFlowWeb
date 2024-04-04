@@ -63,6 +63,34 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
+
+
+function success() {
+    Swal.fire({
+        title: 'Good job!',
+        text: 'Votre formulaire a été soumis avec succès!',
+        icon: 'success',
+        customClass: {
+            confirmButton: 'btn btn-primary',
+        },
+        buttonsStyling: false,
+    })
+}
+
+
+function error() {
+    Swal.fire({
+        title: 'Erreur!',
+        text: ' Veuillez vérifier vos entrées et réessayer!',
+        icon: 'error',
+        customClass: {
+            confirmButton: 'btn btn-primary',
+        },
+        buttonsStyling: false,
+    })
+}
+
+
 </script>
     </head>
 
@@ -92,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 <div class="p-2 mt-4">
                                     {{ form_errors(registrationForm) }}
 
-{{ form_start(registrationForm, {'attr': {'class': 'form'}}) }}
+{{ form_start(registrationForm, {'attr': {'class': 'form', 'id': 'registerForm'}}) }}
     <div class="mb-3">
         <label class="form-label" for="useremail" id="useremail" >Email</label>
         {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'id': 'registration_form_email', 'placeholder': 'Enter email'}}) }}
@@ -151,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                         </div>
 
                                         <div class="mt-4 text-center">
-                                            <p class="text-muted mb-0">Already have an account ? <a href="auth-login.html" class="fw-medium text-primary"> Login</a></p>
+                                            <p class="text-muted mb-0">Already have an account ? <a href="{{ path('app_login') }}" class="fw-medium text-primary"> Login</a></p>
                                         </div>
 {{ form_end(registrationForm) }}
                                 </div>

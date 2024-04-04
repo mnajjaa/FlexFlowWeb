@@ -339,7 +339,7 @@
                             <li class="menu-title">Users</li>
 
                             <li>
-                                <a href="index.html">
+                                <a href="{{ path('admin_dashboard') }}">
                                     <i class="dripicons-home"></i><span class="badge rounded-pill bg-primary float-end">01</span>
                                     <span>Dashboard</span>
                                 </a>
@@ -355,28 +355,28 @@
                                 <ul class="sub-menu " aria-expanded="true" >
                                     <li>
                                         <a href="javascript: void(0);" >
-                                        <span>Listes des coach</span>
+                                        <span>Coaches</span>
                                         <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
                                         </a>
                                         <ul class="sub-menu" aria-expanded="true">
-                                            <li><a href="layouts-dark-sidebar.html">Dark Sidebar</a></li>
-                                            <li><a href="layouts-compact-sidebar.html">Compact Sidebar</a></li>
-                                            <li><a href="layouts-icon-sidebar.html">Icon Sidebar</a></li>
+                                            <li><a href="{{ path('liste_coaches') }}">Listes des coaches</a></li>
+                                            <li><a href="{{ path('add_coach') }}">Ajouter un coach</a></li>
+                                            {# <li><a href="layouts-icon-sidebar.html">Icon Sidebar</a></li>
                                             <li><a href="layouts-boxed.html">Boxed Width</a></li>
                                             <li><a href="layouts-preloader.html">Preloader</a></li>
-                                            <li><a href="layouts-colored-sidebar.html">Colored Sidebar</a></li>
+                                            <li><a href="layouts-colored-sidebar.html">Colored Sidebar</a></li> #}
                                         </ul>
                                     </li>
                                     <li>
                                         <a href="javascript: void(0);">
-                                        <span>Listes des membres</span>
+                                        <span>Membres</span>
                                         <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
                                         </a>
                                         <ul class="sub-menu" aria-expanded="true">
-                                            <li><a href="layouts-horizontal.html">Horizontal</a></li>
-                                            <li><a href="layouts-hori-topbar-dark.html">Topbar Dark</a></li>
-                                            <li><a href="layouts-hori-boxed-width.html">Boxed Width</a></li>
-                                            <li><a href="layouts-hori-preloader.html">Preloader</a></li>
+                                            <li><a href="{{ path('liste_membres') }}">Listes des membres</a></li>
+                                            {# <li><a href="{{ path('add_coach') }}">Ajouter un membre</a></li> #}
+                                            {# <li><a href="layouts-hori-boxed-width.html">Boxed Width</a></li>
+                                            <li><a href="layouts-hori-preloader.html">Preloader</a></li> #}
                                         </ul>
                                     </li>
                                 </ul>

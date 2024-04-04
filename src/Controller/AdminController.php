@@ -18,6 +18,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 
@@ -25,6 +26,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class AdminController extends AbstractController
 {
     static $mdp=false;
+    // static $message="";
     #[Route('/admin', name: 'admin_dashboard')]
     public function index(): Response
     {
@@ -222,45 +224,69 @@ if ($request->isMethod('POST')) {
     public function addCoachForm(): Response
     {
         
-        return $this->render('admin/addCoach.html.twig');
+        return $this->render('admin/addCoach.html.twig',[
+    'message'=>""]);
     }
 
     #[Route('/coachadd', name: 'coach_add')]
     public function addCoach(EntityManagerInterface $entityManager,Request $request,MailerInterface $mailerInterface,UserPasswordHasherInterface $userPasswordHasher): Response
     {
-        $coach = new User();
+        
+    $coach = new User();
        $email= $request->request->get('email');
        $nom= $request->request->get('name');
        $telephone= $request->request->get('telephone');
+       
+      //$user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+       
+
+    //    if($user){
+    //     //self::$message="User already exists";
+    //     
+    //     return $this->render('admin/addCoach.html.twig', [
+    //         'message' =>"User already exists"    
+    //     ]);
+    //     //return new JsonResponse(['exists' => true], Response::HTTP_OK);
+        
+    // }
+    // else{
+    //   
+        $coach->setRoles(["COACH"]);
+        $coach->setEmail($email);
+        $coach->setImage("7c62c977256064c61946037d427a0e0c.png");
+        $coach->setNom($nom);
+        $coach->setTelephone($telephone);
+        $password = base64_encode(random_bytes(8));
+        $coach->setPassword( $userPasswordHasher->hashPassword(
+            $coach,
+            $password
+        ));
+        //var_dump($password);
+        // ...
+            // Send email to the user
+            $email = (new Email())
+                ->from('bahaeddinedridi1@gmail.com')
+                ->to($email)
+                ->subject('Your Generated Password')
+                ->text('Your password: ' . $password);
+
+            $mailerInterface->send($email);
+    
+
+        $entityManager->persist($coach);
+        $entityManager->flush();
+        
+       // return new JsonResponse(['message' => "User not found"], Response::HTTP_OK);
+    return $this->redirectToRoute('liste_coaches');
+    }
+       
+        
+
 
            
-            $coach->setRoles(["COACH"]);
-            $coach->setEmail($email);
-            $coach->setNom($nom);
-            $coach->setTelephone($telephone);
-            $password = base64_encode(random_bytes(8));
-            $coach->setPassword( $userPasswordHasher->hashPassword(
-                $coach,
-                $password
-            ));
-            //var_dump($password);
-            // ...
-                // Send email to the user
-                $email = (new Email())
-                    ->from('bahaeddinedridi1@gmail.com')
-                    ->to($email)
-                    ->subject('Your Generated Password')
-                    ->text('Your password: ' . $password);
+         
+    
 
-                $mailerInterface->send($email);
-        
-
-            $entityManager->persist($coach);
-            $entityManager->flush();
-            
-        
-        return $this->redirectToRoute('liste_coaches');
-    }
 
 
 #[Route('/editCoach/{id}', name: 'edit_coach')]
@@ -351,6 +377,28 @@ return $this->render('admin/editMembre.html.twig', [
       $entityManager->remove($membre);
       $entityManager->flush();
       return $this->redirectToRoute('liste_membres');
+  }
+  #[Route('/checkUser', name: 'check_user')]
+  public function checkUser(Request $request, UserRepository $userRepository): Response
+
+  {
+
+    
+      $email = $request->request->get('username');
+      $user = $userRepository->findOneBy(['email' => $email]);
+    //  if($email==null){
+    //     echo 'Email is empty';
+    //  }
+    //  else{
+    //     echo 'Email is not empty';
+       
+    //  }
+//       var_dump($user);
+      if ($user) {
+      
+       return   new Response("true");
+      }
+       return new Response("false");
   }
 
   

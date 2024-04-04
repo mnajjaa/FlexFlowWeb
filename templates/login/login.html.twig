@@ -56,7 +56,7 @@
                 
                                         <div class="mb-3">
                                             <div class="float-end">
-                                                <a href="auth-recoverpw.html" class="text-muted">Forgot password?</a>
+                                                <a href="{{ path('app_forgot_password_request') }}" class="text-muted">Forgot password?</a>
                                             </div>
                                             <label class="form-label" for="password">Password</label>
                                             <input type="password" name="_password" class="form-control" id="userpassword" placeholder="Enter password" autocomplete="current-password" required>
@@ -100,7 +100,7 @@
                                         </div>
 
                                         <div class="mt-4 text-center">
-                                            <p class="mb-0">Don't have an account ? <a href="auth-register.html" class="fw-medium text-primary"> Signup now </a> </p>
+                                            <p class="mb-0">Don't have an account ? <a href="{{ path('app_register') }}" class="fw-medium text-primary"> Signup now </a> </p>
                                         </div>
                                     </form>
                                 </div>
