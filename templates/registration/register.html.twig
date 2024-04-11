@@ -19,64 +19,99 @@
         <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
-        {# <script src="{{asset('validationJs/formValidation.js')}}"></script> #}
+         
+               <!-- real time validation -->
+        <script src="{{asset('validationJs/formValidation.js')}}"></script>
+
+        <!-- Sweet Alert css -->
+        <link href="{{asset('back-office/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- Sweet Alerts js -->
+        <script src="{{asset('back-office/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+        <!-- Sweet alert init js-->
+        <script src="{{asset('back-office/js/pages/sweet-alerts.init.js')}}"></script>
 <script>
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("registration_form_telephone").oninput = function() {
-        console.log("Input event triggered"); // Add this line
-        var telephone = this.value;
-        if (!/^\d{8}$/.test(telephone)) {
-            document.getElementById("error_Telephone").innerHTML = "• Entrez un numéro de téléphone valide.";
-            document.getElementById("success_Telephone").innerHTML = "";
+   var telephoneInput = document.getElementById("registration_form_telephone");
+   var nameInput = document.getElementById("registration_form_nom");
+   var emailInput =  document.getElementById("registration_form_email");
+   var passwordInput = document.getElementById("registration_form_plainPassword");
+   var form = document.getElementById("registerForm");
 
+    form.onsubmit = function(e) {
+        var email = emailInput.value;
+        var atposition = email.indexOf("@");
+        var dotposition = email.lastIndexOf(".");
+        var telephone = telephoneInput.value;
+        var password = passwordInput.value;
+
+        if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length || 
+            !/^\d{8}$/.test(telephone) || password.length < 8 || || nameInput.value.length < 3 ) {
+            e.preventDefault();
+            error();
         }
-        else {
-            document.getElementById("error_Telephone").innerHTML = "";
-            document.getElementById("success_Telephone").innerHTML = "• numéro de téléphone valide.";
-        } 
     }
-    document.getElementById("registration_form_email").oninput = function() {
+
+emailInput.oninput = function() {
         var email = this.value;
         var atposition = email.indexOf("@");
         var dotposition = email.lastIndexOf(".");
         if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
             document.getElementById("error_Email").innerHTML = "• Merci de saisir un email valide.";
-                    document.getElementById("success_Email").innerHTML = "";
-
+            document.getElementById("success_Email").innerHTML = "";
+             emailInput.style.border = "1px solid red";
         }
         else {
             document.getElementById("error_Email").innerHTML = "";
             document.getElementById("success_Email").innerHTML = "• Email valide.";
+            emailInput.style.border = "1px solid green";
         }
     }
-    document.getElementById("registration_form_plainPassword").oninput = function() {
+
+nameInput.oninput = function() {
+        var name = this.value;
+        if (name.length < 3) {
+            document.getElementById("error_Nom").innerHTML = "• Le nom doit contenir au moins 3 caractères. ";
+            document.getElementById("success_Nom").innerHTML = "";
+            nameInput.style.border = "1px solid red";
+        }
+        else {
+            document.getElementById("error_Nom").innerHTML = "";
+            document.getElementById("success_Nom").innerHTML = "• Nom valide.";
+            nameInput.style.border = "1px solid green";
+        }
+    }
+
+telephoneInput.oninput = function() {
+        console.log("Input event triggered"); // Add this line
+        var telephone = this.value;
+        if (!/^\d{8}$/.test(telephone)) {
+            document.getElementById("error_Telephone").innerHTML = "• Entrez un numéro de téléphone valide.";
+            document.getElementById("success_Telephone").innerHTML = "";
+            telephoneInput.style.border = "1px solid red";
+        }
+        else {
+            document.getElementById("error_Telephone").innerHTML = "";
+            document.getElementById("success_Telephone").innerHTML = "• numéro de téléphone valide.";
+            telephoneInput.style.border = "1px solid green";
+        } 
+    }
+
+   passwordInput.oninput = function() {
         var password = this.value;
         if (password.length < 8) {
             document.getElementById("error_Password").innerHTML = "• Le mot de passe doit contenir au moins 8 caractères. ";
             document.getElementById("success_Password").innerHTML = "";
-
+            passwordInput.style.border = "1px solid red";
         }
         else {
             document.getElementById("error_Password").innerHTML = "";
             document.getElementById("success_Password").innerHTML = "• mot de passe valide.";
+            passwordInput.style.border = "1px solid green";
         }
     }
+
 });
-
-
-function success() {
-    Swal.fire({
-        title: 'Good job!',
-        text: 'Votre formulaire a été soumis avec succès!',
-        icon: 'success',
-        customClass: {
-            confirmButton: 'btn btn-primary',
-        },
-        buttonsStyling: false,
-    })
-}
-
 
 function error() {
     Swal.fire({
@@ -131,7 +166,7 @@ function error() {
 
     <div class="mb-3">
         <label class="form-label" for="username" id="username">Nom</label>
-        {{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control', 'id': 'username', 'placeholder': 'Enter username'}}) }}
+        {{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control', 'id': 'registration_form_nom', 'placeholder': 'Enter username'}}) }}
     </div>
 
     <div class="mb-3">
