@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var password = passwordInput.value;
 
         if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length || 
-            !/^\d{8}$/.test(telephone) || password.length < 8 || || nameInput.value.length < 3 ) {
+            !/^\d{8}$/.test(telephone) || password.length < 8 || nameInput.value.length < 3 ) {
             e.preventDefault();
             error();
         }
@@ -165,8 +165,10 @@ function error() {
     </div>
 
     <div class="mb-3">
-        <label class="form-label" for="username" id="username">Nom</label>
+        <label class="form-label" for="username" >Nom</label>
         {{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control', 'id': 'registration_form_nom', 'placeholder': 'Enter username'}}) }}
+        <span id="error_Nom" class="text-danger" style="color: red;"></span>
+        <span id="success_Nom" class="text-success" style="color: green;"></span>
     </div>
 
     <div class="mb-3">
