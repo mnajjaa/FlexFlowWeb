@@ -19,36 +19,48 @@
         <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+          
+        <!-- real time validation -->
+        <script src="{{asset('validationJs/formValidation.js')}}"></script>
+
+        <!-- Sweet Alert css -->
+        <link href="{{asset('back-office/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- Sweet Alerts js -->
+        <script src="{{asset('back-office/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+        <!-- Sweet alert init js-->
+        <script src="{{asset('back-office/js/pages/sweet-alerts.init.js')}}"></script>
+
 <script> 
 document.addEventListener("DOMContentLoaded", function() {
-   document.getElementById("reset_password_request_form_email").oninput = function() {
+    var emailInput = document.getElementById("reset_password_request_form_email");
+    var form = document.getElementById("requestForm");
+
+    emailInput.oninput = function() {
         var email = this.value;
         var atposition = email.indexOf("@");
         var dotposition = email.lastIndexOf(".");
         if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
             document.getElementById("error_Email").innerHTML = "• Merci de saisir un email valide.";
             document.getElementById("success_Email").innerHTML = "";
-
+            emailInput.style.border = "1px solid red";
         }
         else {
             document.getElementById("error_Email").innerHTML = "";
             document.getElementById("success_Email").innerHTML = "• Email valide.";
+            emailInput.style.border = "1px solid green";
         }
     }
-    });
 
-
-function success() {
-    Swal.fire({
-        title: 'Good job!',
-        text: 'Votre formulaire a été soumis avec succès!',
-        icon: 'success',
-        customClass: {
-            confirmButton: 'btn btn-primary',
-        },
-        buttonsStyling: false,
-    })
-}
+    form.onsubmit = function(e) {
+        var email = emailInput.value;
+        var atposition = email.indexOf("@");
+        var dotposition = email.lastIndexOf(".");
+        if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
+            e.preventDefault();
+            error();
+        }
+    }
+});
 
 
 function error() {
@@ -89,10 +101,10 @@ function error() {
                                         <div class="alert alert-success text-center mb-4" role="alert">
                                             Enter your Email and instructions will be sent to you!
                                         </div>
-                                      {{ form_start(requestForm, {'attr': {'class': 'form'}}) }}
+                                      {{ form_start(requestForm, {'attr': {'class': 'form','id': 'requestForm'}}) }}
     <div class="mb-3">
         <label class="form-label" for="useremail">Email</label>
-        {{ form_widget(requestForm.email, {'attr': {'class': 'form-control', 'id': 'useremail', 'placeholder': 'Enter email'}}) }}
+        {{ form_widget(requestForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Enter email'}}) }}
         <span id="error_Email" class="text-danger" style="color: red;"></span>
         <span id="success_Email" class="text-success" style="color: green;"></span>
     </div>
