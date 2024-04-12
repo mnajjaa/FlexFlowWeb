@@ -1,9 +1,10 @@
 {% extends 'base-back.html.twig' %}
+
 {% block body %}
 
 <!doctype html>
 <html lang="en">
-
+ 
     
 <!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
 <head>
@@ -31,8 +32,8 @@
         <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
-
     </head>
+  
    <body>
 
     <!-- <body data-layout="horizontal" data-topbar="colored"> -->
@@ -40,11 +41,11 @@
         <!-- Begin page -->
         
 
-                <div class="page-content">
-                    <div class="container-fluid mt-5">
+                <div class="page-content ">
+                    <div class="container-fluid ">
 
                         <!-- start page title -->
-                        <div class="row">
+                        <div class="row ">
                             <div class="col-12">
                                 <div class="page-title-box d-flex align-items-center justify-content-between">
                                     <h4 class="mb-0">Liste des evenement</h4>
@@ -73,7 +74,7 @@
                                             <input type="text" class="form-control text-start" placeholder="From" name="From" id="From" />
                                             <input type="text" class="form-control text-start" placeholder="To" name="To" id="To" />
                                             
-                                            <button type="button" class="btn btn-primary"><i class="mdi mdi-filter-variant"></i></button>
+                                            <button type="button" class="btn btn-primary" id="btn-filter">Filtrer</button>
                                         </div>
                                     </div>
                                     
@@ -101,8 +102,8 @@
                                                 <th style="width: 120px;">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-            {% for e in evenement %}
+                                        <tbody id="event-table-body">
+            {% for e in evenements %}
 
                                             <tr>
                                                 <td>
@@ -133,8 +134,11 @@
                                                   {{ e.user.username }}
                                                 </td>
                                                 
-                                               <td>
-            <td>
+                                               
+  
+
+
+         <td>
     <div class="d-flex align-items-center">
 
             <!-- Icône de modification -->
@@ -147,7 +151,6 @@
             </form>
             </div>
         </td>
-
                                             </tr>
                                             
                                                       {% endfor %}
@@ -189,13 +192,40 @@
         <script src="{{asset('back-office/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
 
         <!-- init js -->
-        <script src="{{asset('back-office/js/pages/ecommerce-datatables.init.js')}}"></script>
 
         <!-- App js -->
         <script src="{{asset('back-office/js/app.js')}}"></script>
 
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script>
+   $(document).ready(function() {
+    // Écoutez le clic sur le bouton "Filtrer"
+    $('#btn-filter').click(function() {
+        // Récupérez les valeurs des champs de date
+        var fromDate = $('#From').val();
+        var toDate = $('#To').val();
 
+        // Envoie d'une requête AJAX au serveur pour récupérer les événements filtrés
+        $.ajax({
+            url: "{{ path('filtrer_evenements') }}",
+            method: 'GET',
+            data: {
+                From: fromDate,
+                To: toDate
+            },
+            success: function(response) {
+                // Mettre à jour la liste des événements dans le tableau HTML avec les données filtrées
+                $('#event-table-body').html(response);
+            },
+            error: function(xhr, status, error) {
+                // Gérer les erreurs éventuelles
+                console.error(error);
+            }
+        });
+    });
+});
+
+    </script>
             <script>
 
 
@@ -282,36 +312,9 @@ $(document).ready(function() {
 });
 
 </script>
-<script>
-    $(document).ready(function() {
-        // Écoutez les changements dans les champs de date
-        $('[name="From"], [name="To"]').change(function() {
-            // Récupérez les valeurs des champs "From" et "To"
-            var fromDate = $('[name="From"]').val();
-            var toDate = $('[name="To"]').val();
 
-            // Envoie d'une requête AJAX au serveur pour récupérer les événements filtrés
-            $.ajax({
-                url: "{{ path('filtrer_evenements') }}", // Remplacez par votre propre route
-                method: 'GET',
-                data: {
-                    from: fromDate,
-                    to: toDate
-                },
-                success: function(response) {
-                    // Mettre à jour la liste des événements dans le tableau HTML avec les données filtrées
-                    // Assurez-vous d'avoir un mécanisme pour mettre à jour le contenu de votre tableau avec les données de la réponse AJAX
-                },
-                error: function(xhr, status, error) {
-                    // Gérer les erreurs éventuelles
-                }
-            });
-        });
-    });
-</script>
 
     </body>
 
-<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
 </html>
 {% endblock %}

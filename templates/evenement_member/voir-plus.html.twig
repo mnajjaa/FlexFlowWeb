@@ -140,7 +140,7 @@
 											<tr>
 												<td>
 													 {% if dejaParticipe %}
-        <a href="#" class="btn btn-primary btn-skew disabled" style="pointer-events: none;"><span class="skew-inner"><span class="text">Déjà participé</span></span></a>
+        <a href="#" class="btn btn-primary btn-skew" id="scan-btn"><span class="skew-inner"><span class="text">Scan</span></span></a>
     {% else %}
         <a href="{{ path('reserver_evenement', {'id': evenements.getId()}) }}" class="btn btn-primary btn-skew" id="submit-btn"><span class="skew-inner"><span class="text">Réserver</span></span></a>
     {% endif %}

@@ -14,12 +14,54 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\File; // Ajoutez cette ligne pour importer la classe File
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\EntityManagerInterface;
+
+use Symfony\Component\Intl\DateFormat\DateFormat;
 
 class EvenementController extends AbstractController
 {
 
+    #[Route("/filtrer-evenements", name: "filtrer_evenements")]
+    public function filtrerEvenements(Request $request, EvenementRepository $evenementRepository): Response
+    {
+        // Récupérer les dates "From" et "To" de la requête
+        $fromDateString = $request->query->get('From');
+        $toDateString = $request->query->get('To');
+    
+        // Convertir les dates de l'URL dans le bon format
+        $fromDate = date('Y-m-d', strtotime($fromDateString));
+        $toDate = date('Y-m-d', strtotime($toDateString));
+    
+        // Supposons que vous récupériez les événements filtrés de votre repository d'événements
+        $evenements = $evenementRepository->filtrerParDate($fromDate, $toDate);
+    
+        // Convertir les événements filtrés en un tableau associatif pour le rendu dans la vue Twig
+        $formattedEvents = [];
+        foreach ($evenements as $evenement) {
+            $formattedEvents[] = [
+                'id' => $evenement->getId(),
+                'nomEvenement' => $evenement->getNomEvenement(),
+                'categorie' => $evenement->getCategorie(),
+                'Objectif' => $evenement->getObjectif(),
+                'nbrPlace' => $evenement->getNbrPlace(),
+                'Date' => $evenement->getDate()->format('Y-m-d'),
+                'Time' => $evenement->getTime()->format('H:i:s'),
+                'etat' => $evenement->isEtat() ? 'Actif' : 'Inactif',
+                'user' => $evenement->getUser(),
+                // Ajoutez d'autres propriétés d'événement si nécessaire
+            ];
+        }
+    
+        // Rendre la vue Evenement/list.html.twig avec les données filtrées
+        return $this->render('Evenement/filtres.html.twig', [
+            'evenements' => $formattedEvents,
+        ]);
+    }
+    
+    
+    
+    
  
-
 
 
      #[Route("/admin/ajouterEvenement", name:"ajouter_evenement")]
@@ -89,7 +131,7 @@ class EvenementController extends AbstractController
 
         // Rendre la vue en passant les événements récupérés
         return $this->render('Evenement/list.html.twig', [
-            'evenement' => $evenements,
+            'evenements' => $evenements,
         ]);
     }
 
@@ -214,40 +256,5 @@ public function modifier(Request $request, int $id, EvenementRepository $Eveneme
             return new JsonResponse(['success' => false, 'message' => 'Données incomplètes.'], 400);
         }
     }
-    #[Route("/filtrer-evenements", name: "filtrer_evenements")]
-    public function filtrerEvenements(Request $request, EvenementRepository $evenementRepository): JsonResponse
-    {
-        // Récupérer les dates "From" et "To" de la requête
-        $fromDate = new \DateTime($request->query->get('from'));
-        $toDate = new \DateTime($request->query->get('to'));
-        
-        // Effectuer la logique de filtrage des événements en fonction de ces dates
-        // Vous devrez implémenter cette logique en fonction de votre modèle de données et de votre logique métier
-        
-        // Supposons que vous récupériez les événements filtrés de votre repository d'événements
-        $evenements = $evenementRepository->filtrerParDate($fromDate, $toDate);
-        
-        // Convertir les événements filtrés en un tableau associatif pour la réponse JSON
-        $formattedEvents = [];
-        foreach ($evenements as $evenement) {
-            $formattedEvents[] = [
-                'id' => $evenement->getId(),
-                'nomEvenement' => $evenement->getNomEvenement(),
-                'categorie' => $evenement->getCategorie(),
-                'objectif' => $evenement->getObjectif(),
-                'nbrPlace' => $evenement->getNbrPlace(),
-                'Date' => $evenement->getDate()->format('Y-m-d'),
-                'Time' => $evenement->getTime()->format('H:i:s'),
-                'etat' => $evenement->isEtat() ? 'Actif' : 'Inactif',
-                'user' => $evenement->getUser()->getUsername(),
-                // Ajoutez d'autres propriétés d'événement si nécessaire
-            ];
-        }
-        
-        // Retourner les événements filtrés au format JSON
-        return new JsonResponse($formattedEvents);
-    }
-    
-    
  
 }

@@ -84,8 +84,9 @@
             <a href="javascript:;" class="text-dark font-weight-bold">{{ evenement.nomEvenement }}</a>
           </h5>
           <p>
-            Date: {{ evenement.date|date('Y-m-d') }}<br>
-            Time: {{ evenement.time|date('H:i:s') }}
+          <i class="flaticon-calendar-1"></i>  Date: {{ evenement.date|date('Y-m-d') }}<br>
+           <i class="far fa-clock"></i>
+ Time: {{ evenement.time|date('H:i:s') }}
           </p>
           <a href="{{ path('voir_evenements', {'id': evenement.getId()}) }}" class="text-info icon-move-right">Read More
             <i class="fas fa-arrow-right text-sm" aria-hidden="true"></i>

@@ -133,7 +133,6 @@ public function participerEvenement(int $id, EvenementRepository $EvenementRepos
 
     // If the user has already participated, redirect with an error message
     if ($existingParticipation) {
-        $this->addFlash('error', 'Vous avez déjà participé à cet Evenement.');
         return $this->redirectToRoute('liste_evenement');
     }
 
