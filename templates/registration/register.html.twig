@@ -49,6 +49,8 @@ document.addEventListener("DOMContentLoaded", function() {
             !/^\d{8}$/.test(telephone) || password.length < 8 || nameInput.value.length < 3 ) {
             e.preventDefault();
             error();
+        }else{
+            success();
         }
     }
 
@@ -112,6 +114,18 @@ telephoneInput.oninput = function() {
     }
 
 });
+
+function success() {
+    Swal.fire({
+        title: 'Succès!',
+        text: 'Votre compte a été créé avec succès!',
+        icon: 'success',
+        customClass: {
+            confirmButton: 'btn btn-primary',
+        },
+        buttonsStyling: false,
+    })
+}
 
 function error() {
     Swal.fire({

@@ -8,6 +8,17 @@
 
 
 {% block body %}
+<head>
+       <!-- real time validation -->
+        <script src="{{asset('validationJs/formValidation.js')}}"></script>
+
+        <!-- Sweet Alert css -->
+        <link href="{{asset('back-office/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- Sweet Alerts js -->
+        <script src="{{asset('back-office/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+        <!-- Sweet alert init js-->
+        <script src="{{asset('back-office/js/pages/sweet-alerts.init.js')}}"></script>
+</head>
 
 <body>
 
@@ -25,6 +36,7 @@
 							<h1>{{ membre.nom }}</h1>
 						</div>
 					</div>
+                    
 					{# <div class="col-lg-6 col-md-6">
 						<div class="portfolio-nav wow fadeInUp" data-wow-delay="0.6s">
 							<ul>
@@ -71,7 +83,7 @@
 			<div class="container">
 				<div class="row">
 
-					<div class="col-lg-6 ">
+					<div class="col-xl-6">
 							{# <form class="dz-form dzForm" enctype="multipart/form-data" method="POST" action="{{ path('membre_edit_profile') }}" >
 								 <div class="row">
                                               <div class="col-md-6">
@@ -112,7 +124,7 @@
 								
 							</form> #}
 
-					<form  method="post" class="needs-validation" novalidate enctype="multipart/form-data" action="{{ path('membre_edit_profile') }}">
+					  <form  method="post" class="needs-validation" novalidate enctype="multipart/form-data" action="{{ path('membre_edit_profile') }}" id="editUserForm">
                                         <div class="row">
                                               <div class="col-md-3 p-3">
                                                   <div class="text-end">
@@ -128,14 +140,18 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                         <label class="form-label" for="nom">Nom Complet</label>
-                                                        <input type="text" class="form-control" id="nom" name="nom"  placeholder="First name" value="{{ membre.nom }}" required>
+                                                        <input type="text" class="form-control" id="name" name="nom"  placeholder="First name" value="{{ membre.nom }}" oninput="isValidName()" required>
+                                                        <span id="error_name" class="text-danger" style="color: red; font-size: 12px;"></span>
+                                                        <span id="success_name" class="text-success" style="color: green; font-size: 12px;"></span>
                                                         <div class="valid-feedback">
                                                             Looks good!
                                                         </div>
                                                 </div>
                                                 <div class="row">
                                                         <label class="form-label" for="email">email</label>
-                                                        <input type="text" class="form-control" id="email" name="email" placeholder="email" value="{{ membre.email }}" required>
+                                                        <input type="text" class="form-control" id="email" name="email" placeholder="email" value="{{ membre.email }}" oninput="isValidEmail()" required>
+                                                        <span id="error_email" class="text-danger" style="color: red; font-size: 12px;"></span>
+                                                        <span id="success_email" class="text-success" style="color: green; font-size: 12px;"></span>
                                                         <div class="valid-feedback">
                                                             Looks good!
                                                         </div>
@@ -145,7 +161,9 @@
                                                 <div class="col-md-4">
                                                     <div class="mb-3">
                                                         <label class="form-label" for="telephone">Telephone</label>
-                                                        <input type="text" class="form-control" name="telephone" id="telephone" placeholder="Telephone" value="{{ membre.telephone }}" required>
+                                                        <input type="text" class="form-control" name="telephone" id="telephone" placeholder="Telephone" value="{{ membre.telephone }}" oninput="isValidPhoneNumber()" required>
+                                                        <span id="error_Telephone" class="text-danger" style="color: red; font-size: 12px;"></span>
+                                                        <span id="success_Telephone" class="text-success" style="color: green; font-size: 12px;"></span>
                                                         <div class="invalid-feedback">
                                                             Please provide a valid city.
                                                         </div>
@@ -167,10 +185,65 @@
                                                         Cancel
                                                     </button>
                                         </form>
-					</div>
-                              <div class="col-lg-6">
-                                    {# <h1>{{ membre.nom }}</h1> #}
-                             </div>
+					</div> <!-- end col -->
+                              <div class="col-xl-6">
+                                    <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Changer le mot de passe</h4>
+                                        <p class="card-title-desc">Merci de saisir votre mot de passe actuel pour changer le mot de passe</p>
+                                        <form class="needs-validation" novalidate method="post" action="{{ path('membre_edit_pwd') }}" id="editPasswordForm" >
+                                        {% if mdp is same as(false) %}
+                                         <div class="row">
+                                                <div class="col-md-7">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">mot de passe actuel</label>
+                                                        <input type="password" class="form-control" id="userpassword" placeholder="Entrez le mot de passe actuel" name="actualPassword" required>
+                                                        {% if erreur is same as(true) %}
+                                                        <p style="color:red;">mot de passe incorrect</p>
+                                                        {% endif %}
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    
+                                                </div>
+                                                {% endif %}
+                                                {# Remove the unnecessary if statement #}
+                                                {% if mdp is same as(true) %}
+                                                    {# <div class="alert alert-danger" role="alert">
+                                                        <strong>Erreur!</strong> Mot de passe incorrect
+                                                    </div> #}
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">Nouveau mot de passe</label>
+                                                        <input type="password" class="form-control" id="userpassword" placeholder="Nouveau mot de passe" name="plainPassword" oninput="isValidPassword()" required>
+                                                         <span id="error_userpassword" class="text-danger" style="color: red; font-size: 12px;"></span>
+                                                         <span id="success_userpassword" class="text-success" style="color: green; font-size: 12px;"></span>
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">Répéter le mot de passe</label>
+                                                        <input type="password" class="form-control" id="userpasswordConfirm" placeholder="Répéter le mot de passe" name="plainPasswordConfirm" oninput="isValidPasswordConfirm()" required>
+                                                            <span id="error_userpasswordConfirm" class="text-danger" style="color: red; font-size: 12px;"></span>
+                                                            <span id="success_userpasswordConfirm" class="text-success" style="color: green; font-size: 12px;"></span>
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                            {% endif %}
+                                            <button class="btn btn-primary" type="submit">Réinitialiser</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                             </div> <!-- end col -->
 				</div>
 			</div>
 		</section>
@@ -189,18 +262,18 @@
                                     <form class="needs-validation" novalidate method="post" action="{{ path('membre_edit_pwd') }}"  >
                                       
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-5">
                                                     <div class="mb-3 position-relative">
-                                                        <label class="form-label" for="userpassword">New Password</label>
+                                                        <label class="form-label" for="userpassword">Nouveau mot de passe</label>
                                                         <input type="password" class="form-control" id="userpassword" placeholder="Enter new password" name="plainPassword" required>
                                                         <div class="valid-tooltip">
                                                             Looks good!
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-5">
                                                     <div class="mb-3 position-relative">
-                                                        <label class="form-label" for="userpassword">Repeat Password</label>
+                                                        <label class="form-label" for="userpassword">Répéter le mot de passe</label>
                                                         <input type="password" class="form-control" id="userpasswordConfirm" placeholder="Repeat password" name="plainPasswordConfirm" required>
                                                         <div class="valid-tooltip">
                                                             Looks good!

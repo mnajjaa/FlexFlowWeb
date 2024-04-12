@@ -13,7 +13,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Security;
 
 class MembreController extends AbstractController
-{
+{   
+    static $mdp=false;
+
     #[Route('/membre', name: 'membre_dashboard')]
     public function index(): Response
     {
@@ -24,7 +26,8 @@ class MembreController extends AbstractController
 
     #[Route('/profileMembre', name: 'membre_profile')]
     public function profile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
-    {
+    {   $erreur=false;
+        $mdp=false;
         $user = new User();
         
         $email =  $request->getSession()->get(Security::LAST_USERNAME);
@@ -34,12 +37,15 @@ class MembreController extends AbstractController
         
         return $this->render('membre/profile.html.twig', [
             'membre' => $user,
+            'mdp'=>$mdp,
+            'erreur'=>$erreur
         ]);
     }
 
     #[Route('/editProfileMembre', name: 'membre_edit_profile')]
     public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
-    {
+    {   $erreur=false;
+        $mdp=false;
         $user = new User();
         
         $email = $request->getSession()->get(Security::LAST_USERNAME);
@@ -60,10 +66,6 @@ class MembreController extends AbstractController
             $file = $request->files->get('image');
             if ($file) {
                
-               
-
-
-                
                 $fileName = (string)md5(uniqid()) . '.' . $file->guessExtension();
                 $file->move($this->getParameter('uploads'), $fileName);
 
@@ -85,34 +87,82 @@ class MembreController extends AbstractController
             return $this->redirectToRoute('membre_profile');
             
         }        
-        return $this->render('membre/editProfileMembre.html.twig', [
+        return $this->render('membre/profile.html.twig', [
             'membre' => $user,
+            'mdp'=>$mdp,
+            'erreur'=>$erreur
         ]);
     
     }
     #[Route('/editPwdMembre', name: 'membre_edit_pwd')]
     public function editPwd(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, UserPasswordHasherInterface $passwordHasher): Response
     {
+        $erreur=false;
+        self::$mdp=false; // Initialize mdp to false
         $email = $request->getSession()->get(Security::LAST_USERNAME);
         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
         
+        
         if($request->isMethod('POST')) {
+            
+            if ( $request->get('actualPassword') && !$passwordHasher->isPasswordValid($user, $request->get('actualPassword'))) {
+                // $this->addFlash('reset_password_error', 'Old password is incorrect');
+                ?>
+    
+                <script>
+                    alert("Old password is incorrect");
+                    </script>
+                <?php
+                return $this->redirectToRoute('membre_profile', ['erreur'=>true]);
+               
+            }
+            else {
+            ?>
+            
+            <?php
+                self::$mdp=true;
+                // return $this->render('admin/editProfileAdmin.html.twig', [
+                //     'mdp'=>self::$mdp,
+                //     'admin' => $user
+                // ]);
+            }
+            if($request->get('plainPassword')  && $request->get('plainPasswordConfirm')){
+              
+            
             if($request->get('plainPassword') != $request->get('plainPasswordConfirm')){
-                $this->addFlash('reset_password_error', 'Passwords do not match');
+                ?>
+                <script>
+                    alert("Passwords match");
+                    </script>
+                <?php
                 return $this->redirectToRoute('membre_profile');
             }
+            else{
+                ?>
+                <script>
+                    alert("Passwords match");
+                    </script>
+                <?php
+            var_dump($request->get('plainPassword'));
             $encodedPassword = $passwordHasher->hashPassword(
                 $user,
                 $request->get('plainPassword')
             );
     
             $user->setPassword($encodedPassword);
+            $entityManager->persist($user);
                 $entityManager->flush();
                 var_dump($user);
                 return $this->redirectToRoute('membre_profile');
         }
-        return $this->render('membre/editPwdMembre.html.twig');
+        }
+        return $this->render('membre/profile.html.twig', [
+            'mdp'=>self::$mdp,
+            'membre' => $user,
+            'erreur'=>$erreur
+        ]);
     
+    }
     }
 
 }

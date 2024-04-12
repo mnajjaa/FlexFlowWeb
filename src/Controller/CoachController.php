@@ -12,7 +12,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
 class CoachController extends AbstractController
-{
+{   
+    static $mdp=false;
+
     #[Route('/coach', name: 'coach_dashboard')]
     public function index(): Response
     {
@@ -38,73 +40,75 @@ class CoachController extends AbstractController
     #[Route('/editPwdCoach', name: 'coach_edit_pwd')]
     public function editPwd(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $email = $request->getSession()->get(Security::LAST_USERNAME);
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-        
-        if($request->isMethod('POST')) {
-            if($request->get('plainPassword') != $request->get('plainPasswordConfirm')){
-                $this->addFlash('reset_password_error', 'Passwords do not match');
-                return $this->redirectToRoute('coach_edit_pwd');
-            }
-            $encodedPassword = $passwordHasher->hashPassword(
-                $user,
-                $request->get('plainPassword')
-            );
+       
+    $erreur=false;
     
-            $user->setPassword($encodedPassword);
-                $entityManager->flush();
-                var_dump($user);
-                return $this->redirectToRoute('coach_edit_profile');
+    $email = $request->getSession()->get(Security::LAST_USERNAME);
+    $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+    
+    
+    if($request->isMethod('POST')) {
+        
+        if ( $request->get('actualPassword') && !$passwordHasher->isPasswordValid($user, $request->get('actualPassword'))) {
+            // $this->addFlash('reset_password_error', 'Old password is incorrect');
+            ?>
+
+            <script>
+                alert("Old password is incorrect");
+                </script>
+            <?php
+            return $this->redirectToRoute('coach_edit_profile', ['erreur'=>true]);
+           
         }
-        return $this->render('coach/editPwdCoach.html.twig');
-    
-    }
-    #[Route('/editProfileCoach', name: 'coach_edit_profile')]
-    public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
-    {
-        $user = new User();
+        else {
+        ?>
         
-        $email = $request->getSession()->get(Security::LAST_USERNAME);
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-        
-        if (!$user) {
-            throw $this->createNotFoundException('User not found.');
+        <?php
+            self::$mdp=true;
+            // return $this->render('admin/editProfileAdmin.html.twig', [
+            //     'mdp'=>self::$mdp,
+            //     'admin' => $user
+            // ]);
         }
-
+        if($request->get('plainPassword')  && $request->get('plainPasswordConfirm')){
+          
         
-if ($request->isMethod('POST')) {
-    
-    
-          //code ajout image
-          //les images sont stockées dans le dossier public/uploads/users 
+        if($request->get('plainPassword') != $request->get('plainPasswordConfirm')){
+            ?>
+            <script>
+                alert("Passwords match");
+                </script>
+            <?php
+            return $this->redirectToRoute('coach_edit_profile');
+        }
+        else{
+            ?>
+            <script>
+                alert("Passwords match");
+                </script>
+            <?php
+        var_dump($request->get('plainPassword'));
+        $encodedPassword = $passwordHasher->hashPassword(
+            $user,
+            $request->get('plainPassword')
+        );
 
-            $file = $request->files->get('image');
-            if ($file) {
-                $fileName = (string)md5(uniqid()) . '.' . $file->guessExtension();
-                $file->move($this->getParameter('uploads'), $fileName);
-
-                // Update the user's image
-                $user->setimage($fileName);
-            }
-
-
-
-            $user->setNom($request->request->get('nom'));
-            // var_dump($request->request->get('nom'));
-            $user->setTelephone($request->request->get('telephone'));
-            //$user->setimage($fileName);
-            $user->setEmail($request->request->get('email'));
-            //var_dump($user);
-
-            $entityManager->persist($user);
+        $user->setPassword($encodedPassword);
+        $entityManager->persist($user);
             $entityManager->flush();
-            return $this->redirectToRoute('coach_profile');
-            
-        }        
-        return $this->render('coach/editProfileCoach.html.twig', [
-            'coach' => $user,
-        ]);
-    
+            var_dump($user);
+            return $this->redirectToRoute('coach_edit_profile');
+    }
+    }
+    return $this->render('coach/editProfileCoach.html.twig', [
+        'mdp'=>self::$mdp,
+        'coach' => $user,
+        'erreur'=>$erreur
+    ]);
+
+}
+
+
     }
 }
  /* $email=$request->getSession()->get(Security::LAST_USERNAME);
