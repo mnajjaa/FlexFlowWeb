@@ -53,9 +53,8 @@ class EvenementController extends AbstractController
         }
     
         // Rendre la vue Evenement/list.html.twig avec les données filtrées
-        return $this->render('Evenement/filtres.html.twig', [
-            'evenements' => $formattedEvents,
-        ]);
+        return new JsonResponse($formattedEvents);
+
     }
     
     

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Controller\SmsController;
 
 use App\Entity\Evenement;
 use App\Entity\Reservation;
@@ -14,8 +15,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
+
+
 class EvenementMemberController extends AbstractController
 {
+
+   
     #[Route('/evenement/member', name: 'app_evenement_member')]
     public function index(): Response
     {
@@ -23,7 +28,6 @@ class EvenementMemberController extends AbstractController
             'controller_name' => 'EvenementMemberController',
         ]);
     }
-
 
     #[Route('/evenements/{id}', name: 'voir_evenements')]
     public function voirCours(int $id, EvenementRepository $EvenementRepository, Request $request, EntityManagerInterface $entityManager): Response
@@ -111,7 +115,7 @@ public function events(EvenementRepository $eventRepository)
 
 
 #[Route('/Evenement/{id}/reserver', name: 'reserver_evenement')]
-public function participerEvenement(int $id, EvenementRepository $EvenementRepository, Request $request, EntityManagerInterface $entityManager): Response
+public function participerEvenement(int $id, EvenementRepository $EvenementRepository, Request $request, EntityManagerInterface $entityManager, SmsController $smsController): Response
 {
     // Get the current user's email from the session
     $email = $request->getSession()->get(Security::LAST_USERNAME);
@@ -157,10 +161,13 @@ public function participerEvenement(int $id, EvenementRepository $EvenementRepos
          
 
        
+         $smsController->sendSMS($participation->getId(), $entityManager);
 
 
         // Redirect to the confirmation page
         return $this->redirectToRoute('liste_evenement');
     } 
 }
+
+
 }
