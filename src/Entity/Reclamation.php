@@ -18,6 +18,11 @@ class Reclamation
     private ?\DateTimeInterface $date_reclamation = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le titre de la réclamation ne peut pas être vide")]
+    #[Assert\Regex(
+        pattern: "/^[a-zA-Z0-9\s]+$/",
+        message: "Le titre de la réclamation ne peut contenir que des lettres, des chiffres et des espaces"
+    )]
     private ?string $titre_reclamation = null;
 
     #[ORM\Column(length: 255)]
