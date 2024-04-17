@@ -20,7 +20,7 @@ class SmsController extends AbstractController
         ]);
     }
 
- 
+
     public function sendSMS(int $id, EntityManagerInterface $entityManager)
     {
         // Initialiser le client Twilio
@@ -40,7 +40,7 @@ class SmsController extends AbstractController
         $dateReservation = $reservation->getDateReservation()->format('Y-m-d');
 
         // Numéro de téléphone de destination
-        $toPhoneNumber = ''; // Numéro de téléphone réel
+        $toPhoneNumber = '+21653602680'; // Numéro de téléphone réel
 
         // Corps du message SMS
         $messageBody = sprintf(

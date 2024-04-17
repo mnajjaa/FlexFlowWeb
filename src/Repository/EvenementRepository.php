@@ -47,18 +47,22 @@ class EvenementRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+
 public function filtrerParDate(string $fromDate, string $toDate): array
 {
-    // Implémentez la logique de filtrage des événements en fonction des dates "From" et "To"
-    // Utilisez le bon format pour les dates dans la requête DQL
-    return $this->createQueryBuilder('e')
+    $fromDate = \DateTime::createFromFormat('Y-m-d', $fromDate);
+    $toDate = \DateTime::createFromFormat('Y-m-d', $toDate);
+
+    $evenements = $this->createQueryBuilder('e')
         ->where('e.Date >= :fromDate')
         ->andWhere('e.Date <= :toDate')
         ->setParameter('fromDate', $fromDate)
         ->setParameter('toDate', $toDate)
         ->getQuery()
         ->getResult();
-}
+        dump($evenements);
 
+    return $evenements;
+}
 
 }

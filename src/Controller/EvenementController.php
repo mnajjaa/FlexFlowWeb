@@ -22,12 +22,14 @@ class EvenementController extends AbstractController
 {
 
     #[Route("/filtrer-evenements", name: "filtrer_evenements")]
+
     public function filtrerEvenements(Request $request, EvenementRepository $evenementRepository): Response
     {
         // Récupérer les dates "From" et "To" de la requête
         $fromDateString = $request->query->get('From');
         $toDateString = $request->query->get('To');
-    
+        dump($fromDateString, $toDateString);
+
         // Convertir les dates de l'URL dans le bon format
         $fromDate = date('Y-m-d', strtotime($fromDateString));
         $toDate = date('Y-m-d', strtotime($toDateString));
@@ -47,15 +49,18 @@ class EvenementController extends AbstractController
                 'Date' => $evenement->getDate()->format('Y-m-d'),
                 'Time' => $evenement->getTime()->format('H:i:s'),
                 'etat' => $evenement->isEtat() ? 'Actif' : 'Inactif',
-                'user' => $evenement->getUser(),
-                // Ajoutez d'autres propriétés d'événement si nécessaire
+                'user' => [
+                    'username' => $evenement->getUser()->getUsername(),
+                    // Include other user properties if necessary
+                ],                // Ajoutez d'autres propriétés d'événement si nécessaire
             ];
         }
     
-        // Rendre la vue Evenement/list.html.twig avec les données filtrées
         return new JsonResponse($formattedEvents);
 
     }
+
+    
     
     
     

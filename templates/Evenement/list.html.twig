@@ -70,12 +70,16 @@
                             <div class="col-md-8">
                                 <div class="float-end">
                                     <div class=" mb-3">
-                                        <div class="input-daterange input-group" id="datepicker6" data-date-format="dd M, yyyy" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
+                                                <form action="{{ path('filtrer_evenements') }}" method="get">
+
+                                        <div class="input-daterange input-group" id="datepicker6" data-date-format="yyyy-mm-dd" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
                                             <input type="text" class="form-control text-start" placeholder="From" name="From" id="From" />
                                             <input type="text" class="form-control text-start" placeholder="To" name="To" id="To" />
                                             
-                                            <button type="button" class="btn btn-primary" id="btn-filter">Filtrer</button>
+                                            <button type="submit" class="btn btn-primary" id="btn-filter">Filtrer</button>
                                         </div>
+                                                    </form>
+
                                     </div>
                                     
                                 </div>
@@ -198,33 +202,49 @@
 
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  <script>
-   $(document).ready(function() {
-    // Écoutez le clic sur le bouton "Filtrer"
-    $('#btn-filter').click(function() {
-        // Récupérez les valeurs des champs de date
-        var fromDate = $('#From').val();
-        var toDate = $('#To').val();
+$('#btn-filter').click(function(e) {
+    e.preventDefault();
 
-        // Envoie d'une requête AJAX au serveur pour récupérer les événements filtrés
-        $.ajax({
-            url: "{{ path('filtrer_evenements') }}",
-            method: 'GET',
-            data: {
-                From: fromDate,
-                To: toDate
-            },
-            success: function(response) {
-                // Mettre à jour la liste des événements dans le tableau HTML avec les données filtrées
-                $('#event-table-body').html(response);
-            },
-            error: function(xhr, status, error) {
-                // Gérer les erreurs éventuelles
-                console.error(error);
-            }
-        });
+    var fromDate = $('#From').val();
+    var toDate = $('#To').val();
+
+    $.ajax({
+        url: '/filtrer-evenements',
+        data: {
+            'From': fromDate,
+            'To': toDate
+        },
+        success: function(data) {
+            // Clear the existing rows in the table
+            $('#event-table-body').empty();
+
+            // Iterate over each event in the response data
+            $.each(data, function(index, event) {
+                // Create a new row for each event
+                var row = $('<tr>');
+                row.append('<td>' + event.id + '</td>');
+                row.append('<td>' + event.nomEvenement + '</td>');
+                row.append('<td>' + event.categorie + '</td>');
+                row.append('<td>' + event.Objectif + '</td>');
+                row.append('<td>' + event.nbrPlace + '</td>');
+                row.append('<td>' + event.Date + '</td>');
+                row.append('<td>' + event.Time + '</td>');
+                row.append('<td>' + event.etat + '</td>');
+                row.append('<td>' + event.user.username + '</td>');
+
+var actions = '<td><div class="d-flex align-items-center">';
+        actions += '<a href="/Evenement_modifier/' + event.id + '" class="px-3 text-primary"><i class="fas fa-pen"></i></a>';
+        actions += '<form id="form-delete-' + event.id + '" method="post" action="/Evenement_supprimer/' + event.id + '">';
+        actions += '<input type="hidden" name="_token" value="' + event.token + '">';
+        actions += '<button type="submit" class="btn btn-link text-danger btn-supprimer"><i class="fas fa-trash"></i></button>';
+        actions += '</form></div></td>';
+        row.append(actions);
+                // Add the new row to the table
+                $('#event-table-body').append(row);
+            });
+        }
     });
 });
-
     </script>
             <script>
 
