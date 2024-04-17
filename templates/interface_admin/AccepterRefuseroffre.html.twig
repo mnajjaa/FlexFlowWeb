@@ -66,11 +66,9 @@
                             <a href="{{ path('accepter_offre', {'id': offre.id}) }}" class="action-btn edit-btn">
                        <i class="far fa-check-circle"></i>
                     </a>
-                    
-                            <a href="{{ path('refuser_offre', {'id': offre.id}) }}" class="action-btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir refuser cette offre ?')">
-                        <i class="fas fa-times-circle"></i>
-                            </a>
-                        </td>
+                    <a href="{{ path('refuser_offre', {'id': offre.id}) }}" class="action-btn delete-btn" data-offre-id="{{ offre.id }}">
+                   <i class="fas fa-times-circle"></i>
+                    </a>
                     </tr>
                 {% endfor %}
 
@@ -89,35 +87,59 @@
          
     
 
-        <!-- JAVASCRIPT -->
-        <script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
-        <script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-        <script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
-        <script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
-        <script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
-        <script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
-        <script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+      <!-- JAVASCRIPT -->
 
+<script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+<script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+<script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+<script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+<script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
 
-        <!-- bootstrap datepicker -->
-        <script src="{{asset('back-office/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+<!-- bootstrap datepicker -->
+<script src="{{asset('back-office/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
 
-        <!-- Required datatable js -->
-        <script src="{{asset('back-office/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-        <script src="{{asset('back-office/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<!-- Required datatable js -->
+<script src="{{asset('back-office/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('back-office/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
         
-        <!-- Responsive examples -->
-        <script src="{{asset('back-office/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
-        <script src="{{asset('back-office/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
+<!-- Responsive examples -->
+<script src="{{asset('back-office/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('back-office/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
 
-        <!-- init js -->
-        <script src="{{asset('back-office/js/pages/ecommerce-datatables.init.js')}}"></script>
+<!-- init js -->
+<script src="{{asset('back-office/js/pages/ecommerce-datatables.init.js')}}"></script>
 
-        <!-- App js -->
-        <script src="{{asset('back-office/js/app.js')}}"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    </body>
+<!-- App js -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var offreId = this.getAttribute('data-offre-id');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Êtes-vous sûr de vouloir refuser cette offre ?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Oui',
+                    cancelButtonText: 'Non'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Rediriger vers la route de refus en utilisant l'ID de l'offre
+                        window.location.href = "{{ path('refuser_offre', {'id': 0}) }}".replace('0', offreId);
+                    }
+                });
+            });
+        });
+    });
+    </script>
+    
 
-<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+</body>
 </html>
 {% endblock %}

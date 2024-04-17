@@ -381,16 +381,97 @@
                         <td>{{ demande.offre.id ?? 'Aucune offre associée' }}</td>
                         <td>
                             <a href="{{ path('modifier_demande', {'id': demande.id}) }}" class="px-3 text-primary"><i class="fas fa-edit"></i> </a>
-                            <a href="{{ path('supprimer_demande', {'id': demande.id}) }}" class="action-btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')">
+						<button class="btn btn-link text-danger btn-supprimer" data-id="{{demande.id }}"><i class="fas fa-trash"></i></button>
+                        <form id="form-delete-{{ demande.id }}" action="{{ path('supprimer_demande', {'id': demande.id}) }}" method="post">
+                          
+                        </form>
                         
-                        <button class="btn btn-link text-danger btn-supprimer"><i class="fas fa-trash"></i></button>
-                    </a>
+                       
+            
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+	
+  <!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+<!-- Inclure le script de SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+    $(document).ready(function() {
+  // Gérer le changement du nombre d'entrées à afficher
+
+
+  
+
+  // Afficher les alertes flash avec SweetAlert
+      {% for flashMessage in app.flashes('warning') %}
+          Swal.fire({
+              title: 'Alerte !',
+              html: '{{ flashMessage|raw }}', // Contenu de l'alerte flash
+              icon: 'warning',
+              showConfirmButton: false,
+              timer: 5000,
+              showClass: {
+                  popup: 'animate__animated animate__fadeInDown'
+              },
+              hideClass: {
+                  popup: 'animate__animated animate__fadeOutUp'
+              }
+          });
+      {% endfor %}
+});
+
+
+  
+
+$(document).ready(function() {
+  $('.btn-supprimer').click(function(e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      var url = $('#form-delete-' + id).attr('action');
+      Swal.fire({
+          title: 'Êtes-vous sûr ?',
+          text: "Vous ne pourrez pas revenir en arrière !",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Oui, supprimer !'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              // Soumettre le formulaire si l'utilisateur confirme
+              $('#form-delete-' + id).submit();
+          } else {
+              // Afficher un message d'erreur si l'utilisateur annule la suppression
+              Swal.fire({
+                  title: 'Annulé',
+                  text: 'La suppression a été annulée.',
+                  icon: 'error',
+                  showConfirmButton: false,
+                  timer: 1500,
+                  showClass: {
+                      popup: 'animate__animated animate__fadeInDown'
+                  },
+                  hideClass: {
+                      popup: 'animate__animated animate__fadeOutUp'
+                  }
+              });
+          }
+      });
+  });
+
+  
+});
+
+  </script>
 </body>
 </html>
 <!-- Call To Action -->

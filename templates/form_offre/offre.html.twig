@@ -1,4 +1,18 @@
 {% extends 'base-back.html.twig' %}
+{% block stylesheets %}
+    {# Inclure les fichiers CSS Bootstrap et SweetAlert2 ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        .custom-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .custom-form-label {
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
 <!doctype html>
@@ -17,6 +31,24 @@
     <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+     <!-- Bootstrap Css -->
+     <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+     <!-- Icons Css -->
+     <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+     <!-- App Css-->
+     <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+ 
+     <!-- Sweet Alert-->
+     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+ 
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+ 
+     <!-- Feuilles de styles -->
+     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+ 
+    
+    
     <style>
         /* Style pour le formulaire */
         .form-container {
@@ -87,6 +119,9 @@
         .image-column img {
             width: 350px; /* Ajustez la taille de l'image selon vos préférences */
         }
+        input:invalid {
+    border-color: red;
+}
     </style>
 </head>
 <body>
@@ -100,7 +135,11 @@
             </div>
         </div>
         <div>
-            {{ form_row(form.nom) }}
+            
+            {{ form_row(form.nom)}}
+            <div class="text-danger">
+            {{ form_errors(form.nom) }}
+        </div>
             <label for="specialite">Spécialité </i></label>
             <div style="position: relative;">
     {{ form_widget(form.specialite, {'attr': {'class': 'form-control', 'placeholder': 'Spécialité'}}) }}
@@ -109,7 +148,15 @@
 
 
         <div>
-            {{ form_row(form.tarif_heure) }}
+           
+            <div>
+                {{ form_row(form.tarif_heure, {'attr': {'class': 'form-control', 'placeholder': 'Tarif par heure'}}) }}
+                {% if form_errors(form.tarif_heure) %}
+                    <div class="text-danger">
+                        {{ form_errors(form.tarif_heure) }}
+                    </div>
+                {% endif %}
+            </div>
             {{ form_row(form.etat_offre)}}
             {{ form_row(form.email) }}
             {{ form_row(form.coach) }}
@@ -125,6 +172,32 @@
         </div>
         {{ form_end(form) }}
     </div>
+    <!-- Inclure le script de SweetAlert2 à la fin du body -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+       document.getElementById('submitButton').addEventListener('click', function(event) {
+           // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+           Swal.fire({
+               icon: 'info',
+               title: 'Vérification des données en cours !',
+               showConfirmButton: false,
+               timer: 3000
+           }).then(() => {
+               // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
+               document.querySelector('form').submit();
+           });
+       });
+    });
+    </script>
+
+
+
+
+    
+    
+
+    
 </body>
 </html>
 {% endblock %}

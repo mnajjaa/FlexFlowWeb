@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OffreRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OffreRepository::class)]
 class Offre
@@ -14,14 +14,21 @@ class Offre
     #[ORM\Column]
     private ?int $id = null;
 
+    
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(pattern: '/^\D+$/', message: 'Le nom offre ne peut pas contenir de chiffres.')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
     private ?string $specialite = null;
-
+ 
     #[ORM\Column]
-    private ?float $tarif_heure = null;
+#[Assert\Regex(
+    pattern: '/^\d{1,4}(\.\d{1,2})?$/',
+    message: 'Le tarif par heure doit être un nombre valide avec au plus 2 décimales.'
+)]
+private ?string $tarif_heure = null;
+
 
     #[ORM\Column(length: 255)] 
     private ?string $etat_offre = "en atttente";
