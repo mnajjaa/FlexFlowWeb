@@ -85,7 +85,7 @@ class EvenementController extends AbstractController
     
             // Gestion de l'upload de l'image
             /** @var UploadedFile $imageFile */
-            $imageFile = $form->get('image')->getData();
+            $imageFile = $form->get('imageFile')->getData();
     
             // Vérifier si une image a été téléchargée
             if ($imageFile) {
@@ -156,34 +156,56 @@ class EvenementController extends AbstractController
     
         return $this->redirectToRoute('evenements_list');
     }
-   #[Route('/admin/modifier/{id}', name: 'Evenement_modifier')]
-public function modifier(Request $request, int $id, EvenementRepository $EvenementRepository): Response
-{
-    $evenement = $EvenementRepository->find($id);
+    #[Route('/admin/modifier/{id}', name: 'Evenement_modifier')]
+    public function modifier(Request $request, int $id, EvenementRepository $EvenementRepository): Response
+    {
+        // Find the event by its ID
+        $evenement = $EvenementRepository->find($id);
+    
+        // Check if the event exists
+        if (!$evenement) {
+            throw $this->createNotFoundException('L\'événement avec l\'ID '.$id.' n\'existe pas.');
+        }
+    
+        // Create the form for editing the event
+        $form = $this->createForm(AjouterEvenementType::class, $evenement);
+    
+        // Handle form submission
+        $form->handleRequest($request);
+    
+        // Check if the form is submitted and valid
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Get the uploaded image file
+            $imageFile = $form->get('imageFile')->getData();
+    
+            // Check if a new file is uploaded
+            if ($imageFile) {
+                // Read the content of the file
+                $imageContent = file_get_contents($imageFile->getPathname());
+    
+                // Store the content of the new file in the event entity
+                $evenement->setImage($imageContent);
+            }
+    
+            // Update the event in the database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+    
+            // Add a success flash message
+            $this->addFlash('success', 'Le evenement a été modifié avec succès.');
+    
+            // Redirect to the list of events
+            return $this->redirectToRoute('evenements_list');
+        }
+    
+        // Render the form for editing the event
+        return $this->render('Evenement/modifier.html.twig', [
+            'form' => $form->createView(),
+            'evenement' => $evenement,
 
-    if (!$evenement) {
-        throw $this->createNotFoundException('L\'événement avec l\'ID '.$id.' n\'existe pas.');
+        ]);
     }
-
-    // Créer le formulaire de modification
-    $form = $this->createForm(AjouterEvenementType::class, $evenement);
-
-    // Gérer la soumission du formulaire
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Si le formulaire est soumis et valide, enregistrer les modifications dans la base de données
-        $this->getDoctrine()->getManager()->flush();
-
-        // Rediriger vers la liste des événements
-        return $this->redirectToRoute('evenements_list');
-    }
-
-    // Afficher le formulaire de modification
-    return $this->render('Evenement/modifier.html.twig', [
-        'form' => $form->createView(),
-    ]);
-}
+    
 
 
  

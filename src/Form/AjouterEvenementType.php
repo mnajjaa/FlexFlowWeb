@@ -37,6 +37,7 @@ class AjouterEvenementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+        
             ->add('nomEvenement',TextType::class,[
                 'label'=>"Nom du l'evenement",
                 'constraints' => [
@@ -132,7 +133,7 @@ class AjouterEvenementType extends AbstractType
                 'label' => 'Activer l\'état',
                 'required' => false, // Le champ n'est pas obligatoire
             ])
-            ->add('image',  FileType::class, [
+            ->add('imageFile',  FileType::class, [
                 'label' => 'Image de l\'événement',
                 'mapped' => false, // Indique que ce champ n'est pas associé à une propriété de l'entité
                 'required' => false, // Le champ n'est pas requis, il peut être vide

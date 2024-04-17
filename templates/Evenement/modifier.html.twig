@@ -53,7 +53,8 @@
                                     <div class="card-body">
         
                                         <h4 class="card-title">Modifier un evenement</h4>
-                                        <form action="{{ path('ajouter_evenement') }}" method="post" enctype="multipart/form-data">
+                             <form action="{{ path('Evenement_modifier', {'id': evenement.id}) }}" method="post" enctype="multipart/form-data">
+
                         {{ form_start(form, {'method': 'POST'}) }}
                         {{ form_row(form._token) }} {# Ajout du jeton CSRF #}
                                         <div class="mb-3 row">
@@ -129,9 +130,9 @@
                                     </div>
                              
                                        <div class="mb-3 row">
-                            <label for="{{ form.image.vars.id }}" class="col-md-2 col-form-label">Image</label>
+                            <label for="{{ form.imageFile.vars.id }}" class="col-md-2 col-form-label">Image</label>
                           <div class="col-md-10">
-                            {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
                         </div>
                             </div>           
                                 
