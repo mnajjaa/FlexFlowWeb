@@ -1,3 +1,7 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+Evenement_modifier:
+    path: '/admin/modifier/{id}'
+    controller: 'App\Controller\EvenementController::modifier'
+    methods: ['GET', 'POST']
