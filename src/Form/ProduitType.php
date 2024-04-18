@@ -16,29 +16,20 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ProduitType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-    ->add('nom', TextType::class, [
-        'label' => 'Nom du produit',
-        'constraints' => [
-            new Regex([
-                'pattern' => '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç])+[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç]*$/u',
-                'message' => 'Le nom du produit doit contenir au moins une lettre.',
-            ]),
-        ],
-    ])
-    ->add('Description', TextType::class, [
-        'label' => 'Description',
-        'constraints' => [
-            new Regex([
-                'pattern' => '/^[\p{L}\p{M}\p{N}\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç]*$/u',
-                'message' => 'La description ne peut être vide et peut contenir divers caractères spéciaux.',
-            ]),
-        ],
+        ->add('nom', TextType::class, [
+            'label' => 'Nom du produit',
+            
+        ])
+    ->add('description', TextType::class, [
+        'label' => 'description',
+       
     ])
 
         ->add('prix', NumberType::class, [

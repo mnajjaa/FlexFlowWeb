@@ -40,6 +40,8 @@
     
 
 <body>
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+
     <div class="container">
         <center><h1>Modifier un produit</h1></center>
         <div class="row justify-content-center">
@@ -47,16 +49,15 @@
                 <div class="card custom-card">
                     <div class="card-body">
                         {# Votre formulaire ici #}
-                       {{ form_start(form, {'attr': {'class': 'form'}}) }}
                         <div class="mb-3">
                             {{ form_label(form.nom, 'Nom du produit', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
                             {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
                             <div class="text-danger">{{ form_errors(form.nom) }}</div>
                         </div>
                         <div class="mb-3">
-                            {{ form_label(form.Description, 'Description', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
-                            {{ form_widget(form.Description, {'attr': {'class': 'form-control'}}) }}
-                            <div class="text-danger">{{ form_errors(form.Description) }}</div>
+                            {{ form_label(form.description, 'description', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                            <div class="text-danger">{{ form_errors(form.description) }}</div>
                         </div>
                         <div class="mb-3">
                             {{ form_label(form.prix, 'prix', {'label_attr': {'class': 'form-label custom-form-label'}}) }}

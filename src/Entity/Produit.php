@@ -16,31 +16,46 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç])+[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç]*$/u',
+        message: "Le nom du produit doit contenir au moins une lettre."
+    )]
+    private ?string $nom= null;
 
     #[ORM\Column(length: 500)]
-    private ?string $description = null;
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç])+[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç]*$/u',
+        message: "La description doit contenir au moins une lettre."
+    )]
+    private ?string $description;
 
-    #[ORM\Column]
-    #[Assert\NotBlank]
-    #[Assert\Type(type: 'numeric')]
-    #[Assert\Range(min: 0)]
-    private ?float $prix = null;
+
+    #[ORM\Column(type: "integer")]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Type(type: "numeric", message: "Veuillez saisir un prix valide (chiffres uniquement).")]
+    #[Assert\Range(min: 0, minMessage: "Le prix doit être supérieur ou égal à zéro.")]
+    private ?float $prix;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank]
-    #[Assert\Type(type: 'numeric')]
-    #[Assert\Range(min: 0)]
-    private ?int $quantite = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank]
-    #[Assert\Type(type: 'numeric')]
-    #[Assert\Range(min: 0)]
-    private ?int $quantiteVendues = null;
+
+    
+    #[ORM\Column(type: "integer")]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Type(type: "numeric", message: "Veuillez saisir une quantité valide (chiffres uniquement).")]
+    #[Assert\Range(min: 0, minMessage: "La quantité doit être supérieure ou égale à zéro.")]
+    private ?int $quantite;
+
+    #[ORM\Column(type: "integer")]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Type(type: "numeric", message: "Veuillez saisir une quantité vendue valide (chiffres uniquement).")]
+    #[Assert\Range(min: 0, minMessage: "La quantité vendue doit être supérieure ou égale à zéro.")]
+    private ?int $quantiteVendues;
+
 
     #[ORM\Column(type: Types::BLOB)]
     public $image = null;

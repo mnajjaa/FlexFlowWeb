@@ -1,3 +1,4 @@
+
 {% extends 'base-back.html.twig' %}
 {% block stylesheets %}
     {# Incluez les fichiers CSS Bootstrap ici #}
@@ -40,6 +41,8 @@
     
 
     <body>
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -47,7 +50,6 @@
                 <div class="card-body">
                     <center><h1>Ajouter un produit</h1></center>
                    <form action="{{ path('produit_ajouter') }}" method="post" enctype="multipart/form-data">
-    {{ form_start(form, {'method': 'POST'}) }}
     {{ form_row(form._token) }}
 
     <div class="mb-3">
@@ -59,10 +61,10 @@
 </div>
 
 <div class="mb-3">
-    <label for="Description" class="form-label">Description</label>
-    {{ form_widget(form.Description, {'attr': {'class': 'form-control'}}) }}
+    <label for="description" class="form-label">Description</label>
+    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
     <div class="text-danger">
-        {{ form_errors(form.Description) }}
+        {{ form_errors(form.description) }}
     </div>
 </div>
 
@@ -99,7 +101,11 @@
     <div class="mb-3">
         <label for="imageFile" class="form-label">Image</label>
         {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.imageFile) }} {# Affichage des erreurs pour le champ imageFile #}
+            <div class="text-danger">
+
+        {{ form_errors(form.imageFile) }} 
+            </div>
+    {# Affichage des erreurs pour le champ imageFile #}
     </div>
 
     <button type="submit" class="btn btn-primary">Ajouter</button>

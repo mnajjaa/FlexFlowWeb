@@ -348,7 +348,7 @@ class ProduitController extends AbstractController
         // Liste des produits achetés pour le PDF
         $productsForPDF = [];
         $dateActuelle = date('d/m/Y');
-    
+        $montantTotal = 0; // Initialisation du montant total
         // Parcourir les éléments du panier
         foreach ($panier as $item) {
             // Récupérer l'ID et la quantité achetée du produit
@@ -368,6 +368,10 @@ class ProduitController extends AbstractController
                     $produit->setQuantite($nouvelleQuantite);
                     $produit->setQuantiteVendues($nouvelleQuantiteVendue);
                     $entityManager->persist($produit);
+
+                     // Calculer le montant pour ce produit
+                $montantProduit = $produit->getPrix() * $quantiteAchete;
+                $montantTotal += $montantProduit; // Ajouter au montant total
                 } else {
                     // Gérer le cas où la quantité en stock est insuffisante
                     // Par exemple, afficher un message d'erreur à l'utilisateur
@@ -392,7 +396,9 @@ class ProduitController extends AbstractController
                 $productsForPDF[] = [
                     'nom' => $produit->getNom(),
                     'quantite' => $quantiteAchete,
+                    'prix'=> $produit->getPrix(),
                     'montant' => $produit->getPrix() * $quantiteAchete,
+                    'montantTotale' => $montantProduit,
                 ];
             }
         }
@@ -507,17 +513,25 @@ $mailer->send($email);
     {
         return $this->render('GestionProduit/payment/cancel.html.twig', []);
     }
-
-
-
+/*
+#[Route('/charge', name: 'charge')]
+public function indexAction(Request $request)
+{
+    \Stripe\Stripe::setApiKey("sk_test_51OopTSDtHS4Nu6kaTroMy6hwN1MKCBKitrzK3lm26xblje6CYwCiHccuY5VB1uNQppoCOSn6C6u92jn7i6zjLikl00zSebwoIU");
    
-    
-
+    \Stripe\Charge::create(array(
+        "amount" => 2000,
+        "currency" => "usd",
+        "source" => $request->request->get('stripeToken'),// the token stored in your frontend if you collect it. Should be the 
+        "description" => "Paiment de test",
+    ));
+    return $this->render('GestionProduit/stripe.html.twig');
 }
 
 
 
 
+*/
 
 
 
@@ -527,4 +541,4 @@ $mailer->send($email);
 
 
 
-
+}
