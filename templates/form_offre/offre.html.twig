@@ -92,7 +92,7 @@
 
         /* Bouton de soumission */
         .submit-btn {
-            width: 100%;
+            width: 40%;
             padding: 12px;
             margin-top: 20px;
             background-color: #4e73df;
@@ -119,9 +119,7 @@
         .image-column img {
             width: 350px; /* Ajustez la taille de l'image selon vos préférences */
         }
-        input:invalid {
-    border-color: red;
-}
+        
     </style>
 </head>
 <body>
@@ -162,7 +160,7 @@
             {{ form_row(form.coach) }}
         </div>
         <div class="form-buttons">
-            <button type="submit" id="submitButton" class="submit-btn">Créer</button>
+            <button type="submit" id="submitButton" class="submit-btn">  <i class="fas fa-plus-square"></i>  Ajouter offre</button>
             
             <a href="{{ path('app_consulter_offres') }}" class="btn btn-secondary" id="consulterOffres">
     <i class="fas fa-location-arrow"></i> Consulter les offres
