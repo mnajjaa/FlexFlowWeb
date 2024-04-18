@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
+#[UniqueEntity(fields: ['nomEvenement'], message: 'Ce nom d\'événement est déjà utilisé.')]
 
 class Evenement
 {

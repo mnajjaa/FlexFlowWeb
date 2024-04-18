@@ -102,9 +102,6 @@ class EvenementController extends AbstractController
             // Persist et flush l'entité Evenement dans la base de données
             $entityManager->persist($evenement);
             $entityManager->flush();
-            $this->addFlash('success', 'Evenement a été ajouté avec succès.');
-
-            // Rediriger vers une page de confirmation ou une autre page après l'ajout de l'événement
             return $this->redirectToRoute('evenements_list');
         }
     
@@ -191,12 +188,11 @@ class EvenementController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
     
-            // Add a success flash message
-            $this->addFlash('success', 'Le evenement a été modifié avec succès.');
-    
-            // Redirect to the list of events
+          
+            
             return $this->redirectToRoute('evenements_list');
-        }
+
+                    }
     
         // Render the form for editing the event
         return $this->render('Evenement/modifier.html.twig', [
