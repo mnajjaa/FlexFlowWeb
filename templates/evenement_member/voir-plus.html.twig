@@ -225,7 +225,32 @@
 	</div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('scan-btn').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
 
+            // Make an AJAX request to fetch the QR code
+            fetch('{{ path('qr_code', {'id': evenements.getId()}) }}')
+            .then(response => response.blob())
+            .then(blob => {
+                const qrCodeUrl = URL.createObjectURL(blob);
+
+                // Create an image element for the QR code
+                const img = document.createElement('img');
+                img.src = qrCodeUrl;
+
+                // Display the QR code in a SweetAlert2 popup
+                Swal.fire({
+                    title: 'Scan QR Code',
+                    html: img,
+                    showCloseButton: true,
+                });
+            })
+            .catch(error => console.error('Error fetching QR code:', error));
+        });
+    });
+</script>
    <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('submit-btn').addEventListener('click', function(event) {
@@ -263,6 +288,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="{{asset('front-office/js/dz.carousel.js')}}"></script><!-- OWL-CAROUSEL -->
 <script src="{{asset('front-office/js/dz.ajax.js')}}"></script><!-- AJAX -->
 <script src="{{asset('front-office/js/custom.js')}}"></script><!-- CUSTOM JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 {% endblock %}
 </body>
 </html>
