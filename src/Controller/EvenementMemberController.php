@@ -14,11 +14,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCodeBundle\Response\QrCodeResponse;
 
-
+use Endroid\QrCode\Writer\PngWriter;
 
 class EvenementMemberController extends AbstractController
 {
+
 
    
     #[Route('/evenement/member', name: 'app_evenement_member')]
@@ -28,6 +31,37 @@ class EvenementMemberController extends AbstractController
             'controller_name' => 'EvenementMemberController',
         ]);
     }
+    #[Route('/qr-code/{id}', name: 'qr_code')]
+
+    public function generateQrCode($id)
+    {
+        $evenement = $this->getDoctrine()->getRepository(Evenement::class)->find($id);
+        $participant = $this->getUser(); // Get the current user
+    
+        // Generate the QR code content
+        $content = sprintf(
+            'Nom participant: %s, Nom evenement: %s, Date evenement: %s, Date reservation: %s',
+            $participant->getUsername(),
+            $evenement->getNomEvenement(),
+            $evenement->getDate()->format('Y-m-d H:i:s'),
+            (new \DateTime())->format('Y-m-d H:i:s')
+        );
+    
+        // Create a QR code
+        $qrCode = QrCode::create($content);
+    
+        // Create a writer
+        $writer = new PngWriter();
+    
+        // Generate a result
+        $result = $writer->write($qrCode);
+    
+        // Create a response
+        $response = new QrCodeResponse($result);
+    
+        return $response;
+    }
+   
 
     #[Route('/evenements/{id}', name: 'voir_evenements')]
     public function voirCours(int $id, EvenementRepository $EvenementRepository, Request $request, EntityManagerInterface $entityManager): Response

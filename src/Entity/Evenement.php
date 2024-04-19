@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 #[UniqueEntity(fields: ['nomEvenement'], message: 'Ce nom d\'événement est déjà utilisé.')]
 
+
 class Evenement
 {
     #[ORM\Id]
@@ -19,7 +20,7 @@ class Evenement
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'Ce champ ne peut pas être vide')]
 
     private ?string $nomEvenement = null;
 
@@ -28,7 +29,7 @@ class Evenement
     private ?\DateTimeInterface $Date = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'Ce champ ne peut pas être vide')]
     
     private ?int $nbrPlace = null;
 

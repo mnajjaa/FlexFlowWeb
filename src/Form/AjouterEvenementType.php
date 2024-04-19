@@ -41,6 +41,7 @@ class AjouterEvenementType extends AbstractType
             ->add('nomEvenement',TextType::class,[
                 'label'=>"Nom du l'evenement",
                 'constraints' => [
+                    
                     new Regex([
                         'pattern' => '/^[A-Za-z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}]+$/',
                         'message' => 'Le nom est composé que par des lettres .',
@@ -57,11 +58,7 @@ class AjouterEvenementType extends AbstractType
                     "Gymnastics" => "Gymnastics",
                     "Cardio" => "Cardio",
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez sélectionner une catégorie',
-                    ]),
-                ],
+               
             ])
 
             ->add('Objectif',ChoiceType::class,[
@@ -73,25 +70,22 @@ class AjouterEvenementType extends AbstractType
                     "Renforcement de l'esprit d'équipe "=>" Renforcement de l'esprit d'équipe ",
                   
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez sélectionner un Objectif',
-                    ]),
-                ],
+              
 
             ])
             ->add('nbrPlace', NumberType::class, [
                 'label' => "Nombre de place",
                 'constraints' => [
-                    new Regex([
-                        'pattern' => '/^\d+$/',
-                        'message' => 'Le nombre de place doit être un nombre entier.',
-                    ]),
                     new Range([
                         'min' => 10,
                         'max' => 40,
                         'notInRangeMessage' => 'Le nombre de place doit être compris entre {{ min }} et {{ max }}.',
                     ]),
+                    new Regex([
+                        'pattern' => '/^\d+$/',
+                        'message' => 'Le nombre de place doit être un nombre entier.',
+                    ]),
+                    
                 ],
             ])
             ->add('Date', DateType::class, [
@@ -109,11 +103,7 @@ class AjouterEvenementType extends AbstractType
                 'label' => 'Heure',
                 'widget' => 'single_text', // Utilisez le widget de type texte
                 'attr' => ['class' => 'timepicker'], // Ajoutez une classe pour l'initialisation du time picker
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez sélectionner le temps',
-                    ]),
-                ],
+               
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
@@ -122,11 +112,7 @@ class AjouterEvenementType extends AbstractType
                 'choices' => $this->getCoachUsers(),
 
                 'attr' => ['class' => 'form-control'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez sélectionner un coach',
-                    ]),
-                ],
+               
     
             ])
             ->add('etat', CheckboxType::class, [
@@ -138,7 +124,6 @@ class AjouterEvenementType extends AbstractType
                 'mapped' => false, // Indique que ce champ n'est pas associé à une propriété de l'entité
                 'required' => false, // Le champ n'est pas requis, il peut être vide
                 'constraints' => [
-                    new NotBlank(['message' => 'Veuillez télécharger une image.']),
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [

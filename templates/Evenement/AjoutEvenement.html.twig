@@ -51,7 +51,8 @@
 
 									<h4 class="card-title">Ajouter un événement</h4>
 									<form action="{{ path('ajouter_evenement') }}" method="post" enctype="multipart/form-data" id="ajouter_evenement">
-										{{ form_start(form, {'method': 'POST'}) }}
+{{ form_start(form, {'method': 'POST' ,  'novalidate' : true}) }}
+
 										{{ form_row(form._token) }}
 										{# Ajout du jeton CSRF #}
 										<div class="mb-3 row">
@@ -197,8 +198,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('submit-btn').addEventListener('click', function(event) {
         // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
         Swal.fire({
-            icon: 'success',
-            title: 'Evenement a été ajouté avec succès !',
+            icon: 'info',
+            title: 'vérification de Données !',
             showConfirmButton: false,
             timer: 3000
         }).then(() => {

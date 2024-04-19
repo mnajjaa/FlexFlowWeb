@@ -76,7 +76,8 @@ class EvenementController extends AbstractController
         $evenement = new Evenement();
     
         // Création du formulaire
-        $form = $this->createForm(AjouterEvenementType::class, $evenement);
+        $form = $this->createForm(AjouterEvenementType::class, $evenement,
+    ['required'=>false]);
     
         // Traitement de la soumission du formulaire
         $form->handleRequest($request);
