@@ -27,6 +27,7 @@ class EvenementMemberController extends AbstractController
     #[Route('/evenement/member', name: 'app_evenement_member')]
     public function index(): Response
     {
+
         return $this->render('evenement_member/index.html.twig', [
             'controller_name' => 'EvenementMemberController',
         ]);
@@ -98,8 +99,14 @@ class EvenementMemberController extends AbstractController
 public function listeEvenement(Request $request, EvenementRepository $EvenementRepository): Response
 {
    
-    $evenements = $EvenementRepository->findBy(['etat' => 1]);
-    foreach ($evenements as $evenement) {
+    $evenements = $EvenementRepository->createQueryBuilder('e')
+    ->where('e.Date >= :now')
+    ->andWhere('e.etat = :etat')
+    ->setParameter('now', new \DateTime())
+    ->setParameter('etat', 1)
+    ->orderBy('e.Date', 'ASC')
+    ->getQuery()
+    ->getResult();    foreach ($evenements as $evenement) {
         $evenement->setImage(base64_encode(stream_get_contents($evenement->getImage())));
     }
 
