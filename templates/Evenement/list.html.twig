@@ -365,7 +365,19 @@ $('#btn-filter').click(function(e) {
 
 
     </script>
-
+<script>
+    // Loop through each event and check if nbrPlace is 0
+    {% for e in evenements %}
+        {% if e.nbrPlace == 0 %}
+            // Display SweetAlert for events with no places left
+            Swal.fire({
+                icon: 'info',
+                title: 'No places left',
+                text: 'There are no places left for event {{ e.nomEvenement }}.',
+            });
+        {% endif %}
+    {% endfor %}
+</script>
 
     </body>
 
