@@ -51,7 +51,7 @@
 <link href="{{asset('front-office/vendor/rangeslider/rangeslider.css')}}" rel="stylesheet">
 	<link href="{{asset('front-office/vendor/switcher/switcher.css')}}" rel="stylesheet">
 	<link href="{{asset('front-office/vendor/animate/animate.css')}}" rel="stylesheet">
-	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     	<link class="skin" rel="stylesheet" href="{{asset('front-office/css/skin/skin-1.css')}}">
     <style>
 .date .clock-canvas {
@@ -59,6 +59,8 @@
         font-size: 2em;
 
 }
+
+
 </style>
 </head>
 <body id="bg" class="data-typography-1">
@@ -105,11 +107,11 @@
       
             <div class="container">
 <div class="row">
+
   {% for evenement in evenements %}
     <div class="col-md-4">
       <div class="card card-plain card-blog mt-4">
         <div class="card-image border-radius-lg position-relative ">
-        
             <div class="blur-shadow-image overlay-shine wow fadeInUp ">
 												<div class="dz-media">
 
@@ -131,9 +133,29 @@
           <a href="{{ path('voir_evenements', {'id': evenement.getId()}) }}" class="text-info icon-move-right">Read More
             <i class="fas fa-arrow-right text-sm" aria-hidden="true"></i>
           </a>
+          <i class="far fa-heart heart-icon" style="position: absolute; top: 10px; right: 10px;" onclick="toggleLike(this, {{ evenement.getId() }})"></i>
+
         </div>
       </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var heartIcon = document.querySelector('.heart-icon');
+            var eventId = {{ evenement.getId() }}; // Get the event ID
+
+            fetch('/status/' + eventId)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'liked') {
+                        heartIcon.classList.add('liked');
+                        heartIcon.style.color = 'red';
+                    } else if (data.status === 'disliked') {
+                        heartIcon.classList.remove('liked');
+                        heartIcon.style.color = 'black';
+                    }
+                });
+        });
+    </script>
   {% endfor %}
 </div>
 
@@ -145,7 +167,22 @@
 
 </div>
 
+ <script>
+    function toggleLike(element, eventId) {
+        var liked = element.classList.toggle('liked');
 
+        fetch('/' + (liked ? 'like' : 'dislike') + '/' + eventId)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'liked') {
+                    element.style.color = 'red'; // Change color to red when liked
+                } else if (data.status === 'disliked') {
+                    element.style.color = 'black'; // Change color to black when disliked
+                }
+            });
+    }
+   
+</script>
 
 <script>
 // Set the date we're counting down to
@@ -177,7 +214,38 @@ var countdownInterval = setInterval(function() {
         document.getElementById("countdown").innerHTML = "EXPIRED";
     }
 }, 1000);
+
+
 </script>
+<script>
+        // Select all heart icons
+        const heartIcons = document.querySelectorAll('.heart-icon');
+
+        // Add click event listener to each heart icon
+        heartIcons.forEach(icon => {
+            icon.addEventListener('click', function() {
+                // Toggle the 'far' and 'fas' classes to change the color of the heart icon
+                this.classList.toggle('far');
+                this.classList.toggle('fas');
+                // Toggle the color of the heart icon
+                if (this.classList.contains('far')) {
+                    this.style.color = 'black'; // Change color to black when unliked
+                } else {
+                    this.style.color = 'red'; // Change color to red when liked
+                }
+            });
+        });
+        function toggleLike(element, eventId) {
+    var liked = element.classList.toggle('liked');
+
+    fetch('/' + (liked ? 'like' : 'dislike') + '/' + eventId)
+        .then(response => response.json())
+        .then(data => console.log(data.status));
+}
+
+    </script>
+   
+
 <!-- JAVASCRIPT FILES ========================================= -->
 <script src="{{asset('front-office/js/jquery.min.js')}}"></script><!-- JQUERY.MIN JS -->
 <script src="{{asset('front-office/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script><!-- BOOTSTRAP.MIN JS -->
