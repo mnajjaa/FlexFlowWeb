@@ -21,6 +21,31 @@ class DemandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Demande::class);
     }
 
+    public function findOffresLesPlusDemandees($limit = null)
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d.offre, COUNT(d.offre) as nombre_demandes')
+            ->groupBy('d.offre')
+            ->orderBy('nombre_demandes', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+    // Dans votre DemandeRepository
+
+public function countByOffre(): array
+{
+    return $this->createQueryBuilder('d')
+        ->select('COUNT(d.id) AS nombre_demandes, o.nom AS offre_nom')
+        ->leftJoin('d.offre', 'o')
+        ->groupBy('o.nom')
+        ->getQuery()
+        ->getResult();
+}
+
 //    /**
 //     * @return Demande[] Returns an array of Demande objects
 //     */

@@ -1,4 +1,5 @@
 {% extends 'base-back.html.twig' %}
+
 {% block stylesheets %}
     {# Inclure les fichiers CSS Bootstrap et SweetAlert2 ici #}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -122,8 +123,12 @@
         
     </style>
 </head>
+
 <body>
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+
     <div class="form-container">
+    
         <h1 class="form-title">Créer une nouvelle offre</h1>
         {{ form_start(form) }}
         <div class="image-column"> <!-- Placer cette balise dans la première colonne -->

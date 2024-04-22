@@ -24,6 +24,8 @@ class FormOffreController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Enregistrer l'offre dans la base de données
+          //  Elle récupère le service Doctrine depuis le conteneur de services.
+          //retourne l'instance de l'EntityManager associée à votre application Symfony.
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($offre);
             $entityManager->flush();
