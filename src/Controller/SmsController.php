@@ -20,7 +20,7 @@ class SmsController extends AbstractController
         ]);
     }
 
-
+ 
     public function sendSMS(int $id, EntityManagerInterface $entityManager)
     {
         // Initialiser le client Twilio

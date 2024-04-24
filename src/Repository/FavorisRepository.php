@@ -45,4 +45,32 @@ class FavorisRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findMostLovedEvent()
+{
+    return $this->createQueryBuilder('f')
+        ->select('IDENTITY(f.evenement) as eventId, e.nomEvenement as eventName, COUNT(f.id) as loveCount')
+        ->join('f.evenement', 'e')
+        ->where('f.loved = :loved')
+        ->setParameter('loved', true)
+        ->groupBy('f.evenement')
+        ->orderBy('loveCount', 'DESC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
+}
+
+public function findMostUnlovedEvent()
+{
+    return $this->createQueryBuilder('f')
+        ->select('IDENTITY(f.evenement) as eventId, e.nomEvenement as eventName, COUNT(f.id) as unloveCount')
+        ->join('f.evenement', 'e')
+        ->where('f.unloved = :unloved')
+        ->setParameter('unloved', true)
+        ->groupBy('f.evenement')
+        ->orderBy('unloveCount', 'DESC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
+}
 }
