@@ -32,7 +32,7 @@ class FormOffreController extends AbstractController
 
             // Envoyer un e-mail à l'utilisateur
             $email = (new Email())
-                ->from('votre@email.com')
+                ->from('FlexFlow <your_email@example.com>')
                 ->to($offre->getEmail())
                 ->subject('Confirmation de votre offre')
                 ->html('<p>Votre offre a été enregistrée avec succès.</p>');
@@ -52,7 +52,7 @@ class FormOffreController extends AbstractController
     }
 
      
-      #[Route('/offre/success', name: 'demande_success')]
+      #[Route('/offre/success', name: 'offre_success')]
     public function success(): Response
     {
         return $this->render('form_offre/success.html.twig');

@@ -2,8 +2,7 @@
 
 {% block stylesheets %}
     {# Inclure les fichiers CSS Bootstrap et SweetAlert2 ici #}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <style>
         .custom-card {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -175,24 +174,7 @@
         </div>
         {{ form_end(form) }}
     </div>
-    <!-- Inclure le script de SweetAlert2 à la fin du body -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-       document.getElementById('submitButton').addEventListener('click', function(event) {
-           // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
-           Swal.fire({
-               icon: 'info',
-               title: 'Vérification des données en cours !',
-               showConfirmButton: false,
-               timer: 3000
-           }).then(() => {
-               // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
-               document.querySelector('form').submit();
-           });
-       });
-    });
-    </script>
+  
 
 
 

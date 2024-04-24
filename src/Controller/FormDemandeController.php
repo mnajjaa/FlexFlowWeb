@@ -66,7 +66,7 @@ class FormDemandeController extends AbstractController
                   $user = $demande->getUser();
                   if ($user !== null) {
                       $email = (new Email())
-                          ->from('votre@email.com')
+                          ->from('FlexFlow <your_email@example.com>')
                           ->to($user->getEmail())
                           ->subject('Confirmation de votre demande de coaching privé')
                           ->html('<p> Votre demande a été enregistrée avec succès.</p>');
