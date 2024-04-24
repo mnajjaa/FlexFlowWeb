@@ -186,11 +186,13 @@ function isValidEmail() {
     if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
         document.getElementById("error_email").innerHTML = "• Merci de saisir un  email valide.";
         document.getElementById("success_email").innerHTML = "";
+        document.getElementById("email").style.border = "1px solid red";
         return false;
     }
     else {
         document.getElementById("error_email").innerHTML = "";
         document.getElementById("success_email").innerHTML = "• Email valide.";
+        document.getElementById("email").style.border = "1px solid green";
         return true;
     }
 }
@@ -200,11 +202,13 @@ function isValidName() {
     if (name.length < 3) {
         document.getElementById("error_name").innerHTML = "• Le nom doit avoir au moins 3 caractères.";
         document.getElementById("success_name").innerHTML = "";
+        document.getElementById("name").style.border = "1px solid red";
         return false;
     }
     else {
         document.getElementById("error_name").innerHTML = "";
         document.getElementById("success_name").innerHTML = "• Nom valide.";
+        document.getElementById("name").style.border = "1px solid green";
         return true;
     }
 }
@@ -214,12 +218,14 @@ function isValidName() {
             if (!/^\d{8}$/.test(telephone)) {
                 document.getElementById("error_Telephone").innerHTML = "• Entrez un numéro de téléphone valide.";
                 document.getElementById("success_Telephone").innerHTML = "";
+                document.getElementById("telephone").style.border = "1px solid red";
                 return false;
             }
             else {
                 document.getElementById("error_Telephone").innerHTML = "";
                 document.getElementById("success_Telephone").innerHTML = "• Numéro de téléphone valide.";
                 document.getElementById("success_email").innerHTML = "";
+                document.getElementById("telephone").style.border = "1px solid green";
                 return true;
             } 
         }

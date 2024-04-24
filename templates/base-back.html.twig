@@ -382,7 +382,7 @@
                                 </ul>
                             </li>
                           {% else %}
-                        <p>Vous n'avez pas les droits pour accéder à cette page</p>
+                        {# <p>Vous n'avez pas les droits pour accéder à cette page</p> #}
                         {% endif  %} 
                          {% if app.user.getRoles()[0]=="ADMIN" %}
                             <li class="menu-title">Apps</li>
@@ -453,7 +453,7 @@
                                 </ul>
                             </li>
                            {% else %}
-                           <p>Vous n'avez pas les droits pour accéder à cette page</p>
+                           {# <p>Vous n'avez pas les droits pour accéder à cette page</p> #}
                         {% endif  %} 
                             <li class="menu-title">Utilisateurs</li>
 

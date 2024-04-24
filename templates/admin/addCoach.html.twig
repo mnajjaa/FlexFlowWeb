@@ -35,7 +35,13 @@
         
     </head>
 <body data-check-user-url="{{ path('check_user') }}">
-    <div class="col-xl-6">
+    <div class="container-fluid">
+        <!-- start page title -->
+<div class="row">
+ <div class="card">
+<div class="card-body">
+           <div class="row">
+    <div class="col-xl-6  mt-5 ">
                                 <div class="card">
                                     <div class="card-body">
         
@@ -76,17 +82,13 @@
                                                 </div>
                                             </div>
                                             <div>
-                                            {# <span hidden name="erreur">{{message}} #}
-</span>                                             
-                                                <div>
+                                            {# <span hidden name="erreur">{{message}} </span> #}                                            
+                                                <div> 
                                                     <button type="submit" class="btn btn-primary waves-effect waves-light me-1" >
                                                         Ajouter
                                                     </button>
-                                                    {# <span data-check-user-url="{{ path('check_user') }}">
-    <!-- Your body content here -->
-</span> #}
-                                                   
-                                                     
+                                                    {# <span data-check-user-url="{{ path('check_user') }} "></span> #}
+                                                     <!-- Your body content here -->             
                                                     <a href="{{ path('liste_coaches') }}" class="btn btn-secondary waves-effect">
                                                         Annuler
                                                     </a>
@@ -97,7 +99,16 @@
                                     </div>
                                 </div>
     </div> <!-- end col -->
-
-    
+    <div class="col-xl-6  mt-5 ">
+         <div>
+            <img src="{{asset('back-office/images/undraw_Add_tasks_re_s5yj.png')}}" alt="image" class="img-fluid" style="width: 100%; height: 100%;">
+        </div>
+    </div> <!-- end col -->
+    </div> <!-- end row -->
+</div>
+</div>
+</div> <!-- end row -->
+        <!-- end page title -->
+    </div> <!-- container-fluid -->    
 </body>
     {% endblock %}
