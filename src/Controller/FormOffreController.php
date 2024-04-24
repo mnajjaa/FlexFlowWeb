@@ -51,10 +51,8 @@ class FormOffreController extends AbstractController
 
     }
 
-    /**
-     * @Route("/offre/success", name="offre_success")
-     */
-   
+     
+      #[Route('/offre/success', name: 'demande_success')]
     public function success(): Response
     {
         return $this->render('form_offre/success.html.twig');
