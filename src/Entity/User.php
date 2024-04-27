@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -56,6 +57,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $mfaSecret = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $mfaEnabled = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $mdp_exp = null;
 
     
 
@@ -190,6 +200,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImage(?string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getMfaSecret(): ?string
+    {
+        return $this->mfaSecret;
+    }
+
+    public function setMfaSecret(?string $mfaSecret): static
+    {
+        $this->mfaSecret = $mfaSecret;
+
+        return $this;
+    }
+
+    public function isMfaEnabled(): ?bool
+    {
+        return $this->mfaEnabled;
+    }
+
+    public function setMfaEnabled(?bool $mfaEnabled): static
+    {
+        $this->mfaEnabled = $mfaEnabled;
+
+        return $this;
+    }
+
+    public function getMdpExp(): ?\DateTimeInterface
+    {
+        return $this->mdp_exp;
+    }
+
+    public function setMdpExp(?\DateTimeInterface $mdp_exp): static
+    {
+        $this->mdp_exp = $mdp_exp;
 
         return $this;
     }

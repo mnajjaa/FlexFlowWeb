@@ -52,6 +52,9 @@ class RegistrationController extends AbstractController
            
             $user->setRoles(["MEMBRE"]);
             $user->setImage("7c62c977256064c61946037d427a0e0c.png");
+            $user->setMfaEnabled(false);
+            $user->setMfaSecret(null);
+            $user->setMdpExp(new \DateTime('+30 days'));
             $entityManager->persist($user);
             $entityManager->flush();
             $session->set('user',$user);

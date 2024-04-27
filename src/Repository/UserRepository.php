@@ -49,6 +49,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
+    public function findByMdpExPire()//les users eli lmot de passe youfa ba3ed 7 jours ou moins
+    {
+        
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.mdp_exp <= :date')
+            ->setParameter('date', new \DateTime('+7 days'))
+            ->getQuery()
+            ->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?User
 //    {

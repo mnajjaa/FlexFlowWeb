@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\RegistrationFormType;
 use App\Form\UserType;
+use App\Service\TwoFactorAuthenticator;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -25,6 +26,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdminController extends AbstractController
 {
+    private $twoFactorAuthenticator;
+
+    public function __construct(TwoFactorAuthenticator $twoFactorAuthenticator)
+    {
+        $this->twoFactorAuthenticator = $twoFactorAuthenticator;
+
+
+    }
     static $mdp=false;
     // static $message="";
     #[Route('/admin', name: 'admin_dashboard')]
@@ -124,6 +133,8 @@ public function editPwd(Request $request, EntityManagerInterface $entityManager,
 #[Route('/editProfileAdmin', name: 'admin_edit_profile')]
 public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session,UserPasswordHasherInterface $passwordHasher,bool $erreur=false): Response
 {
+    
+
 
     $erreur=false;
     $mdp=false;
@@ -131,6 +142,8 @@ public function editProfile(Request $request, EntityManagerInterface $entityMana
     
     $email = $request->getSession()->get(Security::LAST_USERNAME);
     $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+    $secret=$this->twoFactorAuthenticator->generateSecret();
+    $qrCode=$this->twoFactorAuthenticator->getQrCode($secret, $user->getEmail(), 'FlexFlow');
     
     if (!$user) {
         throw $this->createNotFoundException('User not found.');
@@ -192,7 +205,9 @@ if ($request->isMethod('POST')) {
         return $this->render('admin/editProfileAdmin.html.twig', [
         'admin' => $user,
         'mdp'=>$mdp,
-        'erreur'=>$erreur
+        'erreur'=>$erreur,
+        'qrCode'=>$qrCode,
+        'secret'=>$secret
             ]);
 
 }
@@ -402,7 +417,26 @@ return $this->render('admin/editMembre.html.twig', [
   }
 
   
-
+  #[Route('/active2fa', name: 'activte_2fa')]
+  public function active2fa(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
+  {
+    if($request->isMethod('POST')){
+        $secret = $request->request->get('secretKey');
+        $code = $request->request->get('otp');
+        if (!$this->twoFactorAuthenticator->validateOTPCode($secret, $code)) {
+            return $this->redirectToRoute('admin_edit_profile');
+        }
+      $email = $request->getSession()->get(Security::LAST_USERNAME);
+      $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+   
+      $user->setMfaSecret($secret);
+      $user->setMfaEnabled(true);
+      $entityManager->persist($user);
+      $entityManager->flush();
+      return $this->redirectToRoute('admin_edit_profile');
+  }
+    return $this->redirectToRoute('admin_edit_profile');
+    }
 
 }
 
