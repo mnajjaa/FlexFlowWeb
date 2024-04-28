@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+        badword_api_key: '3e33204cb468d4e21d789a40c7bd2080'
 
 services:
     # default configuration for services in *this* file
@@ -22,3 +23,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\BadWordFilter:
+        arguments:
+            $apiKey: '%badword_api_key%'

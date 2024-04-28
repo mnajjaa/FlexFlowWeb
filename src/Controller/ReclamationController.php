@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
+use App\Service\BadWordFilter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,7 @@ class ReclamationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager ,BadWordFilter $badWordFilter ): Response
     {
         $reclamation = new Reclamation();
 
@@ -37,6 +38,10 @@ class ReclamationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $reclamation->setTitreReclamation($badWordFilter->filterText($reclamation->getTitreReclamation()));
+            $reclamation->setDescription($badWordFilter->filterText($reclamation->getDescription()));
+
+                         
             $entityManager->persist($reclamation);
             $entityManager->flush();
 
