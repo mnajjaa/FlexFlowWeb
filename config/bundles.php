@@ -15,7 +15,11 @@ return [
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
 <<<<<<< HEAD
+<<<<<<< HEAD
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
+=======
+    SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
+>>>>>>> 583892a5ddf2353f84b50bf4bf49775dc311a5d5
 =======
     SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
 >>>>>>> 583892a5ddf2353f84b50bf4bf49775dc311a5d5
