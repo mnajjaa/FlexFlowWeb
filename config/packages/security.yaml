@@ -23,6 +23,7 @@ security:
                 enable_csrf: true
             logout:
                 path: app_logout
+            custom_authenticator: App\Security\AppCustomAuthenticator
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -37,7 +38,10 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-          - { path: ^/verify/email, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+          - { path: ^/verify/email, roles: IS_AUTHENTICATEDFULLY }
+          # atheya m habech tet3ada 9ali access denied !!!!!!!!!!!!!!!!!
+          #- { path: ^/listeMembres, roles: ADMIN }
+          
 
 
 when@test:
