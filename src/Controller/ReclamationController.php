@@ -26,6 +26,13 @@ class ReclamationController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $reclamation = new Reclamation();
+
+        // Définir la date de réclamation à la date système
+        $reclamation->setDateReclamation(new \DateTime());
+
+        // Définir l'état par défaut à "non traité"
+        $reclamation->setEtat("non traite");
+
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
 
