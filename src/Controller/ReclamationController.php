@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\BadWordFilter;
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
@@ -23,14 +24,26 @@ class ReclamationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager ,BadWordFilter $badWordFilter): Response
     {
         $reclamation = new Reclamation();
+
+         // Définir la date de réclamation à la date système
+         $reclamation->setDateReclamation(new \DateTime());
+
+         // Définir l'état par défaut à "non traité"
+         $reclamation->setEtat("non traite");
+
+
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($reclamation);
+
+            $reclamation->setTitreReclamation($badWordFilter->filterText($reclamation->getTitreReclamation()));
+            $reclamation->setDescription($badWordFilter->filterText($reclamation->getDescription()));
+            
+            $entityManager->persist($reclamation);        
             $entityManager->flush();
 
             return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
