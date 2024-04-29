@@ -1,11 +1,31 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
-{% block title %}Reclamation index{% endblock %}
 
 {% block body %}
-    <h1>Reclamation index</h1>
+<head>
 
-    <table class="table">
+        <meta charset="utf-8" />
+        <title>{% block title %} Reclamation index{% endblock %} </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+        {% block css %}
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+        {% endblock %}
+    </head>
+
+<body>
+    <h1>listes de Reclamation</h1>
+
+    <table class="table table-bordered dt-responsive nowrap table-separator">
         <thead>
             <tr>
                 <th>Id</th>
@@ -25,7 +45,6 @@
                 <td>{{ reclamation.description }}</td>
                 <td>{{ reclamation.etat }}</td>
                 <td>
-                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
                     <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
                 </td>
             </tr>
@@ -37,5 +56,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_reclamation_new') }}">Create new</a>
+    <a href="{{ path('app_reponse_new') }}">Ajouter une reponse</a>
+</body>
 {% endblock %}

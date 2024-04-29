@@ -104,4 +104,8 @@ class Reclamation
 
         return $this;
     }
+    public function __toString(): string
+    {
+        return $this->titre_reclamation ?? '';
+    }
 }

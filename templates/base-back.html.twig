@@ -277,9 +277,9 @@
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="rounded-circle header-profile-user" src="{{app.user.image}}"
+                                <img class="rounded-circle header-profile-user" src=""
                                     alt="Header Avatar">
-                                <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">{{app.user.nom}}</span>
+                                <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">ahmed</span>
                                 <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
@@ -336,7 +336,7 @@
                         <!-- Left Menu Start -->
                         
                         <ul class="metismenu list-unstyled" id="side-menu">
-                        {% if app.user.getRoles()[0]=="ADMIN" %}
+                        {#{% if app.user.getRoles()[0]=="ADMIN" %}#}
                             <li class="menu-title">Users</li>
 
                             <li>
@@ -374,10 +374,10 @@
                                     </li>
                                 </ul>
                             </li>
-                          {% else %}
+                          {#{% else %}
                         <p>Vous n'avez pas les droits pour accéder à cette page</p>
                         {% endif  %} 
-                         {% if app.user.getRoles()[0]=="ADMIN" %}
+                         {% if app.user.getRoles()[0]=="ADMIN" %}#}
                             <li class="menu-title">Apps</li>
 
                             <li>
@@ -445,9 +445,9 @@
                                     <li><a href="contacts-profile.html">Profile</a></li>
                                 </ul>
                             </li>
-                           {% else %}
+                           {#{% else %}
                            <p>Vous n'avez pas les droits pour accéder à cette page</p>
-                        {% endif  %} 
+                        {% endif  %} #}
                             <li class="menu-title">Utilisateurs</li>
 
                             <li>
