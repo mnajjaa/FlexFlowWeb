@@ -321,90 +321,115 @@
         </div>	
     </div>
     <body>
-        <style>
-          /* Votre style personnalisé ici */
-        .star-rating {
-            font-size: 0; /* Empêche les espaces entre les étoiles */
-        }
-        
-        .star-rating input[type="radio"] {
-            display: none; /* Masque les radios */
-        }
-        
-        .star-rating label {
-            font-size: 20px; /* Taille des étoiles */
-            cursor: pointer; /* Curseur pointer */
-            color: #ddd; /* Couleur de l'étoile vide */
-        }
-        
-        .star-rating label:before {
-            content: "\2605"; /* Code unicode pour une étoile pleine */
-        }
-        
-        .star-rating input[type="radio"]:checked ~ label {
-            color: #F5CB5C; /* Couleur de l'étoile pleine */
-        }
-        </style>
-    
-        <!-- <body data-layout="horizontal" data-topbar="colored"> -->
-    
-            <!-- Begin page -->
-            <div class="container">
-        <h1>Consulter les offres</h1>
-			<div class="table-responsive">
-			<table class="table table-striped">
-        <div class="table-container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Spécialité</th>
-                        <th>Tarif / heure</th>
-                        <th>État de l'offre</th>
-                        <th>Coach</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for offre in offres %}
-                    <tr>
-                        <td>{{ offre.nom }}</td>
-                        <td>{{ offre.specialite }}</td>
-                        <td>{{ offre.tarif_heure }}</td>
-                        <td>{{ offre.etat_offre }}</td>
-                        <td>{{ offre.coach.email }}</td>
-                        <td>{{ offre.email }}</td>
-                        <td>
-                            <form action="{{ path('app_evaluation') }}" method="post">
-                                <input type="hidden" name="offre_id" value="{{ offre.id }}">
-                                <div class="star-rating">
-                                    <input type="radio" id="star5_{{ offre.id }}" name="rating" value="5"><label for="star5_{{ offre.id }}"></label>
-                                    <input type="radio" id="star4_{{ offre.id }}" name="rating" value="4"><label for="star4_{{ offre.id }}"></label>
-                                    <input type="radio" id="star3_{{ offre.id }}" name="rating" value="3"><label for="star3_{{ offre.id }}"></label>
-                                    <input type="radio" id="star2_{{ offre.id }}" name="rating" value="2"><label for="star2_{{ offre.id }}"></label>
-                                    <input type="radio" id="star1_{{ offre.id }}" name="rating" value="1"><label for="star1_{{ offre.id }}"></label>
-                                </div>
-							<button type="submit" class="btn btn-primary btn-sm">
-                         Soumettre l'évaluation 
-                  <i class="fas fa-paper-plane" style="margin-left: 20px;"></i>
-                  </button>
-
-
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
-    
-        
-
-</script>
-    
+		<!DOCTYPE html>
+		<html lang="fr">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>Consulter les offres</title>
+			<!-- Inclure les bibliothèques CSS et JS nécessaires -->
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+			<style>
+				/* Votre style personnalisé ici */
+				.star-rating {
+					font-size: 0; /* Empêche les espaces entre les étoiles */
+				}
+				
+				.star-rating input[type="radio"] {
+					display: none; /* Masque les radios */
+				}
+				
+				.star-rating label {
+					font-size: 20px; /* Taille des étoiles */
+					cursor: pointer; /* Curseur pointer */
+					color: #ddd; /* Couleur de l'étoile vide */
+				}
+				
+				.star-rating label:before {
+					content: "\2605"; /* Code unicode pour une étoile pleine */
+				}
+				
+				.star-rating input[type="radio"]:checked ~ label {
+					color: #F5CB5C; /* Couleur de l'étoile pleine */
+				}
+			</style>
+		</head>
+		<body>
+			<!-- Contenu de la page -->
+			<div class="container">
+				<h1>Consulter les offres</h1>
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Nom</th>
+								<th>Spécialité</th>
+								<th>Tarif / heure</th>
+								<th>État de l'offre</th>
+								<th>Coach</th>
+								<th>Email</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for offre in offres %}
+							<tr>
+								<td>{{ offre.nom }}</td>
+								<td>{{ offre.specialite }}</td>
+								<td>{{ offre.tarif_heure }}</td>
+								<td>{{ offre.etat_offre }}</td>
+								<td>{{ offre.coach.email }}</td>
+								<td>{{ offre.email }}</td>
+								<td>
+									<form action="{{ path('app_evaluation') }}" method="post">
+										<input type="hidden" name="offre_id" value="{{ offre.id }}">
+										<div class="star-rating">
+											<input type="radio" id="star5_{{ offre.id }}" name="rating" value="5"><label for="star5_{{ offre.id }}"></label>
+											<input type="radio" id="star4_{{ offre.id }}" name="rating" value="4"><label for="star4_{{ offre.id }}"></label>
+											<input type="radio" id="star3_{{ offre.id }}" name="rating" value="3"><label for="star3_{{ offre.id }}"></label>
+											<input type="radio" id="star2_{{ offre.id }}" name="rating" value="2"><label for="star2_{{ offre.id }}"></label>
+											<input type="radio" id="star1_{{ offre.id }}" name="rating" value="1"><label for="star1_{{ offre.id }}"></label>
+										</div>
+										<button type="submit" class="btn btn-primary btn-sm">
+											Soumettre l'évaluation 
+											<i class="fas fa-paper-plane" style="margin-left: 20px;"></i>
+										</button>
+									</form>
+									<form action="{{ path('app_evaluation') }}" method="post">
+										<!-- Ajoutez ici le formulaire pour partager sur Facebook -->
+										<input type="hidden" name="offre_id" value="{{ offre.id }}">
+										<button type="button" onclick="shareOnFacebook('{{ offre.nom }}', '{{ offre.specialite }}', '{{ offre.tarif_heure }}', '{{ offre.etat_offre }}', '{{ offre.coach.email }}', '{{ offre.email }}')" class="btn btn-info btn-sm">
+											<i class="fab fa-facebook-f"></i> Partager sur Facebook
+										</button>
+									</form>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		
+			<!-- JavaScript pour le partage sur Facebook -->
+			<script>
+				function shareOnFacebook(nom, specialite, tarif, etat, coachEmail, email) {
+					var title = "Offre de coaching : " + nom;
+					var description = "Spécialité : " + specialite + ", Tarif : " + tarif + ", État : " + etat + ", Coach : " + coachEmail + ", Email : " + email;
+					var url = window.location.href; // URL actuelle de la page
+		
+					// Construire l'URL de partage de Facebook avec les paramètres nécessaires
+					var fbShareUrl = 'https://www.facebook.com/sharer/sharer.php';
+					fbShareUrl += '?u=' + encodeURIComponent(url);
+					fbShareUrl += '&title=' + encodeURIComponent(title);
+					fbShareUrl += '&description=' + encodeURIComponent(description);
+		
+					// Ouvrir la fenêtre de partage de Facebook
+					window.open(fbShareUrl, '_blank');
+				}
+			</script>
+		</body>
+		</html>
+		
 <!-- Call To Action -->
 <section class="call-action style-2 bg-img-fix bg-primary">
 <div class="container">
