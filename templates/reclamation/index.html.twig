@@ -24,6 +24,16 @@
 
 <body>
     <h1>listes de Reclamation</h1>
+    {# Calcul du nombre total de réclamations et du nombre de réclamations non traitées #}
+    {% set totalReclamations = reclamations|length %}
+    {% set nombreNonTraite = reclamations|filter(reclamation => reclamation.etat == 'Non_traite')|length %}
+
+    {# Calcul du pourcentage de réclamations non traitées #}
+    {% set pourcentageNonTraite = (nombreNonTraite / totalReclamations) * 100 %}
+
+    <p>Nombre total de réclamations : {{ totalReclamations }}</p>
+    <p>Nombre de réclamations non traitées : {{ nombreNonTraite }}</p>
+    <p>Pourcentage de réclamations non traitées : {{ pourcentageNonTraite }}%</p>
 
     <table class="table table-bordered dt-responsive nowrap table-separator">
         <thead>
