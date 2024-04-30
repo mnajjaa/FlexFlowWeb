@@ -1,0 +1,23 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+    <div class="mb-3">
+        {{ form_label(form.etat, 'État', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.etat, {'attr': {'class': 'form-select'}}) }}
+    </div>
+    {# Champ titre_reclamation #}
+    <div class="mb-3" style="display: none;">
+        {{ form_label(form.titre_reclamation, 'Titre de la réclamation', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.titre_reclamation, {'attr': {'class': 'form-control', 'disabled': 'disabled'}}) }}
+    </div>
+    {# Champ description #}
+    <div class="mb-3" style="display: none;">
+        {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'disabled': 'disabled'}}) }}
+    </div>
+    {# Champ user #}
+    <div class="mb-3" style="display: none;">
+        {{ form_label(form.user, 'Utilisateur', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.user, {'attr': {'class': 'form-control', 'disabled': 'disabled'}}) }}
+    </div>
+    {# Ajouter d'autres champs nécessaires ici avec la même logique #}
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

@@ -1,3 +1,7 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+app_reponse_index_admin:
+    path: /reponse_admin
+    controller: App\Controller\ReponseController::indexAdmin
+

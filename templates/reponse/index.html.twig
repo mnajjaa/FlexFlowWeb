@@ -73,8 +73,11 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Reponse_reclamation</th>
-                <th>actions</th>
+                <th>Reponse</th>
+                <th>Titre Réclamation </th>
+                <th>Descritpion Réclamation </th>
+
+                {#<th>actions</th>#}
             </tr>
         </thead>
         <tbody>
@@ -82,14 +85,16 @@
             <tr>
                 <td>{{ reponse.id }}</td>
                 <td>{{ reponse.reponseReclamation }}</td>
-                <td>
-                    {#<a href="{{ path('app_reponse_show', {'id': reponse.id}) }}">show</a>#}
-                    <a href="{{ path('app_reponse_edit', {'id': reponse.id}) }}">edit</a>
-                </td>
+                <td>{{ reponse.reclamation.titreReclamation }}</td> {# Afficher le titre de la réclamation correspondante #}
+                {#<td>
+                    <a href="{{ path('app_reponse_show', {'id': reponse.id}) }}">show</a>
+                    <a href="{{ path('app_reponse_edit', {'id': reponse.id}) }}">edit</a>#}
+                 {#</td>#}
+                 <td>{{ reponse.reclamation.description }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="4">aucune reponse</td>
             </tr>
         {% endfor %}
         </tbody>

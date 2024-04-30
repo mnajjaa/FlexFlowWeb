@@ -22,6 +22,8 @@ class ReponseController extends AbstractController
         ]);
     }
 
+
+
     #[Route('/new', name: 'app_reponse_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -59,7 +61,7 @@ class ReponseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_reponse_index_admin', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('reponse/edit.html.twig', [
@@ -76,6 +78,19 @@ class ReponseController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_reponse_index_admin', [], Response::HTTP_SEE_OTHER);
     }
+
+    
+#route reponse_admin#
+
+    #[Route('/reponse_admin', name: 'app_reponse_index_admin', methods: ['GET'])]
+    public function indexAdmin(ReponseRepository $reponseRepository): Response
+    {
+        return $this->render('reponse/index-admin.html.twig', [
+            'reponses' => $reponseRepository->findAll(),
+        ]);
+    }
+    
+  
 }
