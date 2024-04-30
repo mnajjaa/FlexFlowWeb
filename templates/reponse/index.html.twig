@@ -67,9 +67,42 @@
         <h1 class="page-title">Listes des Reponses</h1>
     </div>
 
+
+<!-- Progress Bar One -->
+    <section class="content-inner rounded-shape-top overflow-hidden p-b0">
+        <div class="container">
+            <div class="text-center m-b30">
+                {#<h3 class="title m-b30">nombre de Réponses</h3>#}
+            </div>
+            <div class="row">
+                <div class="col-lg-8 m-auto">
+                    {% set maxReponses = 100 %}
+                    {% set totalReponses = reponses|length %}
+
+                    <div class="progress-bx style-5 m-b30">
+                        <span class="progress-title text-primary">Nombre de réponses</span>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="{{ totalReponses }}" aria-valuemin="0" aria-valuemax="{{ maxReponses }}" style="width:{{ totalReponses }}%">
+                                <span class="progress-value">{{ totalReponses }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Progress Bar One -->
+
     <div class="mt-4 mb-5" extra-margin>
 
-    <p>Nombre total de réponses : {{ reponses|length }}</p> {# Afficher le nombre total de réponses #}
+    {#<p>Nombre total de réponses : {{ reponses|length }}</p> {# Afficher le nombre total de réponses #}
+    <p>temps de reponse moeynne : 24h </ p>
+
+
+
+
+
+
 
     <table class="table">
         <thead>
