@@ -113,6 +113,9 @@ class CoursType extends AbstractType
                     'mapped' => false,
                     'required' => false,
                     'constraints' => [
+                        new NotBlank([
+                            'message' => 'Veuillez télécharger une image.',
+                        ]),
                         new FileConstraint([
                             'maxSize' => '1024k',
                             'mimeTypes' => [

@@ -48,7 +48,8 @@
         "symfony/yaml": "5.4.*",
         "symfonycasts/verify-email-bundle": "^1.17",
         "twig/extra-bundle": "*",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "twilio/sdk": "^8.0"
     },
     "config": {
         "allow-plugins": {

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        /* Styles CSS pour le chat */
+        .chat-container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .question {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .response {
+            background-color: #d9edf7;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        {% if question %}
+            <div class="question">
+                <strong>Vous:</strong> {{ question }}
+            </div>
+        {% endif %}
+
+        {% if response %}
+            <div class="response">
+                <strong>Réponse:</strong> {{ response }}
+            </div>
+        {% endif %}
+
+        <!-- Formulaire pour poser une question -->
+        <form action="{{ path('poser_question') }}" method="post">
+            <textarea name="question" rows="3" cols="50" placeholder="Posez votre question ici"></textarea>
+            <br>
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+</body>
+</html>
