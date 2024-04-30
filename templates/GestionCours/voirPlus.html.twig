@@ -25,6 +25,11 @@
 	
 	<!-- Mobile Specific -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Balises Open Graph pour le partage sur Facebook -->
+    <meta property="og:title" content="Cours de Fitness - {{ cours.getNomCour() }}" />
+    <meta property="og:description" content="{% if cours.getCible() == 'Adulte' %}Cours dynamique pour les adultes. Convient aux personnes recherchant une ambiance musicale et de défoulement.{% elseif cours.getCible() == 'Enfant' %}Cours ludique pour les enfants. Idéal pour le développement physique et social.{% endif %}" />
+    <meta property="og:image" content="data:image/jpeg;base64,{{ cours.getImage }}" />
 	
 	<!-- Favicon icon -->
     <link rel="icon" type="image/png" href="{{asset('front-office/images/favicon.png')}}">
@@ -408,9 +413,16 @@
     </button>
 </div>
 
+ <span>&nbsp;</span>
 
-
-						</div>
+				    <div id="fb-root"></div>
+                        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0" nonce="YOUR_NONCE"></script>
+                        <div class="fb-share-button" data-href="{{ app.request.uri }}" data-layout="button" data-size="large">
+                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ app.request.uri }}" class="fb-xfbml-parse-ignore">
+                                Partager sur Facebook
+                            </a>
+                        </div>
+                    </div>
 					</div>
 					<div class="col-lg-4 ">
 						<aside class="side-bar sticky-top">
@@ -489,6 +501,9 @@
             {{ participationError[0] }}
         </div>
     {% endif %}
+
+
+	
 </div>
 
  <!-- Inclure le script de SweetAlert2 à la fin du body -->
