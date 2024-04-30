@@ -71,9 +71,90 @@
     </head>
 
 <body>
+
+
+
     <h1>Liste des Cours</h1>
     <div class="container-fluid">
 
+
+
+    
+    
+        
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-md-8 col-xl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end mt-2">
+                                             <div id="orders-chart"> </div>
+                                            
+                                        </div>
+                                        <div>
+                                              <h4 class="mb-1 mt-1">Cours le plus aimé</h4>
+                        <p class="text-muted mb-0">{{ mostLikedCours.nom_cour }} - {{ mostLikedCours.totalLikes }} likes</p>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+
+                            <div class="col-md-8 col-xl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end mt-2">
+                                        
+                                            <div id="customers-chart"> </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-1 mt-1">Cours le moins aimé</h4>
+                                            <p class="text-muted mb-0">{{ mostHatedCours.nom_cour }} - {{ mostHatedCours.totaldisLikes }} Dislikes</p>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div> 
+
+                            <div class="col-md-8 col-xl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end mt-2">
+                                            <div id="growth-chart"></div>
+                                        </div>
+                                        <div>
+                                           
+                                         
+                                          <h4 class="mb-1 mt-1">Participant actif</h4>
+                                          {% for participant in mostParticipant %}
+                                        <tr>  
+                                            <p class="text-muted mb-0">{{ participant.nomParticipant }} - {{ participant.totalParticipations }} Participations</p>
+                                            
+                                        </tr>
+                                    {% endfor %}
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <!-- end col-->
+
+                           <!-- end col-->
+
+                              
+                           
+                        </div>
+                            </div>
+                         <!-- end row-->
+
+
+                        
+    
+
+    
     
     
         <div class="row">

@@ -59,8 +59,11 @@ class CourAdminController extends AbstractController
 
 
     #[Route('/admin/cours/liste', name: 'cour_liste')]
-    public function liste(CoursRepository $coursRepository): Response
+    public function liste(CoursRepository $coursRepository,RatingRepository $ratingRepository,ParticipationRepository $ParticipationRepository): Response
     {
+        $mostLikedCours = $ratingRepository->getMostLikedCours();
+        $mostParticipant = $ParticipationRepository->getMostParticipant();
+        $mostHatedCours = $ratingRepository->getMostHatedCours();
         $cours = $coursRepository->findAll(); // Récupérer tous les cours depuis la base de données
 
         // Vérifier la capacité de chaque cours
@@ -85,6 +88,9 @@ class CourAdminController extends AbstractController
      }
     
         return $this->render('GestionCours/listeCour.html.twig', [
+            'mostLikedCours' => $mostLikedCours,
+            'mostParticipant' => $mostParticipant,
+            'mostHatedCours' => $mostHatedCours,
             'cours' => $cours, // Passer les cours récupérés à la vue
         ]);
     }
