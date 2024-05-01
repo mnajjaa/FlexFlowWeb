@@ -25,10 +25,88 @@
 
 
 </head>
+<style>
+   
+    .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li a {
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    color: #007bff;
+    margin: 0 5px;
+}
+
+.pagination li.active a {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination li a:hover {
+    text-decoration: none;
+    background-color: #ddd;
+}
+
+.pagination li:first-child a, .pagination li:last-child a {
+    border-radius: 5px;
+}
+
+.pagination .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+    </style>
 
 <body>
     <div class="container mt-3">
         <h1 class="mb-4">Listes de Reclamation</h1>
+
+<form action="{{ path('app_reclamation_index') }}" method="GET" class="mb-3">
+    <div class="form-row">
+        <div class="col">
+            <input type="date" name="date" class="form-control" placeholder="Date">
+        </div>
+        <div class="col">
+            <input type="text" name="titre" class="form-control" placeholder="Titre">
+        </div>
+        <div class="col">
+            <select class="form-control" name="etat">
+                <option value="">-- Select State --</option>
+                <option value="Traite">Traité</option>
+                <option value="Non_traite">Non Traité</option>
+            </select>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+        </div>
+    </div>
+</form>
+
+<!-- Display Reclamations -->
+<div class="container">
+    <div class="row">
+        {% for reclamation in reclamations %}
+        <div class="col-md-4">
+            <!-- Display each reclamation here -->
+        </div>
+        {% else %}
+        <p>No reclamations found.</p>
+        {% endfor %}
+    </div>
+
+
+
+
+
         {% set totalReclamations = reclamations|length %}
         {% set nombreNonTraite = reclamations|filter(reclamation => reclamation.etat == 'Non_traite')|length %}
         {% set nombreTraite = totalReclamations - nombreNonTraite %}
@@ -76,7 +154,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for reclamation in reclamations %}
+            {% for reclamation in pagination %}
                 <tr>
                     <td>{{ reclamation.id }}</td>
                     <td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d') : '' }}</td>
@@ -90,7 +168,44 @@
             {% endfor %}
             </tbody>
         </table>
-    </div>
+
+        
+        <div class="col-12 d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% set currentPage = pagination.currentPageNumber %}
+            {% set pageCount = pagination.pageCount %}
+
+            {% if currentPage > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path('app_reclamation_index', { page: currentPage - 1 }) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for page in 1..pageCount %}
+                <li class="page-item {{ page == currentPage ? 'active' : '' }}">
+                    <a class="page-link" href="{{ path('app_reclamation_index', { page: page }) }}">{{ page }}</a>
+                </li>
+            {% endfor %}
+
+            {% if currentPage < pageCount %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path('app_reclamation_index', { page: currentPage + 1 }) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+        
+        
+        
+        </div>
 
     <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -111,30 +226,39 @@
             labels: ['Total'],
         };
 
-        var untreatedOptions = {
-            series: [{{ pourcentageNonTraite|round }}],
-            chart: {
-                height: 200,
-                type: 'radialBar',
-            },
-            plotOptions: {
-                radialBar: {
-                    hollow: {
-                        size: '70%',
-                    }
+        
+
+    var untreatedOptions = {
+        series: [{{ pourcentageNonTraite|round }}],
+        chart: {
+            height: 200,
+            type: 'radialBar',
+        },
+        plotOptions: {
+            radialBar: {
+                hollow: {
+                    size: '70%',
                 }
-            },
-            colors: ['#FF4560'],
-            labels: ['Non Traitées'],
-        };
+            }
+        },
+        // Color logic based on the number of untreated reclamations
+        colors: [{{ nombreNonTraite < 3 ? "'#007bff'" : nombreNonTraite < 6 ? "'#ffc107'" : "'#dc3545'" }}],
+        labels: ['Non Traitées'],
+    };
+
+
+
+
 
         var pieOptions = {
             series: [{{ pourcentageTraite|round }}, {{ pourcentageNonTraite|round }}],
             chart: {
                 type: 'pie',
+                
+                
             },
             labels: ['Traitées', 'Non Traitées'],
-            colors: ['#008FFB', '#00E396'],
+            colors: ['#00FB09', '#FB0000'],
             responsive: [{
                 breakpoint: 480,
                 options: {
@@ -153,6 +277,8 @@
         new ApexCharts(document.querySelector("#reclamationPieChart"), pieOptions).render();
     });
     </script>
+
+    
     <a href="{{ path('app_reponse_new') }}">Ajouter une reponse</a>
 
    

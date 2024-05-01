@@ -13,22 +13,56 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Service\BadWordFilter;
 use App\Form\EtatFormType;
 use Twilio\Rest\Client;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
 {
     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
-    public function index(ReclamationRepository $reclamationRepository): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator, ReclamationRepository $reclamationRepository): Response
     {
         $nonce = bin2hex(random_bytes(16));
 
+        $queryBuilder = $reclamationRepository->createQueryBuilder('r');
+
+        // Filter by state
+        $etat = $request->query->get('etat');
+        if (!empty($etat)) {
+            $queryBuilder->andWhere('r.etat = :etat')
+                         ->setParameter('etat', $etat);
+        }
+
+        // Search by date or title
+        $searchDate = $request->query->get('date');
+        $searchTitle = $request->query->get('titre');
+        if (!empty($searchDate)) {
+            $queryBuilder->andWhere('r.date_reclamation = :date')
+                         ->setParameter('date', $searchDate);
+        }
+        if (!empty($searchTitle)) {
+            $queryBuilder->andWhere('r.titre_reclamation LIKE :titre')
+                         ->setParameter('titre', '%'.$searchTitle.'%');
+        }
+
+        // Get the query
+        $query = $queryBuilder->getQuery();
+
+        // Paginate the query
+        $pagination = $paginator->paginate(
+            $query, // Query to paginate
+            $request->query->getInt('page', 1), // Current page number
+            10 // Items per page
+        );
 
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamationRepository->findAll(),
-
             'nonce' => $nonce,
+            'pagination' => $pagination,
         ]);
     }
+
+
 
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager ,BadWordFilter $badWordFilter): Response
@@ -126,4 +160,9 @@ public function edit(Request $request, Reclamation $reclamation, EntityManagerIn
 
         return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+
+
 }

@@ -45,4 +45,44 @@ class ReclamationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+/**
+ * @param string|null $date
+ * @param string|null $titre
+ * @return Reclamation[]
+ */
+public function searchByDateOrTitle(?string $date, ?string $titre): array
+{
+    $qb = $this->createQueryBuilder('r');
+
+    if ($date) {
+        $qb->andWhere('r.date_reclamation = :date')
+           ->setParameter('date', $date);
+    }
+
+    if ($titre) {
+        $qb->andWhere('r.titre_reclamation LIKE :titre')
+           ->setParameter('titre', '%'.$titre.'%');
+    }
+
+    return $qb->getQuery()->getResult();
+}
+
+/**
+ * @param string $etat
+ * @return Reclamation[]
+ */
+public function findByEtat(string $etat): array
+{
+    return $this->createQueryBuilder('r')
+                ->where('r.etat = :etat')
+                ->setParameter('etat', $etat)
+                ->getQuery()
+                ->getResult();
+}
+
+
+
+
+
 }
