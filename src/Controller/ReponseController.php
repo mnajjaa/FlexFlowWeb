@@ -108,7 +108,7 @@ $email = (new Email())
             </div>
     
             <!-- Logo -->
-            <img src="/logo.png" alt="FlexFlow Logo" class="logo">
+            <img src="/logo.png"  class="logo">
             
     
             <!-- Contenu principal -->

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
@@ -14,6 +15,7 @@ use App\Service\BadWordFilter;
 use App\Form\EtatFormType;
 use Twilio\Rest\Client;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Service\prk;
 
 
 #[Route('/reclamation')]
@@ -65,7 +67,7 @@ class ReclamationController extends AbstractController
 
 
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager ,BadWordFilter $badWordFilter): Response
+    public function new(Request $request, EntityManagerInterface $entityManager ,BadWordFilter $badWordFilter,prk $bdf): Response
     {
         $reclamation = new Reclamation();
 
@@ -83,7 +85,27 @@ class ReclamationController extends AbstractController
 
             $reclamation->setTitreReclamation($badWordFilter->filterText($reclamation->getTitreReclamation()));
             $reclamation->setDescription($badWordFilter->filterText($reclamation->getDescription()));
+
+
+
+
+
+
+
+
+
+            $reclamation->setTitreReclamation($bdf->filterText($reclamation->getTitreReclamation()));
+            $reclamation->setDescription($bdf->filterText($reclamation->getDescription()));
+
+
+
+
+
             
+
+
+
+
             $entityManager->persist($reclamation);        
             $entityManager->flush();
 
