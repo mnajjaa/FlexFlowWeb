@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\BadWordFilter;
 use App\Form\EtatFormType;
+use Twilio\Rest\Client;
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
@@ -70,10 +71,35 @@ public function edit(Request $request, Reclamation $reclamation, EntityManagerIn
     $form = $this->createForm(EtatFormType::class, $reclamation);
     $form->handleRequest($request);
 
+    $accountSid = $_ENV['TWILIO_ACCOUNT_SID'];
+    $authToken = $_ENV['TWILIO_AUTH_TOKEN'];
+    $twilioPhoneNumber = $_ENV['TWILIO_NUMBER'];
+    // Initialize Twilio client
+    $twilio = new Client($accountSid, $authToken);
+
     if ($form->isSubmitted() && $form->isValid()) {
+    
         // Enregistrer uniquement l'attribut etat
+
+
+        $originalEtat = $entityManager->getUnitOfWork()->getOriginalEntityData($reclamation)['etat'] ?? 'Non_traite'; // Prend 'non traité' si non défini
+        $newEtat = $reclamation->getEtat();
+
         $entityManager->persist($reclamation);
         $entityManager->flush();
+/*
+        if ($originalEtat !== 'Traite' && $newEtat === 'Traite') {
+            // Envoie un SMS seulement si l'état change à "Traité"
+            $message = $twilio->messages
+                ->create(
+                    "+21695523122", // Destination phone number from the form
+                    [
+                        'from' => $twilioPhoneNumber, // Your Twilio phone number
+                        'body' => "Votre réclamation : {$reclamation->getTitreReclamation()}, a été traitée avec succès."
+                    ]
+                );
+        }
+*/
 
         return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -82,6 +108,7 @@ public function edit(Request $request, Reclamation $reclamation, EntityManagerIn
         'form' => $form->createView(),
     ]);
 }
+
     
 
     #[Route('/{id}', name: 'app_reclamation_delete', methods: ['POST'])]

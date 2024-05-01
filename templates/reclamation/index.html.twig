@@ -1,72 +1,149 @@
 {% extends 'base-back.html.twig' %}
 
-
 {% block body %}
 <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}Reclamation Index{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('back-office/images/favicon.ico') }}">
 
+    <!-- Bootstrap and Custom CSS -->
+    <link href="{{ asset('back-office/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('back-office/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('back-office/css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
-        <meta charset="utf-8" />
-        <title>{% block title %} Reclamation index{% endblock %} </title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-        <meta content="Themesdesign" name="author" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
-
-        {% block css %}
-        <!-- Bootstrap Css -->
-        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-        <!-- Icons Css -->
-        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-        <!-- App Css-->
-        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
-        {% endblock %}
-    </head>
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
 
 <body>
-    <h1>listes de Reclamation</h1>
-    {# Calcul du nombre total de réclamations et du nombre de réclamations non traitées #}
-    {% set totalReclamations = reclamations|length %}
-    {% set nombreNonTraite = reclamations|filter(reclamation => reclamation.etat == 'Non_traite')|length %}
+    <div class="container mt-3">
+        <h1 class="mb-4">Listes de Reclamation</h1>
+        {% set totalReclamations = reclamations|length %}
+        {% set nombreNonTraite = reclamations|filter(reclamation => reclamation.etat == 'Non_traite')|length %}
+        {% set nombreTraite = totalReclamations - nombreNonTraite %}
+        {% set pourcentageNonTraite = (nombreNonTraite / totalReclamations) * 100 %}
+        {% set pourcentageTraite = (nombreTraite / totalReclamations) * 100 %}
 
-    {# Calcul du pourcentage de réclamations non traitées #}
-    {% set pourcentageNonTraite = (nombreNonTraite / totalReclamations) * 100 %}
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Reclamations</h5>
+                        <p class="card-text">{{ totalReclamations }}</p>
+                        <div id="totalReclamationsProgress" class="apex-charts"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Non Traitées</h5>
+                        <p class="card-text">{{ nombreNonTraite }}</p>
+                        <div id="untreatedProgress" class="apex-charts"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pourcentage Non Traitées</h5>
+                        <div id="reclamationPieChart" class="apex-charts"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <p>Nombre total de réclamations : {{ totalReclamations }}</p>
-    <p>Nombre de réclamations non traitées : {{ nombreNonTraite }}</p>
-    <p>Pourcentage de réclamations non traitées : {{ pourcentageNonTraite }}%</p>
+        <table class="table table-bordered dt-responsive nowrap table-separator">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Date_reclamation</th>
+                    <th>Titre_reclamation</th>
+                    <th>Description</th>
+                    <th>Etat</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reclamation in reclamations %}
+                <tr>
+                    <td>{{ reclamation.id }}</td>
+                    <td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d') : '' }}</td>
+                    <td>{{ reclamation.titreReclamation }}</td>
+                    <td>{{ reclamation.description }}</td>
+                    <td>{{ reclamation.etat }}</td>
+                    <td><a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a></td>
+                </tr>
+            {% else %}
+                <tr><td colspan="6">No records found</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <table class="table table-bordered dt-responsive nowrap table-separator">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date_reclamation</th>
-                <th>Titre_reclamation</th>
-                <th>Description</th>
-                <th>Etat</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reclamation in reclamations %}
-            <tr>
-                <td>{{ reclamation.id }}</td>
-                <td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d') : '' }}</td>
-                <td>{{ reclamation.titreReclamation }}</td>
-                <td>{{ reclamation.description }}</td>
-                <td>{{ reclamation.etat }}</td>
-                <td>
-                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var totalReclamationsOptions = {
+            series: [100],
+            chart: {
+                height: 200,
+                type: 'radialBar',
+            },
+            plotOptions: {
+                radialBar: {
+                    hollow: {
+                        size: '70%',
+                    }
+                }
+            },
+            colors: ['#20E647'],
+            labels: ['Total'],
+        };
 
+        var untreatedOptions = {
+            series: [{{ pourcentageNonTraite|round }}],
+            chart: {
+                height: 200,
+                type: 'radialBar',
+            },
+            plotOptions: {
+                radialBar: {
+                    hollow: {
+                        size: '70%',
+                    }
+                }
+            },
+            colors: ['#FF4560'],
+            labels: ['Non Traitées'],
+        };
+
+        var pieOptions = {
+            series: [{{ pourcentageTraite|round }}, {{ pourcentageNonTraite|round }}],
+            chart: {
+                type: 'pie',
+            },
+            labels: ['Traitées', 'Non Traitées'],
+            colors: ['#008FFB', '#00E396'],
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        };
+
+        new ApexCharts(document.querySelector("#totalReclamationsProgress"), totalReclamationsOptions).render();
+        new ApexCharts(document.querySelector("#untreatedProgress"), untreatedOptions).render();
+        new ApexCharts(document.querySelector("#reclamationPieChart"), pieOptions).render();
+    });
+    </script>
     <a href="{{ path('app_reponse_new') }}">Ajouter une reponse</a>
 </body>
 {% endblock %}
