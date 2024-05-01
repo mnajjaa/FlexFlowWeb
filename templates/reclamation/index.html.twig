@@ -13,8 +13,17 @@
     <link href="{{ asset('back-office/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('back-office/css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
+
     <!-- ApexCharts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v11.0" nonce="{{ nonce }}"></script>
+
+
+
 </head>
 
 <body>
@@ -145,5 +154,20 @@
     });
     </script>
     <a href="{{ path('app_reponse_new') }}">Ajouter une reponse</a>
+
+   
+    <a href="javascript:void(0);" onclick="shareOnFacebook('{{ url('app_reclamation_new') }}');" class="btn btn-primary">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+
+
+    <script>
+function shareOnFacebook(url) {
+    FB.ui({
+        method: 'share',
+        href: url,
+    }, function(response){});
+}
+</script>
 </body>
 {% endblock %}

@@ -20,11 +20,13 @@ class ReclamationController extends AbstractController
     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
     public function index(ReclamationRepository $reclamationRepository): Response
     {
-          
+        $nonce = bin2hex(random_bytes(16));
 
 
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamationRepository->findAll(),
+
+            'nonce' => $nonce,
         ]);
     }
 
