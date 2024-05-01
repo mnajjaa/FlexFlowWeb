@@ -10,10 +10,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
 
 #[Route('/reponse')]
 class ReponseController extends AbstractController
 {
+    private $mailer;
+
+    public function __construct(MailerInterface $mailer)
+    {
+        $this->mailer = $mailer;
+    }
+
+
+
     #[Route('/', name: 'app_reponse_index', methods: ['GET'])]
     public function index(ReponseRepository $reponseRepository): Response
     {
@@ -34,6 +45,20 @@ class ReponseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($reponse);
             $entityManager->flush();
+
+
+// Récupère l'adresse e-mail de destination depuis le fichier .env
+$destinationEmail = 'maalejahmed55@gmail.com';
+
+// Envoie de l'e-mail
+$email = (new Email())
+    ->from('expediteur@example.com') // Adresse e-mail de l'expéditeur
+    ->to($destinationEmail)
+    ->subject('Nouvelle réponse ajoutée')
+    ->text('Une nouvelle réponse a été ajoutée.');
+
+    $this->mailer->send($email);
+
 
             return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
         }

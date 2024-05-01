@@ -20,6 +20,9 @@ class ReclamationController extends AbstractController
     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
     public function index(ReclamationRepository $reclamationRepository): Response
     {
+          
+
+
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamationRepository->findAll(),
         ]);

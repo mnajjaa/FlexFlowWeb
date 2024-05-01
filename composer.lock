@@ -4259,16 +4259,16 @@
         },
         {
             "name": "symfony/mailer",
-            "version": "v5.4.36",
+            "version": "v5.4.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mailer.git",
-                "reference": "b57d722f2bf6e1dc08df9c86efbfdcaaba89693b"
+                "reference": "93543ff1554d1098b0f80bb01ff27e9da123af5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailer/zipball/b57d722f2bf6e1dc08df9c86efbfdcaaba89693b",
-                "reference": "b57d722f2bf6e1dc08df9c86efbfdcaaba89693b",
+                "url": "https://api.github.com/repos/symfony/mailer/zipball/93543ff1554d1098b0f80bb01ff27e9da123af5c",
+                "reference": "93543ff1554d1098b0f80bb01ff27e9da123af5c",
                 "shasum": ""
             },
             "require": {
@@ -4315,7 +4315,7 @@
             "description": "Helps sending emails",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/mailer/tree/v5.4.36"
+                "source": "https://github.com/symfony/mailer/tree/v5.4.39"
             },
             "funding": [
                 {
@@ -4331,7 +4331,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-01T13:42:14+00:00"
+            "time": "2024-04-18T08:26:06+00:00"
         },
         {
             "name": "symfony/messenger",
