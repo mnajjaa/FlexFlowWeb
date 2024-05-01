@@ -55,7 +55,83 @@ $email = (new Email())
     ->from('expediteur@example.com') // Adresse e-mail de l'expéditeur
     ->to($destinationEmail)
     ->subject('Nouvelle réponse ajoutée')
-    ->text('Une nouvelle réponse a été ajoutée.');
+    //->text('Une nouvelle réponse a été ajoutée.');
+    ->html('
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Nouvelle réponse ajoutée</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                color: #333;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 20px;
+            }
+            .container {
+                background-color: #ffffff;
+                border: 1px solid #dddddd;
+                padding: 20px;
+                max-width: 600px;
+                margin: auto;
+            }
+            .header {
+                background-color: #673ab7;
+                color: #ffffff;
+                padding: 10px 20px;
+                text-align: center;
+            }
+            .footer {
+                background-color: #eeeeee;
+                color: #333;
+                text-align: center;
+                padding: 10px 20px;
+                font-size: 12px;
+            }
+            .content {
+                margin-top: 20px;
+            }
+            .logo {
+                display: block;
+                margin: auto;
+                padding-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Nouvelle réponse ajoutée</h1>
+            </div>
+    
+            <!-- Logo -->
+            <img src="/logo.png" alt="FlexFlow Logo" class="logo">
+            
+    
+            <!-- Contenu principal -->
+            <div class="content">
+                <p>Cher utilisateur,</p>
+                <p>Une nouvelle réponse a été ajoutée à votre requête.</p>
+            </div>
+    
+            <!-- Pied de page -->
+            <div class="footer">
+                <p>Contactez-nous :</p>
+                
+                <p>Tél: + 216 55224477</p>
+                <p>Adresse: 01 - Rue Palestine - Chaguia 2</p>
+            </div>
+        </div>
+    </body>
+    </html>'
+    
+
+    );
+
+
 
     $this->mailer->send($email);
 
