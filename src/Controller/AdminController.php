@@ -20,6 +20,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Service\IpInfoService;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Material\BarChart;
+
 
 
 
@@ -27,35 +30,155 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class AdminController extends AbstractController
 {
     private $twoFactorAuthenticator;
+    private $IpInfoService;
 
-    public function __construct(TwoFactorAuthenticator $twoFactorAuthenticator)
+    public function __construct(TwoFactorAuthenticator $twoFactorAuthenticator,IpInfoService $IpInfoService)
     {
         $this->twoFactorAuthenticator = $twoFactorAuthenticator;
+        $this->IpInfoService = $IpInfoService;
 
 
     }
     static $mdp=false;
     // static $message="";
     #[Route('/admin', name: 'admin_dashboard')]
-    public function index(): Response
+    public function index(UserRepository $userRepository): Response
     {
+        $recentylyadd=0;
+        $locations=[];
+        $users=$userRepository->findAll();
+        foreach($users as $user){
+            if($user->getCreatedAt() > new \DateTime("-7 days")&&$user->getRoles()==["MEMBRE"])
+            {
+               $recentylyadd++;
+            }
+            }
+        foreach($users as $user){
+            $ipinfoservice=$user->getLoginHistories();
+            foreach($ipinfoservice as $ipinfo){
+                $ip=$ipinfo->getIpAdress();
+                $location=$this->IpInfoService->getIpInfo($ip);
+                dump($location);
+                array_push($locations,$location);
+            }
+        }
+       
+      $jour_de_semaine = "";
+        $nombreMembres=0;
+        $nombreCoaches=0;
+        $map_data = array(
+            "Monday" => array("members" => 0, "coaches" => 0),
+            "Tuesday" => array("members" => 0, "coaches" => 0),
+            "Wednesday" => array("members" => 0, "coaches" => 0),
+            "Thursday" => array("members" => 0, "coaches" => 0),
+            "Friday" => array("members" => 0, "coaches" => 0),
+            "Saturday" => array("members" => 0, "coaches" => 0),
+            "Sunday" => array("members" => 0, "coaches" => 0)
+        );
+        $barChart = new BarChart();
+        //$users=$userRepository->RecupérerUsers();
+        $barChart->getOptions()->setTitle('Membres et Coaches par jour de la semaine');
+        $barChart->getOptions()->getHAxis()->setTitle('Nombre de personnes');
+        $barChart->getOptions()->getHAxis()->setMinValue(0);
+        $barChart->getOptions()->getVAxis()->setTitle('Day of the week');
+        $barChart->getOptions()->setWidth(900);
+        $barChart->getOptions()->setHeight(500);
+       
+
+$membres=$userRepository->findByRole("MEMBRE");
+$coaches=$userRepository->findByRole("COACH");
+
+        foreach($membres as $membre){
+           foreach($membre->getLoginHistories() as $loginHistory){
+                  if($loginHistory->getLoginDate()>new \DateTime(" -7 days ")&& $loginHistory->getLoginDate())
+                {
+                    
+                    
+                    $date = $loginHistory->getLoginDate(); 
+                    $jour_de_semaine = date('l', strtotime($date->format('Y-m-d')));
+                    $map_data[$jour_de_semaine]["members"]++;
+                   
+  
+                
+            }
+        }
+    }
+    
+foreach($coaches as $coach){
+    foreach($coach->getLoginHistories() as $loginHistory){
+        if($loginHistory->getLoginDate() > new \DateTime("-7 days")){
+            $jour_de_semaine = date('l', strtotime($date->format('Y-m-d')));
+            $map_data[$jour_de_semaine]["coaches"]++;
+        }
+    }
+}
+
+        $barChart->getData()->setArrayToDataTable([
+            ['Day of the week', 'Membres', 'Coaches'],
+            ["Sunday",  $map_data["Sunday"]["members"], $map_data["Sunday"]["coaches"]],
+             ['Monday', $map_data["Monday"]["members"] , $map_data["Monday"]["coaches"]],
+            ['Tuesday',$map_data["Tuesday"]["members"]  ,  $map_data["Tuesday"]["coaches"]     ],
+            ['Wednesday', $map_data["Wednesday"]["members"], $map_data["Wednesday"]["coaches"]],
+            ['Thursday', $map_data["Thursday"]["members"], $map_data["Thursday"]["coaches"]],
+            ['Friday', $map_data["Friday"]["members"], $map_data["Friday"]["coaches"]],
+            ['Saturday', $map_data["Saturday"]["members"], $map_data["Saturday"]["coaches"]]
+             
+            
+        ]);
+       
+        
+        $totalUsers = count($userRepository->findAll());
+        $nombreMembres=count($membres);
+        $nombreCoaches=count($coaches);
+        
+
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
+            'barChart' => $barChart,
+            'nombreMembres'=>$nombreMembres,
+            'nombreCoaches'=>$nombreCoaches,
+            'totalUsers'=>$totalUsers,
+            'locations'=>$locations,
+            'recentylyadd'=>$recentylyadd,
+
+    
         ]);
     }
 
+    
     #[Route('/profileAdmin', name: 'admin_profile')]
     public function profile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
+        $locations=[];
         $user = new User();
+        
         
         $email =  $request->getSession()->get(Security::LAST_USERNAME);
         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        $currentUserId = $user->getId(); // Get the id of the current user
+        
+        $ipinfoservice = $user->getLoginHistories();
+        foreach($ipinfoservice as $ipinfo){
+            $ip = $ipinfo->getIpAdress();
+            $loginDate = $ipinfo->getLoginDate(); // Get the login date
+            $navigateur = $ipinfo->getNavigateur(); // Get the navigateur information
+
+        
+            // Check if the user id in the LoginHistory object matches the current user id
+            if ($ipinfo->getUser()->getId() == $currentUserId) {
+                $location = $this->IpInfoService->getIpInfo($ip);
+                dump($location);
+                array_push($locations, array('location' => $location, 'loginDate' => $loginDate, 'navigateur' => $navigateur));
+            }
+        }
+        
         // $id = $user->getId();
         // Remove the unused variable $id
         
         return $this->render('admin/profile.html.twig', [
             'admin' => $user,
+            'locations'=>$locations
+
         ]);
     }
 #[Route('/editPwdAdmin', name: 'admin_edit_pwd')]
@@ -270,6 +393,7 @@ if ($request->isMethod('POST')) {
         $coach->setEmail($email);
         $coach->setImage("7c62c977256064c61946037d427a0e0c.png");
         $coach->setNom($nom);
+        $coach->setCreatedAt(new \DateTime());
         $coach->setTelephone($telephone);
         $password = base64_encode(random_bytes(8));
         $coach->setPassword( $userPasswordHasher->hashPassword(

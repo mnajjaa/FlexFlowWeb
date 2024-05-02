@@ -74,6 +74,7 @@
                                                     <th>Email</th>
                                                     <th>Telephone</th>
                                                     <th>Etat</th>
+                                                    <th>CreatedAt</th>
                                                     <th style="width: 120px;">Action</th>
                                                 </tr>
                                             </thead>
@@ -100,8 +101,19 @@
                                                     <td>
                                                         {{coach.telephone}}
                                                     </td>
-                                                    <td>
-                                                        <div class="badge bg-pill bg-soft-success font-size-12">Active</div>
+                                                    {% if coach.isVerified == 1 %}
+                                                       <td>
+                                                        <div class="badge bg-pill bg-soft-success font-size-12">Verified</div>
+                                                    </td>
+
+                                                    {% else %}
+                                                        <td>
+                                                        <div class="badge bg-pill bg-soft-danger font-size-12">Not Verfied</div>
+                                                    </td>
+                                                    {% endif %}
+                                                     
+                                                     <td>
+                                                        <div class="badge bg-pill bg-soft-success font-size-12">{{coach.createdAt ? coach.createdAt|date('Y-m-d') :''}}</div>
                                                     </td>
                                                     <td>
                                                         

@@ -16,6 +16,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
@@ -55,6 +56,7 @@ class RegistrationController extends AbstractController
             $user->setMfaEnabled(false);
             $user->setMfaSecret(null);
             $user->setMdpExp(new \DateTime('+30 days'));
+            $user->setCreatedAt(new \DateTime());
             $entityManager->persist($user);
             $entityManager->flush();
             $session->set('user',$user);
@@ -94,10 +96,10 @@ class RegistrationController extends AbstractController
             );
            
             $user->setRoles(["COACH"]);
-
+            $user->setCreatedAt(new \DateTime());
             $entityManager->persist($user);
             $entityManager->flush();
-           $session->set('user',$user);
+            $session->set('user',$user);
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -117,30 +119,46 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator,SessionInterface $session): Response
-    {
-       
-       //var_dump(self::$user1);
-    
-       
-            // Store the email verification URI in the session so we can redirect back after login
-            $request->getSession()->set('verify_email_uri', $request->getUri());
-    
-             $user=$session->get('user');
-    
-        // validate email confirmation link, sets User::isVerified=true and persists
-        try {
-            $this->emailVerifier->handleEmailConfirmation($request, $user);
-        } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-    
-            return $this->redirectToRoute('app_register');
-        }
-    
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
-    
+public function verifyUserEmail(Request $request, EmailVerifier $emailVerifier, TranslatorInterface $translator, SessionInterface $session,EntityManagerInterface $entityManager): Response
+{
+    // Validate the email confirmation link
+    try {
+        $emailVerifier->handleEmailConfirmation($request, $session->get('user'));
+    } catch (VerifyEmailExceptionInterface $exception) {
+        $this->addFlash('verify_email_error', $exception->getReason());
+
         return $this->redirectToRoute('app_register');
     }
+
+    // Mark the user as verified
+    $user = $session->get('user');
+    $user->setIsVerified(true);
+    $entityManager->flush();
+
+    // Add a success message
+    $this->addFlash('success', $translator->trans('Your email address has been verified.'));
+
+    // Always redirect the user to the login page
+    return $this->redirectToRoute('app_login');
+}
+
+#[Route(path: '/emailVerification', name: 'emailVerification')]
+public function emailVerification(Request $request, EntityManagerInterface $entityManager): Response
+{
+    // $email=$request->getSession()->get(Security::LAST_USERNAME);
+    // $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$email]);
+    // $user->setIsVerified(true);
+    // $entityManager->persist($user);
+    // $entityManager->flush();
+    // return $this->redirectToRoute('app_login');
+
+       
+
+        return $this->render('registration/emailVerification.html.twig', [
+           
+        ]);
+    
+} 
+
+     
 }

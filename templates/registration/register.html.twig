@@ -118,12 +118,14 @@ telephoneInput.oninput = function() {
 function success() {
     Swal.fire({
         title: 'Succès!',
-        text: 'Votre compte a été créé avec succès!',
+        text: 'un email de verification à ete envoyé à votre adresse email',
         icon: 'success',
         customClass: {
             confirmButton: 'btn btn-primary',
         },
         buttonsStyling: false,
+    }).then(() => {
+        window.location.href = '/emailVerification';
     })
 }
 

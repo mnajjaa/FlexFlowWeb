@@ -34,6 +34,7 @@
         <script src="{{asset('back-office/libs/sweetalert2/sweetalert2.min.js')}}"></script>
         <!-- Sweet alert init js-->
         <script src="{{asset('back-office/js/pages/sweet-alerts.init.js')}}"></script>
+        <!-- Two Factor Auth js -->
         <script src="{{asset('validationJs/twoFactor.js')}}"></script>
 
     </head>
@@ -182,7 +183,7 @@
   </div>
   <div class="row">
         <div class="col-12">
-            <div class="card">
+            {# <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Enable multi-factor authentication</h4>                              
                     <p class="card-title    -desc">Enable multi-factor authentication to add an extra layer of security to your account.</p>
@@ -209,7 +210,7 @@
                     </div>
                           <button class="btn btn-primary" type="submit">Enable</button>
                 </div>
-            </div>
+            </div> #}
              
               {# -////////////////////////////////////////////////////////////////////////////// #}
               
@@ -219,64 +220,14 @@
                     <i class="mb-3 fas fa-lock"></i>
                     <h5>Two Factor Auth</h5>
                     <p>Enhance your application security by enabling two factor authentication.</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#twoFactorAuthOne"> Show </button>
+                    <button type="button" class="btn btn-primary" id="showQRCode" onclick="showQrCode()" data-bs-toggle="modal" data-bs-target="#twoFactorAuthOne"> Show </button>
                 </div>
                 </div>
             </div>
 
            <!-- Two Factor Auth Modal -->
 
-            {# <div class="modal fade" id="twoFactorAuth" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered modal-simple">
-                <div class="modal-content p-3 p-md-5">
-                <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div class="text-center mb-4">
-                    <h3 class="mb-2">Select Authentication Method</h3>
-                    <p class="text-muted">You also need to select a method by which the proxy authenticates to the directory serve.</p>
-                    </div>
-                    <div class="row">
-                    <div class="col-12 mb-3">
-                        <div class="form-check custom-option custom-option-basic">
-                        <label class="form-check-label custom-option-content ps-3" for="customRadioTemp1" data-bs-target="#twoFactorAuthOne" data-bs-toggle="modal">
-                            <input name="customRadioTemp" class="form-check-input d-none" type="radio" value="" id="customRadioTemp1" />
-                            <span class="d-flex align-items-start">
-                            <i class="bx bx-cog bx-md me-3"></i>
-                            <span>
-                                <span class="custom-option-header">
-                                <span class="h4 mb-2">Authenticator Apps</span>
-                                </span>
-                                <span class="custom-option-body">
-                                <span class="mb-0">Get code from an app like Google Authenticator or Microsoft Authenticator.</span>
-                                </span>
-                            </span>
-                            </span>
-                        </label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-check custom-option custom-option-basic">
-                        <label class="form-check-label custom-option-content ps-3" for="customRadioTemp2" data-bs-target="#twoFactorAuthTwo" data-bs-toggle="modal">
-                            <input name="customRadioTemp" class="form-check-input d-none" type="radio" value="" id="customRadioTemp2" />
-                            <span class="d-flex align-items-start">
-                            <i class="bx bx-message bx-md me-3"></i>
-                            <span>
-                                <span class="custom-option-header">
-                                <span class="h4 mb-2">SMS</span>
-                                </span>
-                                <span class="custom-option-body">
-                                <span class="mb-0">We will send a code via SMS if you need to use your backup login method.</span>
-                                </span>
-                            </span>
-                            </span>
-                        </label>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div> #}
+          
             <!-- Modal Authentication App -->
             <div class="modal fade" id="twoFactorAuthOne" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-simple">
@@ -288,33 +239,21 @@
                     </div>
                     <h5 class="mb-2 pt-1 text-break">Authenticator Apps</h5>
                     <p class="mb-4">Using an authenticator app like Google Authenticator, Microsoft Authenticator, Authy, or 1Password, scan the QR code. It will generate a 6-digit code for you to enter below.</p>
-                    <div class="text-center">
-                        {# <img src="../../assets/img/icons/misc/authentication-QR.png" alt="QR Code" width="140"> #}
+                <div id="qrCodeField" >
+                    <div class="text-center" id="qrCodeField"  >
                         <img id="qrCode" src="{{qrCode}}" alt="Your QR Code will be displayed here." width="140" style="padding-bottom: 10px;">
                     </div>
-                    {# <div class="alert alert-warning alert-dismissible my-3" role="alert">
-                        <h5 class="alert-heading mb-2 text-break">ASDLKNASDA9AHS678dGhASD78AB</h5>
-                        <p class="mb-0">If you're having trouble using the QR code, select manual entry on your app</p>
-                    </div> #}
                      <form action="{{ path('activte_2fa') }}" method="post">
                     <div class="mb-4">
-                        <input type="email" class="form-control" id="twoFactorAuthInput" placeholder="Enter Authentication Code">
+                        <input type="hidden" name="secretKey" value="{{ secret }}">
+                        <input type="text" id="otp" name="otp" class="form-control" id="twoFactorAuthInput" placeholder="Enter Authentication Code">
                     </div>
                     <div class="col-12 text-end">
                         <button type="button" class="btn btn-label-secondary me-sm-3 me-2 px-3 px-sm-4" data-bs-toggle="modal" data-bs-target="#twoFactorAuth"><i class="dripicons-chevron-left bx-xs me-1 scaleX-n1-rtl"></i><span class="align-middle">Back</span></button>
-                        <button type="submit" class="btn btn-primary px-3 px-sm-4" data-bs-dismiss="modal" aria-label="Close"><span class="align-middle">Continue</span><i class="dripicons-chevron-right bx-xs ms-1 scaleX-n1-rtl"></i></button>
+                        <button type="submit" class="btn btn-primary px-3 px-sm-4" data-bs-dismiss="modal" aria-label="Close"><span class="align-middle">Activer 2FA</span><i class="dripicons-chevron-right bx-xs ms-1 scaleX-n1-rtl"></i></button>
                     </div>
                     </form>
-                    {# //////////////////////////////////////////// #}
-                        <form action="{{ path('activte_2fa') }}" method="post">
-                            <input type="hidden" name="secretKey" value="{{ secret }}">
-                            <label for="otp">Code OTP:</label>
-                            <input type="text" id="otp" name="otp">
-                            <button type="submit">Activer 2FA</button>
-                        </form>
-
-                    {# //////////////////////////////////////////// #}
-
+                </div>
                 </div>
                 </div>
             </div>

@@ -11,10 +11,20 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Security;
+use App\Service\IpInfoService;
+
 
 class MembreController extends AbstractController
 {   
     static $mdp=false;
+    private $IpInfoService;
+      
+    public function __construct(IpInfoService $IpInfoService)
+    {
+        $this->IpInfoService = $IpInfoService;
+
+
+    }
 
     #[Route('/membre', name: 'membre_dashboard')]
     public function index(): Response
@@ -26,22 +36,34 @@ class MembreController extends AbstractController
 
     #[Route('/profileMembre', name: 'membre_profile')]
     public function profile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
-    {   $erreur=false;
-        $mdp=false;
-        $user = new User();
-        
-        $email =  $request->getSession()->get(Security::LAST_USERNAME);
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-        // $id = $user->getId();
-        // Remove the unused variable $id
-        
-        return $this->render('membre/profile.html.twig', [
-            'membre' => $user,
-            'mdp'=>$mdp,
-            'erreur'=>$erreur
-        ]);
+{
+    $erreur = false;
+    $mdp = false;
+    $locations = []; // Added this line to initialize the locations array
+
+    $email =  $request->getSession()->get(Security::LAST_USERNAME);
+    $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+    $currentUserId = $user->getId(); // Get the id of the current user
+
+    $ipinfoservice = $user->getLoginHistories(); // Get the login histories of the user
+    foreach($ipinfoservice as $ipinfo){
+        $ip = $ipinfo->getIpAdress();
+        $loginDate = $ipinfo->getLoginDate(); // Get the login date
+
+        // Check if the user id in the LoginHistory object matches the current user id
+        if ($ipinfo->getUser()->getId() == $currentUserId) {
+            $location = $this->IpInfoService->getIpInfo($ip);
+            array_push($locations, array('location' => $location, 'loginDate' => $loginDate));
+        }
     }
 
+    return $this->render('membre/profile.html.twig', [
+        'membre' => $user,
+        'mdp' => $mdp,
+        'erreur' => $erreur,
+        'locations' => $locations // Added this line to pass the locations array to the template
+    ]);
+}
     #[Route('/editProfileMembre', name: 'membre_edit_profile')]
     public function editProfile(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {   $erreur=false;

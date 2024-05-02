@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -11,6 +12,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\User;
+use App\Entity\LoginHistory;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
@@ -54,6 +56,22 @@ class AppCustomAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+         $loginHistory = new LoginHistory();
+        $loginHistory->setLoginDate(new \DateTime());
+        $userAgent = $request->headers->get('User-Agent');
+        $loginHistory->setNavigateur($userAgent);
+        $os = php_uname('s');
+        $loginHistory->setSysExp($os);
+        
+          $publicIp = file_get_contents('http://httpbin.org/ip');
+            $publicIp = json_decode($publicIp);
+            $publicIp = $publicIp->origin;
+         $loginHistory->setIpAdress($publicIp);
+
+        $loginHistory->setUser($token->getUser());
+        $this->entityManager->persist($loginHistory);
+        $this->entityManager->flush();
+
         
         if($targetPath = $this->getTargetPath($request->getSession(), $firewallName)){
             return new RedirectResponse($targetPath);

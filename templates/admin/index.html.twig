@@ -40,6 +40,8 @@
                                 </div>
                             </div>
                         </div>
+                        
+
                         <!-- end page title -->
 
                         <div class="row">
@@ -50,10 +52,12 @@
                                             <div id="total-revenue-chart"></div>
                                         </div>
                                         <div>
-                                            <h4 class="mb-1 mt-1">$<span data-plugin="counterup">34,152</span></h4>
-                                            <p class="text-muted mb-0">Total Revenue</p>
+                                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{ totalUsers }}</span></h4>
+                                            <p class="text-muted mb-0"><i class="dripicons-user-group me-1"></i>Totale Utilisateurs</p>
+                                             <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="dripicons-arrow-up me-1"></i></span> since last week
+
                                         </div>
-                                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>2.65%</span> since last week
+                                    
                                         </p>
                                     </div>
                                 </div>
@@ -66,10 +70,10 @@
                                             <div id="orders-chart"> </div>
                                         </div>
                                         <div>
-                                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">5,643</span></h4>
-                                            <p class="text-muted mb-0">Orders</p>
+                                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{nombreMembres}}</span></h4>
+                                            <p class="text-muted mb-0"><i class="dripicons-user-group me-1"></i>Totales Des membres </p>
                                         </div>
-                                        <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i class="mdi mdi-arrow-down-bold me-1"></i>0.82%</span> since last week
+                                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="dripicons-arrow-up me-1"></i></span> since last week
                                         </p>
                                     </div>
                                 </div>
@@ -82,10 +86,10 @@
                                             <div id="customers-chart"> </div>
                                         </div>
                                         <div>
-                                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">45,254</span></h4>
-                                            <p class="text-muted mb-0">Customers</p>
+                                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{ recentylyadd }}</span></h4>
+                                            <p class="text-muted mb-0"><i class="dripicons-pulse me-1"></i>Recently Added Custemers</p>
                                         </div>
-                                        <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i class="mdi mdi-arrow-down-bold me-1"></i>6.24%</span> since last week
+                                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="dripicons-arrow-up me-1"></i></span> since last week
                                         </p>
                                     </div>
                                 </div>
@@ -99,26 +103,63 @@
                                             <div id="growth-chart"></div>
                                         </div>
                                         <div>
-                                            <h4 class="mb-1 mt-1">+ <span data-plugin="counterup">12.58</span>%</h4>
-                                            <p class="text-muted mb-0">Growth</p>
+                                            <h4 class="mb-1 mt-1">+ <span data-plugin="counterup">{{nombreCoaches}}</span></h4>
+                                            <p class="text-muted mb-0"><i class="dripicons-rocket me-1"></i>Total Coaches</p>
                                         </div>
-                                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>10.51%</span> since last week
+                                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="dripicons-arrow-up me-1"></i></span> since last week
                                         </p>
                                     </div>
                                 </div>
                             </div> <!-- end col-->
                         </div> <!-- end row-->
+<div class="row">
+<div class="col-xl-8">
+                                <div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Statistiques des Utilisateurs</h4>
+        <div id="map" style="height: 400px; width: 100%;"></div>
+        <script>
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 4,
+                    center: {lat: 0, lng: 0} // Initial center point. Adjust as needed.
+                });
+                var locationsCount = {};
+                {% for Location in locations %}
+                    var loc = '{{ Location.loc }}'.split(',');
+                    var latitude = parseFloat(loc[0]);
+                    var longitude = parseFloat(loc[1]);
+                    var locKey = latitude + ',' + longitude;
+                    locationsCount[locKey] = locationsCount[locKey] ? locationsCount[locKey] + 1 : 1;
+                    var loc = {lat: latitude + (locationsCount[locKey] - 1) * 0.0001, lng: longitude + (locationsCount[locKey] - 1) * 0.0001};
+                    var marker = new google.maps.Marker({
+                        position: loc,
+                        map: map
+                    });
+                {% endfor %}
+            }
+        </script>
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdL6W-ZWFsrcYoxx2LLPg8NUDOZOhr4RY&callback=initMap">
+        </script>
+        <hr>
+    </div>
+</div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+
+</div>
 
                         <div class="row">
                             <div class="col-xl-8">
-                                <div class="card">
+                                <div class="card"  style="width: fit-content;">
                                     <div class="card-body">
                                         <div class="float-end">
                                             <div class="dropdown">
                                                 <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton5"
                                                     data-bs-toggle="dropdown" aria-haspopup="true"
                                                     aria-expanded="false">
-                                                    <span class="fw-semibold">Sort By:</span> <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                                    <span class="fw-semibold">Sort By:</span> <span class="text-muted">Yearly<i class="dripicons-chevron-down ms-1"></i></span>
                                                 </a>
 
                                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton5">
@@ -128,48 +169,24 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <h4 class="card-title mb-4">Sales Analytics</h4>
-
-                                        <div class="mt-1">
-                                            <ul class="list-inline main-chart mb-0">
-                                                <li class="list-inline-item chart-border-left me-0 border-0">
-                                                    <h3 class="text-primary">$<span data-plugin="counterup">2,371</span><span class="text-muted d-inline-block font-size-15 ms-3">Income</span></h3>
-                                                </li>
-                                                <li class="list-inline-item chart-border-left me-0">
-                                                    <h3><span data-plugin="counterup">258</span><span class="text-muted d-inline-block font-size-15 ms-3">Sales</span>
-                                                    </h3>
-                                                </li>
-                                                <li class="list-inline-item chart-border-left me-0">
-                                                    <h3><span data-plugin="counterup">3.6</span>%<span class="text-muted d-inline-block font-size-15 ms-3">Conversation Ratio</span></h3>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <h4 class="card-title mb-4">Statistiques des Utilisateurs</h4>
 
                                         <div class="mt-3">
-                                            <div id="sales-analytics-chart" class="apex-charts" dir="ltr"></div>
+                                        {# houniiii  #}
+                            <div id="div_chart"></div>
+
+                                                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                                                <script type="text/javascript">
+                                                    {{ gc_draw(barChart, 'div_chart') }}
+                                                    
+                                                </script>
+                                            {# <div id="sales-analytics-chart" class="apex-charts" dir="ltr"></div> #}
                                         </div>
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
                             </div> <!-- end col-->
 
-                            <div class="col-xl-4">
-                                <div class="card bg-primary">
-                                    <div class="card-body">
-                                        <div class="row align-items-center">
-                                            <div class="col-sm-8">
-                                                <p class="text-white font-size-18">Enhance your <b>Campaign</b> for better outreach <i class="mdi mdi-arrow-right"></i></p>
-                                                <div class="mt-4">
-                                                    <a href="javascript: void(0);" class="btn btn-success waves-effect waves-light">Upgrade Account!</a>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="mt-4 mt-sm-0">
-                                                    <img src="{{asset('back-office/images/setup-analytics-amico.svg')}}" class="img-fluid" alt="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> <!-- end card-body-->
-                                </div> <!-- end card-->
+                            {# <div class="col-xl-4">
 
                                 <div class="card">
                                     <div class="card-body">
@@ -265,7 +282,7 @@
 
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
-                            </div> <!-- end Col -->
+                            </div> <!-- end Col --> #}
                         </div> <!-- end row-->
 
                         <div class="row">
@@ -424,7 +441,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xl-4">
+                            {# <div class="col-xl-4">
                                 <div class="card">
                                     <div class="card-body">
 
@@ -498,11 +515,15 @@
 
                                     </div>
                                 </div>
-                            </div>
+                            </div> #}
                         </div>
                         <!-- end row -->
 
-                        <div class="row">
+
+ {######################################### nheb rodha latest registred or added Members ####################### #}
+
+
+                        {# <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -698,7 +719,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> #}
                         <!-- end row -->
 
 

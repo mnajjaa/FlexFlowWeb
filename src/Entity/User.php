@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -66,6 +68,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $mdp_exp = null;
+
+    #[ORM\OneToMany(targetEntity: LoginHistory::class, mappedBy: 'user')]
+    private Collection $loginHistories;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $createdAt = null;
+
+    public function __construct()
+    {
+        $this->loginHistories = new ArrayCollection();
+    }
 
     
 
@@ -236,6 +249,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setMdpExp(?\DateTimeInterface $mdp_exp): static
     {
         $this->mdp_exp = $mdp_exp;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LoginHistory>
+     */
+    public function getLoginHistories(): Collection
+    {
+        return $this->loginHistories;
+    }
+
+    public function addLoginHistory(LoginHistory $loginHistory): static
+    {
+        if (!$this->loginHistories->contains($loginHistory)) {
+            $this->loginHistories->add($loginHistory);
+            $loginHistory->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoginHistory(LoginHistory $loginHistory): static
+    {
+        if ($this->loginHistories->removeElement($loginHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($loginHistory->getUser() === $this) {
+                $loginHistory->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

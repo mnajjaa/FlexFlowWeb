@@ -39,7 +39,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    
    
    public function findByRole($role)
     {
@@ -58,6 +57,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
+    public function findByMdpHasExPired()//les users eli lmot de passe youfa ba3ed 7 jours ou moins
+    {
+        
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.mdp_exp <= :date')
+            ->setParameter('date', new \DateTime('now'))
+            ->getQuery()
+            ->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?User
 //    {
@@ -68,4 +76,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function RecupérerUsers()
+{
+    return $this->createQueryBuilder('u')
+        ->getQuery()
+        ->getResult();
+    
+}
 }

@@ -115,5 +115,16 @@ class LoginController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
+    #[Route(path: '/accessD', name: 'accessD')]
+    public function accessD(AuthenticationUtils $authenticationUtils): Response
+    {
+       
+
+        return $this->render('login/denied.html.twig', [
+           
+        ]);
+    }
+
+   
 
 }
