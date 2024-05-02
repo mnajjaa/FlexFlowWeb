@@ -16,6 +16,22 @@
             /*text-align: center; /* Vous pouvez ajuster cette valeur selon votre préférence */
         }
     
+
+
+/* Animation CSS pour la disparition progressive 
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .notification {
+            animation: fadeOut 1s ease-in-out forwards;
+        }  */
+
+
+
+
+
     </style>
 	
 	
@@ -137,5 +153,31 @@
     </div>
 
     <a href="{{ path('app_reclamation_new') }}">Ajouter une Reclamation</a>
+
+
+
+    {# Afficher les notifications Flash de succès avec couleur rouge et en gras #}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success font-weight-bold notification" style="color: red;"  id="notification">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+{# Script JavaScript pour supprimer la notification après 5 secondes #}
+    <script>
+        // Sélectionnez la notification
+        var notification = document.getElementById('notification');
+
+        // Supprimez la notification après 5 secondes
+        setTimeout(function() {
+            notification.style.opacity = '0';
+            setTimeout(function() {
+                notification.remove();
+            }, 1000);
+        }, 7000);
+    </script>
+
+
+
 </body>
 {% endblock %}

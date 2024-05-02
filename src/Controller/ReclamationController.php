@@ -16,11 +16,22 @@ use App\Form\EtatFormType;
 use Twilio\Rest\Client;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Service\prk;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
 {
+
+    private $flashBag;
+
+    public function __construct(FlashBagInterface $flashBag)
+    {
+        $this->flashBag = $flashBag;
+    }
+
+
+
     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
     public function index(Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator, ReclamationRepository $reclamationRepository): Response
     {
@@ -101,7 +112,7 @@ class ReclamationController extends AbstractController
 
 
 
-            
+
 
 
 
@@ -109,8 +120,11 @@ class ReclamationController extends AbstractController
             $entityManager->persist($reclamation);        
             $entityManager->flush();
 
+           
+
             return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
         }
+        $this->flashBag->add('success', 'La réclamation a été ajoutée avec succès.');
 
         return $this->renderForm('reclamation/new.html.twig', [
             'reclamation' => $reclamation,
