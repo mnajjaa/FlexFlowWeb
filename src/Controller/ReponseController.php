@@ -52,7 +52,7 @@ $destinationEmail = 'maalejahmed55@gmail.com';
 
 // Envoie de l'e-mail
 $email = (new Email())
-    ->from('expediteur@example.com') // Adresse e-mail de l'expéditeur
+    ->from('FlexFlow<expediteur@example.com>') // Adresse e-mail de l'expéditeur
     ->to($destinationEmail)
     ->subject('Nouvelle réponse ajoutée')
     //->text('Une nouvelle réponse a été ajoutée.');
