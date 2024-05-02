@@ -164,18 +164,22 @@
     {% endfor %}
 
 {# Script JavaScript pour supprimer la notification après 5 secondes #}
-    <script>
-        // Sélectionnez la notification
-        var notification = document.getElementById('notification');
+ <script>
+    // Sélectionnez la notification
+    var notification = document.getElementById('notification');
 
-        // Supprimez la notification après 5 secondes
+    // Supprimez la notification après 7 secondes
+    setTimeout(function() {
+        // Transition de l'opacité pour une disparition douce
+        notification.style.transition = 'opacity 1s ease-in-out';
+        notification.style.opacity = '0';
+
+        // Suppression de la notification après la transition
         setTimeout(function() {
-            notification.style.opacity = '0';
-            setTimeout(function() {
-                notification.remove();
-            }, 1000);
-        }, 7000);
-    </script>
+            notification.remove();
+        }, 1000);
+    }, 7000);
+</script>
 
 
 
