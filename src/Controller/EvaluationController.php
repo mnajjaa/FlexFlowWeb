@@ -19,7 +19,7 @@ class EvaluationController extends AbstractController
     
         // Assurez-vous que les données nécessaires sont présentes
         if (!$offreId || !$note) {
-            return new Response('Les données de l\'évaluation sont incomplètes.', Response::HTTP_BAD_REQUEST);
+            return new Response('Note bien envoyeé', Response::HTTP_BAD_REQUEST);
         }
     
         // Enregistrez l'évaluation dans la base de données
