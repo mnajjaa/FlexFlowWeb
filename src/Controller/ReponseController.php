@@ -108,7 +108,7 @@ $email = (new Email())
             </div>
     
             <!-- Logo -->
-            <img src="/logo.png"  class="logo">
+            <img src="cid:logo"  class="logo">
             
     
             <!-- Contenu principal -->
@@ -130,6 +130,8 @@ $email = (new Email())
     
 
     );
+    $email->embed(fopen('C:\xampp\htdocs\FlexFlowWeb\public\logo.png', 'r'), 'logo');
+
 
 
 

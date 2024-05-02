@@ -3,7 +3,7 @@ namespace App\Service;
 
 class prk
 {
-    private $badWords = ['bonjour']; // Ajoute ici ta liste de mots interdits
+    private $badWords = ['bonjour','ahmed','ali']; // Ajoute ici ta liste de mots interdits
 
     public function filterText(string $text): string
     {
