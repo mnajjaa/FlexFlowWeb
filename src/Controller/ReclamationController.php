@@ -7,6 +7,7 @@ use App\Entity\Reclamation;
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\prk;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +16,11 @@ use App\Service\BadWordFilter;
 use App\Form\EtatFormType;
 use Twilio\Rest\Client;
 use Knp\Component\Pager\PaginatorInterface;
-use App\Service\prk;
+
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Security\Core\Security;
+use App\Entity\User;
+
 
 
 #[Route('/reclamation')]
@@ -29,12 +33,16 @@ class ReclamationController extends AbstractController
     {
         $this->flashBag = $flashBag;
     }
+    
 
 
 
     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
     public function index(Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator, ReclamationRepository $reclamationRepository): Response
     {
+
+        
+
         $nonce = bin2hex(random_bytes(16));
 
         $queryBuilder = $reclamationRepository->createQueryBuilder('r');
@@ -68,6 +76,16 @@ class ReclamationController extends AbstractController
             10 // Items per page
         );
 
+
+      
+
+        
+
+        
+    
+
+
+
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamationRepository->findAll(),
             'nonce' => $nonce,
@@ -80,6 +98,8 @@ class ReclamationController extends AbstractController
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager ,BadWordFilter $badWordFilter,prk $bdf): Response
     {
+        $user = new User();
+
         $reclamation = new Reclamation();
 
          // Définir la date de réclamation à la date système
@@ -87,6 +107,13 @@ class ReclamationController extends AbstractController
 
          // Définir l'état par défaut à "non traité"
          $reclamation->setEtat("Non_traite");
+        
+        
+         // Get the current user's email from the session
+         $email = $request->getSession()->get(Security::LAST_USERNAME);
+
+        // Find the user entity based on the email
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
 
         $form = $this->createForm(ReclamationType::class, $reclamation);
@@ -98,21 +125,8 @@ class ReclamationController extends AbstractController
             $reclamation->setDescription($badWordFilter->filterText($reclamation->getDescription()));
 
 
-
-
-
-
-
-
-
             $reclamation->setTitreReclamation($bdf->filterText($reclamation->getTitreReclamation()));
             $reclamation->setDescription($bdf->filterText($reclamation->getDescription()));
-
-
-
-
-
-
 
 
 

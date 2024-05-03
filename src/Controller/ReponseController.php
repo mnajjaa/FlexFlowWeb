@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
+use App\Entity\Reclamation;
 
 #[Route('/reponse')]
 class ReponseController extends AbstractController
@@ -35,10 +36,19 @@ class ReponseController extends AbstractController
 
 
 
-    #[Route('/new', name: 'app_reponse_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new/{reclamation_id}', name: 'app_reponse_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager,$reclamation_id): Response
     {
+        // Récupérer la réclamation correspondante à partir de l'ID
+        $reclamation = $this->getDoctrine()
+        ->getRepository(Reclamation::class)
+        ->find($reclamation_id);
+
+
+
         $reponse = new Reponse();
+
+        $reponse->setReclamation($reclamation);
         $form = $this->createForm(ReponseType::class, $reponse);
         $form->handleRequest($request);
 

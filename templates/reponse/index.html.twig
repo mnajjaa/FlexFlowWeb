@@ -30,6 +30,55 @@
 
 
 
+.custom-progress {
+    height: 50px; /* Ajustez la hauteur de la barre de progression selon vos besoins */
+}
+
+/* CSS pour le conteneur de la table avec un arrière-plan */
+.table-container {
+    background-color: #f2f2f2; /* Couleur de fond de votre choix */
+    padding: 20px; /* Espacement intérieur pour la table */
+    border-radius: 10px; /* Ajoutez une bordure arrondie si désiré */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ajoutez une ombre si désiré */
+}
+
+
+.table {
+    border-collapse: collapse; /* Fusionner les bordures de cellule */
+    width: 100%; /* Assurez-vous que la table prend toute la largeur du conteneur */
+}
+
+.table th, .table td {
+    border: 1px solid #ddd; /* Ajouter une bordure de 1px solide avec la couleur grise #ddd */
+    padding: 8px; /* Ajouter un rembourrage intérieur */
+    text-align: left; /* Aligner le texte à gauche */
+}
+
+/* Style facultatif pour les en-têtes de colonne */
+.table th {
+    background-color: #f2f2f2; /* Couleur de fond pour les en-têtes de colonne */
+    color: #333; /* Couleur du texte pour les en-têtes de colonne */
+}
+
+
+/* CSS pour le bouton "Ajouter une Réclamation" */
+.btn-add-reclamation {
+    display: inline-block;
+    padding: 10px 20px; /* Ajustez le rembourrage selon vos préférences */
+    background-color: #D6D842; /* Couleur de fond du bouton */
+    color: #fff; /* Couleur du texte du bouton */
+    border: none; /* Supprimez la bordure */
+    border-radius: 5px; /* Ajoutez une bordure arrondie */
+    cursor: pointer; /* Changez le curseur au survol */
+    text-decoration: none; /* Supprimez le soulignement du lien */
+    transition: background-color 0.3s; /* Transition de couleur au survol */
+}
+
+.btn-add-reclamation:hover {
+    background-color: blue; /* Couleur de fond du bouton au survol */
+}
+
+
 
 
     </style>
@@ -79,7 +128,7 @@
 </head>
 
 <body> 
-<div class="mt-4 mb-5" extra-margin> <!-- Ajout de marges au titre -->
+<div class="mt-4 mb-5 " extra-margin> <!-- Ajout de marges au titre -->
         <h1 class="page-title">Listes des Reponses</h1>
     </div>
 
@@ -96,8 +145,8 @@
                     {% set totalReponses = reponses|length %}
 
                     <div class="progress-bx style-5 m-b30">
-                        <span class="progress-title text-primary">Nombre de réponses</span>
-                        <div class="progress">
+                        <span class="progress-title text-primary text-center ">Nombre de réponses</span>
+                        <div class="progress  custom-progress ">
                             <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="{{ totalReponses }}" aria-valuemin="0" aria-valuemax="{{ maxReponses }}" style="width:{{ totalReponses }}%">
                                 <span class="progress-value">{{ totalReponses }}</span>
                             </div>
@@ -112,14 +161,14 @@
     <div class="mt-4 mb-5" extra-margin>
 
     {#<p>Nombre total de réponses : {{ reponses|length }}</p> {# Afficher le nombre total de réponses #}
-    <p>temps de reponse moeynne : 24h </p>
+    {#<p>temps de reponse moeynne : 24h </p>#}
 
 
 
 
 
 
-
+<div class="table-container">
     <table class="table">
         <thead>
             <tr>
@@ -151,8 +200,9 @@
         </tbody>
     </table>
     </div>
+    </div>
 
-    <a href="{{ path('app_reclamation_new') }}">Ajouter une Reclamation</a>
+    <a href="{{ path('app_reclamation_new') }}"  class="btn-add-reclamation">Ajouter une Reclamation</a>
 
 
 

@@ -64,29 +64,61 @@
     border: 0;
 }
 
+
+/* CSS pour le conteneur de la table avec un arrière-plan */
+.table-container {
+    background-color: #f2f2f2; /* Couleur de fond de votre choix */
+    padding: 20px; /* Espacement intérieur pour la table */
+    border-radius: 10px; /* Ajoutez une bordure arrondie si désiré */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ajoutez une ombre si désiré */
+}
+
+
+.table {
+    border-collapse: collapse; /* Fusionner les bordures de cellule */
+    width: 100%; /* Assurez-vous que la table prend toute la largeur du conteneur */
+}
+
+.table th, .table td {
+    border: 1px solid #ddd; /* Ajouter une bordure de 1px solide avec la couleur grise #ddd */
+    padding: 8px; /* Ajouter un rembourrage intérieur */
+    text-align: left; /* Aligner le texte à gauche */
+}
+
+/* Style facultatif pour les en-têtes de colonne */
+.table th {
+    background-color: #f2f2f2; /* Couleur de fond pour les en-têtes de colonne */
+    color: #333; /* Couleur du texte pour les en-têtes de colonne */
+}
+
+
+
+
+
     </style>
 
 <body>
+
     <div class="container mt-3">
         <h1 class="mb-4">Listes de Reclamation</h1>
 
-<form action="{{ path('app_reclamation_index') }}" method="GET" class="mb-3">
+<form action="{{ path('app_reclamation_index') }}" method="GET" class="mb-5">
     <div class="form-row">
         <div class="col">
-            <input type="date" name="date" class="form-control" placeholder="Date">
+            <input type="date" name="date" class="form-control mb-2" placeholder="Date">
         </div>
         <div class="col">
-            <input type="text" name="titre" class="form-control" placeholder="Titre">
+            <input type="text" name="titre" class="form-control mb-2" placeholder="Titre">
         </div>
         <div class="col">
-            <select class="form-control" name="etat">
+            <select class="form-control mb-2" name="etat">
                 <option value="">-- Select State --</option>
                 <option value="Traite">Traité</option>
                 <option value="Non_traite">Non Traité</option>
             </select>
         </div>
         <div class="col">
-            <button type="submit" class="btn btn-primary">Rechercher</button>
+            <button type="submit" class="btn btn-primary mt-3">Rechercher</button>
         </div>
     </div>
 </form>
@@ -141,7 +173,8 @@
                 </div>
             </div>
         </div>
-
+        
+<div class="table-container">
         <table class="table table-bordered dt-responsive nowrap table-separator">
             <thead>
                 <tr>
@@ -150,7 +183,8 @@
                     <th>Titre_reclamation</th>
                     <th>Description</th>
                     <th>Etat</th>
-                    <th>actions</th>
+                    <th>modifier etat</th>
+                    <th>Ajouter Réponse</th> <!-- Nouvelle colonne -->
                 </tr>
             </thead>
             <tbody>
@@ -162,12 +196,27 @@
                     <td>{{ reclamation.description }}</td>
                     <td>{{ reclamation.etat }}</td>
                     <td><a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a></td>
+
+                    <!-- Nouvelle colonne pour ajouter une réponse -->
+            <td>
+                <a href="{{ path('app_reponse_new', {'reclamation_id': reclamation.id}) }}" class="btn btn-primary">Ajouter Réponse</a>
+                
+                {# Vérifie si la réclamation a une réponse associée 
+                {% if reclamation.reponse is not null %}
+                <button type="button" disabled class="btn btn-primary">Ajouter réponse (Réponse déjà ajoutée)</button>
+                {% else %}
+                <a href="{{ path('app_reponse_new', {'reclamation_id': reclamation.id}) }}" class="btn btn-primary">Ajouter réponse</a>
+                {% endif %} #}
+            </td>
+
+
                 </tr>
             {% else %}
-                <tr><td colspan="6">No records found</td></tr>
+                <tr><td colspan="7">No records found</td></tr>
             {% endfor %}
             </tbody>
         </table>
+        </div>
 
         
         <div class="col-12 d-flex justify-content-center">
@@ -279,12 +328,20 @@
     </script>
 
     
-    <a href="{{ path('app_reponse_new') }}">Ajouter une reponse</a>
+   {# <a href="{{ path('app_reponse_new') }}">Ajouter une reponse</a>#}
 
    
-    <a href="javascript:void(0);" onclick="shareOnFacebook('{{ url('app_reclamation_new') }}');" class="btn btn-primary">
+   {#<div class="text-right"> <!-- Cette div va aligner son contenu à droite -->
+    <a href="javascript:void(0);" onclick="shareOnFacebook('{{ url('app_reclamation_new') }}');" class="btn btn-primary float-right">
         <i class="fab fa-facebook-f"></i>
     </a>
+</div>}#}
+
+<!-- Bouton pour aller vers l'interface admin -->
+<a href="{{ path('app_reponse_index_admin') }}" class="btn btn-primary">voir listes reponse</a>
+
+
+   
 
 
     <script>

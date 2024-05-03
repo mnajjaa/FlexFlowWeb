@@ -19,9 +19,9 @@
                             </div>
                         {% endif %}
     </div>
-    <div class="mb-3">
+   {# <div class="mb-3">
         {{ form_label(form.user, 'Utilisateur', {'label_attr': {'class': 'form-label'}}) }}
         {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
-    </div>
+    </div>#}
     <button type="submit" class="btn btn-primary"  >{{ button_label|default('Enregistré') }}</button>
 {{ form_end(form) }}

@@ -13,7 +13,7 @@ class ReponseType extends AbstractType
     {
         $builder
             ->add('reponse_reclamation')
-            ->add('reclamation')
+            //->add('reclamation')
         ;
     }
 
