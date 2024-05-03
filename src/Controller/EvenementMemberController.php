@@ -69,8 +69,12 @@ class EvenementMemberController extends AbstractController
     {
         // Récupérer le cours depuis le référentiel en fonction de l'ID
         //$cours = $coursRepository->find($id);
+        $email = $request->getSession()->get(Security::LAST_USERNAME);
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+    
         $evenements = $this->getDoctrine()->getRepository(Evenement::class)->find($id);
     
+        $randomEvents = $EvenementRepository->findRandomEventsForUser($user);
 
         // Vérifier si le cours existe
         if (!$evenements) {
@@ -90,6 +94,8 @@ class EvenementMemberController extends AbstractController
         return $this->render('evenement_member/voir-plus.html.twig', [
             'evenements' => $evenements,
             'dejaParticipe' => $dejaParticipe,
+            'randomEvents' => $randomEvents,
+
 
         ]);
     }
@@ -102,6 +108,7 @@ public function listeEvenement(Request $request, EvenementRepository $EvenementR
     $evenements = $EvenementRepository->createQueryBuilder('e')
     ->where('e.Date >= :now')
     ->andWhere('e.etat = :etat')
+    ->andWhere('e.nbrPlace > 0') // Add this line
     ->setParameter('now', new \DateTime())
     ->setParameter('etat', 1)
     ->orderBy('e.Date', 'ASC')
@@ -209,6 +216,16 @@ public function participerEvenement(int $id, EvenementRepository $EvenementRepos
         return $this->redirectToRoute('liste_evenement');
     } 
 }
+#[Route('/random-events', name: 'random_events')]
 
+public function randomEvents(EvenementRepository $evenementRepository): Response
+{
+    $user = $this->getUser();
+    $randomEvents = $evenementRepository->findRandomEventsForUser($user);
 
+    return $this->render('evenement_member/voir-plus.html.twig', [
+        'randomEvents' => $randomEvents,
+    ]);
+
+}
 }

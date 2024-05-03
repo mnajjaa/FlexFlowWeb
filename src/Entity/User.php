@@ -52,8 +52,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->evenement = new ArrayCollection();
-    }
 
+       
+
+    }
     
 
     public function getId(): ?int
@@ -191,6 +193,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+   
     /**
      * @return Collection<int, Favoris>
      */
@@ -220,6 +223,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-     
+    
 
+    
     }

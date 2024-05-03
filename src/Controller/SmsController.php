@@ -20,7 +20,10 @@ class SmsController extends AbstractController
         ]);
     }
 
- 
+ private $twilioAccountSid = 'AC8802c2e9768e4876ace30c6beb9ba980'; // Remplacez par votre SID Twilio
+   private $twilioAuthToken = '6ecb828326a724faf557c7f259f06ef5'; // Remplacez par votre jeton d'authentification Twilio
+   private $twilioPhoneNumber = '+19497102963'; // Remplacez par votre numéro de téléphone Twilio
+
     public function sendSMS(int $id, EntityManagerInterface $entityManager)
     {
         // Initialiser le client Twilio
