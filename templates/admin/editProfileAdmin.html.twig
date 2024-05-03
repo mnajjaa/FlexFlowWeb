@@ -183,36 +183,6 @@
   </div>
   <div class="row">
         <div class="col-12">
-            {# <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Enable multi-factor authentication</h4>                              
-                    <p class="card-title    -desc">Enable multi-factor authentication to add an extra layer of security to your account.</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <input class="form-check-input" type="checkbox" id="showQRCode" onclick="showQrCode()">
-                                <label class="form-check form-check-label" for="showQRCode">Enable 2FA</label>
-                                
-                            </div>
-                            <div class="mb-3" id="qrCodeField" style="display: none;"  >
-                                <label class="form-label" for="qrCode">QR Code</label>
-                                <img id="qrCode" src="{{qrCode}}" alt="Your QR Code will be displayed here.">
-                                <form action="{{ path('activte_2fa') }}" method="post">
-                                    <input type="hidden" name="secretKey" value="{{ secret }}">
-                                    <label for="otp">Code OTP:</label>
-                                    <input type="text" id="otp" name="otp">
-                                    <button type="submit">Activer 2FA</button>
-                                </form>
-                            </div>
-
-                        </div>
-    
-                    </div>
-                          <button class="btn btn-primary" type="submit">Enable</button>
-                </div>
-            </div> #}
-             
-              {# -////////////////////////////////////////////////////////////////////////////// #}
               
             <div class="col-12 col-sm-6 col-lg-4 mb-4">
                 <div class="card">
@@ -241,11 +211,15 @@
                     <p class="mb-4">Using an authenticator app like Google Authenticator, Microsoft Authenticator, Authy, or 1Password, scan the QR code. It will generate a 6-digit code for you to enter below.</p>
                 <div id="qrCodeField" >
                     <div class="text-center" id="qrCodeField"  >
+                    {% if qrCode is defined %}
                         <img id="qrCode" src="{{qrCode}}" alt="Your QR Code will be displayed here." width="140" style="padding-bottom: 10px;">
+                    {% endif %}
                     </div>
                      <form action="{{ path('activte_2fa') }}" method="post">
                     <div class="mb-4">
+                    {% if qrCode is defined %}
                         <input type="hidden" name="secretKey" value="{{ secret }}">
+                    {% endif %}
                         <input type="text" id="otp" name="otp" class="form-control" id="twoFactorAuthInput" placeholder="Enter Authentication Code">
                     </div>
                     <div class="col-12 text-end">

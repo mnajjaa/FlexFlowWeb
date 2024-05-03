@@ -31,8 +31,6 @@
         <script src="{{asset('back-office/libs/sweetalert2/sweetalert2.min.js')}}"></script>
         <!-- Sweet alert init js-->
         <script src="{{asset('back-office/js/pages/sweet-alerts.init.js')}}"></script>
-        {# <!-- Sweet alert functions -->
-        <script src="{{asset('sweetAlert-back-office/sweetAlertback.js')}}"></script> #}
     </head>
 
 <body
@@ -84,7 +82,7 @@
                                                     <td><a href="javascript: void(0);" class="text-dark fw-bold">{{membre.id}}</a> </td>
                                                     <td>
                                                         
-                                                            <img src="{{ asset(membre.image) }}" alt="" class="avatar-xs rounded-circle me-2">
+                                                            <img src=" {{asset('uploads/users/' ~membre.image)}}" alt="" class="avatar-xs rounded-circle me-2">
                                                             {{ membre.nom }}
                                                         
                                                         {# <span>{{ membre.nom }}</span> #}
@@ -98,11 +96,9 @@
                                                         <div class="badge bg-pill bg-soft-success font-size-12">Active</div>
                                                     </td>
                                                     <td>
-                                                        {# <a href="javascript:void(0);" class="px-3 text-primary"><i class="uil uil-pen font-size-18"></i></a>
-                                                        <a href="javascript:void(0);" class="px-3 text-danger"><i class="uil uil-trash-alt font-size-18"></i></a> #}
+                                             
                                                         <a href="{{ path('edit_membre', {'id': membre.id}) }}" class="px-3 text-primary"><i class="dripicons-pencil"></i></a>
                                                         <a href="javascript:void(0);" class="px-3 text-danger" onclick="deleteMembre('{{path('delete_membre', {'id': membre.id}) }}')"><i class="dripicons-trash"></i></a>
-                                                        {# <a href="{{ path('delete_membre', {'id': membre.id}) }}" class="px-3 text-danger"><i class="dripicons-trash"></i></a> #}
                                                     </td>
                                                 </tr>
 
@@ -118,66 +114,8 @@
 
                     </div> <!-- container-fluid -->
            
-              <!-- Right Sidebar -->
-        <div class="right-bar">
-            <div data-simplebar class="h-100">
+    
 
-                <div class="rightbar-title d-flex align-items-center px-3 py-4">
-            
-                    <h5 class="m-0 me-2">Settings</h5>
-
-                    <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
-                        <i class="mdi mdi-close noti-icon"></i>
-                    </a>
-                </div>
-
-
-
-                <!-- Settings -->
-                <hr class="mt-0" />
-                <h6 class="text-center mb-0">Choose Layouts</h6>
-
-                <div class="p-4">
-                    <div class="mb-2">
-                        <img src="{{asset('back-office/images/layouts/layout-1.jpg')}}" class="img-thumbnail" alt="layout images">
-                    </div>
-                    <div class="form-check form-switch mb-3">
-                        <input type="checkbox" class="form-check-input theme-choice" id="light-mode-switch" checked />
-                        <label class="form-check-label" for="light-mode-switch">Light Mode</label>
-                    </div>
-
-                    <div class="mb-2">
-                        <img src="{{asset('back-office/images/layouts/layout-2.jpg')}}" class="img-thumbnail" alt="layout images">
-                    </div>
-                    <div class="form-check form-switch mb-3">
-                        <input type="checkbox" class="form-check-input theme-choice" id="dark-mode-switch" />
-                        <label class="form-check-label" for="dark-mode-switch">Dark Mode</label>
-                    </div>
-
-                    <div class="mb-2">
-                        <img src="{{asset('back-office/images/layouts/layout-3.jpg')}}" class="img-thumbnail" alt="layout images">
-                    </div>
-                    <div class="form-check form-switch mb-3">
-                        <input type="checkbox" class="form-check-input theme-choice" id="rtl-mode-switch" />
-                        <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
-                    </div>
-
-                    <div class="mb-2">
-                        <img src="{{asset('back-office/images/layouts/layout-4.jpg')}}" class="img-thumbnail" alt="layout images">
-                    </div>
-                    <div class="form-check form-switch mb-5">
-                        <input class="form-check-input theme-choice" type="checkbox" id="dark-rtl-mode-switch">
-                        <label class="form-check-label" for="dark-rtl-mode-switch">Dark RTL Mode</label>
-                    </div>
-
-            
-                </div>
-
-            </div> <!-- end slimscroll-menu-->
-        </div>
-        <!-- /Right-bar -->
- <!-- Right bar overlay-->
-        <div class="rightbar-overlay"></div>
 
         <!-- JAVASCRIPT -->
          {% block javascript %}

@@ -194,19 +194,11 @@ public function editPwd(Request $request, EntityManagerInterface $entityManager,
         
         if ( $request->get('actualPassword') && !$passwordHasher->isPasswordValid($user, $request->get('actualPassword'))) {
             // $this->addFlash('reset_password_error', 'Old password is incorrect');
-            ?>
-
-            <script>
-                alert("Old password is incorrect");
-                </script>
-            <?php
             return $this->redirectToRoute('admin_edit_profile', ['erreur'=>true]);
            
         }
         else {
-        ?>
-        
-        <?php
+      
             self::$mdp=true;
             // return $this->render('admin/editProfileAdmin.html.twig', [
             //     'mdp'=>self::$mdp,
@@ -217,20 +209,12 @@ public function editPwd(Request $request, EntityManagerInterface $entityManager,
           
         
         if($request->get('plainPassword') != $request->get('plainPasswordConfirm')){
-            ?>
-            <script>
-                alert("Passwords match");
-                </script>
-            <?php
+           
             return $this->redirectToRoute('admin_edit_profile');
         }
         else{
-            ?>
-            <script>
-                alert("Passwords match");
-                </script>
-            <?php
-        var_dump($request->get('plainPassword'));
+          
+        // var_dump($request->get('plainPassword'));
         $encodedPassword = $passwordHasher->hashPassword(
             $user,
             $request->get('plainPassword')
@@ -239,7 +223,7 @@ public function editPwd(Request $request, EntityManagerInterface $entityManager,
         $user->setPassword($encodedPassword);
         $entityManager->persist($user);
             $entityManager->flush();
-            var_dump($user);
+            // var_dump($user);
             return $this->redirectToRoute('admin_edit_profile');
     }
     }
@@ -375,20 +359,6 @@ if ($request->isMethod('POST')) {
        $nom= $request->request->get('name');
        $telephone= $request->request->get('telephone');
        
-      //$user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-       
-
-    //    if($user){
-    //     //self::$message="User already exists";
-    //     
-    //     return $this->render('admin/addCoach.html.twig', [
-    //         'message' =>"User already exists"    
-    //     ]);
-    //     //return new JsonResponse(['exists' => true], Response::HTTP_OK);
-        
-    // }
-    // else{
-    //   
         $coach->setRoles(["COACH"]);
         $coach->setEmail($email);
         $coach->setImage("7c62c977256064c61946037d427a0e0c.png");
