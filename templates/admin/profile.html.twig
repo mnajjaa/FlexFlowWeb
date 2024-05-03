@@ -1,0 +1,160 @@
+{% if app.user.getRoles()[0] == "MEMBRE" %}
+    {% extends app.user.getRoles()[0] == "MEMBRE" ? 'base-front.html.twig' :  'base-back.html.twig' %}
+{% endif %}
+
+
+
+
+
+{% block body %}
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+ 
+    </head>
+
+<body>
+
+    <div class="row mb-4">
+
+                            <div class="col-xl-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <div class="dropdown float-end">
+                                                <a class="dripicons-pencil font-size-18" href="{{ path('admin_edit_profile') }}" role="button"  aria-haspopup="true">
+                                                </a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div>
+                                                <img src="{{asset('uploads/users/' ~app.user.image)}}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                                            </div>
+                                            <h5 class="mt-3 mb-1">{{ admin.nom }}</h5>
+                                            <p class="text-muted">Administrateur</p>
+
+                                            <div class="mt-4">
+                                                <button type="button" class="btn btn-light btn-sm"><i class="uil uil-envelope-alt me-2"></i> Message</button>
+                                            </div>
+                                        </div>
+
+                                        <hr class="my-4">
+
+                                        <div class="text-muted">
+                                            {# <h5 class="font-size-16">About</h5>
+                                            <p>Hi I'm Marcus,has been the industry's standard dummy text To an English person, it will seem like simplified English, as a skeptical Cambridge.</p> #}
+                                            <div class="table-responsive mt-4">
+                                                <div>
+                                                    <p class="mb-1">Name :</p>
+                                                    <h5 class="font-size-16">{{ admin.nom }}</h5>
+                                                </div>
+                                                <div class="mt-4">
+                                                    <p class="mb-1">Mobile :</p>
+                                                    <h5 class="font-size-16">{{ admin.telephone }}</h5>
+                                                </div>
+                                                <div class="mt-4">
+                                                    <p class="mb-1">Email :</p>
+                                                    <h5 class="font-size-16">{{ admin.email }}</h5>
+                                                </div>
+                                                <div class="mt-4">
+                                                    <p class="mb-1">Location :</p>
+                                                    <h5 class="font-size-16">Tunis, Tunisia</h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-xl-8">
+                                <div class="card mb-0">
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#about" role="tab">
+                                                <i class="uil uil-user-circle font-size-20"></i>
+                                                <span class="d-none d-sm-block">About</span> 
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <!-- Tab content -->
+           <div class="tab-content p-4">
+            <div class="tab-pane active" id="about" role="tabpanel">
+                <div>
+                
+                            <div class="row">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Recent Activity</h4>
+                                        <ol class="activity-feed mb-0 ps-2" data-simplebar style="max-height: 336px;">
+                                         {% for Location in locations %}
+                                            <li class="feed-item">
+                                                <div class="feed-item-list">
+                                                    <p class="text-muted mb-1 font-size-13">
+                                                        {{ Location.loginDate|date('Y-m-d') }}
+                                                        <small class="d-inline-block ms-1">{{ Location.loginDate|date('H:i A') }}</small>
+                                                    </p>
+                                                    <p class="mb-0">
+                                                        Logged in from {{ Location.location.city }}, {{ Location.location.region }}, {{ Location.location.country }}
+                                                    </p>
+                                                    {# <p class="mb-0">
+                                                        Device: {{ Location.navigateur }}
+                                                    </p> #}
+                                                </div>
+                                            </li>
+                                            {% set loc = Location.location.loc %}
+                                            {% set lat_long = loc|split(',') %}
+                                            {% set latitude = lat_long[0] %}
+                                            {% set longitude = lat_long[1] %}
+                                        {% endfor %}
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                                        <div id="map" style="height: 400px; width: 100%;"></div>
+                                                <script>
+                                                    function initMap() {
+                                                        var map = new google.maps.Map(document.getElementById('map'), {
+                                                            zoom: 4,
+                                                            center: {lat: 0, lng: 0} // Initial center point. Adjust as needed.
+                                                        });
+
+                                                        {% for Location in locations %}
+                                    {% set loc = Location.location.loc %}
+                                    {% set lat_long = loc|split(',') %}
+                                    {% set latitude = lat_long[0] %}
+                                    {% set longitude = lat_long[1] %}
+                                    var loc = {lat: {{ latitude }}, lng: {{ longitude }}};
+                                    var marker = new google.maps.Marker({
+                                        position: loc,
+                                        map: map
+                                    });
+                                {% endfor %}
+                            }
+                        </script>
+                        <script async defer
+                            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdL6W-ZWFsrcYoxx2LLPg8NUDOZOhr4RY&callback=initMap">
+                        </script>
+                        <hr>
+                    </div>
+                    </div>
+                </div>
+                                
+            </div>     
+        </div>      
+    </div>   
+
+</body>
+{% endblock %}
