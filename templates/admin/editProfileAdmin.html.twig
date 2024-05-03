@@ -188,8 +188,8 @@
                 <div class="card">
                 <div class="card-body text-center">
                     <i class="mb-3 fas fa-lock"></i>
-                    <h5>Two Factor Auth</h5>
-                    <p>Enhance your application security by enabling two factor authentication.</p>
+                    <h5>Authentification à deux facteurs</h5>
+                    <p>Améliorez la sécurité de vos applications en activant l'authentification à deux facteurs.</p>
                     <button type="button" class="btn btn-primary" id="showQRCode" onclick="showQrCode()" data-bs-toggle="modal" data-bs-target="#twoFactorAuthOne"> Show </button>
                 </div>
                 </div>
@@ -205,10 +205,10 @@
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="text-center mb-2">
-                        <h3 class="mb-0">Add Authenticator App</h3>
+                        <h3 class="mb-0">Ajouter une application d'authentification</h3>
                     </div>
                     <h5 class="mb-2 pt-1 text-break">Authenticator Apps</h5>
-                    <p class="mb-4">Using an authenticator app like Google Authenticator, Microsoft Authenticator, Authy, or 1Password, scan the QR code. It will generate a 6-digit code for you to enter below.</p>
+                    <p class="mb-4">À l'aide d'une application d'authentification comme Google Authenticator, Microsoft Authenticator, Authy ou 1Password, scannez le code QR. Il générera un code à 6 chiffres que vous devrez saisir ci-dessous.</p>
                 <div id="qrCodeField" >
                     <div class="text-center" id="qrCodeField"  >
                     {% if qrCode is defined %}
@@ -216,15 +216,15 @@
                     {% endif %}
                     </div>
                      <form action="{{ path('activte_2fa') }}" method="post">
-                    <div class="mb-4">
+                    <div class="mb-4" style="padding-left: 10px;">
                     {% if qrCode is defined %}
                         <input type="hidden" name="secretKey" value="{{ secret }}">
                     {% endif %}
-                        <input type="text" id="otp" name="otp" class="form-control" id="twoFactorAuthInput" placeholder="Enter Authentication Code">
+                        <input type="text" id="otp" name="otp" class="form-control" id="twoFactorAuthInput" placeholder="Enter Authentication Code" style="padding-left: 10px;">
                     </div>
                     <div class="col-12 text-end">
-                        <button type="button" class="btn btn-label-secondary me-sm-3 me-2 px-3 px-sm-4" data-bs-toggle="modal" data-bs-target="#twoFactorAuth"><i class="dripicons-chevron-left bx-xs me-1 scaleX-n1-rtl"></i><span class="align-middle">Back</span></button>
-                        <button type="submit" class="btn btn-primary px-3 px-sm-4" data-bs-dismiss="modal" aria-label="Close"><span class="align-middle">Activer 2FA</span><i class="dripicons-chevron-right bx-xs ms-1 scaleX-n1-rtl"></i></button>
+                        <button type="button" class="btn btn-label-secondary me-sm-3 me-2 px-3 px-sm-4" data-bs-toggle="modal" data-bs-target="#twoFactorAuth"><span class="align-middle">Annuler</span></button>
+                        <button type="submit" class="btn btn-primary px-3 px-sm-4" data-bs-dismiss="modal" aria-label="Close"><span class="align-middle">Activer 2FA</span></button>
                     </div>
                     </form>
                 </div>
