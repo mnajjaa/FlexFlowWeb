@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body %}
+    <h1>Edit Profile</h1>
+
+    <form method="post" >
+        <label for="nom">Name:</label>
+        <input type="text" id="nom" name="nom" value="{{ membre.nom }}" required>
+
+        <label for="telephone">Phone:</label>
+        <input type="number" id="telephone" name="telephone" value="{{ membre.telephone }}" required>
+
+        <label for="image">Image:</label>
+        <input type="text" id="image" name="image" value="{{ membre.image }}" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ membre.email }}" required>
+
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}

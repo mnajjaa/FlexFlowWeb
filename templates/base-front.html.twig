@@ -91,11 +91,31 @@
 					
 					<!-- Extra Nav -->
 					<div class="extra-nav">
-						<div class="extra-cell">
-							<button id="quik-search-btn" type="button" class="header-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-							<a href="appointment.html" class="btn btn-primary btn-skew appointment-btn"><span class="skew-inner"><span class="text">Appointment</span></span></a>
-						</div>
-					</div>
+    <div class="extra-cell">
+        <button id="quik-search-btn" type="button" class="header-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <a href="appointment.html" class="btn btn-primary btn-skew appointment-btn"><span class="skew-inner"><span class="text">Appointment</span></span></a>
+        <div class="header-nav navbar-collapse collapse justify-content-end" id="navbarNavDropdown">
+    <div class="logo-header logo-dark">
+        <a href="index.html"><img src="{{asset('uploads/users/' ~app.user.image)}}" alt="" style="width: 50px; height: 50px;"></a>
+    </div>
+    <ul class="nav navbar-nav navbar navbar-left">	
+        <li class="sub-menu-down"><a href="javascript:void(0);">
+        <img class="rounded-circle header-profile-user ml-2" src="{{asset('uploads/users/' ~app.user.image)}}" style="width: 50px; height: 50px;">
+                {{app.user.nom}}
+            </a>
+            <ul class="sub-menu">
+                <li><a href="{{ path('membre_profile') }}">View Profile</a></li>
+                {# <li><a href="#">Settings</a></li>
+                <li><a href="#">Lock screen</a></li> #}
+                <li><a href="{{ path('app_logout') }}">Sign out</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+    </div>
+</div>
+
+
 					<!-- Extra Nav -->
 					
 					<!-- Search Form -->
@@ -112,14 +132,9 @@
 							<a href="index.html"><img src="{{asset('front-office/images/logo.png')}}" alt=""></a>
 						</div>
 						<ul class="nav navbar-nav navbar navbar-left">	
-							<li class="sub-menu-down"><a href="javascript:void(0);">Home</a>
-								<ul class="sub-menu">
-									<li><a href="index.html">Home 1</a></li>
-									<li><a href="index-2.html">Home 2</a></li>
-									<li><a href="index-3.html">Home 3</a></li>
-								</ul>
-							</li>
-							<li class="sub-menu-down"><a href="javascript:void(0);">Pages</a>
+							<li><a href="{{ path('membre_dashboard') }}">Acceuil</a>
+							</li>					
+							<li class="sub-menu-down"><a href="javascript:void(0);">Cours</a>
 								<ul class="sub-menu">
 									<li><a href="about-us.html">About Us</a></li>
 									<li><a href="faq.html">FAQ</a></li>
@@ -161,7 +176,7 @@
 								</ul>
 							</li>
 							<li class="has-mega-menu">
-								<a href="javascript:void(0);">Blogs</a>
+								<a href="javascript:void(0);">Evenement</a>
 								<ul class="mega-menu">
 									<li> <a href="javascript:;">Blog Grid</a>
 										<ul>
@@ -197,8 +212,8 @@
 									</li>
 								</ul>
 							</li>
-							<li class="has-mega-menu">
-								<a href="javascript:void(0);">Elements</a>
+							{# <li class="has-mega-menu">
+								<a href="javascript:void(0);">Eles</a>
 								<ul class="mega-menu">
 									<li> <a href="javascript:;">Elements</a>
 										<ul>
@@ -241,8 +256,8 @@
 										</ul>
 									</li>
 								</ul>
-							</li>
-							<li><a href="contact-us.html">Contact Us</a></li>
+							</li> #}
+							{# <li><a href="contact-us.html">Contact Us</a></li> #}
 						</ul>
 						<div class="dz-social-icon">
 							<ul>

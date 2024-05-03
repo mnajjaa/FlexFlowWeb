@@ -4,7 +4,7 @@
 <head>
 
         <meta charset="utf-8" />
-        <title>{% block title %} Dashboard | Minible - Admin & Dashboard Template {% endblock %} </title>
+        <title>{% block title %} Dashboard | FlexFlow {% endblock %} </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesdesign" name="author" />
@@ -22,6 +22,158 @@
     </head>
 
     <body>
-    <h5> welcome ADMIN </h5>
+     <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Dashboard</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">FlexFlow</a></li>
+                                            <li class="breadcrumb-item active">Dashboard</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-md-6 col-xl-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end mt-2">
+                                            <div id="total-revenue-chart"></div>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{ totalUsers }}</span></h4>
+                                            <p class="text-muted mb-0"><i class="dripicons-user-group me-1"></i>Totale Utilisateurs</p>
+                                             <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="dripicons-arrow-up me-1"></i></span> depuis la semaine dernière
+
+                                        </div>
+                                    
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-6 col-xl-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end mt-2">
+                                            <div id="orders-chart"> </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{nombreMembres}}</span></h4>
+                                            <p class="text-muted mb-0"><i class="dripicons-user-group me-1"></i>Totales Des membres </p>
+                                        </div>
+                                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="dripicons-arrow-up me-1"></i></span> depuis la semaine dernière
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-6 col-xl-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end mt-2">
+                                            <div id="customers-chart"> </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{ recentylyadd }}</span></h4>
+                                            <p class="text-muted mb-0"><i class="dripicons-pulse me-1"></i>Clients récemment ajoutés</p>
+                                        </div>
+                                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="dripicons-arrow-up me-1"></i></span> depuis la semaine dernière
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-md-6 col-xl-3">
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end mt-2">
+                                            <div id="growth-chart"></div>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-1 mt-1">+ <span data-plugin="counterup">{{nombreCoaches}}</span></h4>
+                                            <p class="text-muted mb-0"><i class="dripicons-rocket me-1"></i>Total Coaches</p>
+                                        </div>
+                                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="dripicons-arrow-up me-1"></i></span> depuis la semaine dernière
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+                        </div> <!-- end row-->
+<div class="row">
+<div class="col-xl-8">
+                                <div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Statistiques des Utilisateurs</h4>
+        <div id="map" style="height: 400px; width: 100%;"></div>
+        <script>
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 4,
+                    center: {lat: 0, lng: 0} // Initial center point. Adjust as needed.
+                });
+                var locationsCount = {};
+                {% for Location in locations %}
+                    var loc = '{{ Location.loc }}'.split(',');
+                    var latitude = parseFloat(loc[0]);
+                    var longitude = parseFloat(loc[1]);
+                    var locKey = latitude + ',' + longitude;
+                    locationsCount[locKey] = locationsCount[locKey] ? locationsCount[locKey] + 1 : 1;
+                    var loc = {lat: latitude + (locationsCount[locKey] - 1) * 0.0001, lng: longitude + (locationsCount[locKey] - 1) * 0.0001};
+                    var marker = new google.maps.Marker({
+                        position: loc,
+                        map: map
+                    });
+                {% endfor %}
+            }
+        </script>
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdL6W-ZWFsrcYoxx2LLPg8NUDOZOhr4RY&callback=initMap">
+        </script>
+        <hr>
+    </div>
+</div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+
+</div>
+
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <div class="card"  style="width: fit-content;">
+                                    <div class="card-body">
+                               
+                                        <h4 class="card-title mb-4">Statistiques des Utilisateurs</h4>
+
+                                        <div class="mt-3">
+                                        {# houniiii  #}
+                            <div id="div_chart"></div>
+
+                                                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                                                <script type="text/javascript">
+                                                    {{ gc_draw(barChart, 'div_chart') }}
+                                                    
+                                                </script>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+
+                    
+                        </div> <!-- end row-->
+
+                    </div> <!--end container-fluid -->
     </body>
 {% endblock %}
