@@ -109,6 +109,20 @@ class ProduitController extends AbstractController
     }
 
 
+
+    
+
+
+
+
+    
+
+
+
+
+
+
+
     #[Route('/produit/{id}', name: 'produit_detail')]
     public function showProductDetail($id): Response
     {
@@ -415,7 +429,7 @@ class ProduitController extends AbstractController
         // Vérifier que $productsForPDF contient les données correctes
 //var_dump($productsForPDF);
 //Api sms 
-/*$number="29678226";
+$number="29678226";
 $name="FlexFlow";
 
 $text = "Bonjour,
@@ -428,62 +442,63 @@ Votre commande est valable pendant une semaine à partir d'aujourd'hui " . date(
 $number_test=$_ENV['twilio_to_number'];// Numéro vérifier par twilio. Un seul numéro autorisé pour la version de test.
 
 //Appel du service
-$smsGenerator->sendSms($number_test ,$name,$text);*/
+$smsGenerator->sendSms($number_test ,$name,$text);
 // Générer le contenu du PDF avec les détails des produits achetés
 $pdfContent = $pdfGeneratorService->generatePDF($productsForPDF);
 
 // Vérifier le contenu généré du PDF
 //($pdfContent);
  // kifeh tejbed luser m session
- $user = new User();
+        $user = new User();
         $email1=$request->getSession()->get(Security::LAST_USERNAME);
         $user=$entityManager->getRepository(User::class)->findOneBy(['email'=>$email1]);
         $nomUtilisateur = $user->getNom();
 
-$emailContent = "
-<!DOCTYPE html>
-<html lang='fr'>
-<head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<title>Confirmation d'achat</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-  }
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-  }
-  h1 {
-    color: #333;
-    text-align: center;
-  }
-  p {
-    margin-bottom: 15px;
-  }
-  .signature {
-    font-style: italic;
-  }
-</style>
-</head>
-<body>
-<div class='container'>
-  <h1>Confirmation d'achat</h1>
-  <p>Bonjour $nomUtilisateur,</p>
-  <p>Votre commande sera prête à être retirée. Vous pouvez venir la récupérer à tout moment.</p>
-  <p>Votre commande est valable pendant une semaine à partir d'aujourd'hui $dateActuelle.</p>
-  <p class='signature'>Cordialement,<br>Votre application</p>
-</div>
-</body>
-</html>";
-
+        $emailContent = "
+        <!DOCTYPE html>
+        <html lang='fr'>
+        <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>Confirmation d'achat</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+          }
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+          }
+          h1 {
+            color: #333;
+            text-align: center;
+          }
+          p {
+            margin-bottom: 15px;
+          }
+          .signature {
+            font-style: italic;
+          }
+        </style>
+        </head>
+        <body>
+        <div class='container'>
+          <h1>Confirmation d'achat</h1>
+          <p>Bonjour $nomUtilisateur,</p>
+          <p>Votre commande sera prête à être retirée. Vous pouvez venir la récupérer à tout moment.</p>
+          <p>Votre commande est valable pendant une semaine à partir d'aujourd'hui $dateActuelle.</p>
+          <p class='signature'>Cordialement,<br>FlexFlow</p>
+        </div>
+        </body>
+        </html>";
+        
+        
 
 // Envoyer un e-mail à l'utilisateur avec le PDF en pièce jointe
 $email = (new Email())
@@ -537,8 +552,10 @@ public function indexAction(Request $request)
 
 
 
-
-
-
+#[Route('/show-button', name: 'show_button')]
+public function showButton(): Response
+{
+    return $this->render('button.html.twig');
+}
 
 }

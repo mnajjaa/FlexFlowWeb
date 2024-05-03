@@ -2,6 +2,7 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 # config/routes.yaml
-execute_python:
-    path: /execute-python
-    controller: App\Controller\ProduitController::executePython
+# config/routes.yaml
+run_object_recognition:
+    path: /run_object_recognition
+    controller: App\Controller\ProduitController::runObjectRecognition

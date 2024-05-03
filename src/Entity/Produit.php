@@ -26,10 +26,11 @@ class Produit
     #[ORM\Column(length: 500)]
     #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
     #[Assert\Regex(
-        pattern: '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç])+[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç]*$/u',
-        message: "La description doit contenir au moins une lettre."
+        pattern: '/^[^\r\n]{1,}$/u',
+        message: "La description du produit doit contenir au moins une lettre ou un caractère spécial."
     )]
     private ?string $description;
+    
 
 
     #[ORM\Column(type: "integer")]

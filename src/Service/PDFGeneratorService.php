@@ -39,7 +39,7 @@ class PDFGeneratorService
         $pdf->Cell(0, 7, 'Pays: Tunisie', 0, 1, 'L');
         $pdf->Cell(0, 7, 'Adresse: Tunis, Ghazela', 0, 1, 'L');
         $pdf->Cell(0, 7, 'Email: flexflow@gmail.com', 0, 1, 'L');
-        $pdf->Cell(0, 7, 'Téléphone: +216 29678226', 0, 1, 'L');
+        $pdf->Cell(0, 7, 'Téléphone: +216 29678126', 0, 1, 'L');
 
         // Ajout une ligne de séparation
         $pdf->Ln(10);
@@ -76,7 +76,7 @@ class PDFGeneratorService
 
         // Calcul de la TVA
         $tva = $montantTotal * 0.19;
-        $montantApresTVA = $montantTotal - $tva;
+        $montantApresTVA = $montantTotal + $tva;
 
                // Affichage des informations TVA
                $pdf->SetFont('helvetica', '', 12);
@@ -88,7 +88,7 @@ class PDFGeneratorService
         // Ajout du texte "Offre valable jusqu'à" à gauche sous le tableau
         $pdf->SetFont('helvetica', '', 12);
         $pdf->SetXY(10, $pdf->getY() + 10);
-        $pdf->Cell(0, 10, 'Offre valable jusqu\'à : ' . date('Y-m-d', strtotime('+7 days')), 0, 1, 'L');
+        $pdf->Cell(0, 10, 'commande valable jusqu\'à : ' . date('Y-m-d', strtotime('+7 days')), 0, 1, 'L');
 
         // Ajout de l'image de la signature sous le texte "Signature"
         $image_signature = 'C:\xampp\htdocs\FlexFlowWeb\public\uploads\signature.jpg'; // Chemin vers le fichier de signature
