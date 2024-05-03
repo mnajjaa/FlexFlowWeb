@@ -280,8 +280,8 @@
                                 {# </ul> #}
                             </li>
                           {% else %}
-                        <p>Vous n'avez pas les droits pour accéder à cette page</p>
-                        {% endif  %} 
+                                           
+                             {% endif  %} 
                          {% if app.user.getRoles()[0]=="ADMIN" %}
                             <li class="menu-title">Pages</li>
 
@@ -360,8 +360,87 @@
 
                            
                            {% else %}
-                           <p>Vous n'avez pas les droits pour accéder à cette page</p>
-                        {% endif  %} 
+                           <li class="menu-title">Home</li>
+
+                            <li>
+                                <a href="{{ path('coach_dashboard') }}">
+                                    <i class="dripicons-home"></i><span class="badge rounded-pill bg-primary float-end">01</span>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>          
+                            
+                            <li class="menu-title">Pages</li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="waves-effect">
+                                    <i class="dripicons-hourglass"></i>
+                                    <span>Evenements</span>
+                                    <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
+                                </a>
+                                 <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="invoices-list.html"> Liste evenement</a></li>
+                                    <li><a href="invoices-detail.html">Ajouter evenement</a></li>
+                                </ul>
+                            </li>
+                            
+                             <li>
+                                <a href="javascript: void(0);" class="waves-effect">
+                                    <i class="dripicons-calendar"></i>
+                                    <span>Calender</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class=" waves-effect">
+                                    <i class="dripicons-lifting"></i>
+                                    <span>Cours</span>
+                                    <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
+
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="invoices-list.html"> List des cours</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="waves-effect" >
+                                    <i class="dripicons-rocket"></i>
+                                    <span>Coaching privé</span>
+                                <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
+
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="email-inbox.html">Consulter offres</a></li>
+                                </ul>
+                            </li>
+ 
+                            <li class="menu-title">Apps</li>
+
+                            <li>
+                                <a href="javascript: void(0);" class=" waves-effect" >
+                                    <i class="dripicons-store"></i>
+                                    <span>Store</span>
+                                    <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
+                                </a>
+                                
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="ecommerce-products.html">Produits</a></li>
+                                    <li><a href="ecommerce-orders.html">Commande</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a  href="javascript: void(0);" class=" waves-effect">
+                                    <i class="dripicons-broadcast"></i>
+                                    <span>Reclamation</span>
+                                 <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
+                                </a>
+                                 <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="email-inbox.html">Listes</a></li>
+                                    <li><a href="email-read.html">Responses</a></li>
+                                </ul>
+                            </li>           
+                           {% endif  %} 
                     </div>
                     <!-- Sidebar -->
                 </div>
