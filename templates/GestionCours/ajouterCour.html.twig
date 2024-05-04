@@ -1,0 +1,150 @@
+{% extends 'base-back.html.twig' %}
+
+{% block stylesheets %}
+    {# Inclure les fichiers CSS Bootstrap et SweetAlert2 ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        .custom-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .custom-form-label {
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<!doctype html>
+<html lang="en">
+
+<head>      
+    <meta charset="utf-8" />
+    <title>Login | Minible - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+    <!-- Bootstrap Css -->
+    <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+    <!-- Sweet Alert-->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- Feuilles de styles -->
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+
+    <!-- Fichiers JS -->
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
+    {% block javascripts %}{% endblock %}
+    <script src="{{ asset('assets/js/scripts.js') }}" defer></script>
+</head>
+
+<body>
+ {{ form_start(form, {'method': 'POST' , 'class':'needs-validation' , 'novalidate' : true}) }}
+
+<div class="container">
+<h1 class="text-center mb-4">Ajouter un cour</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ path('cour_ajouter') }}" method="post" enctype="multipart/form-data">
+                        
+                        {{ form_row(form._token) }} {# Ajout du jeton CSRF #}
+                        
+                        <div class="mb-3">
+                            <label for="nomCour" class="form-label">Nom du cours</label>
+                            {{ form_widget(form.nomCour, {'attr': {'class': 'form-control'}}) }}
+                             <div class="text-danger">
+        {{ form_errors(form.nomCour) }}
+    </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Duree" class="form-label">Durée</label>
+                            {{ form_widget(form.Duree, {'attr': {'class': 'form-control'}}) }}
+                            <div class="text-danger">
+        {{ form_errors(form.Duree) }}
+    </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Intensite" class="form-label">Intensité</label>
+                            {{ form_widget(form.Intensite, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="Cible" class="form-label">Cible</label>
+                            {{ form_widget(form.Cible, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="Categorie" class="form-label">Catégorie</label>
+                            {{ form_widget(form.Categorie, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="Objectif" class="form-label">Objectif</label>
+                            {{ form_widget(form.Objectif, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="etat" class="form-label">État</label>
+                            {{ form_widget(form.etat, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="capacite" class="form-label">Capacité</label>
+                            {{ form_widget(form.capacite, {'attr': {'class': 'form-control'}}) }}
+                            <div class="text-danger">
+        {{ form_errors(form.capacite) }}
+    </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imageFile" class="form-label">Image</label>
+                            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                              <div class="text-danger">
+        {{ form_errors(form.imageFile) }}
+    </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="user" class="form-label">Coach</label>
+                            {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                       <center> <button type="submit" class="btn btn-primary" id="submit-btn">Ajouter</button> </center>
+                        {{ form_end(form) }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inclure le script de SweetAlert2 à la fin du body -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('submit-btn').addEventListener('click', function(event) {
+        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+        Swal.fire({
+            icon: 'info',
+            title: 'Vérification des données en cours !',
+            showConfirmButton: false,
+            timer: 3000
+        }).then(() => {
+            // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
+            document.querySelector('form').submit();
+        });
+    });
+});
+</script>
+
+</body>
+
+</html>
+{% endblock %}
