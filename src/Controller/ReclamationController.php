@@ -136,7 +136,7 @@ class ReclamationController extends AbstractController
 
             $this->flashBag->add('success', 'La réclamation a été ajoutée avec succès.');
 
-            
+
             return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
         }
         
@@ -146,6 +146,8 @@ class ReclamationController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    
 
     #[Route('/{id}', name: 'app_reclamation_show', methods: ['GET'])]
     public function show(Reclamation $reclamation): Response
