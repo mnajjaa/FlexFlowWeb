@@ -1,0 +1,224 @@
+
+{% block title %}Liste des produits{% endblock %}
+
+
+
+
+
+
+
+
+{% extends 'base-back.html.twig' %}
+{% block stylesheets %}
+ 
+
+  {# Incluez les fichiers CSS Bootstrap ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {# Incluez les fichiers CSS Font Awesome ici #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    {# Incluez les fichiers CSS Bootstrap ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+    #searchInput.search-focus {
+    border-color: #6c757d;
+    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+}
+
+#searchInput.search-focus-append .btn {
+    border-color: #6c757d;
+    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+}
+
+        .custom-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .custom-form-label {
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="assets/libs/toastr/build/toastr.min.css">
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+        
+
+    </head>
+    
+
+<body>
+
+<div class="container">
+    <h1>Liste des produits</h1>
+    <!-- Barre de recherche -->
+    <!-- Barre de recherche -->
+<!-- Barre de recherche -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="input-group">
+        <input type="text" id="searchInput" class="form-control rounded-pill border-0 py-2" style="max-width: 200px;" placeholder="Rechercher par nom..." aria-label="Search" aria-describedby="search-addon">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary rounded-pill border-0 py-2" type="button" id="search-addon">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <a href="{{ path('produit_ajouter') }}" class="btn btn-primary rounded-pill" style="width: 200px;">Ajouter produit</a>
+
+</div>
+
+
+
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nom du produit</th>
+              
+                <th>Prix</th>
+                <th>Type</th>
+                <th>Quantité</th>
+                <th>Quantité Vendues</th>
+                <th>Image</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="productTableBody">
+            {% for produit in produits %}
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.nom }}</td>
+              
+                <td>{{ produit.prix }}</td>
+                <td>{{ produit.type }}</td>
+                <td>{{ produit.quantite }}</td>
+                <td>{{ produit.quantiteVendues }}</td>
+                <td><img src="data:image/jpeg;base64,{{ produit.image }}" alt="Image du produit" style="max-width: 100px;"></td>
+                <td>
+                    {% if produit.quantite > 0 %}
+                        <span style="color: green;">En stock</span>
+                    {% else %}
+                        <span style="color: red;">Out of stock</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="d-flex">
+                        <form method="post" action="{{ path('produit-supprimer', {'id': produit.id}) }}" onsubmit="return confirmWithSweetAlert(event)">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
+                            <button type="submit" class="btn btn-danger mr-1"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                        <form method="get" action="{{ path('produit_modifier', {'id': produit.id}) }}">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Inclure les fichiers JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+   function confirmWithSweetAlert(event) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Êtes-vous sûr?',
+       // text: 'Vous ne pourrez pas revenir en arrière!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oui, supprimer!',
+        cancelButtonText: 'Annuler' // Texte du bouton d'annulation
+    }).then((result) => {
+        if (result.isConfirmed) {
+            event.target.submit();
+            Swal.fire({
+                icon: 'success',
+                title: 'Suppression réussie',
+                showConfirmButton: false,
+                timer: 5000
+            });
+        } else {
+            // L'utilisateur a annulé, vous pouvez ajouter un comportement supplémentaire ici si nécessaire
+            Swal.fire({
+                icon: 'info',
+                title: 'Suppression annulée',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+    });
+}
+
+
+    // Filtrer les produits par nom
+    document.getElementById("searchInput").addEventListener("input", function() {
+        var input = this.value.toLowerCase();
+        var rows = document.querySelectorAll("#productTableBody tr");
+        rows.forEach(function(row) {
+            var productName = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+            if (productName.includes(input)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+
+    $(document).ready(function() {
+    $('#searchInput').on('focus', function() {
+        $(this).addClass('search-focus');
+        $(this).siblings('.input-group-append').addClass('search-focus-append');
+    });
+
+    $('#searchInput').on('blur', function() {
+        if (!$(this).val()) {
+            $(this).removeClass('search-focus');
+            $(this).siblings('.input-group-append').removeClass('search-focus-append');
+        }
+    });
+});
+$(document).ready(function() {
+    $('#addProductBtn').hover(function() {
+        $(this).toggleClass('btn-primary btn-secondary');
+    });
+});
+</script>
+
+</body>
+
+
+{% endblock %}
+
+
+
+
+
+
+

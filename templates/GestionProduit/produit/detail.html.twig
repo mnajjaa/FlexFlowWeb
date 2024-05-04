@@ -1,0 +1,20 @@
+<h1>{{ produit.nom }}</h1>
+<p>Type: {{ produit.type }}</p>
+<img src="data:image/jpeg;base64,{{ produit.image }}" alt="{{ produit.nom }}">
+<p>Prix: {{ produit.prix }} dnt</p>
+<p>Description: {{ produit.description }}</p>
+
+{% if produitsMemeType is not empty %}
+    <h2>Autres produits du même type :</h2>
+    <ul>
+        {% for produitMemeType in produitsMemeType %}
+            <li>
+                <h3>{{ produitMemeType.nom }}</h3>
+                <img src="data:image/jpeg;base64,{{ produitMemeType.image }}" alt="{{ produitMemeType.nom }}">
+                <p>Prix: {{ produitMemeType.prix }} dnt</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun autre produit du même type disponible.</p>
+{% endif %}

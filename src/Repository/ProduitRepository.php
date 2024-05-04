@@ -45,4 +45,22 @@ class ProduitRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findMostSoldProduct(): ?Produit
+{
+    return $this->createQueryBuilder('p')
+        ->orderBy('p.quantiteVendues', 'DESC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
+}
+
+public function findLeastSoldProduct(): ?Produit
+{
+    return $this->createQueryBuilder('p')
+        ->orderBy('p.quantiteVendues', 'ASC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
+}
+
 }
