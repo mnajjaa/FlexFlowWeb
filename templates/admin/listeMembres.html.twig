@@ -1,32 +1,151 @@
 {% extends 'base-back.html.twig' %}
 
 {% block body %}
-
 <head>
-
+        
         <meta charset="utf-8" />
-        <title>{% block title %} Dashboard | Minible - Admin & Dashboard Template {% endblock %} </title>
+        <title>Customers | Minible - Admin & Dashboard Template</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesdesign" name="author" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
 
-        {% block css %}
+        <!-- DataTables -->
+        <link href="{{asset('back-office/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Responsive datatable examples -->
+        <link href="{{asset('back-office/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />  
+
         <!-- Bootstrap Css -->
         <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
         <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
-        {% endblock %}
+        <!-- real time validation -->
+        <script src="{{asset('validationJs/formValidation.js')}}"></script>
+        <!-- Sweet Alert css -->
+        <link href="{{asset('back-office/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- Sweet Alerts js -->
+        <script src="{{asset('back-office/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+        <!-- Sweet alert init js-->
+        <script src="{{asset('back-office/js/pages/sweet-alerts.init.js')}}"></script>
     </head>
+
 <body
-    <h1>Members List</h1>
-    <ul>
-        {% for member in membres %}
-            <li>{{ member.email }}</li>
-        {% endfor %}
-    </ul>
+
+            
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Liste Des Membres</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div>
+                                    <div class="table-responsive mb-4">
+                                        <table class="table table-centered datatable dt-responsive nowrap table-card-list" style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                            <thead>
+                                                <tr class="bg-transparent">
+                                                    <th style="width: 20px;">
+                                                        <div class="form-check text-center">
+                                                            <input type="checkbox" class="form-check-input" id="customercheck">
+                                                            <label class="form-check-label" for="customercheck"></label>
+                                                        </div>
+                                                    </th>
+                                                    <th style="width: 120px;">Customer ID</th>
+                                                    <th>Nom</th>
+                                                    <th>Email</th>
+                                                    <th>Telephone</th>
+                                                    <th>Etat</th>
+                                                    <th style="width: 120px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                    {% for membre in membres %}
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check text-center">
+                                                            <input type="checkbox" class="form-check-input" id="customercheck1">
+                                                            <label class="form-check-label" for="customercheck1"></label>
+                                                        </div>
+                                                    </td>
+                                                    
+                                                    <td><a href="javascript: void(0);" class="text-dark fw-bold">{{membre.id}}</a> </td>
+                                                    <td>
+                                                        
+                                                            <img src=" {{asset('uploads/users/' ~membre.image)}}" alt="" class="avatar-xs rounded-circle me-2">
+                                                            {{ membre.nom }}
+                                                        
+                                                        {# <span>{{ membre.nom }}</span> #}
+                                                    </td>
+                                                    <td>{{ membre.email }}</td>
+                                                    
+                                                    <td>
+                                                        {{membre.telephone}}
+                                                    </td>
+                                                    <td>
+                                                        <div class="badge bg-pill bg-soft-success font-size-12">Active</div>
+                                                    </td>
+                                                    <td>
+                                             
+                                                        <a href="{{ path('edit_membre', {'id': membre.id}) }}" class="px-3 text-primary"><i class="dripicons-pencil"></i></a>
+                                                        <a href="javascript:void(0);" class="px-3 text-danger" onclick="deleteMembre('{{path('delete_membre', {'id': membre.id}) }}')"><i class="dripicons-trash"></i></a>
+                                                    </td>
+                                                </tr>
+
+                                    {% endfor %}   
+  
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+
+                    </div> <!-- container-fluid -->
+           
+    
+
+
+        <!-- JAVASCRIPT -->
+         {% block javascript %}
+        <script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+        <!-- Required datatable js -->
+        <script src="{{asset('back-office/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+        
+        <!-- Responsive examples -->
+        <script src="{{asset('back-office/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
+        
+         <!-- Sweet Alerts js -->
+        <script src="{{asset('back-office/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+
+        <!-- Sweet alert init js-->
+        <script src="{{asset('back-office/js/pages/sweet-alerts.init.js')}}"></script>
+
+        <!-- init js -->
+        <script src="{{asset('back-office/js/pages/ecommerce-datatables.init.js')}}"></script>
+        
+        <!-- App js -->
+        <script src="{{asset('back-office/js/app.js')}}"></script>
+        {% endblock %}
     </body>
-{% endblock %}
+ {% endblock %}

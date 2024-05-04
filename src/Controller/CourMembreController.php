@@ -199,7 +199,7 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
           // Envoyer un message WhatsApp avec le nom du cours
 
           //na7iii hethi men commentaire!!!!!!!
-        //$this->envoyerMessageWhatsApp($user->getTelephone(), $cours->getNomCour());
+        $this->envoyerMessageWhatsApp($user->getTelephone(), $cours->getNomCour());
 
         // Send email confirmation
         $email = (new Email())
@@ -219,7 +219,7 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
 }
 
 //api whatsapp !!!!!
-/*private function envoyerMessageWhatsApp($numeroTelephone, $nomCours)
+private function envoyerMessageWhatsApp($numeroTelephone, $nomCours)
 {
     $sid    = "AC9c420f29e4603574c936348746f94949";
     $token  = "68f0ae53f83846f67e6c2ad62a4f756d";
@@ -232,7 +232,7 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
           "body" => "Confirmation de participation au cours : $nomCours. Merci!"
         )
       );
-}*/
+}
 
 ////commentaire aprés merge////
 

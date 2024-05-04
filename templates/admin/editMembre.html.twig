@@ -1,0 +1,107 @@
+{% extends 'base-back.html.twig' %}
+  {% block body %}
+  <head>
+        
+        <meta charset="utf-8" />
+        <title>Customers | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+        <!-- DataTables -->
+        <link href="{{asset('back-office/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Responsive datatable examples -->
+        <link href="{{asset('back-office/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />  
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+        
+        <!-- real time validation -->
+        <script src="{{asset('validationJs/formValidation.js')}}"></script>
+
+        <!-- Sweet Alert css -->
+        <link href="{{asset('back-office/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- Sweet Alerts js -->
+        <script src="{{asset('back-office/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+        <!-- Sweet alert init js-->
+        <script src="{{asset('back-office/js/pages/sweet-alerts.init.js')}}"></script>
+         
+    </head>
+<body>
+<div class="row">
+ <div class="card">
+<div class="card-body">
+           <div class="row">
+    <div class="col-xl-6 mt-5 ">
+                                <div class="card">
+                                    <div class="card-body">
+        
+                                        <h4 class="card-title">Modifier un Membre </h4>
+                                        <p class="card-title-desc">Modifier un  Membre dans votre Liste. </p>
+        
+                                        <form action="{{ path('edit_membre', {'id': membre.id}) }}" method="POST" class="custom-validation" id="editUserForm">
+        
+                                            <div class="mb-3">
+                                                <label class="form-label">Nom Complet</label>
+                                                <div>
+                                                    <input type="text" id="name" name="name" class="form-control" required
+                                                             placeholder="Min 6 chars." oninput="isValidName()"
+                                                            value="{{ membre.nom }}" />
+                                                            <span id="error_name" class="text-danger" style="color: red;"></span>
+                                                            <span id="success_name" class="text-success" style="color: green;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Telephone</label>
+                                                <div>
+                                                    <input type="text" id="telephone" name="telephone" class="form-control"  required
+                                                             placeholder="Max 6 chars." oninput="isValidPhoneNumber()"
+                                                            value="{{ membre.telephone}}" />
+                                                            <span id="error_Telephone" class="text-danger" style="color: red;"></span>
+                                                            <span id="success_Telephone" class="text-success" style="color: green;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Email</label>
+                                                <div>
+                                                    <input type="email" id="email" name="email" class="form-control" required
+                                                            data-parsley-length="[5,10]" oninput="isValidEmail()"
+                                                            placeholder="Text between 5 - 10 chars length"
+                                                            value="{{ membre.email }}" />
+                                                            <span id="error_email" class="text-danger" style="color: red;"></span>
+                                                            <span id="success_email" class="text-success" style="color: green;"></span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                                        Modifier
+                                                    </button>
+                                                    <a href="{{ path('liste_membres') }}" class="btn btn-secondary waves-effect">
+                                                        Annuler
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </form>
+        
+                                    </div>
+                                </div>
+    </div> <!-- end col -->
+       <div class="col-xl-6  mt-5 ">
+         <div>
+            <img src="{{asset('back-office/images/undraw_Add_tasks_re_s5yj.png')}}" alt="image" class="img-fluid" style="width: 100%; height: 100%;">
+        </div>
+    </div> <!-- end col -->
+    </div> <!-- end row -->
+</div>
+</div>
+</div> <!-- end row -->
+</body>
+    {% endblock %}

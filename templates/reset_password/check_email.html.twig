@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/pages-404.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:40 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Check Email </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body class="authentication-bg">
+
+        <div class="my-5 pt-sm-5">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-12">
+                <div class="text-center">
+    <div>
+        <div class="row justify-content-center">
+            <div class="col-sm-4">
+                <div class="error-img">
+                    <img src="{{asset('back-office/images/404-error.png')}}" alt="" class="img-fluid mx-auto d-block">
+                </div>
+            </div>
+        </div>
+    </div>
+    <h4 class="text-uppercase mt-4">Password Reset Email Sent</h4>
+    <p class="text-muted">
+        If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
+        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+    </p>
+    <p class="text-muted">If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+    <div class="mt-5">
+        <a class="btn btn-primary waves-effect waves-light" href="{{ path('app_forgot_password_request') }}">Try Again</a>
+    </div>
+</div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JAVASCRIPT -->
+        <script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+        <!-- App js -->
+        <script src="{{asset('back-office/js/app.js')}}"></script>
+
+    </body>
+
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/pages-404.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:40 GMT -->
+</html>
