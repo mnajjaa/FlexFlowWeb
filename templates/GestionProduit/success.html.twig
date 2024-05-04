@@ -1,0 +1,73 @@
+{# templates/success.html.twig #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Succès</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center; /* Centrer le contenu horizontalement */
+            padding: 50px;
+        }
+         .success-container {
+            max-width: 400px;
+            margin: 0 auto; /* Centrer le bloc horizontalement */
+            border-radius: 10px;
+            background-color: white;
+            padding: 20px;
+            text-align: center; /* Centrer le contenu horizontalement */
+            border: 2px solid black; /* Ajout de bordures noires */
+                        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Ajout d'une ombre */
+
+        }
+        .success-image {
+            width: 290px;
+            margin-bottom: 20px;
+            margin: 0 auto; /* Centrer l'image horizontalement */
+        }
+        .message {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 auto; /* Centrer le texte horizontalement */
+        }
+        .btn-return {
+            width: 70%; /* Largeur de 100% */
+            margin-top: 20px; /* Espacement entre le texte et le bouton */
+        }
+    </style>
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <!-- Bootstrap Css -->
+    <link href="css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="success-container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="alert alert-success alert-dismissible fade show mt-4 px-4 mb-0 text-center" role="alert">
+                    <i class="uil uil-check-circle d-block display-4 mt-2 mb-3 text-success"></i>
+                    <h5 class="text-success">Success</h5>
+                    <p></p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+
+        <img src="{{ asset('success.gif') }}" alt="Success" class="success-image">
+        
+        <p class="message">Votre paiement a été effectué avec succès. Vérifie votre boite d'email.</p>
+
+        <p class="message">Bienvenue!</p>
+
+        <a href="{{ path('produits') }}" class="btn btn-primary btn-return">Retour au FlexFlow</a>
+    </div>
+</body>
+</html>

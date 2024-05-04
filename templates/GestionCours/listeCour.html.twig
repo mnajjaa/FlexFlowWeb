@@ -1,0 +1,275 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Liste des Cours{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .table-separator td {
+            border-right: 1px solid #ccc; /* Bordure droite */
+            padding: 8px; /* Espacement */
+        }
+        .table-separator th {
+            border-right: 1px solid #ccc; /* Bordure droite */
+            padding: 8px; /* Espacement */
+        }
+    </style>
+
+
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        /* Votre CSS personnalisé ici */
+        .table-separator td {
+            border-right: 1px solid #ccc;
+            padding: 8px;
+        }
+        .table-separator th {
+            border-right: 1px solid #ccc;
+            padding: 8px;
+        }
+    </style>
+{% endblock %}
+
+
+
+{% block body %}
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="assets/libs/toastr/build/toastr.min.css">
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+        
+
+    </head>
+
+<body>
+    <h1>Liste des Cours</h1>
+    <div class="container-fluid">
+
+    
+    
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            
+                           <div id="datatable_filter" class="dataTables_filter">
+    <label for="tableSearch" class="input-group mb-0">
+        <input id="tableSearch" type="search" class="form-control form-control-sm" placeholder="Chercher par nom..." aria-controls="datatable">
+        <span class="input-group-text"><i class="fas fa-search"></i></span>
+    </label>
+</div>
+
+                             <!-- Bouton Ajouter -->
+                            <div class="ml-auto">
+                                <a href="{{ path('cour_ajouter') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Ajouter</a>
+
+                            </div>
+                        </div>
+
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nom du Cours</th>
+                                    <th>Durée</th>
+                                    <th>Intensité</th>
+                                    <th>Cible</th>
+                                    <th>Catégorie</th>
+                                    <th>Objectif</th>
+                                    <th>État</th>
+                                    <th>Capacité</th>
+                                    <th>Coach</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                          
+                            <tbody>
+                                {% for cour in cours %}
+                                    <tr>
+                                        <td>{{ cour.id }}</td>
+                                        <td>{{ cour.nomCour }}</td>
+                                        <td>{{ cour.Duree }}</td>
+                                        <td>{{ cour.Intensite }}</td>
+                                        <td>{{ cour.Cible }}</td>
+                                        <td>{{ cour.Categorie }}</td>
+                                        <td>{{ cour.Objectif }}</td>
+                                        <td>{{ cour.etat ? 'Actif' : 'Inactif' }}</td>
+                                        <td>{{ cour.capacite }}</td>
+                                        <td>{{ cour.user.username }}</td>
+  <td>
+    <div class="d-flex">
+        <form id="form-delete-{{ cour.id }}" method="post" action="{{ path('cour_supprimer', {'id': cour.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cour.id) }}">
+    <button type="button" class="btn btn-danger btn-sm mr-2 btn-supprimer" data-id="{{ cour.id }}"><i class="fas fa-trash-alt"></i></button>
+</form>
+
+        <form method="get" action="{{ path('cour_modifier', {'id': cour.id}) }}">
+            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+        </form>
+    </div>
+</td>
+
+
+
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+    </div> <!-- end container-fluid -->
+
+
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+ <!-- Inclure le script de SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      $(document).ready(function() {
+    // Gérer le changement du nombre d'entrées à afficher
+ 
+
+    // Script pour la recherche dans la table
+    $('#tableSearch').on('keyup', function() {
+        var searchText = $(this).val().toLowerCase();
+        $('#datatable tbody tr').each(function() {
+            var rowData = $('td:eq(1)', this).text().toLowerCase(); // Rechercher dans la deuxième colonne (Nom du Cours)
+            if (rowData.startsWith(searchText)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+
+
+    // Afficher les alertes flash avec SweetAlert
+        {% for flashMessage in app.flashes('warning') %}
+            Swal.fire({
+                title: 'Alerte !',
+                html: '{{ flashMessage|raw }}', // Contenu de l'alerte flash
+                icon: 'warning',
+                showConfirmButton: false,
+                timer: 5000,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });
+        {% endfor %}
+});
+
+ 
+    
+
+ $(document).ready(function() {
+    $('.btn-supprimer').click(function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var url = $('#form-delete-' + id).attr('action');
+        Swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: "Vous ne pourrez pas revenir en arrière !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Soumettre le formulaire si l'utilisateur confirme
+                $('#form-delete-' + id).submit();
+            } else {
+                // Afficher un message d'erreur si l'utilisateur annule la suppression
+                Swal.fire({
+                    title: 'Annulé',
+                    text: 'La suppression a été annulée.',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+            }
+        });
+    });
+
+    // Écouter l'événement de soumission du formulaire de suppression
+    $('form[id^="form-delete-"]').submit(function(e) {
+        e.preventDefault(); // Empêcher la soumission du formulaire par défaut
+
+        var form = $(this);
+        var id = form.attr('id').replace('form-delete-', ''); // Récupérer l'ID du formulaire
+
+        // Envoyer une requête AJAX pour supprimer l'élément
+        $.ajax({
+            url: form.attr('action'), // Récupérer l'URL d'action du formulaire
+            method: 'POST',
+            data: form.serialize(), // Sérialiser les données du formulaire
+            success: function(response) {
+                // Si la suppression réussit, afficher un message de succès avec animation
+                Swal.fire({
+                    title: 'Supprimé !',
+                    text: 'Le cours a été supprimé.',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                }).then(() => {
+                    // Recharger la page après l'animation
+                    location.reload();
+                });
+            },
+            error: function(xhr, status, error) {
+                // Si une erreur se produit lors de la suppression, afficher un message d'erreur
+                Swal.fire({
+                    title: 'Erreur !',
+                    text: 'Une erreur s\'est produite lors de la suppression.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            }
+        });
+    });
+});
+
+    </script>
+    </body>
+{% endblock %}
