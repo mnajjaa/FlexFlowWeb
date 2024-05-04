@@ -1,3 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+# config/routes.yaml
+run_object_recognition:
+    path: /run_object_recognition
+    controller: App\Controller\ProduitController::runObjectRecognition
