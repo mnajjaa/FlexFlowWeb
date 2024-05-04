@@ -25,6 +25,12 @@
 	
 	<!-- Mobile Specific -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Balises Open Graph pour le partage sur Facebook -->
+    <meta property="og:title" content="Cours de Fitness - {{ cours.getNomCour() }}" />
+    <meta property="og:description" content="{% if cours.getCible() == 'Adulte' %}Cours dynamique pour les adultes. Convient aux personnes recherchant une ambiance musicale et de défoulement.{% elseif cours.getCible() == 'Enfant' %}Cours ludique pour les enfants. Idéal pour le développement physique et social.{% endif %}" />
+    <meta property="og:image" content="data:image/jpeg;base64,{{ cours.getImage }}" />
+
 	
 	<!-- Favicon icon -->
     <link rel="icon" type="image/png" href="{{asset('front-office/images/favicon.png')}}">
@@ -320,6 +326,8 @@
 
 
 							<ul class="pr-list style-2 dark m-b30 wow fadeInUp" data-wow-delay="1.0s">
+							{% if cours.getCible() == "Adulte" %}
+
 								<li><i class="flaticon-check-mark"></i>Santé globale et bien-être</li>
 <li><i class="flaticon-check-mark"></i>Évaluation des progrès</li>
 <li><i class="flaticon-check-mark"></i>Récompenses et incitations</li>
@@ -328,10 +336,29 @@
 <li><i class="flaticon-check-mark"></i>Engagement communautaire</li>
 <li><i class="flaticon-check-mark"></i>Suivi des progrès</li>
 <li><i class="flaticon-check-mark"></i>Variété d'activités</li>
+ {% elseif cours.getCible() == "Enfant" %}
+ <li><i class="flaticon-check-mark"></i>Jeux actifs</li>
+<li><i class="flaticon-check-mark"></i>Défis amusants</li>
+<li><i class="flaticon-check-mark"></i>Suivi adapté</li>
+<li><i class="flaticon-check-mark"></i>Diversité des activités</li>
+<li><i class="flaticon-check-mark"></i>Développement physique</li>
+<li><i class="flaticon-check-mark"></i>Esprit d'équipe</li>
+<li><i class="flaticon-check-mark"></i>Activités familiales</li>
+<li><i class="flaticon-check-mark"></i>Variété d'activités</li>
+{% endif %}
 
 							</ul>
-							<p class="event-text wow fadeInUp" data-wow-delay="1.2s">There are many variations of passages of Lorem Ipsum available, but the majority have some a form suffered alteration in , by injected humour,</p>
 							
+							<h4 class="title wow fadeInUp" data-wow-delay="1.8s">Vidéo du Jour : Séances d'Entraînement Recommandées</h4>
+
+							<style>
+    .video-container {
+        margin-top: 20px; /* Espacement en haut */
+        margin-bottom: 20px; /* Espacement en bas */
+    }
+</style>
+
+<div class="video-container">							
 
 {% if cours.getCategorie() == "Aquatique" %}
 							<video class="wow fadeInUp" data-wow-delay="1.0s" controls autoplay muted loop>
@@ -361,10 +388,45 @@
   Your browser does not support the video tag.
 </video>
 {% endif %}
+</div>
+    
 							
-							<h4 class="title wow fadeInUp" data-wow-delay="1.8s">Trainer Suggestion And Going</h4>
-							<p class="event-text wow fadeInUp" data-wow-delay="2.0s">If you use this site regularly and would like to help keep the site on the Internet, please consider donating a small sum to help pay for the hosting and bandwidth bill. make a type specimen book. It has survived not only five centuries but also the leap into the electronic typesetting, remaining essentially unchanged.</p>
-						</div>
+							<h4 class="title wow fadeInUp" data-wow-delay="1.8s">Conseils sportifs</h4>
+							<p class="event-text wow fadeInUp" data-wow-delay="2.0s">Pour maximiser vos séances d'entraînement, veillez à bien vous hydrater avant, pendant et après l'exercice. N'oubliez pas de vous échauffer correctement pour éviter les blessures, et écoutez votre corps pour savoir quand il est temps de ralentir ou de faire une pause.</p>
+							<!-- Ajouter les icônes de like/dislike -->
+<!-- Ajouter les icônes de like/dislike avec les classes d'animation directement dans le Twig -->
+
+
+<h4 class="title wow fadeInUp" data-wow-delay="1.8s">Votre avis compte pour nous <i class="far fa-comment"></i> </h4>
+
+<div class="reaction-buttons">
+    <!-- Bouton de like -->
+    <button class="like-btn" data-rating="like" style="background-color: transparent; border: none;" id="rate-btn" {% if alreadyRated %}disabled{% endif %}>
+        <i class="far fa-thumbs-up" style="font-size: 24px;"></i>
+        <span id="likes-count">{{ totalLikes }}</span>
+    </button>
+    
+    <!-- Ajout d'un espace -->
+    <span>&nbsp;</span>
+    
+    <!-- Bouton de dislike -->
+    <button class="dislike-btn" data-rating="dislike" style="background-color: transparent; border: none;" id="ratedis-btn" {% if alreadyRated %}disabled{% endif %}>
+        <i class="far fa-thumbs-down" style="font-size: 24px;"></i>
+        <span id="dislikes-count">{{ totalDislikes }}</span>
+    </button>
+</div>
+
+ <span>&nbsp;</span>
+
+				    <div id="fb-root"></div>
+                        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0" nonce="YOUR_NONCE"></script>
+                        <div class="fb-share-button" data-href="{{ app.request.uri }}" data-layout="button" data-size="large">
+                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ app.request.uri }}" class="fb-xfbml-parse-ignore">
+                                Partager sur Facebook
+                            </a>
+                        </div>
+                    </div>
+
 					</div>
 					<div class="col-lg-4 ">
 						<aside class="side-bar sticky-top">
@@ -430,9 +492,11 @@
 										<img src="{{asset('front-office/images/event/grid2/pic3.jpg')}}" alt="/">
 									</div>
 									<div class="dz-content">
-    <h3 class="title">Gym Training And Event</h3>
+    <h3 class="title">Prêt à relever le défi ? Rejoignez ce cour !</h3>
     {% if dejaParticipe %}
         <a href="#" class="btn btn-primary btn-skew disabled" style="pointer-events: none;"><span class="skew-inner"><span class="text">Déjà participé</span></span></a>
+		 <a href="{{ path('annuler_participation_cours', {'id': cours.getId()}) }}" class="btn btn-danger btn-skew" id="cancel-btn"><span class="skew-inner"><span class="text">Annuler Participation</span></span></a>
+
     {% else %}
         <a href="{{ path('participer_cours', {'id': cours.getId()}) }}" class="btn btn-primary btn-skew" id="submit-btn"><span class="skew-inner"><span class="text">Participer</span></span></a>
     {% endif %}
@@ -442,6 +506,7 @@
             {{ participationError[0] }}
         </div>
     {% endif %}
+
 </div>
 
  <!-- Inclure le script de SweetAlert2 à la fin du body -->
@@ -463,7 +528,116 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+
+
+
 </script>
+
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('rate-btn').addEventListener('click', function(event) {
+        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+        Swal.fire({
+            icon: 'success',
+            title: 'Merci pour votre évaluation !',
+            showConfirmButton: false,
+            timer: 3000
+        }).then((result) => {
+            // Exécuter du code après la fermeture de l'alerte
+            if (result.dismiss === Swal.DismissReason.timer) {
+                // Recharger la page après 3 secondes si l'alerte a été fermée automatiquement
+                location.reload();
+            }
+			 });
+    });
+
+ // Recharger la page après 3 secondes
+       
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('ratedis-btn').addEventListener('click', function(event) {
+            // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+            Swal.fire({
+                icon: 'success',
+                title: 'Merci pour votre évaluation !',
+                showConfirmButton: false,
+                timer: 3000
+            }).then((result) => {
+                // Exécuter du code après la fermeture de l'alerte
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    // Recharger la page après 3 secondes si l'alerte a été fermée automatiquement
+                    location.reload();
+                }
+            });
+        });
+
+        // Recharger la page après 3 secondes
+    });
+</script>
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.like-btn, .dislike-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var rating = this.dataset.rating;
+            var courseId = {{ cours.getId() }};
+            // Ajouter la classe active au bouton cliqué
+            this.style.backgroundColor = rating === 'like' ? '#007bff' : '#dc3545';
+            this.style.color = '#fff';
+            // Supprimer la classe active de l'autre bouton
+            var otherBtn = rating === 'like' ? document.querySelector('.dislike-btn') : document.querySelector('.like-btn');
+            otherBtn.style.backgroundColor = 'transparent';
+            otherBtn.style.color = 'inherit';
+            // Envoyer une requête AJAX au serveur pour enregistrer le rating
+            fetch(`/cours/${courseId}/evaluer`, { // Utilisation de l'URL de la nouvelle route
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ rating: rating }),
+            }).then(function(response) {
+                // Gérer la réponse du serveur si nécessaire
+                if (response.ok) {
+                    console.log('Evaluation enregistrée avec succès');
+                } else {
+                    console.error('Erreur lors de l\'enregistrement de l\'évaluation');
+                }
+            }).catch(function(error) {
+                console.error('Error:', error);
+            });
+        });
+    });
+});
+</script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Récupérer l'ID du cours actuel depuis les données Twig
+    var courseId = "{{ cours.getId() }}";
+
+    // Envoyer une requête AJAX pour récupérer le nombre de likes et de dislikes
+    fetch(`/cours/${courseId}/likes`)
+        .then(response => response.json())
+        .then(data => {
+            // Mettre à jour l'affichage du nombre de likes et de dislikes sur la page
+            document.getElementById('likes-count').innerText = data.likes;
+            document.getElementById('dislikes-count').innerText = data.dislikes;
+        })
+        .catch(error => console.error('Erreur lors de la récupération des likes et dislikes:', error));
+});
+</script>
+
+
 
 
 						</aside>
@@ -473,56 +647,33 @@ document.addEventListener('DOMContentLoaded', function() {
 			</div>
 		</section>
 		<div class="content-inner pt-0">
+		{% if autresCours is not empty %}
 			<div class="container">
-				<div class="row">
-					<h4 class="title font-weight-700 m-b30">Related Projects</h4>
-					<div class="col-xl-6 col-lg-8">
-						<div class="dz-card style-1 blog-half m-b30 wow fadeInUp" data-wow-delay="0.4s">
-							<div class="dz-media">
-								<a href="javascript:void(0);"><img src="{{asset('front-office/images/blog/blog-grid/pic1.jpg')}}" alt="/"></a>
-							</div>
-							<div class="dz-info">
-								<div class="dz-meta">
-									<ul>
-										<li class="dz-date">
-											<span>14</span> FEB
-										</li>
-										<li class="dz-time">
-											<a href="javascript:void(0);">9:00 am - 11:00 am</a>
-										</li>
-									</ul>
-								</div> 
-								<h4 class="dz-title"><a href="event.html">Personal Journeys to a Healthier Lifestyle</a></h4>
-								<p>Lorem Ipsum is simply dummy text of the printing and.</p>
-								<a class="read-btn btn-link" href="event.html">Read More</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-6 col-lg-8">
-						<div class="dz-card style-1 blog-half m-b30 wow fadeInUp" data-wow-delay="0.6s">
-							<div class="dz-media">
-                            
-								<a href="javascript:void(0);"><img src="{{asset('front-office/images/blog/blog-grid/pic2.jpg')}}" alt="/"></a>
-							</div>
-							<div class="dz-info">
-								<div class="dz-meta">
-									<ul>
-										<li class="dz-date">
-											<span>20</span> FEB
-										</li>
-										<li class="dz-time">
-											<a href="javascript:void(0);">9:00 am - 11:00 am</a>
-										</li>
-									</ul>
-								</div> 
-								<h4 class="dz-title"><a href="event.html">Maximizing Results with Time Workouts</a></h4>
-								<p>Lorem Ipsum is simply dummy text of the printing and.</p>
-								<a class="read-btn btn-link" href="event.html">Read More</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+    <div class="row">
+        <h4 class="title font-weight-700 m-b30">VOUS AIMEREZ PEUT-ÊTRE AUSSI…</h4>
+        {% for autreCours in autresCours %}
+        <div class="col-xl-6 col-lg-8">
+            <div class="dz-card style-1 blog-half m-b30 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="dz-media">
+                    <a href="{{ path('voir_cours', {'id': autreCours.id}) }}"><img src="data:image/jpeg;base64,{{ autreCours.image }}" alt=""></a>
+                </div>
+                <div class="dz-info">
+                    <div class="dz-meta">
+                        <ul>
+                            {# Ajouter les détails du cours comme la date et l'heure ici #}
+                        </ul>
+                    </div>
+                    <h4 class="dz-title"><a href="{{ path('voir_cours', {'id': autreCours.id}) }}">{{ autreCours.nomCour }}</a></h4>
+                    
+                    <a class="read-btn btn-link" href="{{ path('voir_cours', {'id': autreCours.id}) }}">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
 		</div>
 		<!-- Our Event Detail -->
 		

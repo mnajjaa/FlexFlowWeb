@@ -11,7 +11,9 @@
         <meta content="Themesdesign" name="author" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-pnLDlS50xL34ul5+xeRuJusv/1dmbd3W7pUT2F+QfJtadgFU1mX6lYb/0J2a9UcCpJw5f1ADmMBmBVmg+R2nGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
@@ -24,7 +26,10 @@
         <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/chart.css') }}">
+        
         {% endblock %}
+
 
 
         <!-- Feuilles de styles -->
@@ -36,6 +41,7 @@
 		<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
 		{% block javascripts %}{% endblock %}
 		<script src="{{ asset('assets/js/scripts.js') }}" defer></script>
+
     </head>
 
     
@@ -328,8 +334,8 @@
 
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="invoices-list.html"> List des cours</a></li>
-                                    <li><a href="invoices-detail.html">Ajouter un cour</a></li>
+                                    <li><a href="{{ path('cour_liste') }}"> List des cours</a></li>
+                                    <li><a href="{{ path('cour_ajouter') }}">Ajouter un cour</a></li>
                                 </ul>
                             </li>
 
@@ -464,7 +470,8 @@
             <!-- Left Sidebar End -->
 
             
-
+<!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <!-- ============================================================== -->
             <!-- Start right Content here -->
             <!-- ============================================================== -->
@@ -530,8 +537,13 @@
         <script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
         <script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
         <script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+        <script src="{{ asset('js/chart.js') }}"></script>
+
+        <script src="{{asset('back-office/js/pages/dashboard.init.js')}}"></script>
 
 
+<!-- apexcharts zedthom ena bch icone mtaa chart temchi 2 lignes-->
+        <script src="{{asset('back-office/libs/apexcharts/apexcharts.min.js')}}"></script>
         <script src="{{asset('back-office/js/pages/dashboard.init.js')}}"></script>
 
         <!-- App js -->

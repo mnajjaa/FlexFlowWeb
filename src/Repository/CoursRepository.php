@@ -67,6 +67,39 @@ public function findDistinctCibles(): array
     return $cibles;
 }
 
+
+  // Méthode pour trouver des cours aléatoires par catégorie
+  public function findRandomCoursByCategory($categorie, $limit, $excludedId = null)
+{
+    // Obtenez tous les IDs des cours dans la catégorie spécifiée
+    $idsQueryBuilder = $this->createQueryBuilder('c')
+        ->select('c.id')
+        ->where('c.Categorie = :Categorie')
+        ->setParameter('Categorie', $categorie);
+
+    if ($excludedId !== null) {
+        $idsQueryBuilder->andWhere('c.id != :excludedId')
+            ->setParameter('excludedId', $excludedId);
+    }
+
+    // Exécutez la requête pour obtenir les IDs des cours
+    $ids = array_column($idsQueryBuilder->getQuery()->getResult(), 'id');
+
+    // Mélangez les IDs pour une sélection aléatoire
+    shuffle($ids);
+
+    // Sélectionnez les premiers IDs en fonction de la limite spécifiée
+    $selectedIds = array_slice($ids, 0, $limit);
+
+    // Construisez une requête pour obtenir les objets Cours correspondants
+    $coursQueryBuilder = $this->createQueryBuilder('c2')
+        ->where('c2.id IN (:selectedIds)')
+        ->setParameter('selectedIds', $selectedIds);
+
+    return $coursQueryBuilder->getQuery()->getResult();
+}
+
+
 //    /**
 //     * @return Cours[] Returns an array of Cours objects
 //     */

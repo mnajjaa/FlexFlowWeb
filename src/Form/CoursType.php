@@ -13,6 +13,14 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\File as FileConstraint;
+
+
 
 
 class CoursType extends AbstractType
@@ -30,11 +38,16 @@ class CoursType extends AbstractType
     {
         $builder
             ->add('nomCour', TextType::class, [
-                'label' => 'Nom du cours'
+                'label' => 'Nom du cours',
+                
             ])
-            ->add('Duree', TextType::class, [
-                'label' => 'Durée'
-            ])
+            ->add('Duree', NumberType::class, [
+                'label' => 'Durée',
+               
+    'invalid_message' => 'La durée doit être un nombre.',
+                ]) 
+                
+
             ->add('Intensite', ChoiceType::class, [
                 'label' => 'Intensité',
                 'choices' => [
@@ -90,12 +103,33 @@ class CoursType extends AbstractType
             
             
             
-            ->add('capacite')
-            ->add('imageFile', FileType::class, [
-                //'label' => 'Uploader une image',
-                'mapped' => false, // Ce champ ne sera pas mappé à une propriété de l'entité Cours
-                'required' => false, // Le champ n'est pas obligatoire
-            ])
+            ->add('capacite',NumberType::class, [
+                'label' => 'Capacité',
+
+    'invalid_message' => 'La capacité doit être un nombre.',
+                
+                ]) 
+
+                ->add('imageFile', FileType::class, [
+                    'label' => 'Image',
+                    'mapped' => false,
+                    'required' => false,
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Veuillez télécharger une image.',
+                        ]),
+                        new FileConstraint([
+                            'maxSize' => '1024k',
+                            'mimeTypes' => [
+                                'image/jpeg',
+                                'image/png',
+                            ],
+                            'mimeTypesMessage' => 'Veuillez télécharger une image au format JPEG ou PNG.',
+                            'uploadErrorMessage' => 'Une erreur est survenue lors du téléversement du fichier.',
+                        ]),
+                    ],
+                ])
+
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'label' => 'Coach',
