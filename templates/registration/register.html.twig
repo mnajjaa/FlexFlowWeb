@@ -1,31 +1,275 @@
-{% extends 'base.html.twig' %}
+<!doctype html>
+<html lang="en">
 
-{% block title %}Register{% endblock %}
-
-{% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-
-    <h1>Register</h1>
-
-    {{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{form_row(registrationForm.nom, {
-            label: 'Nom'
-        }) }}
-        {{form_row(registrationForm.telephone, {
-            label: 'Telephone'
-        }) }}
-       
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
         
+        <meta charset="utf-8" />
+        <title>Register | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
 
+<<<<<<< HEAD
         <button type="submit" class="btn"  action="{{ path('produits') }}">Register</button>
        
     {{ form_end(registrationForm) }}
 {% endblock %}
+=======
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+         
+               <!-- real time validation -->
+        <script src="{{asset('validationJs/formValidation.js')}}"></script>
+
+        <!-- Sweet Alert css -->
+        <link href="{{asset('back-office/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- Sweet Alerts js -->
+        <script src="{{asset('back-office/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+        <!-- Sweet alert init js-->
+        <script src="{{asset('back-office/js/pages/sweet-alerts.init.js')}}"></script>
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+   var telephoneInput = document.getElementById("registration_form_telephone");
+   var nameInput = document.getElementById("registration_form_nom");
+   var emailInput =  document.getElementById("registration_form_email");
+   var passwordInput = document.getElementById("registration_form_plainPassword");
+   var form = document.getElementById("registerForm");
+
+    form.onsubmit = function(e) {
+        var email = emailInput.value;
+        var atposition = email.indexOf("@");
+        var dotposition = email.lastIndexOf(".");
+        var telephone = telephoneInput.value;
+        var password = passwordInput.value;
+
+        if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length || 
+            !/^\d{8}$/.test(telephone) || password.length < 8 || nameInput.value.length < 3 ) {
+            e.preventDefault();
+            error();
+        }else{
+            success();
+        }
+    }
+
+emailInput.oninput = function() {
+        var email = this.value;
+        var atposition = email.indexOf("@");
+        var dotposition = email.lastIndexOf(".");
+        if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
+            document.getElementById("error_Email").innerHTML = "• Merci de saisir un email valide.";
+            document.getElementById("success_Email").innerHTML = "";
+             emailInput.style.border = "1px solid red";
+        }
+        else {
+            document.getElementById("error_Email").innerHTML = "";
+            document.getElementById("success_Email").innerHTML = "• Email valide.";
+            emailInput.style.border = "1px solid green";
+        }
+    }
+
+nameInput.oninput = function() {
+        var name = this.value;
+        if (name.length < 3) {
+            document.getElementById("error_Nom").innerHTML = "• Le nom doit contenir au moins 3 caractères. ";
+            document.getElementById("success_Nom").innerHTML = "";
+            nameInput.style.border = "1px solid red";
+        }
+        else {
+            document.getElementById("error_Nom").innerHTML = "";
+            document.getElementById("success_Nom").innerHTML = "• Nom valide.";
+            nameInput.style.border = "1px solid green";
+        }
+    }
+
+telephoneInput.oninput = function() {
+        console.log("Input event triggered"); // Add this line
+        var telephone = this.value;
+        if (!/^\d{8}$/.test(telephone)) {
+            document.getElementById("error_Telephone").innerHTML = "• Entrez un numéro de téléphone valide.";
+            document.getElementById("success_Telephone").innerHTML = "";
+            telephoneInput.style.border = "1px solid red";
+        }
+        else {
+            document.getElementById("error_Telephone").innerHTML = "";
+            document.getElementById("success_Telephone").innerHTML = "• numéro de téléphone valide.";
+            telephoneInput.style.border = "1px solid green";
+        } 
+    }
+
+   passwordInput.oninput = function() {
+        var password = this.value;
+        if (password.length < 8) {
+            document.getElementById("error_Password").innerHTML = "• Le mot de passe doit contenir au moins 8 caractères. ";
+            document.getElementById("success_Password").innerHTML = "";
+            passwordInput.style.border = "1px solid red";
+        }
+        else {
+            document.getElementById("error_Password").innerHTML = "";
+            document.getElementById("success_Password").innerHTML = "• mot de passe valide.";
+            passwordInput.style.border = "1px solid green";
+        }
+    }
+
+});
+
+function success() {
+    Swal.fire({
+        title: 'Succès!',
+        text: 'un email de verification à ete envoyé à votre adresse email',
+        icon: 'success',
+        customClass: {
+            confirmButton: 'btn btn-primary',
+        },
+        buttonsStyling: false,
+    }).then(() => {
+        window.location.href = '/emailVerification';
+    })
+}
+
+function error() {
+    Swal.fire({
+        title: 'Erreur!',
+        text: ' Veuillez vérifier vos entrées et réessayer!',
+        icon: 'error',
+        customClass: {
+            confirmButton: 'btn btn-primary',
+        },
+        buttonsStyling: false,
+    })
+}
+
+
+</script>
+    </head>
+
+    <body class="authentication-bg">
+        <div class="account-pages my-5 pt-sm-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <a href="index.html" class="mb-5 d-block auth-logo">
+                                <img src="{{asset('back-office/images/logo-dark.png')}}" alt="" height="22" class="logo logo-dark">
+                                <img src="{{asset('back-office/images/logo-light.png')}}" alt="" height="22" class="logo logo-light">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card">
+                           
+                            <div class="card-body p-4"> 
+
+                                <div class="text-center mt-2">
+                                    <h5 class="text-primary">Register Account</h5>
+                                    <p class="text-muted">Get your FlexFlow account now.</p>
+                                </div>
+                                <div class="p-2 mt-4">
+                                    {{ form_errors(registrationForm) }}
+
+{{ form_start(registrationForm, {'attr': {'class': 'form', 'id': 'registerForm'}}) }}
+    <div class="mb-3">
+        <label class="form-label" for="useremail" id="useremail" >Email</label>
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'id': 'registration_form_email', 'placeholder': 'Enter email'}}) }}
+            <span id="error_Email" class="text-danger" style="color: red;"></span>
+            <span id="success_Email" class="text-success" style="color: green;"></span>
+
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="username" >Nom</label>
+        {{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control', 'id': 'registration_form_nom', 'placeholder': 'Enter username'}}) }}
+        <span id="error_Nom" class="text-danger" style="color: red;"></span>
+        <span id="success_Nom" class="text-success" style="color: green;"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="telephone" id="telephone_label">Telephone</label>
+        {{ form_widget(registrationForm.telephone, {'attr': {'class': 'form-control', 'id': 'registration_form_telephone', 'placeholder': 'Enter telephone', 'oninput': 'isValidPhoneNumber()'}}) }}
+        <span id="error_Telephone" class="text-danger" style="color: red;"></span>
+        <span id="success_Telephone" class="text-success" style="color: green;"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="userpassword" id="userpassword">Password</label>
+        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'id': 'registration_form_plainPassword', 'placeholder': 'Enter password'}}) }}
+         <span id="error_Password" class="text-danger" style="color: red;"></span>
+         <span id="success_Password" class="text-success" style="color: green;"></span>
+
+    </div>
+
+    <div class="mt-3 text-end">
+        <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Register</button>
+    </div>
+{{ form_end(registrationForm) }}
+                                        <div class="mt-4 text-center">
+                                            <div class="signin-other-title">
+                                                <h5 class="font-size-14 mb-3 title">Sign up using</h5>
+                                            </div>
+                                            
+            
+                                            <ul class="list-inline">
+                                                <li class="list-inline-item">
+                                                    <a href="javascript:void()" class="social-list-item bg-primary text-white border-primary">
+                                                        <i class="fab fa-facebook-f"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="javascript:void()" class="social-list-item bg-info text-white border-info">
+                                                        <i class="fab fa-twitter"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="javascript:void()" class="social-list-item bg-danger text-white border-danger">
+                                                        <i class="fab fa-google"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="mt-4 text-center">
+                                            <p class="text-muted mb-0">Already have an account ? <a href="{{ path('app_login') }}" class="fw-medium text-primary"> Login</a></p>
+                                        </div>
+{{ form_end(registrationForm) }}
+                                </div>
+            
+                            </div>
+                        </div>
+                        <div class="mt-5 text-center">
+                            <p>© <script>document.write(new Date().getFullYear())</script> Minible. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesdesign</p>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+
+        <!-- JAVASCRIPT -->
+        <script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+        <!-- App js -->
+        <script src="{{asset('back-office/js/app.js')}}"></script>
+
+    </body>
+
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+</html>
+>>>>>>> 30cb60e77e55be557ca2d18d4ec36193d636025b

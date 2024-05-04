@@ -1,0 +1,374 @@
+{% if app.user.getRoles()[0] == "MEMBRE" %}
+    {% extends app.user.getRoles()[0] == "MEMBRE" ? 'base-front.html.twig' :  'base-back.html.twig' %}
+{% endif %}
+
+
+
+
+
+
+{% block body %}
+<head>
+       <!-- real time validation -->
+        <script src="{{asset('validationJs/formValidation.js')}}"></script>
+
+        <!-- Sweet Alert css -->
+        <link href="{{asset('back-office/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- Sweet Alerts js -->
+        <script src="{{asset('back-office/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+        <!-- Sweet alert init js-->
+        <script src="{{asset('back-office/js/pages/sweet-alerts.init.js')}}"></script>
+</head>
+
+<body>
+
+
+  <section class="content-inner portfolio-single  " style="background-image: url(front-office/images/background/bg1.png); background-color: #232323; padding-bottom: 0px; ">
+			<div class="container" >
+				<div class="row">
+					<div class="col-lg-6 col-md-6">
+						<div class="head-section wow fadeInUp" data-wow-delay="0.4s">
+						
+							<span>membre</span>
+							    {# <div>
+                                    <img src="{{asset('uploads/users/' ~app.user.image)}}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                                </div> #}
+							<h1 style="color: #ffffff;">{{ membre.nom }}</h1>
+						</div>
+					</div>
+                    
+					
+
+					{# /////////////////////////////////////////////// #}
+				</div>
+			</div>
+            	{# <div class="portfolio-single-wrapper">
+				<div class="container">
+					<figure class="wp-container-5 wp-block-gallery-5 wp-block-gallery has-nested-images columns-4 is-cropped alignwide">
+						<figure class="wp-block-image size-large wow fadeInUp" data-wow-delay="0.8s"><img src="assets/images/portfolio/pic1.jpg" alt="/"></figure>
+						<figure class="wp-block-image size-large wow fadeInUp" data-wow-delay="1.0s"><img src="assets/images/portfolio/pic2.jpg" alt="/"></figure>
+						<figure class="wp-block-image size-large wow fadeInUp" data-wow-delay="1.2s"><img src="assets/images/portfolio/pic3.jpg" alt="/"></figure>
+						<figure class="wp-block-image size-large wow fadeInUp" data-wow-delay="1.4s"><img src="assets/images/portfolio/pic4.jpg" alt="/"></figure>
+					</figure>
+				</div>
+			</div> #}
+		</section>
+        <section class="content-inner bg-gray">
+
+			<div class="container">
+				<div class="row">
+
+					<div class="col-xl-6">
+							{# <form class="dz-form dzForm" enctype="multipart/form-data" method="POST" action="{{ path('membre_edit_profile') }}" >
+								 <div class="row">
+                                              <div class="col-md-6">
+                                                  <div class="text-end">
+                                                        <img src="{{ asset('uploads/users/' ~membre.image) }}" class="avatar-xs rounded-circle " alt="...">
+                                                  </div>  
+                                                </div>
+                                                <div class="col-md-6">
+
+                                                  <label for="image">Choose Image:</label>
+                                                  <input class="form-control" type="file" id="image" name="image">
+                                                </div>
+                                    </div>    
+								     <label class="form-label">Your Name</label>
+								    <div class="input-group">
+									      <input required type="text" class="form-control" id="nom" name="nom" value="{{ membre.nom }}">
+								    </div>
+								
+
+								<label class="form-label">Email Address</label>
+								<div class="input-group">
+									<input required type="text" class="form-control" id="email" name="email" value="{{ membre.email }}">
+								</div>
+								<label class="form-label">Phone Number</label>
+								<div class="input-group">
+									<input required type="text" class="form-control" name="telephone" id="telephone" value="{{ membre.telephone }}">
+								</div>
+								{# <label class="form-label">Image</label>
+								<div class="input-group">
+									<input required type="text" class="form-control" id="image" name="image" value="{{ membre.image }}">
+								</div> #}
+								{# <div>
+									<button name="submit" type="submit"  class="btn btn-primary m-3 btnhover">SUBMIT</button>
+									<button type="reset" class="btn btn-secondary waves-effect">
+                                                        Cancel
+                                                    </button>
+								</div>
+								
+							</form> #}
+
+					  <form  method="post" class="needs-validation" novalidate enctype="multipart/form-data" action="{{ path('membre_edit_profile') }}" id="editUserForm">
+                                        <div class="row">
+                                              <div class="col-md-3 p-3">
+                                                  <div class="text-end">
+                                                        <img src="{{ asset('uploads/users/' ~membre.image) }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                                                  </div>  
+                                                </div>
+                                                <div class="col-md-4">
+
+                                                  <label for="image">Choose Image:</label>
+                                                  <input type="file" id="image" name="image">
+                                                </div>
+                                        </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                        <label class="form-label" for="nom">Nom Complet</label>
+                                                        <input type="text" class="form-control" id="name" name="nom"  placeholder="First name" value="{{ membre.nom }}" oninput="isValidName()" required>
+                                                        <span id="error_name" class="text-danger" style="color: red; font-size: 12px;"></span>
+                                                        <span id="success_name" class="text-success" style="color: green; font-size: 12px;"></span>
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                </div>
+                                                <div class="row">
+                                                        <label class="form-label" for="email">email</label>
+                                                        <input type="text" class="form-control" id="email" name="email" placeholder="email" value="{{ membre.email }}" oninput="isValidEmail()" required>
+                                                        <span id="error_email" class="text-danger" style="color: red; font-size: 12px;"></span>
+                                                        <span id="success_email" class="text-success" style="color: green; font-size: 12px;"></span>
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="telephone">Telephone</label>
+                                                        <input type="text" class="form-control" name="telephone" id="telephone" placeholder="Telephone" value="{{ membre.telephone }}" oninput="isValidPhoneNumber()" required>
+                                                        <span id="error_Telephone" class="text-danger" style="color: red; font-size: 12px;"></span>
+                                                        <span id="success_Telephone" class="text-success" style="color: green; font-size: 12px;"></span>
+                                                        <div class="invalid-feedback">
+                                                            Please provide a valid city.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="mb-3">
+                                                        <input type="image" class="form-control" name="image" id="image" placeholder="image" value="{{ coach.image }}" required>
+                                                            <div class="invalid-feedback">
+                                                                You must agree before submitting.
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div> #}
+                                            <button class="btn btn-primary" type="submit">Submit form</button>
+                                            <button type="reset" class="btn btn-secondary waves-effect">
+                                                        Cancel
+                                                    </button>
+                                        </form>
+					</div> <!-- end col -->
+                              <div class="col-xl-6">
+                                    <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Changer le mot de passe</h4>
+                                        <p class="card-title-desc">Merci de saisir votre mot de passe actuel pour changer le mot de passe</p>
+                                        <form class="needs-validation" novalidate method="post" action="{{ path('membre_edit_pwd') }}" id="editPasswordForm" >
+                                        {% if mdp is same as(false) %}
+                                         <div class="row">
+                                                <div class="col-md-7">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">mot de passe actuel</label>
+                                                        <input type="password" class="form-control" id="userpassword" placeholder="Entrez le mot de passe actuel" name="actualPassword" required>
+                                                        {% if erreur is same as(true) %}
+                                                        <p style="color:red;">mot de passe incorrect</p>
+                                                        {% endif %}
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    
+                                                </div>
+                                                {% endif %}
+                                                {# Remove the unnecessary if statement #}
+                                                {% if mdp is same as(true) %}
+                                                    {# <div class="alert alert-danger" role="alert">
+                                                        <strong>Erreur!</strong> Mot de passe incorrect
+                                                    </div> #}
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">Nouveau mot de passe</label>
+                                                        <input type="password" class="form-control" id="userpassword" placeholder="Nouveau mot de passe" name="plainPassword" oninput="isValidPassword()" required>
+                                                         <span id="error_userpassword" class="text-danger" style="color: red; font-size: 12px;"></span>
+                                                         <span id="success_userpassword" class="text-success" style="color: green; font-size: 12px;"></span>
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">Répéter le mot de passe</label>
+                                                        <input type="password" class="form-control" id="userpasswordConfirm" placeholder="Répéter le mot de passe" name="plainPasswordConfirm" oninput="isValidPasswordConfirm()" required>
+                                                            <span id="error_userpasswordConfirm" class="text-danger" style="color: red; font-size: 12px;"></span>
+                                                            <span id="success_userpasswordConfirm" class="text-success" style="color: green; font-size: 12px;"></span>
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                            {% endif %}
+                                            <button class="btn btn-primary" type="submit">Réinitialiser</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                             </div> <!-- end col -->
+				</div>
+			</div>
+		</section>
+			<div class="portfolio-single-wrapper">
+				<div class="container">
+					{# <figure class="wp-container-5 wp-block-gallery-5 wp-block-gallery has-nested-images columns-4 is-cropped alignwide">
+						<figure class="wp-block-image size-large wow fadeInUp" data-wow-delay="0.8s"><img src="assets/images/portfolio/pic1.jpg" alt="/"></figure>
+						<figure class="wp-block-image size-large wow fadeInUp" data-wow-delay="1.0s"><img src="assets/images/portfolio/pic2.jpg" alt="/"></figure>
+						<figure class="wp-block-image size-large wow fadeInUp" data-wow-delay="1.2s"><img src="assets/images/portfolio/pic3.jpg" alt="/"></figure>
+						<figure class="wp-block-image size-large wow fadeInUp" data-wow-delay="1.4s"><img src="assets/images/portfolio/pic4.jpg" alt="/"></figure>
+					</figure> #}
+                    <div class="card">
+                                    <div class="card-body">
+                                     <div class="tab-content p-4">
+            <div class="tab-pane active" id="about" role="tabpanel">
+                <div>
+                
+                            <div class="row">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Recent Activity</h4>
+                                        <ol class="activity-feed mb-0 ps-2" data-simplebar style="max-height: 336px;">
+                                            {% for Location in locations %}
+                                                <li class="feed-item">
+                                                    <div class="feed-item-list">
+                                                        <p class="text-muted mb-1 font-size-13">
+                                                            {{ Location.loginDate|date('Y-m-d') }}
+                                                            <small class="d-inline-block ms-1">{{ Location.loginDate|date('H:i A') }}</small>
+                                                        </p>
+                                                        <p class="mb-0">
+                                                            Logged in from {{ Location.location.city }}, {{ Location.location.region }}, {{ Location.location.country }}
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                {% set loc = Location.location.loc %}
+                                                {% set lat_long = loc|split(',') %}
+                                                {% set latitude = lat_long[0] %}
+                                                {% set longitude = lat_long[1] %}
+                                            {% endfor %}
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                                        <div id="map" style="height: 400px; width: 100%;"></div>
+                                                <script>
+                                                    function initMap() {
+                                                        var map = new google.maps.Map(document.getElementById('map'), {
+                                                            zoom: 4,
+                                                            center: {lat: 0, lng: 0} // Initial center point. Adjust as needed.
+                                                        });
+
+                                                        {% for Location in locations %}
+                                    {% set loc = Location.location.loc %}
+                                    {% set lat_long = loc|split(',') %}
+                                    {% set latitude = lat_long[0] %}
+                                    {% set longitude = lat_long[1] %}
+                                    var loc = {lat: {{ latitude }}, lng: {{ longitude }}};
+                                    var marker = new google.maps.Marker({
+                                        position: loc,
+                                        map: map
+                                    });
+                                {% endfor %}
+                            }
+                        </script>
+                        <script async defer
+                            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdL6W-ZWFsrcYoxx2LLPg8NUDOZOhr4RY&callback=initMap">
+                        </script>
+                        <hr>
+                    </div>
+                    </div>
+                </div>
+                                
+            </div>     
+        </div>    
+                                    </div>
+                                </div>
+				</div>
+			</div>
+		</section>
+
+{# //////////////////////////////////////////////////////////////////////////// #}
+
+
+    {# <div class="coach-profile">
+        <h1>{{ coach.nom }}</h1>
+        
+        
+        <form>
+            <input type="text" name="name" value="{{ coach.nom }}" />
+            <input name="email" type="email" value="{{ coach.email }}"/>
+            <input name="telephone" type="tel" value="{{ coach.telephone }}"/>
+            
+                
+            
+        </form>
+    </div> #}
+    {# <div class="col-xl-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <div class="dropdown float-end">
+                                                <a class="text-body dropdown-toggle font-size-18" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                                                  <i class="dripicons-dots-3"></i>
+                                                </a>
+                                              
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="{{ path('membre_edit_profile') }}">Edit</a>
+                                                    <a class="dropdown-item" href="#">Action</a>
+                                                    <a class="dropdown-item" href="#">Remove</a>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div>
+                                                <img src="{{ asset(membre.image) }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                                            </div>
+                                            <h5 class="mt-3 mb-1">{{ membre.nom }}</h5>
+                                            <p class="text-muted">Ux Ui designer</p>
+
+                                            <div class="mt-4">
+                                                <button type="button" class="btn btn-light btn-sm"><i class="uil uil-envelope-alt me-2"></i> Message</button>
+                                            </div>
+                                        </div>
+
+                                        <hr class="my-4">
+
+                                        <div class="text-muted">
+                                            <h5 class="font-size-16">About</h5>
+                                            <p>Hi I'm Marcus,has been the industry's standard dummy text To an English person, it will seem like simplified English, as a skeptical Cambridge.</p>
+                                            <div class="table-responsive mt-4">
+                                                <div>
+                                                    <p class="mb-1">Name :</p>
+                                                    <h5 class="font-size-16">{{ membre.nom }}</h5>
+                                                </div>
+                                                <div class="mt-4">
+                                                    <p class="mb-1">Mobile :</p>
+                                                    <h5 class="font-size-16">{{ membre.telephone }}</h5>
+                                                </div>
+                                                <div class="mt-4">
+                                                    <p class="mb-1">Email :</p>
+                                                    <h5 class="font-size-16">{{ membre.email }}</h5>
+                                                </div>
+                                                <div class="mt-4">
+                                                    <p class="mb-1">Location :</p>
+                                                    <h5 class="font-size-16">California, United States</h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> #}
+</body>
+{% endblock %}

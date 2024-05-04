@@ -3,10 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 
@@ -20,7 +24,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
+    #[ORM\Column(length: 180, unique: true,nullable: true)]
+    // #[Assert\Length(min: 3, max: 180)]
+    // #[Assert\NotBlank]
     private ?string $email = null;
 
     #[ORM\Column(type: 'json')]
@@ -30,19 +36,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    // #[Assert\Length(min: 6)]
+    // #[Assert\NotBlank]
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
     #[ORM\Column(length: 255)]
+    // #[Assert\NotBlank]
+    // #[Assert\Regex(
+    //     pattern: "/^[a-zA-Z\s]*$/",
+    // )]
     private ?string $nom = null;
 
+    
     #[ORM\Column]
+    // #[Assert\Length(min: 8, max: 8)]
+    // #[Assert\Regex(pattern: "/^0[1-9][0-9]{8}$/")]  
+    // #[Assert\NotBlank]
     private ?int $telephone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $mfaSecret = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $mfaEnabled = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $mdp_exp = null;
+
+    #[ORM\OneToMany(targetEntity: LoginHistory::class, mappedBy: 'user')]
+    private Collection $loginHistories;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $createdAt = null;
+
+    public function __construct()
+    {
+        $this->loginHistories = new ArrayCollection();
+    }
 
     
 
@@ -180,6 +216,85 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-     
 
+    public function getMfaSecret(): ?string
+    {
+        return $this->mfaSecret;
     }
+
+    public function setMfaSecret(?string $mfaSecret): static
+    {
+        $this->mfaSecret = $mfaSecret;
+
+        return $this;
+    }
+
+    public function isMfaEnabled(): ?bool
+    {
+        return $this->mfaEnabled;
+    }
+
+    public function setMfaEnabled(?bool $mfaEnabled): static
+    {
+        $this->mfaEnabled = $mfaEnabled;
+
+        return $this;
+    }
+
+    public function getMdpExp(): ?\DateTimeInterface
+    {
+        return $this->mdp_exp;
+    }
+
+    public function setMdpExp(?\DateTimeInterface $mdp_exp): static
+    {
+        $this->mdp_exp = $mdp_exp;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LoginHistory>
+     */
+    public function getLoginHistories(): Collection
+    {
+        return $this->loginHistories;
+    }
+
+    public function addLoginHistory(LoginHistory $loginHistory): static
+    {
+        if (!$this->loginHistories->contains($loginHistory)) {
+            $this->loginHistories->add($loginHistory);
+            $loginHistory->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoginHistory(LoginHistory $loginHistory): static
+    {
+        if ($this->loginHistories->removeElement($loginHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($loginHistory->getUser() === $this) {
+                $loginHistory->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+}
+   
+    
+

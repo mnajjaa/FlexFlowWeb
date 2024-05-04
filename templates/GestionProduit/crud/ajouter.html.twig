@@ -38,7 +38,6 @@
         <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
 
     </head>
-    
 
     <body>
     {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
@@ -50,7 +49,7 @@
                 <div class="card-body">
                     <center><h1>Ajouter un produit</h1></center>
                    <form action="{{ path('produit_ajouter') }}" method="post" enctype="multipart/form-data">
-    {{ form_row(form._token) }}
+                   {{ form_row(form._token) }}
 
     <div class="mb-3">
     <label for="nom" class="form-label">Nom du produit</label>
