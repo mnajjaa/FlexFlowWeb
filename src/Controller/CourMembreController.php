@@ -444,7 +444,8 @@ public function poserQuestion(Request $request, EntityManagerInterface $entityMa
         'question' => $question, // Définir la variable question avec le message de la requête
     ]);
 }
-
+//modif sghir 
+//test e
 }
 
 
