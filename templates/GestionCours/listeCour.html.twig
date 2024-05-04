@@ -37,6 +37,7 @@
     border-color: #6c757d;
     box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
 }
+
     </style>
 {% endblock %}
 
@@ -155,6 +156,7 @@
     
 
     
+
     
     
         <div class="row">
@@ -176,10 +178,12 @@
                             <div class="ml-auto">
                                 <a href="{{ path('cour_ajouter') }}" class="btn btn-primary"><i class="fas fa-plus"></i> </a>
 
+
                             </div>
                         </div>
 
                         <table  class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -197,6 +201,7 @@
                             </thead>
                           
                             <tbody id="productTableBody">
+
                                 {% for cour in cours %}
                                     <tr>
                                         <td>{{ cour.id }}</td>
@@ -239,6 +244,7 @@
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
+
  <!-- Inclure le script de SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -269,6 +275,7 @@
             $(this).siblings('.input-group-append').removeClass('search-focus-append');
         }
     });
+
 
 
     // Afficher les alertes flash avec SweetAlert

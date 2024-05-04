@@ -55,6 +55,7 @@
 
 <div class="container">
 <h1 class="text-center mb-4">Ajouter un cour</h1>
+
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
@@ -69,6 +70,7 @@
                              <div class="text-danger">
         {{ form_errors(form.nomCour) }}
     </div>
+
                         </div>
                         <div class="mb-3">
                             <label for="Duree" class="form-label">Durée</label>
@@ -76,6 +78,7 @@
                             <div class="text-danger">
         {{ form_errors(form.Duree) }}
     </div>
+
                         </div>
                         <div class="mb-3">
                             <label for="Intensite" class="form-label">Intensité</label>
@@ -103,6 +106,7 @@
                             <div class="text-danger">
         {{ form_errors(form.capacite) }}
     </div>
+
                         </div>
                         <div class="mb-3">
                             <label for="imageFile" class="form-label">Image</label>
@@ -110,6 +114,7 @@
                               <div class="text-danger">
         {{ form_errors(form.imageFile) }}
     </div>
+
                         </div>
                         
                         <div class="mb-3">
@@ -128,12 +133,14 @@
 <!-- Inclure le script de SweetAlert2 à la fin du body -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  <script>
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('submit-btn').addEventListener('click', function(event) {
         // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
         Swal.fire({
             icon: 'info',
             title: 'Vérification des données en cours !',
+
             showConfirmButton: false,
             timer: 3000
         }).then(() => {

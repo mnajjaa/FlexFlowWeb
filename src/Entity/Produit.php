@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use App\Repository\ProduitRepository;
 use Doctrine\DBAL\Types\Types;
@@ -17,23 +18,32 @@ class Produit
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 500)]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'numeric')]
+    #[Assert\Range(min: 0)]
     private ?float $prix = null;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'numeric')]
+    #[Assert\Range(min: 0)]
     private ?int $quantite = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'numeric')]
+    #[Assert\Range(min: 0)]
     private ?int $quantiteVendues = null;
 
     #[ORM\Column(type: Types::BLOB)]
-    private $image = null;
+    public $image = null;
 
     public function getId(): ?int
     {
@@ -117,10 +127,14 @@ class Produit
         return $this->image;
     }
 
-    public function setImage($image): static
+    public function setImage($image): self
     {
         $this->image = $image;
 
         return $this;
     }
+
+
+
+    
 }

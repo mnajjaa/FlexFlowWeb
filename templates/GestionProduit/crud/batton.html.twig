@@ -1,0 +1,67 @@
+{# templates/admin/charte_commandes.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Charte des commandes{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <canvas id="charteCommandes"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById('charteCommandes').getContext('2d');
+            var chartData = {
+                labels: [
+                    {% for date, montant in montantParJour %}
+                        '{{ date }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Montant total par jour',
+                    data: [
+                        {% for date, montant in montantParJour %}
+                            {{ montant }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            var chartOptions = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                barThickness: calculateBarThickness({{ montantParJour|length }}) // Calcul de la largeur des barres
+            };
+
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: chartOptions
+            });
+
+            // Fonction pour calculer la largeur des barres en fonction du nombre de jours
+            function calculateBarThickness(numDays) {
+                // Ajustez cette valeur selon vos préférences
+                var maxBarThickness = 50;
+                var minBarThickness = 20;
+                var defaultBarThickness = 30;
+
+                var barThickness = defaultBarThickness;
+                if (numDays > 0) {
+                    barThickness = Math.min(maxBarThickness, Math.max(minBarThickness, Math.floor(400 / numDays)));
+                }
+                return barThickness;
+            }
+        });
+    </script>
+{% endblock %}

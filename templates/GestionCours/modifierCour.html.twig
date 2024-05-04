@@ -155,6 +155,7 @@
 <body>
     <div class="container mt-4">
         <h1 class="text-center mb-4">Modifier un cour</h1>
+
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card custom-card">
@@ -168,6 +169,7 @@
                                     <div class="text-danger">
         {{ form_errors(form.nomCour) }}
     </div>
+
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -177,6 +179,7 @@
                                      <div class="text-danger">
         {{ form_errors(form.Duree) }}
     </div>
+
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -220,6 +223,7 @@
                                      <div class="text-danger">
         {{ form_errors(form.capacite) }}
     </div>
+
                                 </div>
                             </div>
                                  <div class="form-group row">
@@ -229,6 +233,7 @@
                                     <div class="text-danger">
         {{ form_errors(form.imageFile) }}
     </div>
+
                                 </div>
                             </div>
                              <div class="form-group row">
@@ -258,6 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'info',
             title: 'Vérification des données en cours !',
+
             showConfirmButton: false,
             timer: 3000
         }).then(() => {

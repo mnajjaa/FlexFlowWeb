@@ -99,6 +99,7 @@ public function findDistinctCibles(): array
     return $coursQueryBuilder->getQuery()->getResult();
 }
 
+
 //    /**
 //     * @return Cours[] Returns an array of Cours objects
 //     */

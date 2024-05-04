@@ -30,6 +30,7 @@
     <meta property="og:title" content="Cours de Fitness - {{ cours.getNomCour() }}" />
     <meta property="og:description" content="{% if cours.getCible() == 'Adulte' %}Cours dynamique pour les adultes. Convient aux personnes recherchant une ambiance musicale et de défoulement.{% elseif cours.getCible() == 'Enfant' %}Cours ludique pour les enfants. Idéal pour le développement physique et social.{% endif %}" />
     <meta property="og:image" content="data:image/jpeg;base64,{{ cours.getImage }}" />
+
 	
 	<!-- Favicon icon -->
     <link rel="icon" type="image/png" href="{{asset('front-office/images/favicon.png')}}">
@@ -326,6 +327,7 @@
 
 							<ul class="pr-list style-2 dark m-b30 wow fadeInUp" data-wow-delay="1.0s">
 							{% if cours.getCible() == "Adulte" %}
+
 								<li><i class="flaticon-check-mark"></i>Santé globale et bien-être</li>
 <li><i class="flaticon-check-mark"></i>Évaluation des progrès</li>
 <li><i class="flaticon-check-mark"></i>Récompenses et incitations</li>
@@ -357,6 +359,7 @@
 </style>
 
 <div class="video-container">							
+
 {% if cours.getCategorie() == "Aquatique" %}
 							<video class="wow fadeInUp" data-wow-delay="1.0s" controls autoplay muted loop>
   <source src="{{ asset('videos/aquatique.mp4') }}" type="video/mp4">
@@ -423,6 +426,7 @@
                             </a>
                         </div>
                     </div>
+
 					</div>
 					<div class="col-lg-4 ">
 						<aside class="side-bar sticky-top">
@@ -492,6 +496,7 @@
     {% if dejaParticipe %}
         <a href="#" class="btn btn-primary btn-skew disabled" style="pointer-events: none;"><span class="skew-inner"><span class="text">Déjà participé</span></span></a>
 		 <a href="{{ path('annuler_participation_cours', {'id': cours.getId()}) }}" class="btn btn-danger btn-skew" id="cancel-btn"><span class="skew-inner"><span class="text">Annuler Participation</span></span></a>
+
     {% else %}
         <a href="{{ path('participer_cours', {'id': cours.getId()}) }}" class="btn btn-primary btn-skew" id="submit-btn"><span class="skew-inner"><span class="text">Participer</span></span></a>
     {% endif %}
@@ -502,8 +507,6 @@
         </div>
     {% endif %}
 
-
-	
 </div>
 
  <!-- Inclure le script de SweetAlert2 à la fin du body -->
@@ -636,6 +639,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
 						</aside>
 					</div>
                     
@@ -669,6 +673,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 {% endif %}
+
 		</div>
 		<!-- Our Event Detail -->
 		

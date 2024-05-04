@@ -5,24 +5,30 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Cours;
 use App\Entity\Rating;
+
 use App\Entity\Participation;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Mime\Email;
 use App\Repository\CoursRepository;
+
 use App\Repository\RatingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\Notify\NotifierInterface;
+
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 
+
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Twilio\Rest\Client;
+
+
 
 
 
@@ -108,6 +114,7 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
      $totalLikes = $ratingRepository->getTotalLikes($cours->getNomCour());
      $totalDislikes = $ratingRepository->getTotalDislikes($cours->getNomCour());
 
+
     // Vérifier si l'utilisateur a déjà participé à ce cours
     $email = $request->getSession()->get(Security::LAST_USERNAME);
     $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
@@ -138,6 +145,7 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
     }
 
    // $cours->image = base64_encode(stream_get_contents($cours->getImage()));
+
     // Afficher les détails du cours dans un nouveau template
     return $this->render('GestionCours/voirPlus.html.twig', [
         'cours' => $cours,
@@ -147,6 +155,7 @@ public function voirCours(int $id, CoursRepository $coursRepository, Request $re
         'totalLikes' => $totalLikes,
         'totalDislikes' => $totalDislikes,
         'alreadyRated' => ($alreadyRated !== null),
+
     ]);
 }
 
@@ -200,6 +209,7 @@ public function participerCours(int $id, CoursRepository $coursRepository, Reque
 
           //na7iii hethi men commentaire!!!!!!!
         $this->envoyerMessageWhatsApp($user->getTelephone(), $cours->getNomCour());
+
 
         // Send email confirmation
         $email = (new Email())
@@ -446,6 +456,7 @@ public function poserQuestion(Request $request, EntityManagerInterface $entityMa
 }
 
 }
+
 
 
 

@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
+
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
 #[UniqueEntity(fields: ['nomCour'], message: 'Ce nom de cours est déjà utilisé.')]
 class Cours

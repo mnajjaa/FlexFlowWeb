@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints\File as FileConstraint;
 
 
 
+
 class CoursType extends AbstractType
 {
     private $userRepository;
@@ -46,6 +47,7 @@ class CoursType extends AbstractType
     'invalid_message' => 'La durée doit être un nombre.',
                 ]) 
                 
+
             ->add('Intensite', ChoiceType::class, [
                 'label' => 'Intensité',
                 'choices' => [
@@ -128,7 +130,6 @@ class CoursType extends AbstractType
                     ],
                 ])
 
-            
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'label' => 'Coach',
