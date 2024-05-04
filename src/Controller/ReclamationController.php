@@ -134,11 +134,12 @@ class ReclamationController extends AbstractController
             $entityManager->persist($reclamation);        
             $entityManager->flush();
 
-           
+            $this->flashBag->add('success', 'La réclamation a été ajoutée avec succès.');
 
+            
             return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
         }
-        $this->flashBag->add('success', 'La réclamation a été ajoutée avec succès.');
+        
 
         return $this->renderForm('reclamation/new.html.twig', [
             'reclamation' => $reclamation,

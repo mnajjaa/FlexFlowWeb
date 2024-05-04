@@ -21,7 +21,7 @@ class Reclamation
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le titre de la réclamation ne peut pas être vide")]
     #[Assert\Regex(
-        pattern: "/^[a-zA-Z0-9\s]+$/",
+        pattern: "/^[\p{L}0-9\s]+$/u",
         message: "Le titre de la réclamation ne peut contenir que des lettres, des chiffres et des espaces"
     )]
     private ?string $titre_reclamation = null;
@@ -29,7 +29,7 @@ class Reclamation
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "La description de la réclamation ne peut pas être vide")]
     #[Assert\Regex(
-        pattern: "/^[a-zA-Z0-9\s]+$/",
+        pattern: "/^[\p{L}0-9\s]+$/u",
         message: "La description de la réclamation ne peut contenir que des lettres, des chiffres et des espaces"
     )]
     private ?string $description = null;

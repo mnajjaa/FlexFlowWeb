@@ -17,7 +17,7 @@ class Reponse
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "la reponse ne peut pas être vide")]
     #[Assert\Regex(
-        pattern: "/^[a-zA-Z0-9\s]+$/",
+        pattern: "/^[\p{L}0-9\s]+$/u",
         message: "la reponse ne peut contenir que des lettres, des chiffres et des espaces"
     )]
     private ?string $reponse_reclamation = null;

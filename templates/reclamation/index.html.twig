@@ -112,7 +112,7 @@
         </div>
         <div class="col">
             <select class="form-control mb-2" name="etat">
-                <option value="">-- Select State --</option>
+                <option value="">choisir l'etat</option>
                 <option value="Traite">Traité</option>
                 <option value="Non_traite">Non Traité</option>
             </select>
@@ -131,7 +131,7 @@
             <!-- Display each reclamation here -->
         </div>
         {% else %}
-        <p>No reclamations found.</p>
+        <p>aucune reclamation </p>
         {% endfor %}
     </div>
 
@@ -195,7 +195,7 @@
                     <td>{{ reclamation.titreReclamation }}</td>
                     <td>{{ reclamation.description }}</td>
                     <td>{{ reclamation.etat }}</td>
-                    <td><a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a></td>
+                    <td><a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-primary">edit</a></td>
 
                     <!-- Nouvelle colonne pour ajouter une réponse -->
             <td>
@@ -212,7 +212,7 @@
 
                 </tr>
             {% else %}
-                <tr><td colspan="7">No records found</td></tr>
+                <tr><td colspan="7">aucune reclamation</td></tr>
             {% endfor %}
             </tbody>
         </table>
