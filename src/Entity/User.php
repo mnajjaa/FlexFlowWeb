@@ -75,9 +75,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $createdAt = null;
 
+
+    #[ORM\OneToMany(targetEntity: Favoris::class, mappedBy: 'user')]
+    private Collection $evenement;
+
     public function __construct()
     {
         $this->loginHistories = new ArrayCollection();
+        $this->evenement = new ArrayCollection();
+
     }
 
     
