@@ -6,20 +6,13 @@
 
         <meta charset="utf-8" />
         <title>{% block title %} Dashboard | FlexFlow  {% endblock %} </title>
-        <title>{% block title %} Dashboard | FlexFlow  {% endblock %} </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesdesign" name="author" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-pnLDlS50xL34ul5+xeRuJusv/1dmbd3W7pUT2F+QfJtadgFU1mX6lYb/0J2a9UcCpJw5f1ADmMBmBVmg+R2nGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         
 
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block css %}
         <!-- Bootstrap Css -->
         <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -28,18 +21,9 @@
         <!-- App Css-->
         <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ asset('css/chart.css') }}">
-        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
         {% endblock %}
 
-        <!-- Feuilles de styles -->
-		<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-        {% block stylesheets %}{% endblock %}
-		<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
-
-		<!-- Fichiers JS -->
-		<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
-		{% block javascripts %}{% endblock %}
-		<script src="{{ asset('assets/js/scripts.js') }}" defer></script>
     </head>
 
     
@@ -75,7 +59,6 @@
                             <div class="position-relative">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="fas fa-search"></span>
-                                <span class="fas fa-search"></span>
                             </div>
                         </form>
                     </div>
@@ -85,7 +68,6 @@
                         <div class="dropdown d-inline-block d-lg-none ms-2">
                             <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search"></i>
                                 <i class="fas fa-search"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -107,107 +89,10 @@
                         <div class="dropdown d-none d-lg-inline-block ms-1">
                             <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
                                 <i class="fas fa-expand"></i>
-                                <i class="fas fa-expand"></i>
                             </button>
                         </div>
 
-                        {# <div class="dropdown d-inline-block">
-                        {# <div class="dropdown d-inline-block">
-                            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell"></i>
-                                <i class="fas fa-bell"></i>
-                                <span class="badge bg-danger rounded-pill">3</span>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                                aria-labelledby="page-header-notifications-dropdown">
-                                <div class="p-3">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h5 class="m-0 font-size-16"> Notifications </h5>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="#!" class="small"> Mark all as read</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div data-simplebar style="max-height: 230px;">
-                                    <a href="javascript:void(0);" class="text-reset notification-item">
-                                        <div class="d-flex align-items-start">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar-xs">
-                                                    <span class="avatar-title bg-primary rounded-circle font-size-16">
-                                                        <i class="fas fa-shopping-cart"></i>
-                                                        <i class="fas fa-shopping-cart"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1">Your order is placed</h6>
-                                                <div class="font-size-12 text-muted">
-                                                    <p class="mb-1">If several languages coalesce the grammar</p>
-                                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0);" class="text-reset notification-item">
-                                        <div class="d-flex align-items-start">
-                                            <div class="flex-shrink-0 me-3">
-                                                <img src="{{asset('back-office/images/users/avatar-3.jpg')}}" class="rounded-circle avatar-xs" alt="user-pic">
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1">James Lemire</h6>
-                                                <div class="font-size-12 text-muted">
-                                                    <p class="mb-1">It will seem like simplified English.</p>
-                                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hour ago</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0);" class="text-reset notification-item">
-                                        <div class="d-flex align-items-start">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar-xs">
-                                                    <span class="avatar-title bg-success rounded-circle font-size-16">
-                                                        <i class="uil-truck"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1">Your item is shipped</h6>
-                                                <div class="font-size-12 text-muted">
-                                                    <p class="mb-1">If several languages coalesce the grammar</p>
-                                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-
-                                    <a href="javascript:void(0);" class="text-reset notification-item">
-                                        <div class="d-flex align-items-start">
-                                            <div class="flex-shrink-0 me-3">
-                                                <img src="{{asset('back-office/images/users/avatar-4.jpg')}}" class="rounded-circle avatar-xs" alt="user-pic">
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1">Salena Layfield</h6>
-                                                <div class="font-size-12 text-muted">
-                                                    <p class="mb-1">As a skeptical Cambridge friend of mine occidental.</p>
-                                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="p-2 border-top">
-                                    <div class="d-grid">
-                                        <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
-                                            <i class="uil-arrow-circle-right me-1"></i> View More..
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> #}
+                        
 
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
@@ -318,16 +203,20 @@
                                     <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
                                 </a>
                                  <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="invoices-list.html"> Liste evenement</a></li>
-                                    <li><a href="invoices-detail.html">Ajouter evenement</a></li>
+                                    <li><a href="{{ path('evenements_list') }}"> Liste evenement</a></li>
+                                    <li><a href="{{ path('ajouter_evenement') }}">Ajouter evenement</a></li>
                                 </ul>
                             </li>
 
-                             <li>
+                            <li>
                                 <a href="javascript: void(0);" class="waves-effect">
                                     <i class="dripicons-calendar"></i>
                                     <span>Calender</span>
+                                    <i class="dripicons-chevron-down d-none d-xl-inline-block font-size-15 float-end  waves-effect"></i>
                                 </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a  href="{{ path('calendar_events') }}"> Coming soon</a></li>
+                                </ul>
                             </li>
 
                             <li>
@@ -366,9 +255,9 @@
                                 </a>
                                 
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="{{ path('produit-liste') }}">Produits</a></li>
-                                    <li><a href="{{ path('commande-liste') }}">Commande</a></li>
-                                    <li><a href="{{ path('produit_ajouter') }}">Ajouter produit</a></li>
+                                    <li><a href="ecommerce-products.html">Produits</a></li>
+                                    <li><a href="ecommerce-orders.html">Commande</a></li>
+                                    <li><a href="ecommerce-add-product.html">Ajouter produit</a></li>
                                 </ul>
                             </li>
 
@@ -545,16 +434,15 @@
 
         <script src="{{asset('back-office/js/pages/dashboard.init.js')}}"></script>
 
-
+        <!--calendar-->
+        <script src="{{asset('back-office/js/pages/calendar.init.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
 <!-- apexcharts zedthom ena bch icone mtaa chart temchi 2 lignes-->
         <script src="{{asset('back-office/libs/apexcharts/apexcharts.min.js')}}"></script>
         <script src="{{asset('back-office/js/pages/dashboard.init.js')}}"></script>
 
         <!-- App js -->
         <script src="{{asset('back-office/js/app.js')}}"></script>
-                <script src="{{asset('back-office/js/pages/calendar.init.js')}}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
-
        {% endblock %}
     </body>
 

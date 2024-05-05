@@ -114,7 +114,7 @@ class EvenementController extends AbstractController
 
 
 
-    #[Route('/admin/list', name: 'evenements_list')]
+    #[Route('/admin/liste/Events', name: 'evenements_list')]
     public function listEvenements(EvenementRepository $EvenementRepository): Response
     {
        
@@ -137,7 +137,7 @@ class EvenementController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/supprimer/{id}', name: 'Evenement_supprimer', methods: ['POST'])]
+    #[Route('/admin/event/supprimer/{id}', name: 'Evenement_supprimer', methods: ['POST'])]
     public function supprimerEvenement(Request $request, int $id, EvenementRepository $EvenementRepository): Response
     {
         $evenement = $EvenementRepository->find($id);
@@ -154,7 +154,7 @@ class EvenementController extends AbstractController
     
         return $this->redirectToRoute('evenements_list');
     }
-    #[Route('/admin/modifier/{id}', name: 'Evenement_modifier')]
+    #[Route('/admin/events/modifier/{id}', name: 'Evenement_modifier')]
     public function modifier(Request $request, int $id, EvenementRepository $EvenementRepository): Response
     {
         // Find the event by its ID
@@ -206,7 +206,7 @@ class EvenementController extends AbstractController
 
 
  
-    #[Route("/events", name:"calendar_events")]
+    #[Route("/ComingSoon", name:"calendar_events")]
 
     public function events(EvenementRepository $eventRepository)
     {

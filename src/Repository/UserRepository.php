@@ -83,9 +83,5 @@ public function RecupérerUsers()
         ->getQuery()
         ->getResult();
     
-<<<<<<< HEAD
-=======
-}
->>>>>>> a8fccbb9b0bba060677cacaf2771f76a9ef96ffa
 }
 }
