@@ -4,13 +4,35 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+<<<<<<< HEAD
     images_directory: '%kernel.project_dir%/public/uploads/images'
 
+=======
+    upload_directory: '%kernel.project_dir%/public/uploads'
+    uploads: '%kernel.project_dir%/public/uploads/users'
+>>>>>>> a8fccbb9b0bba060677cacaf2771f76a9ef96ffa
 services:
+    
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        bind:
+            $stripeSK: "%env(STRIPE_SK)%" 
+            # config/services.yaml
+
+
+    App\Service\SmsGenerator:
+        arguments:
+            $twilioAccountSid: '%env(TWILIO_ACCOUNT_SID)%'
+            $twilioAuthToken: '%env(TWILIO_AUTH_TOKEN)%'
+
+            
+            # config/services.yaml
+   
+
+# Automatically registers your services as commands, event subscribers, etc.
 
     App\Service\TwilioService:
         arguments:
@@ -31,5 +53,10 @@ services:
         arguments:
             $logger: '@logger'
 
+<<<<<<< HEAD
 # add more service definitions when explicit configuration is needed
 # please note that last definitions always *replace* previous ones
+=======
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+>>>>>>> a8fccbb9b0bba060677cacaf2771f76a9ef96ffa

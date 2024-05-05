@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block body %}
+<div class="row">
+<div class="col s12 m4 l4 offset-m4 offset-l4">
+
+<form action="/charge" method="post" id="payment-form">
+<div class="form-row">
+<label for="card-element">
+Credit or debit card
+</label>
+<div id="card-element">
+<!-- a Stripe Element will be inserted here. -->
+</div>
+
+<!-- Used to display form errors -->
+<div id="card-errors" role="alert"></div>
+</div>
+
+<button> Submit Payment</button>
+</form>
+</div>
+</div>
+{% endblock }
+
+{% block javascript %}
+<script>
+   var stripe = Stripe('pk_test_51OopTSDtHS4Nu6kaAymb14R0Qb2ksLbCOBFPqmCikWn3wNM2tx2F9Blh0V1P8yTyolqB4scemp1bWGAuGfFkYSb500b3g4Fjls');
+    var elements = stripe.elements();
+
+
+ var style = {
+        base: {
+            fontSize: '16px',
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        }
+    };
+
+    // Créer un élément de carte avec le style personnalisé
+    var card = elements.create('card', { style: style });
+
+    // Montrez l'élément de carte dans le DOM
+    card.mount('#card-element');
+
+    // Gérer les erreurs de validation de la carte en temps réel
+    card.addEventListener('change', function(event) {
+        var displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+
+
+
+ 
+
+        var form = document.getElementById('payment-form');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    var  errorElement = document.getElementById('card-errors');
+                     errorElement.textContent = result.error.message;
+                     } else {
+                        stripeTokenHandler(result.token);
+                        }
+            });
+        });
+
+        function  stripeTokenHandler(token){
+            var form = document.getElementById('payment-form');
+            var hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type','hidden');
+            hiddenInput.setAttribute('name','stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+          
+            // Envoyer la demande au serveur pour traitement final
+            form.submit();
+         
+        }
+
+      
+                   
+        
+</script>
+
+
+
+{% endblock }
+

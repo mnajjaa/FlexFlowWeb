@@ -5,8 +5,13 @@ namespace App\Entity;
 use App\Repository\CoursRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
+#[UniqueEntity(fields: ['nomCour'], message: 'Ce nom de cours est déjà utilisé.')]
 class Cours
 {
     #[ORM\Id]
@@ -14,10 +19,15 @@ class Cours
     #[ORM\Column]
     private ?int $id = null;
 
+    
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide")]
+    #[Assert\Regex(pattern: '/^\D+$/', message: 'Le nom du cours ne peut pas contenir de chiffres.')]
     private ?string $nomCour = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide")]
+    #[Assert\Range(min: 30, max: 75, notInRangeMessage: 'La durée doit être comprise entre {{ min }} et {{ max }} minutes')]
     private ?string $Duree = null;
 
     #[ORM\Column(length: 255)]
@@ -36,6 +46,8 @@ class Cours
     private ?bool $etat = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide")]
+    #[Assert\Range(min: 10, max: 30, notInRangeMessage: 'La capacité doit être comprise entre {{ min }} et {{ max }}')]
     private ?int $capacite = null;
 
     #[ORM\ManyToOne]
@@ -43,7 +55,7 @@ class Cours
     private ?User $user = null;
 
     #[ORM\Column(type: Types::BLOB)]
-    private $image = null;
+    public $image = null;
 
     public function getId(): ?int
     {
@@ -163,7 +175,7 @@ class Cours
         return $this->image;
     }
 
-    public function setImage($image): static
+    public function setImage($image): self
     {
         $this->image = $image;
 

@@ -52,4 +52,8 @@ class EmailVerifier
        
         $this->entityManager->flush();
     }
+
+
+
+    
 }

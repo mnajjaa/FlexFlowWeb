@@ -1,0 +1,65 @@
+{# index.html.twig #}
+
+{# index.html.twig #}
+{% extends 'GestionProduit/baseFrontproduit.html.twig' %}
+
+{% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('/styles.css') }}">
+
+        <link rel="stylesheet" href="{{ asset('/style.css') }}">
+
+{% endblock %}
+
+{# index.html.twig #}
+
+{% block body %}
+   
+
+	<section class="products">
+		<h2>Our Products</h2>
+		<div class="all-products">
+			
+			 {% for produit in produits %}
+			
+			<div class="product">
+                        <img src="data:image/jpeg;base64,{{ produit.image }}" class="card-img-top" alt="{{ produit.nom }}">
+				<div class="product-info">
+					
+                <h5 class="product-title">Nom: <span style="color: black;">{{ produit.nom }}</span></h5>
+                            <p class="product-price">Prix: <span style="color: navy;">{{ produit.prix }} dnt</span></p>
+
+
+
+
+
+<form action="{{ path('ajouter_au_panier', {'id': produit.id}) }}" method="post" class="d-flex">
+
+    <select name="quantite" class="custom-select custom-select-sm">
+        {% for i in 1..5 %}
+            <option value="{{ i }}">{{ i }}</option>
+        {% endfor %}
+    </select>   
+     <button type="submit" class="btn btn-primary mr-2">Ajout au panier</button>
+
+</form>
+
+				</div>
+			</div>
+            {% endfor %}
+
+		</div>
+        <div class="row">
+        <div class="col-md-12">
+            <a href="{{ path('consulter_panier') }}" action=""class="btn btn-primary">Consulter le panier</a>
+        </div>
+    </div>
+	</section>
+
+
+
+
+
+{% endblock %}
+
+
+

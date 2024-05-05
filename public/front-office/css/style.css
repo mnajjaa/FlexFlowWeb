@@ -238,7 +238,7 @@
   --bs-dark-text: #dee2e6;
   --bs-primary-bg-subtle: #08061c;
   --bs-secondary-bg-subtle: #212529;
-  --bs-success-bg-subtle: #002018;
+  --bs-success-bg-subtle: #010201;
   --bs-info-bg-subtle: #032830;
   --bs-warning-bg-subtle: #332e04;
   --bs-danger-bg-subtle: #330001;
@@ -295,6 +295,8 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   font-weight: 900;
   line-height: 1.2;
   color: var(--bs-heading-color, inherit); }
+
+  
 
 h1, .h1 {
   font-size: calc(1.3875rem + 1.65vw); }
@@ -465,6 +467,13 @@ th {
   border-color: inherit;
   border-style: solid;
   border-width: 0; }
+
+
+
+
+
+
+
 
 label {
   display: inline-block; }

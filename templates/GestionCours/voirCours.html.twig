@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Cours{{ cours.getNomCour() }}{% endblock %}
+
+{% block body %}
+    <h1>Détails du Cours - {{ cours.getNomCour() }}</h1>
+    <ul>
+        <li>Durée: {{ cours.getDuree() }}</li>
+        <li>Intensité: {{ cours.getIntensite() }}</li>
+        <li>Cible: {{ cours.getCible() }}</li>
+        <li>Catégorie: {{ cours.getCategorie() }}</li>
+        <li>Objectif: {{ cours.getObjectif() }}</li>
+        <li>Capacité: {{ cours.getCapacite() }}</li>
+<a href="{{ path('participer_cours', {'id': cours.getId()}) }}" class="btn btn-primary">Participer</a>
+        <!-- Ajoutez d'autres détails du cours ici -->
+    </ul>
+{% endblock %}
