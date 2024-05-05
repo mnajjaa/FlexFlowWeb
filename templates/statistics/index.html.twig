@@ -1,0 +1,94 @@
+{% extends 'base-back.html.twig' %}
+{% block stylesheets %}
+    {# Inclure les fichiers CSS Bootstrap et SweetAlert2 ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
+{% endblock %}
+{% block body %}
+
+
+	<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+	<head>
+
+		<meta charset="utf-8"/>
+		<title>Login | Minible - Admin & Dashboard Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta content="Premium Multipurpose Admin & Dashboard Template" name="description"/>
+		<meta
+		content="Themesdesign" name="author"/>
+		<!-- App favicon -->
+		<link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+		<!-- bootstrap datepicker -->
+
+
+		<!-- Bootstrap Css -->
+		<link
+		href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css"/> <!-- Icons Css -->
+		<link
+		href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css"/>
+		<!-- App Css-->
+		<link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css"/>
+
+	</head>
+	<body>
+
+
+	
+       				<div class="col-xl-6">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Evenement statstique</h4>
+            
+            <div id="radial_chart" class="apex-charts" dir="ltr">
+            
+            </div>  
+        </div>
+    </div>
+</div>
+            <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+    var options = {
+        series: [{{ data.mostReservedCount }}, {{ data.mostLovedCount }}, {{ data.mostHatedCount }}],
+        chart: {
+            height: 350,
+            type: 'radialBar',
+        },
+        plotOptions: {
+            radialBar: {
+                dataLabels: {
+                    // ...
+                }
+            }
+        },
+        labels: ['Most Reserved:{{ data.mostReservedName }}', 'Most Loved:  {{ data.mostLovedName }}', 'Most Hated:  {{ data.mostHatedName }}'],
+    };
+
+    var chart = new ApexCharts(document.querySelector("#radial_chart"), options);
+    chart.render();
+</script>
+	
+
+
+			<!-- JAVASCRIPT -->
+
+			<script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+			<!-- App js -->
+			<script src="{{asset('back-office/js/app.js')}}"></script>
+
+<!-- Inclure le script de SweetAlert2 à la fin du body -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  
+		</body>
+
+		<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+	{% endblock %}

@@ -1,0 +1,37 @@
+
+{% extends 'base-back.html.twig' %}
+
+{% block body %}
+
+    <h1>Événements filtrés</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom de l'événement</th>
+                <th>Catégorie</th>
+                <th>Objectif</th>
+                <th>Nombre de places</th>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>État</th>
+                <th>Utilisateur</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for evenement in evenements %}
+                <tr>
+                    <td>{{ evenement.id }}</td>
+                    <td>{{ evenement.nomEvenement }}</td>
+                    <td>{{ evenement.categorie }}</td>
+                    <td>{{ evenement.Objectif }}</td>
+                    <td>{{ evenement.nbrPlace }}</td>
+                    <td>{{ evenement.Date|date('Y-m-d') }}</td>
+                    <td>{{ evenement.Time|date('H:i:s') }}</td>
+                    <td>{{ evenement.etat ? 'Actif' : 'Inactif' }}</td>
+                    <td>{{ evenement.user.username }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

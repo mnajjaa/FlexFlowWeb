@@ -1,0 +1,215 @@
+{% extends 'base-back.html.twig' %}
+{% block stylesheets %}
+    {# Inclure les fichiers CSS Bootstrap et SweetAlert2 ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
+{% endblock %}
+{% block body %}
+
+
+	<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+	<head>
+
+		<meta charset="utf-8"/>
+		<title>Login | Minible - Admin & Dashboard Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta content="Premium Multipurpose Admin & Dashboard Template" name="description"/>
+		<meta
+		content="Themesdesign" name="author"/>
+		<!-- App favicon -->
+		<link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+		<!-- bootstrap datepicker -->
+
+
+		<!-- Bootstrap Css -->
+		<link
+		href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css"/> <!-- Icons Css -->
+		<link
+		href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css"/>
+		<!-- App Css-->
+		<link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css"/>
+
+	</head>
+	<body>
+
+
+		<!-- ============================================================== -->
+		<!-- Start right Content here -->
+		<!-- ============================================================== -->
+			<div class="main-content"> <div class="page-content">
+				<div
+					class="container-fluid">
+
+
+					<!-- end page title -->
+
+					<div class="row">
+						<div class="col-8">
+							<div class="card">
+								<div class="card-body">
+
+									<h4 class="card-title">Ajouter un événement</h4>
+									<form action="{{ path('ajouter_evenement') }}" method="post" enctype="multipart/form-data" id="ajouter_evenement">
+{{ form_start(form, {'method': 'POST' ,  'novalidate' : true}) }}
+
+										{{ form_row(form._token) }}
+										{# Ajout du jeton CSRF #}
+										<div class="mb-3 row">
+											<label for="example-text-input" class="col-md-2 col-form-label">Nom de l'événement</label>
+											<div class="col-md-10">
+												{{ form_widget(form.nomEvenement, {'attr': {'class': 'form-control'}}) }}
+												<div class="text-danger">
+        {{ form_errors(form.nomEvenement) }}
+    </div>
+											</div>
+
+										</div>
+										<div class="mb-3 row">
+											<label class="col-md-2 col-form-label">Categorie</label>
+											<div class="col-md-10">
+												{{ form_widget(form.categorie, {'attr': {'class': 'form-select'}}) }}
+	<div class="text-danger">
+        {{ form_errors(form.categorie) }}
+    </div>
+
+											</div>
+										</div>
+										<div class="mb-3 row">
+											<label class="col-md-2 col-form-label">Objectif</label>
+											<div class="col-md-10">
+
+												{{ form_widget(form.Objectif, {'attr': {'class': 'form-select'}}) }}
+	<div class="text-danger">
+        {{ form_errors(form.Objectif) }}
+    </div>
+
+											</div>
+										</div>
+
+										<div class="mb-3 row">
+											<label for="example-number-input" class="col-md-2 col-form-label">Nombre de Place</label>
+											<div class="col-md-10">
+												{{ form_widget(form.nbrPlace, {'attr': {'class': 'form-control'}}) }}
+												<div class="text-danger">
+        {{ form_errors(form.nbrPlace) }}
+    </div>
+                                            </div>
+										</div>
+
+										<div class="mb-3 row">
+											<label for="example-date-input" class="col-md-2 col-form-label">Date</label>
+											<div class="col-md-10">
+												{{ form_widget(form.Date, {'attr': {'class': 'form-control'}}) }}
+<div class="text-danger">
+        {{ form_errors(form.Date) }}
+    </div>
+											</div>
+										</div>
+
+										<div class="mb-3 row">
+											<label for="example-time-input" class="col-md-2 col-form-label">Time</label>
+											<div class="col-md-10">
+												{{ form_widget(form.Time, {'attr': {'class': 'form-control'}}) }}
+												<div class="text-danger">
+        {{ form_errors(form.Time) }}
+    </div>
+											</div>
+										</div>
+
+										<div class="mb-3 row">
+											<label class="col-md-2 col-form-label">User</label>
+											<div class="col-md-10">
+												{{ form_widget(form.user, {'attr': {'class': 'form-select'}}) }}
+<div class="text-danger">
+        {{ form_errors(form.user) }}
+    </div>
+											</div>
+										</div>
+										<div class="mb-3 row">
+
+											<label class="col-md-2 col-form-check-label" for="formCheckRight1">
+												Actif
+											</label>
+											<div class="col-md-10">
+												<div class="vstack gap-2">
+													<div>
+														<div class="form-check form-check-right">
+
+															{{ form_widget(form.etat, {'attr': {'class': 'orm-check-label'}}) }}
+														</div>
+														<div></div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="mb-3 row">
+											<label for="imageFile" class="col-md-2 col-form-label">Image</label>
+											<div class="col-md-10">
+												{{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+												<div class="text-danger">
+        {{ form_errors(form.imageFile) }}
+    </div>
+											</div>
+										</div>
+
+										<div class="mb-3 row">
+											<div class="col-md-2"></div>
+											<div class="col-md-10">
+												<button type="submit" id="submit-btn" class="btn btn-primary waves-effect waves-light w-md">Envoyer</button>
+												<button type="reset" class="btn btn-outline-danger waves-effect waves-light w-md">Annuler</button>
+											</div>
+										</div>
+
+
+									</form>
+								</div>
+							</div>
+						</div>
+						<!-- end col -->
+					</div>
+					<!-- end row -->
+
+
+				</div>
+				<!-- container-fluid -->
+			</div>
+			<!-- End Page-content -->
+
+
+			<!-- JAVASCRIPT -->
+			<script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+			<script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+			<!-- App js -->
+			<script src="{{asset('back-office/js/app.js')}}"></script>
+
+<!-- Inclure le script de SweetAlert2 à la fin du body -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('submit-btn').addEventListener('click', function(event) {
+        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+        Swal.fire({
+            icon: 'info',
+            title: 'vérification de Données !',
+            showConfirmButton: false,
+            timer: 3000
+        }).then(() => {
+            // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
+            document.querySelector('form').submit();
+        });
+    });
+});
+</script>
+		</body>
+
+		<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+	{% endblock %}

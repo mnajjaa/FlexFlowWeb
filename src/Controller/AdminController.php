@@ -533,5 +533,3 @@ return $this->render('admin/editMembre.html.twig', [
     }
 
 }
-
-

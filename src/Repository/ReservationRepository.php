@@ -45,4 +45,20 @@ class ReservationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+
+
+
+public function findMostReservedEvent()
+{
+    return $this->createQueryBuilder('r')
+        ->select('r.nomEvenement as eventName, COUNT(r.id) as reservationCount')
+        ->groupBy('r.nomEvenement')
+        ->orderBy('reservationCount', 'DESC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
+}
+
 }
