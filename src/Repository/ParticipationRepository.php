@@ -21,6 +21,20 @@ class ParticipationRepository extends ServiceEntityRepository
         parent::__construct($registry, Participation::class);
     }
 
+
+    public function getMostParticipant(): array
+{
+    $entityManager = $this->getEntityManager();
+
+    $query = $entityManager->createQuery(
+        'SELECT p.nomParticipant, COUNT(p) as totalParticipations
+        FROM App\Entity\Participation p
+        GROUP BY p.nomParticipant
+        ORDER BY totalParticipations DESC'
+    )->setMaxResults(1);
+
+    return $query->getResult();
+}
 //    /**
 //     * @return Participation[] Returns an array of Participation objects
 //     */

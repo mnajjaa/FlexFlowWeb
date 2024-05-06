@@ -75,9 +75,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $createdAt = null;
 
+
+    #[ORM\OneToMany(targetEntity: Favoris::class, mappedBy: 'user')]
+    private Collection $evenement;
+
     public function __construct()
     {
         $this->loginHistories = new ArrayCollection();
+        $this->evenement = new ArrayCollection();
+
     }
 
     
@@ -252,7 +258,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+ /**
+     * @return Collection<int, Favoris>
+     */
+    public function getEvenement(): Collection
+    {
+        return $this->evenement;
+    }
 
+    public function addEvenement(Favoris $evenement): static
+    {
+        if (!$this->evenement->contains($evenement)) {
+            $this->evenement->add($evenement);
+            $evenement->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvenement(Favoris $evenement): static
+    {
+        if ($this->evenement->removeElement($evenement)) {
+            // set the owning side to null (unless already changed)
+            if ($evenement->getUser() === $this) {
+                $evenement->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+    
     /**
      * @return Collection<int, LoginHistory>
      */
@@ -295,6 +330,3 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 }
-   
-    
-

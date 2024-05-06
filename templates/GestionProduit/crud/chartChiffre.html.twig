@@ -1,0 +1,58 @@
+{# templates/admin/charte_commandes.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Chart des commandes{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <canvas id="charteCommandes"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById('charteCommandes').getContext('2d');
+            var chartData = {
+                labels: [
+                    {% for date, montant in montantParJour %}
+                        '{{ date }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Montant totale par jour',
+                    data: [
+                        {% for date, montant in montantParJour %}
+                            {{ montant }},
+                        {% endfor %}
+                    ],
+                    fill: false,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                    pointBorderColor: 'rgba(54, 162, 235, 1)',
+                    pointHoverRadius: 7,
+                    pointHoverBackgroundColor: 'rgba(54, 162, 235, 1)',
+                    pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+                }]
+            };
+
+            var chartOptions = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            };
+
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: chartOptions
+            });
+        });
+    </script>
+{% endblock %}

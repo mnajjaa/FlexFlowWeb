@@ -1,0 +1,276 @@
+{% extends 'base-back.html.twig' %}
+
+{% block stylesheets %}
+    {# Inclure les fichiers CSS Bootstrap #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+     {{ parent() }}
+    <style>
+        /* Styles pour rendre le checkbox visible et ajuster sa taille */
+        .custom-checkbox {
+            display: inline-block;
+            position: relative;
+            padding-left: 40px; /* Ajuster l'espace à gauche pour accueillir le checkbox plus grand */
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 30px; /* Hauteur du checkbox */
+            width: 30px; /* Largeur du checkbox */
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 30px; /* Hauteur du checkbox */
+            width: 30px; /* Largeur du checkbox */
+            background-color: #eee;
+            border: 1px solid #ccc;
+            border-radius: 5px; /* Bord arrondi pour le checkbox */
+        }
+
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .custom-checkbox .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 8px; /* Position de la coche à l'intérieur du checkbox */
+            top: 4px; /* Position de la coche à l'intérieur du checkbox */
+            width: 14px;
+            height: 14px;
+            border: solid #007bff;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+    </style>
+
+    <style>
+        .custom-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .custom-form-label {
+            font-weight: bold;
+        }
+        /* Ajouter des styles personnalisés */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn-save {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .btn-save:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+
+
+    
+{% endblock %}
+
+{% block title %}Modifier un cours{% endblock %}
+
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+
+
+
+<!-- jebtou mel base.html.twig-->
+      
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-pnLDlS50xL34ul5+xeRuJusv/1dmbd3W7pUT2F+QfJtadgFU1mX6lYb/0J2a9UcCpJw5f1ADmMBmBVmg+R2nGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+         <link rel="shortcut icon" href="assets/images/favicon.ico">
+        
+        <!-- Sweet Alert-->
+        <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- Bootstrap Css -->
+        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
+		<!-- Feuilles de styles -->
+		<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    
+		<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+
+		<!-- Fichiers JS -->
+		<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
+		{% block javascripts %}{% endblock %}
+		<script src="{{ asset('assets/js/scripts.js') }}" defer></script>{# Run composer require symfony/webpack-encore-bundle to start using Symfony UX #}
+        
+
+    </head>
+
+
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Modifier un cour</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card custom-card">
+                    <div class="card-body">
+                        {{ form_start(form, {'attr': {'class': 'form-horizontal', 'enctype': 'multipart/form-data'}}) }}
+
+                            <div class="form-group row">
+                                <label for="{{ form.nomCour.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Nom du cours :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.nomCour, {'attr': {'class': 'form-control'}}) }}
+                                    <div class="text-danger">
+        {{ form_errors(form.nomCour) }}
+    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="{{ form.Duree.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Durée :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.Duree, {'attr': {'class': 'form-control'}}) }}
+                                     <div class="text-danger">
+        {{ form_errors(form.Duree) }}
+    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="{{ form.Intensite.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Intensité :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.Intensite, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="{{ form.Cible.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Cible :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.Cible, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="{{ form.Categorie.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Catégorie :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.Categorie, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="{{ form.Objectif.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Objectif :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.Objectif, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                                                       <div class="form-group row">
+                                <label for="{{ form.etat.vars.id }}" class="col-sm-3 col-form-label custom-form-label">État :</label>
+                                <div class="col-sm-9">
+                                    <label class="custom-checkbox">
+                                        {{ form_widget(form.etat) }}
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                             <div class="form-group row">
+                                <label for="{{ form.Objectif.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Capacité :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.capacite, {'attr': {'class': 'form-control'}}) }}
+                                     <div class="text-danger">
+        {{ form_errors(form.capacite) }}
+    </div>
+                                </div>
+                            </div>
+                                 <div class="form-group row">
+                                <label for="{{ form.Objectif.vars.id }}" class="col-sm-3 col-form-label custom-form-label">ImageFile :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                                    <div class="text-danger">
+        {{ form_errors(form.imageFile) }}
+    </div>
+                                </div>
+                            </div>
+                             <div class="form-group row">
+                                <label for="{{ form.Objectif.vars.id }}" class="col-sm-3 col-form-label custom-form-label">Coach :</label>
+                                <div class="col-sm-9">
+                                    {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <!-- Ajouter d'autres champs du formulaire ici -->
+                             <center>
+                            <button type="submit" class="btn btn-primary" id="submit-btn">Enregistrer</button>
+                        </center>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inclure le script de SweetAlert2 à la fin du body -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('submit-btn').addEventListener('click', function(event) {
+        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+        Swal.fire({
+            icon: 'info',
+            title: 'Vérification des données en cours !',
+            showConfirmButton: false,
+            timer: 3000
+        }).then(() => {
+            // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
+            document.querySelector('form').submit();
+        });
+    });
+});
+</script>
+
+
+
+    </body>
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+</html>
+{% endblock %}

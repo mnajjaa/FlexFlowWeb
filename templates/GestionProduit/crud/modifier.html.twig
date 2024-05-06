@@ -1,0 +1,120 @@
+{% extends 'base-back.html.twig' %}
+{% block stylesheets %}
+  {# Incluez les fichiers CSS Bootstrap ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .custom-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .custom-form-label {
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+    </head>
+    
+
+<body>
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+
+    <div class="container">
+        <center><h1>Modifier un produit</h1></center>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card custom-card">
+                    <div class="card-body">
+                        {# Votre formulaire ici #}
+                        <div class="mb-3">
+                            {{ form_label(form.nom, 'Nom du produit', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                            <div class="text-danger">{{ form_errors(form.nom) }}</div>
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.description, 'description', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                            <div class="text-danger">{{ form_errors(form.description) }}</div>
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.prix, 'prix', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+                            <div class="text-danger">{{ form_errors(form.prix) }}</div>
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.Type, 'Type', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.Type, {'attr': {'class': 'form-control'}}) }}
+                            <div class="text-danger">{{ form_errors(form.Type) }}</div>
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.quantite, 'Quantité', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.quantite, {'attr': {'class': 'form-control'}}) }}
+                            <div class="text-danger">{{ form_errors(form.quantite) }}</div>
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.quantiteVendues, 'Quantité vendues', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.quantiteVendues, {'attr': {'class': 'form-control'}}) }}
+                            <div class="text-danger">{{ form_errors(form.quantiteVendues) }}</div>
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.imageFile, 'Image', {'label_attr': {'class': 'form-label custom-form-label'}}) }}
+                            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                            <div class="text-danger">{{ form_errors(form.imageFile) }}</div>
+                        </div>
+                        <center>
+                            <button type="submit" class="btn btn-primary" id="submit-btn">Enregistrer</button>
+                        </center>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+       <!-- Inclure le script de SweetAlert2 à la fin du body -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   <!--<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('submit-btn').addEventListener('click', function(event) {
+        // event.preventDefault(); // Supprimez cette ligne pour permettre la soumission automatique
+        Swal.fire({
+            icon: 'success',
+            title: 'Le produit a été modifié avec succès !',
+            showConfirmButton: false,
+            timer: 3000
+        }).then(() => {
+            // Une fois que l'alerte est fermée, soumettez le formulaire manuellement
+            document.querySelector('form').submit();
+        });
+    });
+});
+</script>  -->  
+
+</body>
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+</html>
+{% endblock %}

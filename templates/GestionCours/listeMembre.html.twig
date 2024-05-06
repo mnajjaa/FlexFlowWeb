@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Cours{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .card {
+            border: 1px solid #ddd; /* bordure de la carte */
+            border-radius: 8px; /* coins arrondis */
+            overflow: hidden; /* pour cacher les coins des images plus grandes */
+            height: 400px; /* définir une hauteur fixe pour toutes les cartes */
+        }
+        .card-img-top {
+            width: 100%; /* image occupe 100% de la largeur de la carte */
+            height: 60%; /* définir la hauteur de l'image */
+            object-fit: cover; /* ajuste l'image pour remplir complètement la zone */
+        }
+        .card-body {
+            height: 40%; /* définir la hauteur du corps de la carte */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* aligner le contenu verticalement au centre */
+            text-align: center; /* centrer le texte horizontalement */
+        }
+        .btn-participer {
+            width: 120px; /* définir une largeur spécifique au bouton */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">Liste des Cours</h1>
+    <div class="row">
+        {% for cour in cours %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <img src="data:image/jpeg;base64,{{ cour.getImage }}" class="card-img-top" alt="{{ cour.getNomCour() }}">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ cour.getNomCour() }}</h2>
+                       <center> <a href="{{ path('voir_cours', {'id': cour.getId()}) }}" class="btn btn-primary btn-participer">Voir plus</a></center>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
