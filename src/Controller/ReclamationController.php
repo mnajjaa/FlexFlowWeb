@@ -129,7 +129,7 @@ class ReclamationController extends AbstractController
             $reclamation->setDescription($bdf->filterText($reclamation->getDescription()));
 
 
-
+            $reclamation->setUser($user);
 
             $entityManager->persist($reclamation);        
             $entityManager->flush();
