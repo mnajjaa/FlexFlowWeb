@@ -1,0 +1,120 @@
+{% extends 'base-back.html.twig' %}
+
+{% block body %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Modifier une offre | Minible - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('back-office/images/favicon.ico') }}">
+    <!-- Bootstrap Css -->
+    <link href="{{ asset('back-office/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{{ asset('back-office/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{{ asset('back-office/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    <style>
+        /* Style pour le formulaire */
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 900px;
+            margin: 20px auto -20px auto; /* Réduire la marge supérieure */
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Réduire la largeur de la première colonne */
+            gap: 20px;
+        }
+
+        /* Titre du formulaire */
+        .form-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #343a40;
+            grid-column: span 2;
+        }
+
+        /* Champs de formulaire */
+        input[type="text"], input[type="email"], select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        /* Effet de survol pour les champs de formulaire */
+        input[type="text"]:focus, input[type="email"]:focus, select:focus {
+            border-color: #4e73df;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+        }
+
+        /* Bouton de soumission */
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #4e73df;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        /* Effet de survol pour le bouton de soumission */
+        .submit-btn:hover {
+            background-color: #375a7f;
+        }
+
+        /* Style pour l'image */
+        .image-column {
+            text-align: right;
+            grid-column: 1/ 2; /* Placer l'image dans la première colonne */
+            margin-top: 20px;
+        }
+
+        /* Ajustez la taille de l'image */
+        .image-column img {
+            width: 350px; /* Ajustez la taille de l'image selon vos préférences */
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-title">Modifier une offre</h1>
+        {{ form_start(form) }}
+        <div class="image-column"> <!-- Placer cette balise dans la première colonne -->
+            <div class="form-group"> <!-- Ajouter cette balise pour maintenir l'alignement des champs -->
+                <label></label>
+                <img src="{{ asset('images/modif.png') }}" alt="Your Image" width="150">
+            </div>
+        </div>
+        <div>
+            {{ form_row(form.nom) }}
+            <label for="specialite">Spécialité</label>
+            {{ form_widget(form.specialite, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div>
+            {{ form_row(form.tarif_heure) }}
+            {{ form_row(form.etat_offre)}}
+            {{ form_row(form.email) }}
+            {{ form_row(form.coach) }}
+        </div>
+        <div class="form-buttons">
+            <button type="submit" id="submitButton" class="submit-btn">Modifier</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</body>
+</html>
+{% endblock %}

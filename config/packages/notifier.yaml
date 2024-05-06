@@ -5,6 +5,8 @@ framework:
         #    telegram: '%env(TELEGRAM_DSN)%'
         texter_transports:
             twilio: '%env(TWILIO_DSN)%'
+        channel_policy:
+            twilio: '%env(TWILIO_DSN)%'
         #    nexmo: '%env(NEXMO_DSN)%'
         #channel_policy:
             # use chat/slack, chat/telegram, sms/twilio or sms/nexmo

@@ -1,0 +1,128 @@
+{% extends 'base-back.html.twig' %}
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Login | Minible - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+    <!-- Bootstrap Css -->
+    <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="container">
+    <h1>Liste des demandes</h1>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Age</th>
+                    <th>But</th>
+                    <th>Niveau Physique</th>
+                    <th>Maladie Chronique</th>
+                    <th>Nombre d'heures</th>
+                    <th>État</th>
+                    <th>Horaire</th>
+                    <th>Jours</th>
+                    <th>Utilisateur</th>
+                    <th>Offre</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for demand in demande %}
+                <tr>
+                    <td>{{ demand.nom }}</td>
+                    <td>{{ demand.age }}</td>
+                    <td>{{ demand.but }}</td>
+                    <td>{{ demand.niveau_physique }}</td>
+                    <td>{{ demand.maladie_chronique }}</td>
+                    <td>{{ demand.nombreheure }}</td>
+                    <td>{{ demand.etat }}</td>
+                    <td>{{ demand.horaire ? demand.horaire|date('H:i') : '' }}</td>
+                    <td>{{ demand.lesjours }}</td>
+                    <td>{{ demand.user.email }}</td>
+                    <td>{{ demand.offre.nom }}</td>
+                    <td>
+                        <a href="{{ path('accepter_demande', {'id': demand.id}) }}" class="action-btn edit-btn">
+                            <i class="far fa-check-circle"></i>
+                        </a>
+                     
+                            <a href="{{ path('refuser_demande', {'id': demand.id}) }}" class="action-btn delete-btn" data-demand-id="{{ demand.id }}">
+                                <i class="fas fa-times-circle"></i>
+                            </a>
+                
+                    
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- JAVASCRIPT -->
+
+<script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+<script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+<script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+<script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+<script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+<!-- bootstrap datepicker -->
+<script src="{{asset('back-office/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+
+<!-- Required datatable js -->
+<script src="{{asset('back-office/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('back-office/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+        
+<!-- Responsive examples -->
+<script src="{{asset('back-office/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('back-office/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
+
+<!-- init js -->
+<script src="{{asset('back-office/js/pages/ecommerce-datatables.init.js')}}"></script>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- App js -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            var demandId = this.getAttribute('data-demand-id');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Êtes-vous sûr de vouloir refuser cette demande ?',
+                showCancelButton: true,
+                confirmButtonText: 'Oui',
+                cancelButtonText: 'Non'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to delete route
+                    window.location.href = "{{ path('refuser_demande', {'id': 'demandId'}) }}".replace('demandId', demandId);
+                }
+            });
+        });
+    });
+});
+</script>
+
+</body>
+</html>
+{% endblock %}

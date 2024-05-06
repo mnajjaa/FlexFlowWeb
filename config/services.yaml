@@ -37,6 +37,9 @@ services:
             $twilioAuthToken: '%env(TWILIO_AUTH_TOKEN)%'
             $twilioPhoneNumber: '%env(TWILIO_PHONE_NUMBER)%'
 
+    App\Controller\StatistiqueController:
+        tags: ['controller.service_arguments']
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
