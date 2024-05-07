@@ -67,233 +67,181 @@
 </div>
 <div class="page-wraper">
 
-	<!-- Header -->
-	<header class="site-header mo-left header style-1">
-		
-		<!-- Top Header -->
-		<div class="top-bar bg-dark">
-			<div class="container">
-				<div class="dz-topbar-inner d-flex justify-content-between align-items-center">
-					<div class="dz-topbar-left">
-						<ul>
-							<li><i class="fa-regular fa-envelope"></i> info@example.com</li>
-						</ul>
-					</div>
-					<div class="dz-topbar-right">
-						<ul>
-							<li><i class="fa-regular fa-clock"></i> Time 06:00 AM To 08:00 PM</li>
-							<li><i class="fa fa-phone"></i> +91-1234567890</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
+		<!-- Header -->
+	<header class="site-header mo-left header header-transparent style-2">
 		
 		<!-- Main Header -->
-		<div class="sticky-header main-bar-wraper navbar-expand-lg border-bottom">
-			<div class="main-bar clearfix">
-				<div class="container clearfix">
-					<div class="clearfix">
-						<!-- Website Logo -->
-						<div class="logo-header mostion logo-dark">
-							<a href="index.html"><img src="assets/images/logo.png" alt=""></a>
+		<div class="sticky-header main-bar-wraper navbar-expand-lg">
+			<div class="main-bar clearfix ">
+				<div class="container clearfix ">
+				
+					<!-- Website Logo -->
+					<div class="logo-header logo-white">
+						<a href="index.html"><img src="{{asset('front-office/images/logo-white.png')}}" alt=""></a>
+					</div>
+					<div class="logo-header logo-dark">
+						<a href="index.html"><img src="{{asset('front-office/images/logo.png')}}" alt=""></a>
+					</div>
+					
+					<!-- Nav Toggle Button -->
+					<button class="navbar-toggler navbar-toggler-skew collapsed navicon justify-content-end" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
+					
+					<!-- Extra Nav -->
+					<div class="extra-nav">
+    <div class="extra-cell">
+        
+        
+        <div class="header-nav navbar-collapse collapse justify-content-end" id="navbarNavDropdown">
+    <div class="logo-header logo-dark">
+        <a href="index.html"><img src="{{asset('uploads/users/' ~app.user.image)}}" alt="" style="width: 50px; height: 50px;"></a>
+    </div>
+    <ul class="nav navbar-nav navbar navbar-left">	
+        <li class="sub-menu-down"><a href="javascript:void(0);">
+        <img class="rounded-circle header-profile-user ml-2" src="{{asset('uploads/users/' ~app.user.image)}}" style="width: 50px; height: 50px;">
+                {{app.user.nom}}
+            </a>
+            <ul class="sub-menu">
+                <li><a href="{{ path('membre_profile') }}">View Profile</a></li>
+                {# <li><a href="#">Settings</a></li>
+                <li><a href="#">Lock screen</a></li> #}
+                <li><a href="{{ path('app_logout') }}">Sign out</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+    </div>
+</div>
+
+
+					<!-- Extra Nav -->
+					
+					<!-- Search Form -->
+					<div class="dz-quik-search">
+						<form action="#">
+							<input name="search" value="" type="text" class="form-control" placeholder="Enter Your Keyword ...">
+							<span id="quik-search-remove"><i class="fa-solid fa-xmark"></i></span>
+						</form>
+					</div>
+					
+					<!-- Header Nav -->
+					<div class="header-nav navbar-collapse collapse justify-content-end" id="navbarNavDropdown">
+						<div class="logo-header logo-dark">
+							<a href="index.html"><img src="{{asset('front-office/images/logo.png')}}" alt=""></a>
 						</div>
-						
-						<!-- Nav Toggle Button -->
-						<button class="navbar-toggler navbar-toggler-skew collapsed navicon justify-content-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-							<span></span>
-							<span></span>
-							<span></span>
-						</button>
-						
-						<!-- Extra Nav -->
-						<div class="extra-nav">
-							<div class="extra-cell">
-								<button id="quik-search-btn" type="button" class="header-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-								<a href="appointment.html" class="btn btn-primary btn-skew appointment-btn"><span class="skew-inner"><span class="text">Appointment</span></span></a>
-							</div>
-						</div>
-						<!-- Extra Nav -->
-						
-						<!-- Search Form -->
-						<div class="dz-quik-search">
-							<form action="#">
-								<input name="search" value="" type="text" class="form-control" placeholder="Enter Your Keyword ...">
-								<span id="quik-search-remove"><i class="fa-solid fa-xmark"></i></span>
-							</form>
-						</div>
-						
-						<!-- Header Nav -->
-						<div class="header-nav navbar-collapse collapse justify-content-end" id="navbarNavDropdown">
-							<div class="logo-header logo-dark">
-								<a href="index.html"><img src="assets/images/logo.png" alt=""></a>
-							</div>
-							<ul class="nav navbar-nav navbar navbar-left">	
-								<li class="sub-menu-down"><a href="javascript:void(0);">Home</a>
-									<ul class="sub-menu">
-										<li><a href="index.html">HomePage 1</a></li>
-										<li><a href="index-2.html">HomePage 2</a></li>
-										<li><a href="index-3.html">HomePage 3</a></li>
-									</ul>
-								</li>
-								<li class="sub-menu-down"><a href="javascript:void(0);">Pages</a>
-									<ul class="sub-menu">
-										<li><a href="about-us.html">About Us</a></li>
-										<li><a href="faq.html">FAQ</a></li>
-										<li><a href="pricing.html">Pricing</a></li>
-										<li><a href="team.html">Team</a></li>
-										<li><a href="bmi-calculator.html">BMI Calculator</a></li>
-										<li><a href="javascript:void(0);">Services <i class="fa fa-angle-right"></i></a>
-											<ul class="sub-menu">
-												<li><a href="services.html">Services</a></li>
-												<li><a href="service-details.html">Service Detail</a></li>
-											</ul>
-										</li>
-										<li><a href="schedule.html">Schedule</a></li>
-										<li><a href="javascript:void(0);">Event<i class="fa fa-angle-right"></i></a>
-											<ul class="sub-menu">
-												<li><a href="events.html">Events</a></li>
-												<li><a href="event-detail.html">Event Details</a></li>
-											</ul>
-										</li>
-										<li><a href="javascript:void(0);">Portfolio<i class="fa fa-angle-right"></i></a>
-											<ul class="sub-menu">
-												<li><a href="portfolio.html">Portfolio</a></li>
-												<li><a href="portfolio-detail.html">Portfolio Details</a></li>
-											</ul>
-										</li>
-										<li><a href="coming-soon.html">Coming Soon</a></li>
-										<li><a href="error-404.html">Error 404</a></li>
-										<li><a href="under-maintenance.html">Under Maintenance</a></li>
-									</ul>
-								</li>
-								<li class="sub-menu-down"><a href="javascript:void(0);">Shop</a>
-									<ul class="sub-menu">
-										<li><a href="shop.html">Shop</a></li>
-										<li><a href="shop-cart.html">Shop Cart</a></li>
-										<li><a href="shop-wishlist.html">Shop Wishlist</a></li>
-										<li><a href="shop-login.html">Shop Login</a></li>
-										<li><a href="shop-checkout.html">Shop Checkout</a></li>
-										<li><a href="product-detail.html">Product Detail</a></li>
-									</ul>
-								</li>
-								<li class="has-mega-menu">
-									<a href="javascript:void(0);">Blogs</a>
-									<ul class="mega-menu">
-										<li> <a href="javascript:;">Blog Grid</a>
-											<ul>
-												<li><a href="blog-grid-2.html">Blog Grid 2</a></li>
-												<li><a href="blog-grid-3.html">Blog Grid 3</a></li>
-												<li><a href="blog-grid-left-sidebar.html">Blog Grid Left Sidebar</a></li>
-												<li><a href="blog-grid-right-sidebar.html">Blog Grid Right Sidebar</a></li>
-											</ul>
-										</li>
-										<li> <a href="javascript:;">Blog List</a>
-											<ul>
-												<li><a href="blog-list.html">Blog List</a></li>
-												<li><a href="blog-list-left-sidebar.html">Blog List Left Sidebar</a></li>
-												<li><a href="blog-list-right-sidebar.html">Blog List Right Sidebar</a></li>
-												<li><a href="blog-both-sidebar.html">Blog Both Sidebar</a></li>
-											</ul>
-										</li>
-										<li> <a href="javascript:;">Blog Single</a>
-											<ul>
-												<li><a href="blog-detail.html">Blog Detail</a></li>
-												<li><a href="blog-open-gutenberg.html">Blog Open Gutenberg</a></li>
-												<li><a href="blog-detail-left-sidebar.html">Blog Details Left Sidebar</a></li>
-												<li><a href="blog-detail-right-sidebar.html">Blog Details Right Sidebar</a></li>
-											</ul>
-										</li>
-										<li> <a href="javascript:;">Blog Masonry</a>
-											<ul>
-												<li><a href="blog-grid-3-masonary.html">Blog Grid 3 Masonry</a></li>
-												<li><a href="blog-grid-4-masonary.html">Blog Grid 4 Masonry</a></li>
-												<li><a href="blog-wide-list-sidebar.html">Blog Wide List Sidebar</a></li>
-												<li><a href="blog-wide-grid-sidebar.html">Blog Wide Grid Sidebar</a></li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li class="has-mega-menu">
-									<a href="javascript:void(0);">Elements</a>
-									<ul class="mega-menu">
-										<li> <a href="javascript:;">Elements</a>
-											<ul>
-												<li><a href="shortcode-accordians.html"><i class="ti-layout-accordion-list"></i> Accordians</a></li>
-												<li><a href="shortcode-alert.html"><i class="ti-alert"></i> Alert box</a></li>
-												<li><a href="shortcode-animation-effects.html"><i class="ti-layers-alt"></i> Animation Effects</a></li>
-												<li><a href="shortcode-buttons.html"><i class="ti-mouse"></i> Buttons</a></li>
-												<li><a href="shortcode-buttons-effects.html"><i class="ti-mouse"></i> Buttons Effects</a></li>
-												<li><a href="shortcode-counters.html"><i class="ti-timer"></i> Counters</a></li>
-											</ul>
-										</li>
-										<li> <a href="javascript:;">Elements</a>
-											<ul>
-												<li><a href="shortcode-dividers.html"><i class="ti-layout-list-post"></i> Dividers</a></li>
-												<li><a href="shortcode-filters.html"><i class="ti-check-box"></i> Gallery Filters</a></li>
-												<li><a href="shortcode-widgets.html"><i class="ti-widgetized"></i> All Widgets</a></li>
-												<li><a href="shortcode-google-map.html"><i class="ti-map-alt"></i>Google Maps</a></li>
-												<li><a href="shortcode-icon-box-styles.html"><i class="ti-layout-grid2"></i> Icon box styles</a></li>
-												<li><a href="shortcode-image-box-content.html"><i class="ti-image"></i> Image box content</a></li>
-											</ul>
-										</li>
-										<li> <a href="javascript:;">Elements</a>
-											<ul>
-												<li><a href="shortcode-images-effects.html"><i class="ti-layout-media-overlay"></i> Images effects</a></li>
-												<li><a href="shortcode-list-group.html"><i class="ti-list"></i> List group</a></li>
-												<li><a href="shortcode-pagination.html"><i class="ti-more"></i> Pagination</a></li>
-												<li><a href="shortcode-pricing-table.html"><i class="ti-layout-grid2-thumb"></i> Pricing table</a></li>
-												<li><a href="shortcode-progress-bars.html"><i class="ti-view-list"></i> Progress Bars</a></li>
-												<li><a href="shortcode-separators.html"><i class="ti-layout-line-solid"></i> Separators</a></li>
-											</ul>
-										</li>
-										<li> <a href="javascript:;">Elements</a>
-											<ul>
-												<li><a href="shortcode-sliders.html"><i class="ti-layout-slider"></i>Sliders</a></li>
-												<li><a href="shortcode-tabs.html"><i class="ti-layout-tab-window"></i> Tabs</a></li>
-												<li><a href="shortcode-team.html"><i class="ti-user"></i> Team</a></li>
-												<li><a href="shortcode-testimonials.html"><i class="ti-comments"></i> Testimonials</a></li>
-												<li><a href="shortcode-typography.html"><i class="ti-map-alt"></i> Typography</a></li>
-												<li><a href="shortcode-widgets.html"><i class="ti-widgetized"></i> Widgets</a></li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li><a href="contact-us.html">Contact Us</a></li>
-							</ul>
-							<div class="dz-social-icon">
-								<ul>
-									<li>
-										<a target="_blank" href="https://www.facebook.com/">
-											<i class="fab fa-facebook-f"></i>
-										</a>
+						<ul class="nav navbar-nav navbar navbar-left">	
+							<li><a href="{{ path('membre_dashboard') }}">Acceuil</a>
+							</li>					
+							<li><a href="{{ path('liste_cours') }}">Cours</a>
+								
+							</li>
+							<li><a href="{{ path('produits') }}">Store</a>
+								
+							</li>
+							<li >
+								<a href="javascript:void(0);">Evenement <i class="fa fa-angle-down"></i></a>
+										<ul class="sub-menu">
+											<li><a href="services.html">Liste des événements</a></li>
+											<li><a href="service-details.html">Calendrier</a></li>
+										</ul>
+								
+							</li>
+							<li >
+								<a href="javascript:void(0);">Coaching <i class="fa fa-angle-down"></i></a>
+								<ul class="sub-menu">
+											<li><a href="services.html">Offre/Demande</a></li>
+											<li><a href="service-details.html">IMC</a></li>
+											<li><a href="service-details.html">Chat IA</a></li>
+										</ul>
+							</li>
+							<li >
+								<a href="javascript:void(0);">Réclamation</a>
+								
+							</li>
+							
+							{# <li class="has-mega-menu">
+								<a href="javascript:void(0);">Eles</a>
+								<ul class="mega-menu">
+									<li> <a href="javascript:;">Elements</a>
+										<ul>
+											<li><a href="shortcode-accordians.html"><i class="ti-layout-accordion-list"></i> Accordians</a></li>
+											<li><a href="shortcode-alert.html"><i class="ti-alert"></i> Alert box</a></li>
+											<li><a href="shortcode-animation-effects.html"><i class="ti-layers-alt"></i> Animation Effects</a></li>
+											<li><a href="shortcode-buttons.html"><i class="ti-mouse"></i> Buttons</a></li>
+											<li><a href="shortcode-buttons-effects.html"><i class="ti-mouse"></i> Buttons Effects</a></li>
+											<li><a href="shortcode-counters.html"><i class="ti-timer"></i> Counters</a></li>
+										</ul>
 									</li>
-									<li>
-										<a target="_blank" href="https://twitter.com/?lang=en">
-											<i class="fab fa-twitter"></i>
-										</a>
+									<li> <a href="javascript:;">Elements</a>
+										<ul>
+											<li><a href="shortcode-dividers.html"><i class="ti-layout-list-post"></i> Dividers</a></li>
+											<li><a href="shortcode-filters.html"><i class="ti-check-box"></i> Gallery Filters</a></li>
+											<li><a href="shortcode-widgets.html"><i class="ti-widgetized"></i> All Widgets</a></li>
+											<li><a href="shortcode-google-map.html"><i class="ti-map-alt"></i>Google Maps</a></li>
+											<li><a href="shortcode-icon-box-styles.html"><i class="ti-layout-grid2"></i> Icon box styles</a></li>
+											<li><a href="shortcode-image-box-content.html"><i class="ti-image"></i> Image box content</a></li>
+										</ul>
 									</li>
-									<li>
-										<a target="_blank" href="https://www.linkedin.com/">
-											<i class="fab fa-linkedin-in"></i>
-										</a>
+									<li> <a href="javascript:;">Elements</a>
+										<ul>
+											<li><a href="shortcode-images-effects.html"><i class="ti-layout-media-overlay"></i> Images effects</a></li>
+											<li><a href="shortcode-list-group.html"><i class="ti-list"></i> List group</a></li>
+											<li><a href="shortcode-pagination.html"><i class="ti-more"></i> Pagination</a></li>
+											<li><a href="shortcode-pricing-table.html"><i class="ti-layout-grid2-thumb"></i> Pricing table</a></li>
+											<li><a href="shortcode-progress-bars.html"><i class="ti-view-list"></i> Progress Bars</a></li>
+											<li><a href="shortcode-separators.html"><i class="ti-layout-line-solid"></i> Separators</a></li>
+										</ul>
 									</li>
-									<li>
-										<a target="_blank" href="https://www.instagram.com/?hl=en">
-											<i class="fab fa-instagram"></i>
-										</a>
+									<li> <a href="javascript:;">Elements</a>
+										<ul>
+											<li><a href="shortcode-sliders.html"><i class="ti-layout-slider"></i>Sliders</a></li>
+											<li><a href="shortcode-tabs.html"><i class="ti-layout-tab-window"></i> Tabs</a></li>
+											<li><a href="shortcode-team.html"><i class="ti-user"></i> Team</a></li>
+											<li><a href="shortcode-testimonials.html"><i class="ti-comments"></i> Testimonials</a></li>
+											<li><a href="shortcode-typography.html"><i class="ti-map-alt"></i> Typography</a></li>
+											<li><a href="shortcode-widgets.html"><i class="ti-widgetized"></i> Widgets</a></li>
+										</ul>
 									</li>
 								</ul>
-							</div>	
-						</div>
-					
+							</li> #}
+							{# <li><a href="contact-us.html">Contact Us</a></li> #}
+						</ul>
+						<div class="dz-social-icon">
+							<ul>
+								<li>
+									<a target="_blank" href="https://www.facebook.com/">
+										<i class="fab fa-facebook-f"></i>
+									</a>
+								</li>
+								<li>
+									<a target="_blank" href="https://twitter.com/?lang=en">
+										<i class="fab fa-twitter"></i>
+									</a>
+								</li>
+								<li>
+									<a target="_blank" href="https://www.linkedin.com/">
+										<i class="fab fa-linkedin-in"></i>
+									</a>
+								</li>
+								<li>
+									<a target="_blank" href="https://www.instagram.com/?hl=en">
+										<i class="fab fa-instagram"></i>
+									</a>
+								</li>
+							</ul>
+						</div>	
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- Main Header End -->
-		
 	</header>
+	<!-- Header -->
+	
 	<!-- Header -->
 	
 	<div class="page-content bg-white">
@@ -491,7 +439,7 @@
 	</div>
 	
 	<!-- Footer -->
-		<footer class="site-footer style-1 bg-parallax" style="background-image: url(front-office/images/background/footer-bg-2.jpg);" id="footer">
+    <footer class="site-footer style-1 bg-parallax"  style="background-image: url({{asset('front-office/images/background/footer-bg-2.jpg')}});" id="footer">
 		<div class="footer-top">
             <div class="container">
 				<div class="row">
@@ -500,49 +448,35 @@
 							<div class="footer-logo logo-white">
 								<a href="index.html"><img src="{{asset('front-office/images/logo-white.png')}}" alt=""></a> 
 							</div>
-							<p>A Wonderful Serenity Has Taken Possession Of My Entire Soul, Like These.</p>
-							<span class="m-b15 d-block text-white font-weight-600">Our Socials</span>
+							<p>Une merveilleuse sérénité s'est emparée de toute mon âme, comme celle-ci</p>
+							<span class="m-b15 d-block text-white font-weight-600">Nos Réseaux Sociaux</span>
 							<div class="dz-social-icon style-1 dz-hover-move dark">
 								<ul>									
 									<li>
-										<a target="_blank" href="https://www.facebook.com/dexignzone/">
+										<a target="_blank" href="https://www.facebook.com/profile.php?id=61556203916437">
 											<i class="fab fa-facebook-f"></i>
 										</a>
 									</li>
-									<li>
-										<a target="_blank" href="https://twitter.com/dexignzones">
-											<i class="fab fa-twitter"></i>
-										</a>
-									</li>
-									<li>
-										<a target="_blank" href="https://www.instagram.com/dexignzone/">
-											<i class="fab fa-instagram"></i>
-										</a>
-									</li>
-									<li>
-										<a target="_blank" href="https://www.youtube.com/channel/UCGL8V6uxNNMRrk3oZfVct1g">
-											<i class="fab fa-youtube"></i>
-										</a>
-									</li>
+								
 								</ul>
 							</div>							
 						</div>
 					</div>
 					<div class="col-xl-3 col-md-4 wow fadeInUp" data-wow-delay="0.4s">
 						<div class="widget recent-posts-entry">
-							<h4 class="footer-title">Blog Posts</h4>
+							<h4 class="footer-title">Articles de blog</h4>
 							<div class="widget-post-bx">
 								<div class="widget-post clearfix">
 									<div class="dz-info">
-										<h6 class="title text-white"><a class="text-white" href="blog-detail.html">Simple Condition for all Around.</a></h6>
-										<span class="post-date"> JUNE 18, 2023</span>
+										<h6 class="title text-white"><a class="text-white" >Conditions simples pour tous les niveaux.</a></h6>
+										<span class="post-date"> 18 juin 2023</span>
 									</div>
 								</div>
 								<div class="post-separator"></div>
 								<div class="widget-post clearfix">
 									<div class="dz-info">
-										<h6 class="title"><a class="text-white" href="blog-detail.html">Best 50 Tips For Heavy Fitness.</a></h6>
-										<span class="post-date"> AUGUST 22, 2023</span>
+										<h6 class="title"><a class="text-white" >Les 50 meilleures astuces pour une forme physique intense.</a></h6>
+										<span class="post-date"> 22 août 2023</span>
 									</div>
 								</div>
 							</div>
@@ -550,10 +484,10 @@
 					</div>
 					<div class="col-xl-3 col-md-4 wow fadeInUp" data-wow-delay="0.6s">
 						<div class="widget widget_locations">
-							<h4 class="footer-title">Locations</h4>
+							<h4 class="footer-title">Localisation</h4>
 							<div class="clearfix">
-								<span class="text-white d-block font-weight-600 m-b10">Washington</span>
-								<p>1559 Alabama Ave SE, DC 20032, Washington, USA</p>
+								<span class="text-white d-block font-weight-600 m-b10">Chotrana II</span>
+								<p>Zone Industrielle Chotrana II, B.P. 160 Pôle Technologique El Ghazela</p>
 								<svg class="svg-map" width="232" height="103" viewBox="0 0 232 103" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path d="M97.1989 29.7683L97.3329 30.5383L95.8967 30.7704L95.6815 32.3916H97.4442L99.7656 32.2199L100.966 31.1007L99.6826 30.7063L98.9767 30.0797L97.9217 28.7624L97.4442 26.8638L95.4607 27.1789L94.9115 27.847V28.5887L95.857 29.1172L97.1989 29.7683Z" fill="var(--primary)" fill-opacity="0.4"/>
 									<path d="M95.5362 30.3967L95.6268 29.3757L94.4906 28.9907L92.8638 29.2776L91.6635 30.7836V31.7688H93.0695L95.5362 30.3967Z" fill="var(--primary)" fill-opacity="0.4"/>
@@ -607,21 +541,19 @@
 					</div>
 					<div class="col-xl-3 col-md-4 wow fadeInUp" data-wow-delay="0.8s">
 						<div class="widget widget_working">
-							<h4 class="footer-title">Working Hours</h4>
+							<h4 class="footer-title">Heures de travail</h4>
 							<ul>
 								<li>
-									<span class="days">Monday – Friday:</span>
-									<span class="time"><a href="schedule.html">07:00 – 21:00</a></span>
+									<span class="days">Lundi – Vendredi :</span>
+									<span class="time"><a >07:00 – 21:00</a></span>
 								</li>
 								<li>
-									<span class="days">Saturday:</span>
-									<span class="time"><a href="schedule.html">07:00 – 16:00</a></span>
+									<span class="days">Samedi:</span>
+									<span class="time"><a >07:00 – 16:00</a></span>
 								</li>
-								<li>
-									<span class="days">Sunday Closed:</span>
-								</li>
+								
 							</ul>
-							<a class="btn-link" href="schedule.html">More Here <i class="fa-solid fa-arrow-right m-l10"></i></a>
+							
 						</div>
 					</div>
 				</div>
