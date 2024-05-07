@@ -1,0 +1,145 @@
+{% extends 'base-back.html.twig' %}
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <!-- bootstrap datepicker -->
+
+        <link href="{{asset('back-office/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet">
+ <!-- DataTables -->
+        <link href="{{asset('back-office/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Responsive datatable examples -->
+        <link href="{{asset('back-office/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" /> 
+
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+    </head>
+   <body>
+
+    <!-- <body data-layout="horizontal" data-topbar="colored"> -->
+
+        <!-- Begin page -->
+        <div class="container">
+    <h1>Liste des offres</h1>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Spécialité</th>
+                    <th>Tarif / heure</th>
+                    <th>État de l'offre</th>
+                    <th>Coach</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for offre in offres %}
+                    <tr>
+                        <td>{{ offre.nom }}</td>
+                        <td>{{ offre.specialite }}</td>
+                        <td>{{ offre.tarif_heure }}</td>
+                        <td>{{ offre.etat_offre }}</td>
+                        <td>{{ offre.coach.email }}</td>
+                        <td>{{ offre.email }}</td>
+                        <td>
+                            <a href="{{ path('accepter_offre', {'id': offre.id}) }}" class="action-btn edit-btn">
+                       <i class="far fa-check-circle"></i>
+                    </a>
+                    <a href="{{ path('refuser_offre', {'id': offre.id}) }}" class="action-btn delete-btn" data-offre-id="{{ offre.id }}">
+                   <i class="fas fa-times-circle"></i>
+                    </a>
+                    </tr>
+                {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+               
+         
+    
+
+      <!-- JAVASCRIPT -->
+
+<script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+<script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+<script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+<script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+<script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+<!-- bootstrap datepicker -->
+<script src="{{asset('back-office/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+
+<!-- Required datatable js -->
+<script src="{{asset('back-office/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('back-office/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+        
+<!-- Responsive examples -->
+<script src="{{asset('back-office/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('back-office/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
+
+<!-- init js -->
+<script src="{{asset('back-office/js/pages/ecommerce-datatables.init.js')}}"></script>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- App js -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var offreId = this.getAttribute('data-offre-id');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Êtes-vous sûr de vouloir refuser cette offre ?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Oui',
+                    cancelButtonText: 'Non'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Rediriger vers la route de refus en utilisant l'ID de l'offre
+                        window.location.href = "{{ path('refuser_offre', {'id': 0}) }}".replace('0', offreId);
+                    }
+                });
+            });
+        });
+    });
+    </script>
+    
+
+</body>
+</html>
+{% endblock %}

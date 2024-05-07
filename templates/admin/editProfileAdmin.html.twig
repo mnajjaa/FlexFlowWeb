@@ -1,0 +1,244 @@
+{% extends 'base-back.html.twig' %}
+
+
+  {% block body %}
+ <head>
+        
+        <meta charset="utf-8" />
+        <title>Customers | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+        <!-- DataTables -->
+        <link href="{{asset('back-office/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Responsive datatable examples -->
+        <link href="{{asset('back-office/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />  
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+        <!-- real time validation -->
+        <script src="{{asset('validationJs/formValidation.js')}}"></script>
+
+        <!-- Sweet Alert css -->
+        <link href="{{asset('back-office/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- Sweet Alerts js -->
+        <script src="{{asset('back-office/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+        <!-- Sweet alert init js-->
+        <script src="{{asset('back-office/js/pages/sweet-alerts.init.js')}}"></script>
+        <!-- Two Factor Auth js -->
+        <script src="{{asset('validationJs/twoFactor.js')}}"></script>
+
+    </head>
+<body>
+ <div class="row">
+
+        <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Modifier votre Profile</h4>
+                                        {# <p class="card-title-desc">Provide valuable, actionable feedback to your users with HTML5 form validation–available in all our supported browsers.</p> #}
+                                        <form  method="post" class="needs-validation" novalidate enctype="multipart/form-data" id="editUserForm">
+                                        <div class="row">
+                                              <div class="col-md-6">
+                                                  <div class="text-end">
+                                                        <img src="{{ asset('uploads/users/' ~admin.image) }}" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                                                  </div>  
+                                                </div>
+                                                <div class="col-md-6">
+
+                                                  <label for="image">Choose Image:</label>
+                                                  <input type="file" id="image" name="image">
+                                                </div>
+                                        </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="nom">Nom Complet</label>
+                                                        <input type="text" class="form-control" id="name" name="nom"  placeholder="First name" value="{{ admin.nom }}" oninput="isValidName()" required>
+                                                        <span id="error_name" class="text-danger" style="color: red;"></span>
+                                                        <span id="success_name" class="text-success" style="color: green;"></span>
+                                                        
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="email">email</label>
+                                                        <input type="text" class="form-control" id="email" name="email" placeholder="email" value="{{ admin.email }}" oninput="isValidEmail()" required>
+                                                        <span id="error_email" class="text-danger" style="color: red;"></span>
+                                                        <span id="success_email" class="text-success" style="color: green;"></span>
+
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="telephone">Telephone</label>
+                                                        <input type="text" class="form-control" name="telephone" id="telephone" placeholder="Telephone" value="{{ admin.telephone }}" oninput="isValidPhoneNumber()" required>
+                                                        <span id="error_Telephone" class="text-danger" style="color: red;"></span>
+                                                        <span id="success_Telephone" class="text-success" style="color: green;"></span>
+                                                     
+                                                        <div class="invalid-feedback">
+                                                            Please provide a valid city.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="mb-3">
+                                                        <input type="image" class="form-control" name="image" id="image" placeholder="image" value="{{ coach.image }}" required>
+                                                            <div class="invalid-feedback">
+                                                                You must agree before submitting.
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div> #}
+                                            <button class="btn btn-primary" type="submit">Modifier</button>
+                                            <a href="{{ path('admin_profile') }}" class="btn btn-secondary waves-effect">
+                                                        Annuler
+                                                    </a>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+            </div> <!-- end col -->
+        <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Changer le mot de passe </h4>
+                                        <p class="card-title-desc">Merci de saisir votre mot de passe actuel pour changer le mot de passe</p>
+                                    <form class="needs-validation" novalidate method="post" action="{{ path('admin_edit_pwd') }}"  id="editPasswordForm">
+                                         {% if mdp is same as(false) %}
+                                         <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">mot de passe actuel</label>
+                                                        <input type="password" class="form-control" id="userpassword" placeholder="Entrez le mot de passe actuel" name="actualPassword" required>
+                                                        {% if erreur is same as(true) %}
+                                                        <p style="color:red;">mot de passe incorrect</p>
+                                                        {% endif %}
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    
+                                                </div>
+                                                {% endif %}
+                                                {# Remove the unnecessary if statement #}
+                                                {% if mdp is same as(true) %}
+                                                    {# <div class="alert alert-danger" role="alert">
+                                                        <strong>Erreur!</strong> Mot de passe incorrect
+                                                    </div> #}
+                                                
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">Nouveau mot de passe </label>
+                                                        <input type="password" class="form-control" id="userpassword" placeholder="Entrez le nouveau mot de passe" name="plainPassword" oninput="isValidPassword()" required>
+                                                        <span id="error_userpassword" class="text-danger" style="color: red;"></span>
+                                                        <span id="success_userpassword" class="text-success" style="color: green;"></span>
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="mb-3 position-relative">
+                                                        <label class="form-label" for="userpassword">Répéter le mot de passe</label>
+                                                        <input type="password" class="form-control" id="userpasswordConfirm" placeholder="Répéter le mot de passe" name="plainPasswordConfirm" oninput="isValidPasswordConfirm()" required>
+                                                        <span id="error_userpasswordConfirm" class="text-danger" style="color: red;"></span>
+                                                        <span id="success_userpasswordConfirm" class="text-success" style="color: green;"></span>
+                                                        <div class="valid-tooltip">
+                                                            Looks good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                            {% endif %}
+                                            <button class="btn btn-primary" type="submit">Réinitialiser</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            </div> <!-- end col -->
+                        </div>
+  
+  
+  </div>
+  <div class="row">
+        <div class="col-12">
+              
+            <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                <div class="card">
+                <div class="card-body text-center">
+                    <i class="mb-3 fas fa-lock"></i>
+                    <h5>Authentification à deux facteurs</h5>
+                    <p>Améliorez la sécurité de vos applications en activant l'authentification à deux facteurs.</p>
+                    <button type="button" class="btn btn-primary" id="showQRCode" onclick="showQrCode()" data-bs-toggle="modal" data-bs-target="#twoFactorAuthOne"> Show </button>
+                </div>
+                </div>
+            </div>
+
+           <!-- Two Factor Auth Modal -->
+
+          
+            <!-- Modal Authentication App -->
+            <div class="modal fade" id="twoFactorAuthOne" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-simple">
+                <div class="modal-content p-3 p-md-5">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-2">
+                        <h3 class="mb-0">Ajouter une application d'authentification</h3>
+                    </div>
+                    <h5 class="mb-2 pt-1 text-break">Authenticator Apps</h5>
+                    <p class="mb-4">À l'aide d'une application d'authentification comme Google Authenticator, Microsoft Authenticator, Authy ou 1Password, scannez le code QR. Il générera un code à 6 chiffres que vous devrez saisir ci-dessous.</p>
+                <div id="qrCodeField" >
+                    <div class="text-center" id="qrCodeField"  >
+                    {% if qrCode is defined %}
+                        <img id="qrCode" src="{{qrCode}}" alt="Your QR Code will be displayed here." width="140" style="padding-bottom: 10px;">
+                    {% endif %}
+                    </div>
+                     <form action="{{ path('activte_2fa') }}" method="post">
+                    <div class="mb-4" style="padding-left: 10px;">
+                    {% if qrCode is defined %}
+                        <input type="hidden" name="secretKey" value="{{ secret }}">
+                    {% endif %}
+                        <input type="text" id="otp" name="otp" class="form-control" id="twoFactorAuthInput" placeholder="Enter Authentication Code" style="padding-left: 10px;">
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="button" class="btn btn-label-secondary me-sm-3 me-2 px-3 px-sm-4" data-bs-toggle="modal" data-bs-target="#twoFactorAuth"><span class="align-middle">Annuler</span></button>
+                        <button type="submit" class="btn btn-primary px-3 px-sm-4" data-bs-dismiss="modal" aria-label="Close"><span class="align-middle">Activer 2FA</span></button>
+                    </div>
+                    </form>
+                </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <script>
+            // Check selected custom option
+            window.Helpers.initCustomOptionCheck();
+
+            </script>
+
+        </div>
+    </div>
+  </body>
+{% endblock %}  

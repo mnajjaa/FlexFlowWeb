@@ -1,0 +1,465 @@
+
+
+
+
+{% extends 'base-back.html.twig' %}
+{% block stylesheets %}
+ 
+
+  {# Incluez les fichiers CSS Bootstrap ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {# Incluez les fichiers CSS Font Awesome ici #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    {# Incluez les fichiers CSS Bootstrap ici #}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+    #searchInput.search-focus {
+    border-color: #6c757d;
+    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+}
+
+#searchInput.search-focus-append .btn {
+    border-color: #6c757d;
+    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+}
+
+        .custom-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .custom-form-label {
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="assets/libs/toastr/build/toastr.min.css">
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+        
+
+    </head>
+    
+
+
+	<body>
+
+						<!-- end page title -->
+
+						<div class="row">
+							<div class="col-md-6 col-xl-3">
+								<div class="card">
+									<div class="card-body">
+										<div class="float-end mt-2">
+											<div id="total-revenue-chart"></div>
+										</div>
+										<div>
+											<h4 class="mb-1 mt-1">
+												<span data-plugin="counterup">{{ montantTotal }}</span>
+												Dnt</h4>
+											<p class="text-muted mb-0">Revenues totales</p>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<!-- end col-->
+
+
+							<div class="col-md-6 col-xl-3">
+								<div class="card">
+									<div class="card-body">
+										<div class="float-end mt-2">
+											<div id="orders-chart"></div>
+										</div>
+										<div>
+											<h4 class="mb-1 mt-1">
+												<span data-plugin="counterup">
+													{% if produitPlusVendu is not null %}
+														{{ produitPlusVendu.nom }}
+													{% else %}
+														Aucun produit
+													{% endif %}
+												</span>
+											</h4>
+											<p class="text-muted mb-0">Produit le plus vendue</p>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<!-- end col-->
+
+
+							<div class="col-md-6 col-xl-3">
+								<div class="card">
+									<div class="card-body">
+										<div class="float-end mt-2">
+											<div id="customers-chart"></div>
+										</div>
+										<div>
+											<h4 class="mb-1 mt-1">
+												<span data-plugin="counterup">
+													{% if produitMoinsVendu is not null %}
+														{{ produitMoinsVendu.nom }}
+													{% else %}
+														N/A
+													{% endif %}
+												</span>
+											</h4>
+											<p class="text-muted mb-0">Produit le moins vendu</p>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<!-- end col-->
+
+
+							<div class="col-md-6 col-xl-3">
+								<div class="card">
+									<div class="card-body">
+										<div class="float-end mt-2">
+											<div id="growth-chart"></div>
+										</div>
+										<div>
+											<h4 class="mb-1 mt-1">
+												<span data-plugin="counterup">{{ nomUtilisateurPlusRepete }}</span>
+											</h4>
+											<p class="text-muted mb-0">Meilleur client</p>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<!-- end col-->
+
+
+							<div class="row">
+								 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById('charteCommandes').getContext('2d');
+            var chartData = {
+                labels: [
+                    {% for date, montant in montantParJour %}
+                        '{{ date }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Montant totale par jour',
+                    data: [
+                        {% for date, montant in montantParJour %}
+                            {{ montant }},
+                        {% endfor %}
+                    ],
+                    fill: false,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                    pointBorderColor: 'rgba(54, 162, 235, 1)',
+                    pointHoverRadius: 7,
+                    pointHoverBackgroundColor: 'rgba(54, 162, 235, 1)',
+                    pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+                }]
+            };
+
+            var chartOptions = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            };
+
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: chartOptions
+            });
+        });
+    </script>
+
+								
+									<!-- end card-->
+
+									<div class="card">
+										<div class="card-body">
+											
+													
+
+ <div class="container">
+        <canvas id="charteCommandes"></canvas>
+    </div>													
+
+                                                    <!--courbeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-->
+
+
+
+
+
+											</div>
+
+
+
+											
+											<!-- end row-->
+
+										
+
+											
+											<!-- end row-->
+
+											<!-- end row-->
+
+										</div>
+										<!-- end card-body-->
+									</div>
+									<!-- end card-->
+								</div>
+								<!-- end Col -->
+							</div>
+							<!-- end row-->
+
+
+
+
+
+
+
+							<!-- end row -->
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="card">
+										<div class="card-body">
+											<h4 class="card-title mb-4">Les commandes</h4>
+											<div class="table-responsive">
+												<table class="table table-centered table-nowrap mb-0">
+													<thead class="table-light">
+														<tr>
+															<th>N  commande</th>
+															<th>Nom produit</th>
+															<th>Date</th>
+															<th>Total</th>
+															<th>Nom du client</th>
+															<th>Status de Paiement</th>
+															<th>M thode de Paiement</th>
+														</tr>
+													</thead>
+													<tbody>
+														{% for commande in commandes %}
+															<tr>
+																<td>
+																	<a href="javascript:void(0);" class="text-body fw-bold">{{ commande.id }}</a>
+																</td>
+																<td>{{ commande.nom }}</td>
+																<td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
+																<td>{{ commande.montant }}</td>
+																<td>{{ commande.nomUser }}</td>
+																<td>
+																	<span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
+																</td>
+																<td>
+																	<i class="fab fa-cc-visa me-1"></i>
+																	Visa</td>
+															</tr>
+														{% endfor %}
+													</tbody>
+												</table>
+											</div>
+											<!-- end table-responsive -->
+
+											<!-- Pagination -->
+											<div class="d-flex justify-content-center mt-4">
+
+
+												{% set currentPage = commandes.getCurrentPageNumber() %}
+												{% set pageCount = commandes.getPageCount() %}
+
+												<div class="row page wow fadeInUp" data-wow-delay="2.4s">
+													<div class="col-sm-6 m-b15">
+														<p class="para">Showing
+															{{ commandes.getPaginationData().firstItemNumber }} {{ commandes.getPaginationData().lastItemNumber }}
+															Of
+															{{ commandes.getTotalItemCount() }}
+															Results</p>
+													</div>
+													<div class="col-sm-6 m-b15">
+														<nav aria-label="Shop Pagination">
+															<ul class="pagination style-1">
+																{% if currentPage != 1 %}
+																	<li class="page-item">
+																		<a class="page-link prev" href="{{ path('commande-liste', {'page': currentPage - 1 }) }}">Prev</a>
+																	</li>
+																{% endif %}
+																{% for page in 1..pageCount %}
+																	{% if page == currentPage %}
+																		<li class="page-item active">
+																			<span class="page-link">{{ page }}</span>
+																		</li>
+																	{% else %}
+																		<li class="page-item">
+																			<a class="page-link" href="{{ path('commande-liste', {'page': page }) }}">{{ page }}</a>
+																		</li>
+																	{% endif %}
+																{% endfor %}
+																{% if currentPage != pageCount %}
+																	<li class="page-item">
+																		<a class="page-link next" href="{{ path('commande-liste', {'page': currentPage + 1 }) }}">Next</a>
+																	</li>
+																{% endif %}
+															</ul>
+														</nav>
+													</div>
+
+												</div>
+
+
+											</div>
+
+
+										</div>
+									</div>
+								</div>
+								</div>
+								</div>
+
+
+								<footer class="footer">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="col-sm-6">
+												<script>
+													document.write(new Date().getFullYear())
+												</script>
+												  Minible.
+											</div>
+											<div class="col-sm-6">
+												<div class="text-sm-end d-none d-sm-block">
+													Crafted with
+													<i class="mdi mdi-heart text-danger"></i>
+													by
+													<a href="https://1.envato.market/themesdesign" target="_blank" class="text-reset">Themesdesign</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</footer>
+							</div>
+							<!-- end main content-->
+
+						</div>
+						<!-- END layout-wrapper -->
+
+						<!-- Right Sidebar -->
+						<div class="right-bar">
+							<div data-simplebar class="h-100">
+
+								<div class="rightbar-title d-flex align-items-center px-3 py-4">
+
+									<h5 class="m-0 me-2">Settings</h5>
+
+									<a href="javascript:void(0);" class="right-bar-toggle ms-auto">
+										<i class="mdi mdi-close noti-icon"></i>
+									</a>
+								</div>
+
+
+								<!-- Settings -->
+								<hr class="mt-0"/>
+								<h6 class="text-center mb-0">Choose Layouts</h6>
+
+								<div class="p-4">
+									<div class="mb-2">
+										<img src="assets/images/layouts/layout-1.jpg" class="img-thumbnail" alt="layout images">
+									</div>
+									<div class="form-check form-switch mb-3">
+										<input type="checkbox" class="form-check-input theme-choice" id="light-mode-switch" checked/>
+										<label class="form-check-label" for="light-mode-switch">Light Mode</label>
+									</div>
+
+									<div class="mb-2">
+										<img src="assets/images/layouts/layout-2.jpg" class="img-thumbnail" alt="layout images">
+									</div>
+									<div class="form-check form-switch mb-3">
+										<input type="checkbox" class="form-check-input theme-choice" id="dark-mode-switch"/>
+										<label class="form-check-label" for="dark-mode-switch">Dark Mode</label>
+									</div>
+
+									<div class="mb-2">
+										<img src="assets/images/layouts/layout-3.jpg" class="img-thumbnail" alt="layout images">
+									</div>
+									<div class="form-check form-switch mb-3">
+										<input type="checkbox" class="form-check-input theme-choice" id="rtl-mode-switch"/>
+										<label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
+									</div>
+
+									<div class="mb-2">
+										<img src="assets/images/layouts/layout-4.jpg" class="img-thumbnail" alt="layout images">
+									</div>
+									<div class="form-check form-switch mb-5">
+										<input class="form-check-input theme-choice" type="checkbox" id="dark-rtl-mode-switch">
+										<label class="form-check-label" for="dark-rtl-mode-switch">Dark RTL Mode</label>
+									</div>
+
+
+								</div>
+
+							</div>
+							<!-- end slimscroll-menu-->
+						</div>
+						<!-- /Right-bar -->
+
+						<!-- Right bar overlay-->
+						<div class="rightbar-overlay"></div>
+
+
+						{% block javascript %}
+							<script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+							<script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+							<script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+							<script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+							<script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+							<script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+							<script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+							<!-- apexcharts -->
+							<script src="{{asset('back-office/libs/apexcharts/apexcharts.min.js')}}"></script>
+
+							<script src="{{asset('back-office/js/pages/dashboard.init.js')}}"></script>
+
+							<!-- App js -->
+							<script src="{{asset('assets/js/app.js')}}"></script>
+						{% endblock %}
+
+
+					</body>
+{% endblock %}
+
+
+

@@ -1,0 +1,107 @@
+{% extends 'base-back.html.twig' %}
+{% block title %}calendar{% endblock %}
+
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <!-- bootstrap datepicker -->
+
+        <link href="{{asset('back-office/libs/%40fullcalendar/core/main.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('back-office/libs/%40fullcalendar/daygrid/main.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('back-office/libs/%40fullcalendar/bootstrap/main.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('back-office/libs/%40fullcalendar/timegrid/main.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+
+    </head>
+<body>
+  
+    <div id="calendar">
+    </div>
+
+         
+            
+
+           
+        
+ <!-- JAVASCRIPT -->
+        <script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+        <!-- plugin js -->
+        <script src="{{asset('back-office/libs/moment/min/moment.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/jquery-ui-dist/jquery-ui.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/%40fullcalendar/core/main.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/%40fullcalendar/bootstrap/main.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/%40fullcalendar/daygrid/main.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/%40fullcalendar/timegrid/main.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/%40fullcalendar/interaction/main.min.js')}}"></script>
+<script>
+ window.onload = () => {
+        let calendarElt = document.querySelector("#calendar")
+
+        let calendar = new FullCalendar.Calendar(calendarElt, {
+            initialView: 'dayGridMonth',
+            
+            headerToolbar: {
+                start: 'prev,next today',
+                center: 'title',
+                end: 'dayGridMonth,timeGridWeek,listWeek'
+            },
+            events: {{ data|raw }},
+            editable: true,
+            eventResizableFromStart: true
+        })
+         calendar.on('eventChange', (e) => {
+            let url = `/api/${e.event.id}/edit`
+            let donnees = {
+                "title": e.event.title,
+                "start": e.event.start,
+                "categorie":e.event.extendedProps.categorie,
+                "objectif":e.event.extendedProps.objectif,
+                "nbrdePlace":e.event.extendedProps.nbrdePlace,
+                "id":e.event.id,
+                "Etat":e.event.extendedProps.Etat,
+                "user":e.event.extendedProps.User,
+                  "_method":"PUT"
+
+            }
+            
+            let xhr = new XMLHttpRequest
+
+            xhr.open("PUT", url)
+            xhr.send(JSON.stringify(donnees))
+        })
+        calendar.render();
+
+    }
+</script>
+</body>
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+</html>
+{% endblock %}

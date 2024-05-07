@@ -1,0 +1,104 @@
+
+{% extends 'base-front.html.twig' %}
+
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <!-- bootstrap datepicker -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+
+        <link href="{{asset('back-office/libs/%40fullcalendar/core/main.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('back-office/libs/%40fullcalendar/daygrid/main.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('back-office/libs/%40fullcalendar/bootstrap/main.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('back-office/libs/%40fullcalendar/timegrid/main.min.css')}}" rel="stylesheet" type="text/css" />
+
+
+       
+ <style>
+        #calendar {
+            max-height: 600px; /* Ajustez cette valeur selon vos besoins */
+            overflow-y: auto; /* Ajoutez une barre de défilement vertical si nécessaire */
+
+        }
+		
+    </style>
+    </head>
+<body>
+  
+ <div class="container-fluid">
+        <div class="row justify-content-center align-items-center" style="min-height: 120vh;">
+            <div class="col-lg-8">
+                <div id="calendar" data-bs-toggle="calendar" class="calendar"></div>
+            </div>
+        </div>
+    </div>
+
+         
+            
+
+           
+        
+ <!-- JAVASCRIPT -->
+        <script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+        <!-- plugin js -->
+        <script src="{{asset('back-office/libs/moment/min/moment.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/jquery-ui-dist/jquery-ui.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/%40fullcalendar/core/main.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/%40fullcalendar/bootstrap/main.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/%40fullcalendar/daygrid/main.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/%40fullcalendar/timegrid/main.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/%40fullcalendar/interaction/main.min.js')}}"></script>
+		   <script src="{{asset('back-office/js/pages/calendar.init.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
+        <script src="{{asset('back-office/js/app.js')}}"></script>
+
+<script>
+ window.onload = () => {
+        let calendarElt = document.querySelector("#calendar")
+
+        let calendar = new FullCalendar.Calendar(calendarElt, {
+            initialView: 'timeGridWeek',
+            
+            headerToolbar: {
+                start: 'prev,next today',
+                center: 'title',
+                end: 'dayGridMonth,timeGridWeek'
+            },
+            events: {{ data|raw }},
+			editable: false,
+eventContent: function(arg) {
+                    let html = '<div class="fc-content">' +
+                                    '<div class="fc-title">' + arg.event.title + '</div>' +
+                                '</div>';
+                    return { html: html };
+                }
+        })
+       
+        calendar.render();
+
+    }
+</script>
+</body>
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+</html>
+{% endblock %}

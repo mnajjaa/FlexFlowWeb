@@ -4,16 +4,45 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    images_directory: '%kernel.project_dir%/public/uploads/images'
         badword_api_key: '3e33204cb468d4e21d789a40c7bd2080'
         twilio_number: '%env(TWILIO_NUMBER)%'
 
+    upload_directory: '%kernel.project_dir%/public/uploads'
+    uploads: '%kernel.project_dir%/public/uploads/users'
 services:
+    
+
     
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        
+        autoconfigure: true
+        bind:
+            $stripeSK: "%env(STRIPE_SK)%" 
+            # config/services.yaml
+
+
+    App\Service\SmsGenerator:
+        arguments:
+            $twilioAccountSid: '%env(TWILIO_ACCOUNT_SID)%'
+            $twilioAuthToken: '%env(TWILIO_AUTH_TOKEN)%'
+
+            
+            # config/services.yaml
+   
+
+# Automatically registers your services as commands, event subscribers, etc.
+
+    App\Service\TwilioService:
+        arguments:
+            $twilioAccountSid: '%env(TWILIO_ACCOUNT_SID)%'
+            $twilioAuthToken: '%env(TWILIO_AUTH_TOKEN)%'
+            $twilioPhoneNumber: '%env(TWILIO_PHONE_NUMBER)%'
+
+    App\Controller\StatistiqueController:
+        tags: ['controller.service_arguments']
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -22,6 +51,10 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+            
+    App\Service\ScheduledTask:
+        arguments:
+            $logger: '@logger'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

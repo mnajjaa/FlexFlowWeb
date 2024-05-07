@@ -1,0 +1,164 @@
+{% extends 'base-back.html.twig' %}
+
+{% block body %}
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="assets/libs/toastr/build/toastr.min.css">
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+         <!-- Bootstrap Css -->
+        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+        
+
+    </head>
+
+<body>
+   
+    <div class="container-fluid">
+
+    
+    
+        <   <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Dashboard</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Minible</a></li>
+                                            <li class="breadcrumb-item active">Dashboard</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-md-6 col-xl-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end mt-2">
+                                             <div id="orders-chart"> </div>
+                                            
+                                        </div>
+                                        <div>
+                                              <h4 class="mb-1 mt-1">Cours le plus aimé</h4>
+                        <p class="text-muted mb-0">{{ mostLikedCours.nom_cour }} - {{ mostLikedCours.totalLikes }} likes</p>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+
+                            <div class="col-md-6 col-xl-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end mt-2">
+                                        
+                                            <div id="customers-chart"> </div>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-1 mt-1">Cours le moins aimé</h4>
+                                            <p class="text-muted mb-0">{{ mostHatedCours.nom_cour }} - {{ mostHatedCours.totaldisLikes }} Dislikes</p>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div> 
+
+                            <div class="col-md-6 col-xl-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end mt-2">
+                                            <div id="total-revenue-chart"></div>
+                                        </div>
+                                        <div>
+                                           
+                                         
+                                          <h4 class="mb-1 mt-1">Participant actif</h4>
+                                          {% for participant in mostParticipant %}
+                                        <tr>  
+                                            <p class="text-muted mb-0">{{ participant.nomParticipant }}</p>
+                                            <p class="text-muted mb-0">{{ participant.totalParticipations }} Participations</p>
+                                        </tr>
+                                    {% endfor %}
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                            <!-- end col-->
+
+                            <div class="col-md-6 col-xl-3">
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end mt-2">
+                                            <div id="growth-chart"></div>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-1 mt-1">Cours le moins aimé</h4>
+                                            <p class="text-muted mb-0">{{ mostHatedCours.nom_cour }} - {{ mostHatedCours.totaldisLikes }} Dislikes</p>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div> <!-- end col-->
+
+                              
+                           
+                        </div>
+                            </div>
+                        </div> <!-- end row-->
+
+
+                        
+    </div> <!-- end container-fluid -->
+
+
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+ <!-- Inclure le script de SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- apexcharts -->
+        <script src="{{asset('back-office/libs/apexcharts/apexcharts.min.js')}}"></script>
+        
+
+        <!-- App js -->
+        <script src="{{asset('back-office/js/app.js')}}"></script>
+
+  
+    </body>
+{% endblock %}

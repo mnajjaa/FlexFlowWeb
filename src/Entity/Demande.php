@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\DemandeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: DemandeRepository::class)]
 class Demande
@@ -24,23 +26,23 @@ class Demande
     private ?string $But = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $NiveauPhysique = null;
+    private ?string $niveau_physique = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $MaladieChronique = null;
+    private ?string $maladie_chronique = null;
 
     #[ORM\Column]
     private ?int $nombreheure = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $etat = null;
+    private ?string $etat = 'En attente';
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $horaire = null;
 
     #[ORM\Column(length: 255)]
     private ?string $lesjours = null;
-
+    
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -49,17 +51,21 @@ class Demande
     #[ORM\JoinColumn(nullable: false)]
     private ?Offre $offre = null;
 
+    // Getters et setters...
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    // Autres getters et setters...
 
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -71,7 +77,7 @@ class Demande
         return $this->Age;
     }
 
-    public function setAge(int $Age): static
+    public function setAge(?int $Age): self
     {
         $this->Age = $Age;
 
@@ -83,7 +89,7 @@ class Demande
         return $this->But;
     }
 
-    public function setBut(string $But): static
+    public function setBut(?string $But): self
     {
         $this->But = $But;
 
@@ -92,34 +98,59 @@ class Demande
 
     public function getNiveauPhysique(): ?string
     {
-        return $this->NiveauPhysique;
+        return $this->niveau_physique;
     }
 
-    public function setNiveauPhysique(string $NiveauPhysique): static
+    public function setNiveauPhysique(?string $niveau_physique): self
     {
-        $this->NiveauPhysique = $NiveauPhysique;
+        $this->niveau_physique = $niveau_physique;
+
+        return $this;
+    }
+
+
+    public function getNiveau_Physique(): ?string
+    {
+        return $this->niveau_physique;
+    }
+
+    public function setNiveau_Physique(?string $niveau_physique): self
+    {
+        $this->niveau_physique = $niveau_physique;
 
         return $this;
     }
 
     public function getMaladieChronique(): ?string
     {
-        return $this->MaladieChronique;
+        return $this->maladie_chronique;
     }
 
-    public function setMaladieChronique(string $MaladieChronique): static
+    public function setMaladieChronique(?string $maladie_chronique): self
     {
-        $this->MaladieChronique = $MaladieChronique;
+        $this->maladie_chronique = $maladie_chronique;
 
         return $this;
     }
 
-    public function getNombreheure(): ?int
+    public function getMaladie_Chronique(): ?string
+    {
+        return $this->maladie_chronique;
+    }
+
+    public function setMaladie_Chronique(?string $maladie_chronique): self
+    {
+        $this->maladie_chronique = $maladie_chronique;
+
+        return $this;
+    }
+
+    public function getNombreHeure(): ?int
     {
         return $this->nombreheure;
     }
 
-    public function setNombreheure(int $nombreheure): static
+    public function setNombreHeure(?int $nombreheure): self
     {
         $this->nombreheure = $nombreheure;
 
@@ -131,7 +162,7 @@ class Demande
         return $this->etat;
     }
 
-    public function setEtat(string $etat): static
+    public function setEtat(?string $etat): self
     {
         $this->etat = $etat;
 
@@ -143,7 +174,7 @@ class Demande
         return $this->horaire;
     }
 
-    public function setHoraire(\DateTimeInterface $horaire): static
+    public function setHoraire(?\DateTimeInterface $horaire): self
     {
         $this->horaire = $horaire;
 
@@ -155,7 +186,7 @@ class Demande
         return $this->lesjours;
     }
 
-    public function setLesjours(string $lesjours): static
+    public function setLesjours(?string $lesjours): self
     {
         $this->lesjours = $lesjours;
 
@@ -167,7 +198,7 @@ class Demande
         return $this->user;
     }
 
-    public function setUser(?User $user): static
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
@@ -179,7 +210,7 @@ class Demande
         return $this->offre;
     }
 
-    public function setOffre(?Offre $offre): static
+    public function setOffre(?Offre $offre): self
     {
         $this->offre = $offre;
 

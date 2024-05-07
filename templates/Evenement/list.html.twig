@@ -1,0 +1,423 @@
+{% extends 'base-back.html.twig' %}
+
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+ 
+    
+<!-- Mirrored from themesdesign.in/minible-symfony/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 10:47:37 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Login | Minible - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+        <!-- bootstrap datepicker -->
+
+        <link href="{{asset('back-office/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet">
+ <!-- DataTables -->
+        <link href="{{asset('back-office/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Responsive datatable examples -->
+        <link href="{{asset('back-office/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" /> 
+
+
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+    </head>
+
+   <body>
+
+    <!-- <body data-layout="horizontal" data-topbar="colored"> -->
+
+        <!-- Begin page -->
+        
+
+                <div class="page-content ">
+                    <div class="container-fluid ">
+	<div class="col-xl-12 ">
+    <div class="card custom-card ">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Evenement statstique</h4>
+            
+             
+			  <div id="bar_chart" class="apex-charts" dir="ltr"></div> 
+        </div>
+    </div>
+</div>
+                        <!-- start page title -->
+                        <div class="row ">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">Liste des evenement</h4>
+
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div>
+                                 <form method="get" action="{{ path('ajouter_evenement' )}}">
+
+                                    <button type="submit"   class="btn btn-success waves-effect waves-light mb-3">Ajouter Evenement</button>
+                                                     </form>
+
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="float-end">
+                                    <div class=" mb-3">
+                                                <form action="{{ path('filtrer_evenements') }}" method="get">
+
+                                        <div class="input-daterange input-group" id="datepicker6" data-date-format="yyyy-mm-dd" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
+                                            <input type="text" class="form-control text-start" placeholder="From" name="From" id="From" />
+                                            <input type="text" class="form-control text-start" placeholder="To" name="To" id="To" />
+                                            
+                                            <button type="submit" class="btn btn-primary" id="btn-filter">Filtrer</button>
+                                        </div>
+                                                    </form>
+
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                
+                                <div class="table-responsive mb-4">
+                                    <table class="table table-centered datatable dt-responsive nowrap table-card-list" style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                        <thead>
+                                            <tr class="bg-transparent">
+                                              
+                                                <th>ID</th>
+                                                <th>Nom de l'evenement</th>
+                                                 <th>Catégorie</th>
+                                                <th>Objectif</th>
+                                                <th>Nombre de place</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>État</th>
+                                                <th>Utilisateur</th>
+                                                <th style="width: 120px;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="event-table-body">
+            {% for e in evenements %}
+
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check text-center font-size-16">
+                                                      {{ e.id }}
+                                                    </div>
+                                                </td>
+                                                
+                                                <td>{{ e.nomEvenement}}</td>
+                                                <td>
+                                                  {{ e.categorie }}
+                                                </td>
+                                                <td>{{ e.Objectif }}</td>
+                                                
+                                                <td>
+                                                  {{ e.nbrPlace }}
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-success font-size-12">{{ e.Date|date('Y-m-d')}}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="badge bg-soft-success font-size-12">{{ e.Time|date('H:i:s') }}</div>
+                                                </td>
+                                                 <td>
+                                                  {{ e.etat ? 'Actif' : 'Inactif' }}
+                                                </td>
+                                                  <td>
+                                                  {{ e.user.username }}
+                                                </td>
+                                                
+                                               
+  
+
+
+         <td>
+    <div class="d-flex align-items-center">
+
+            <!-- Icône de modification -->
+            <a href="{{ path('Evenement_modifier', {'id': e.id}) }}" class="px-3 text-primary"><i class="fas fa-pen"></i></a>
+       
+            <!-- Icône de suppression -->
+            <form id="form-delete-{{ e.id }}" method="post" action="{{ path('Evenement_supprimer', {'id': e.id}) }}" >
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ e.id) }}">
+                <button type="submit" class="btn btn-link text-danger btn-supprimer" ><i class="fas fa-trash"></i></button>
+            </form>
+            </div>
+        </td>
+                                            </tr>
+                                            
+                                                      {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+               
+         
+    
+
+        <!-- JAVASCRIPT -->
+        <script src="{{asset('back-office/libs/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/metismenu/metisMenu.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/simplebar/simplebar.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/node-waves/waves.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/waypoints/lib/jquery.waypoints.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/jquery.counterup/jquery.counterup.min.js')}}"></script>
+
+
+        <!-- bootstrap datepicker -->
+        <script src="{{asset('back-office/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+
+        <!-- Required datatable js -->
+        <script src="{{asset('back-office/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+        
+        <!-- Responsive examples -->
+        <script src="{{asset('back-office/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+        <script src="{{asset('back-office/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
+
+        <!-- init js -->
+
+        <!-- App js -->
+        <script src="{{asset('back-office/js/app.js')}}"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script>
+$('#btn-filter').click(function(e) {
+    e.preventDefault();
+
+    var fromDate = $('#From').val();
+    var toDate = $('#To').val();
+
+    $.ajax({
+        url: '/filtrer-evenements',
+        data: {
+            'From': fromDate,
+            'To': toDate
+        },
+        success: function(data) {
+            // Clear the existing rows in the table
+            $('#event-table-body').empty();
+
+            // Iterate over each event in the response data
+            $.each(data, function(index, event) {
+                // Create a new row for each event
+                var row = $('<tr>');
+                row.append('<td>' + event.id + '</td>');
+                row.append('<td>' + event.nomEvenement + '</td>');
+                row.append('<td>' + event.categorie + '</td>');
+                row.append('<td>' + event.Objectif + '</td>');
+                row.append('<td>' + event.nbrPlace + '</td>');
+                row.append('<td>' + event.Date + '</td>');
+                row.append('<td>' + event.Time + '</td>');
+                row.append('<td>' + event.etat + '</td>');
+                row.append('<td>' + event.user.username + '</td>');
+  var actions = '<td><div class="d-flex align-items-center">';
+    actions += '<a href="/admin/modifier/' + event.id + '" class="px-3 text-primary"><i class="fas fa-pen"></i></a>';
+    actions += '<form id="form-delete-' + event.id + '" method="post" action="/admin/supprimer/' + event.id + '">';
+    actions += '<input type="hidden" name="_token" value="' + event.token + '">';
+    actions += '<button type="submit" class="btn btn-link text-danger btn-supprimer"><i class="fas fa-trash"></i></button>';
+    actions += '</form></div></td>';
+    row.append(actions);
+                // Add the new row to the table
+                $('#event-table-body').append(row);
+                                bindEventListeners();
+
+            });
+        }
+    });
+    
+});
+    </script>
+            <script>
+        // Function to bind event listeners
+        function bindEventListeners() {
+            // Event listener for delete buttons
+            $('.btn-supprimer').click(function(e) {
+                e.preventDefault();
+                var id = $(this).closest('form').attr('id').replace('form-delete-', '');
+                var url = $('#form-delete-' + id).attr('action');
+                // Handle delete functionality
+                handleDelete(id, url);
+            });
+
+            // Event listener for edit buttons
+            $('.btn-modifier').click(function(e) {
+                e.preventDefault();
+                var id = $(this).closest('a').attr('id').replace('btn-edit-', '');
+                var url = $('#btn-edit-' + id).attr('href');
+                // Handle edit functionality
+                handleEdit(id, url);
+            });
+        }
+
+        // Function to handle delete functionality
+        function handleDelete(id, url) {
+            Swal.fire({
+                title: 'Êtes-vous sûr ?',
+                text: "Vous ne pourrez pas revenir en arrière !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Oui, supprimer !'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form if the user confirms
+                    $('#form-delete-' + id).submit();
+                } else {
+                    // Display a cancellation message if the user cancels deletion
+                    Swal.fire({
+                        title: 'Annulé',
+                        text: 'La suppression a été annulée.',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    });
+                }
+            });
+        }
+
+        // Function to handle edit functionality
+        function handleEdit(id, url) {
+            // Redirect to edit page
+            window.location.href = url;
+        }
+
+        // Document ready function
+        $(document).ready(function() {
+            // Bind event listeners when the document is ready
+            bindEventListeners();
+
+            // Event listener for filter button
+            $('#btn-filter').click(function(e) {
+                e.preventDefault();
+                // Your filtering logic here
+                // After filtering, bind event listeners again
+                bindEventListeners();
+            });
+        });
+        
+        $(document).on('submit', 'form[id^="form-update-"]', function(e) {
+    e.preventDefault();
+
+    var form = $(this);
+
+    // Perform an AJAX request to update the event
+    $.ajax({
+        type: 'POST',
+        url: form.attr('action'),
+        data: form.serialize(),
+        success: function(response) {
+            // If the update is successful, display a success message
+            Swal.fire({
+                title: 'Mis à jour !',
+                text: 'Evenement a été mis à jour.',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then(() => {
+                // Refresh the page or update the event row in the table
+            });
+        },
+        error: function(xhr, status, error) {
+            // If an error occurs during the update, display an error message
+            Swal.fire({
+                title: 'Erreur !',
+                text: 'Une erreur s\'est produite lors de la mise à jour.',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+        }
+    });
+});
+
+
+    </script>
+<script>
+    // Loop through each event and check if nbrPlace is 0
+    {% for e in evenements %}
+        {% if e.nbrPlace == 0 %}
+            // Display SweetAlert for events with no places left
+            Swal.fire({
+                icon: 'info',
+                title: 'No places left',
+                text: 'There are no places left for event {{ e.nomEvenement }}.',
+            });
+        {% endif %}
+    {% endfor %}
+</script>
+ <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+    var options = {
+        series: [{
+            name: 'Events',
+            data: [{{ data.mostReservedCount }}, {{ data.mostLovedCount }}, {{ data.mostHatedCount }}]
+        }],
+        chart: {
+            height: 350,
+            type: 'bar',
+        },
+
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                barHeight: '30%', // Adjust this value to change the height of the bars
+                dataLabels: {
+                    // ...
+                }
+            }
+        },
+        xaxis: {
+            categories: ['Most Reserved:{{ data.mostReservedName }}', 'Most Loved:  {{ data.mostLovedName }}', 'Most Hated:  {{ data.mostHatedName }}'],
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#bar_chart"), options);
+    chart.render();
+</script>
+    </body>
+
+</html>
+{% endblock %}

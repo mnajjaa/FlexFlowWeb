@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use App\Repository\ProduitRepository;
 use Doctrine\DBAL\Types\Types;
@@ -15,25 +16,50 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-zA-Z\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç])+[a-zA-Z0-9\s\'\-\.\,\!\?\&\$\%\@\#\*\(\)\[\]\{\}àéèç]*$/u',
+        message: "Le nom du produit doit contenir au moins une lettre."
+    )]
+    private ?string $nom= null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
+    #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Regex(
+        pattern: '/^[^\r\n]{1,}$/u',
+        message: "La description du produit doit contenir au moins une lettre ou un caractère spécial."
+    )]
+    private ?string $description;
+    
 
-    #[ORM\Column]
-    private ?float $prix = null;
+
+    #[ORM\Column(type: "integer")]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Type(type: "numeric", message: "Veuillez saisir un prix valide (chiffres uniquement).")]
+    #[Assert\Range(min: 0, minMessage: "Le prix doit être supérieur ou égal à zéro.")]
+    private ?float $prix;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\Column]
-    private ?int $quantite = null;
 
-    #[ORM\Column]
-    private ?int $quantiteVendues = null;
+
+    
+    #[ORM\Column(type: "integer")]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Type(type: "numeric", message: "Veuillez saisir une quantité valide (chiffres uniquement).")]
+    #[Assert\Range(min: 0, minMessage: "La quantité doit être supérieure ou égale à zéro.")]
+    private ?int $quantite;
+
+    #[ORM\Column(type: "integer")]
+    #[Assert\NotBlank(message: "Le champ ne peut pas être vide.")]
+    #[Assert\Type(type: "numeric", message: "Veuillez saisir une quantité vendue valide (chiffres uniquement).")]
+    #[Assert\Range(min: 0, minMessage: "La quantité vendue doit être supérieure ou égale à zéro.")]
+    private ?int $quantiteVendues;
+
 
     #[ORM\Column(type: Types::BLOB)]
-    private $image = null;
+    public $image = null;
 
     public function getId(): ?int
     {
@@ -117,10 +143,14 @@ class Produit
         return $this->image;
     }
 
-    public function setImage($image): static
+    public function setImage($image): self
     {
         $this->image = $image;
 
         return $this;
     }
+
+
+
+    
 }

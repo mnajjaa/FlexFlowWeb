@@ -1,0 +1,265 @@
+{% extends 'base-front.html.twig' %}
+
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from powerzone.dexignzone.com/xhtml/events.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 23 Mar 2024 22:02:42 GMT -->
+<head>
+    
+    <!-- Title -->
+    <title>PowerZone - Fitness, Workout & Gym HTML Template</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="DexignZone">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="bodybuilding, class, clean, coach, fitness, fitness gym, gym, gym trainer, health, martial arts, personal trainer, sport, sports theme, training, workout, Fitness template, Workout design, Health and wellness, Exercise layout, Fitness app, Gym website, UI components, UX components, Workout routines, Health template, UIUX, creative, HTML, CSS, Sass Integration, HTML Template, Bootstrap, Bootstrap Template, Gym UI Kit, websiite, Website template, Fitness Website Design, Exercise App Design, Gym Interface, Exercise Dashboard, Gym Homepage Template, HTML Gym Template, Responsive Gym Design, responsive, HTML Fitness Components, Workout Program Template, Fitness Studio HTML, Responsive Workout Design, Landing Page Kit, HTML5, HTML/CSS">
+    <meta name="description" content="Embark on a transformative fitness journey with the PowerZone HTML Template. Elevate your workouts and gym routines with this dynamic and versatile template designed to unleash the power of sleek aesthetics and intuitive features. Discover a world of possibilities for fitness and wellness, as PowerZone becomes your gateway to a healthier, stronger version of yourself">
+    <meta property="og:title" content="PowerZone - Fitness, Workout & Gym HTML Template | DexignZone">
+    <meta property="og:description" content="Embark on a transformative fitness journey with the PowerZone HTML Template. Elevate your workouts and gym routines with this dynamic and versatile template designed to unleash the power of sleek aesthetics and intuitive features. Discover a world of possibilities for fitness and wellness, as PowerZone becomes your gateway to a healthier, stronger version of yourself">
+    <meta property="og:image" content="social-image.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="twitter:title" content="PowerZone - Fitness, Workout & Gym HTML Template | DexignZone">
+    <meta name="twitter:description" content="Embark on a transformative fitness journey with the PowerZone HTML Template. Elevate your workouts and gym routines with this dynamic and versatile template designed to unleash the power of sleek aesthetics and intuitive features. Discover a world of possibilities for fitness and wellness, as PowerZone becomes your gateway to a healthier, stronger version of yourself">
+    <meta name="twitter:image" content="social-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" href="{{asset('front-office/images/favicon.png')}}">
+    
+    <link href="{{asset('front-office/vendor/rangeslider/rangeslider.css')}}" rel="stylesheet">
+    <link href="{{asset('front-office/vendor/switcher/switcher.css')}}" rel="stylesheet">
+    <link href="{{asset('front-office/vendor/animate/animate.css')}}" rel="stylesheet">
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{{asset('front-office/css/style.css')}}">
+    <link class="skin" rel="stylesheet" href="{{asset('front-office/css/skin/skin-1.css')}}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+    
+    <!-- Meta -->
+		<link class="skin" rel="stylesheet" href="{{asset('front-office/css/skin/skin-1.css')}}">
+<link href="{{asset('front-office/vendor/rangeslider/rangeslider.css')}}" rel="stylesheet">
+	<link href="{{asset('front-office/vendor/switcher/switcher.css')}}" rel="stylesheet">
+	<link href="{{asset('front-office/vendor/animate/animate.css')}}" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    	<link class="skin" rel="stylesheet" href="{{asset('front-office/css/skin/skin-1.css')}}">
+    <style>
+.date .clock-canvas {
+    font-weight: 900;
+        font-size: 2em;
+
+}
+
+
+</style>
+</head>
+<body id="bg" class="data-typography-1">
+
+
+    
+    <div class="page-content bg-white">
+        
+    
+        <!-- Our Events -->
+        <section class="content-inner" style=" display: flex; justify-content: center; align-items: center;">
+		<div div class="col-lg-6 col-md-12">
+			<div class="coming-soon-detail">
+				<div class="inner-content">
+			<div class="coming-soon-detail">
+
+    <div id="countdown" class="countdown countdown-timer wow fadeInUp" data-wow-delay="1.0s" style="display: flex; justify-content: space-around;">
+    <div class="date clock-days">
+							<div class="items-days">
+    <span id="days" class="clock-canvas"></span> 
+    </div>
+    <span class="type-days type-time" data-border-color="#000" >Days</span>
+    </div>
+    <div class="date clock-hours">
+							<div class="items-days">
+    <span id="hours" class="clock-canvas"></span>  
+    </div>
+    <span class="type-hours type-time" data-border-color="#000">Hours</span>
+    </div>
+    <div class="date clock-minutes">
+							<div class="items-days">
+    <span id="minutes" class="clock-canvas"></span> 
+    </div>
+							<span class="type-minutes type-time" data-border-color="#000">Minutes</span>
+    </div>
+    <div class="date clock-seconds">
+              <div class="items-days">
+    <span id="seconds" class="clock-canvas"></span> 
+    </div>
+    							<span class="type-seconds type-time" data-border-color="#000">Second</span>
+</div>
+</div></div></div></div></div>
+</div>     
+      
+            <div class="container">
+<div class="row">
+
+  {% for evenement in evenements %}
+    <div class="col-md-4">
+      <div class="card card-plain card-blog mt-4">
+        <div class="card-image border-radius-lg position-relative ">
+            <div class="blur-shadow-image overlay-shine wow fadeInUp ">
+												<div class="dz-media">
+
+            <img class="img border-radius-lg move-on-hover" src="data:image/jpeg;base64,{{ evenement.image }}" style="width: 100%; height: 200px; object-fit: cover;">
+            </div>
+			</div>
+			
+          </div>
+		 
+        <div class="card-body px-0">
+          <h5>
+            <a href="javascript:;" class="text-dark font-weight-bold">{{ evenement.nomEvenement }}</a>
+          </h5>
+          <p>
+          <i class="flaticon-calendar-1"></i>  Date: {{ evenement.date|date('Y-m-d') }}<br>
+           <i class="far fa-clock"></i>
+ Time: {{ evenement.time|date('H:i:s') }}
+          </p>
+          <a href="{{ path('voir_evenements', {'id': evenement.getId()}) }}" class="text-info icon-move-right">Read More
+            <i class="fas fa-arrow-right text-sm" aria-hidden="true"></i>
+          </a>
+          <i class="far fa-heart heart-icon" style="position: absolute; top: 10px; right: 10px;" onclick="toggleLike(this, {{ evenement.getId() }})"></i>
+
+        </div>
+      </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var heartIcon = document.querySelector('.heart-icon');
+            var eventId = {{ evenement.getId() }}; // Get the event ID
+
+            fetch('/status/' + eventId)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'liked') {
+                        heartIcon.classList.add('liked');
+                        heartIcon.style.color = 'red';
+                    } else if (data.status === 'disliked') {
+                        heartIcon.classList.remove('liked');
+                        heartIcon.style.color = 'black';
+                    }
+                });
+        });
+    </script>
+  {% endfor %}
+</div>
+
+ 
+</div></section></div></div>
+ 
+
+ 
+
+</div>
+
+ <script>
+    function toggleLike(element, eventId) {
+        var liked = element.classList.toggle('liked');
+
+        fetch('/' + (liked ? 'like' : 'dislike') + '/' + eventId)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'liked') {
+                    element.style.color = 'red'; // Change color to red when liked
+                } else if (data.status === 'disliked') {
+                    element.style.color = 'black'; // Change color to black when disliked
+                }
+            });
+    }
+   
+</script>
+
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("{{ evenements[0].getDate()|date('F j, Y H:i:s') }}").getTime();
+
+// Update the count down every 1 second
+var countdownInterval = setInterval(function() {
+    // Get today's date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the element with id="countdown"
+    document.getElementById("days").innerText = days;
+    document.getElementById("hours").innerText = hours;
+    document.getElementById("minutes").innerText = minutes;
+    document.getElementById("seconds").innerText = seconds;
+
+    // If the count down is finished, write some text 
+    if (distance < 0) {
+        clearInterval(countdownInterval);
+        document.getElementById("countdown").innerHTML = "EXPIRED";
+    }
+}, 1000);
+
+
+</script>
+<script>
+        // Select all heart icons
+        const heartIcons = document.querySelectorAll('.heart-icon');
+
+        // Add click event listener to each heart icon
+        heartIcons.forEach(icon => {
+            icon.addEventListener('click', function() {
+                // Toggle the 'far' and 'fas' classes to change the color of the heart icon
+                this.classList.toggle('far');
+                this.classList.toggle('fas');
+                // Toggle the color of the heart icon
+                if (this.classList.contains('far')) {
+                    this.style.color = 'black'; // Change color to black when unliked
+                } else {
+                    this.style.color = 'red'; // Change color to red when liked
+                }
+            });
+        });
+        function toggleLike(element, eventId) {
+    var liked = element.classList.toggle('liked');
+
+    fetch('/' + (liked ? 'like' : 'dislike') + '/' + eventId)
+        .then(response => response.json())
+        .then(data => console.log(data.status));
+}
+
+    </script>
+   
+
+<!-- JAVASCRIPT FILES ========================================= -->
+<script src="{{asset('front-office/js/jquery.min.js')}}"></script><!-- JQUERY.MIN JS -->
+<script src="{{asset('front-office/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script><!-- BOOTSTRAP.MIN JS -->
+<script src="{{asset('front-office/vendor/wow/wow.js')}}"></script><!-- WOW.JS -->
+<script src="{{asset('front-office/js/dz.carousel.js')}}"></script><!-- OWL-CAROUSEL -->
+<script src="{{asset('front-office/js/dz.ajax.js')}}"></script><!-- AJAX -->
+<script src="{{asset('front-office/js/custom.js')}}"></script><!-- CUSTOM JS -->
+<script src="{{asset('front-office/vendor/rangeslider/rangeslider.js')}}"></script><!-- RANGESLIDER -->
+<script src="{{asset('front-office/vendor/switcher/switcher.js')}}"></script><!-- SWITCHER -->
+<script src="{{asset('front-office/vendor/countdown/jquery.final-countdown.js')}}"></script><!-- COUNTDOWN JS -->
+
+</body>
+
+<!-- Mirrored from powerzone.dexignzone.com/xhtml/events.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 23 Mar 2024 22:02:44 GMT -->
+</html>
+
+{% endblock %}

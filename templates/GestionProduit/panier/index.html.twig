@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulter le panier{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <a href="{{ path('produits') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Retour à la liste des produits</a>
+
+        <h1>Votre panier</h1>
+        {% if panier is empty %}
+            <div class="alert alert-info" role="alert">
+                Votre panier est vide.
+            </div>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Produit</th>
+                            <th scope="col">Quantité</th>
+                            <th scope="col">Prix unitaire</th>
+                            <th scope="col">Prix total</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    {% for item in panier %}
+                            <tr>
+                               <td>{{ item.produit.nom }}</td>
+                                <td>{{ item.quantite }}</td>
+                                <td>{{ item.produit.prix }} Dnt</td>
+                                <td>{{ item.produit.prix * item.quantite }} Dnt</td>
+                                <td>
+    <a href="#" class="btn btn-success" onclick="incrementerQuantite({{ item.produit.id }})">+</a>
+        <a href="#" class="btn btn-warning" onclick="decrementerQuantite({{ item.produit.id }})">-</a>
+
+ <a href="#" class="btn btn-danger" onclick="supprimerAchat({{ item.produit.id }})">Supprimer</a>
+
+                                </td>
+                            </tr>
+                       {% set total = total + item.produit.prix * item.quantite %}
+
+                        {% else %}
+                            <tr>
+                                <td colspan="5">Votre panier est vide</td>
+                            </tr>    
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Total</td>
+                            <td>{{ total / 2 }} Dnt </td>
+                            <td>
+                               <a href="{{ path('vider_panier') }}" class="btn btn-danger">Vider</a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+<form action="/checkout" method="post">
+    <button type="submit" class="btn btn-primary">Valider le panier</button>
+</form>
+
+
+                     
+                </table>
+
+
+            </div>
+        {% endif %}
+    </div>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <script>
+    function incrementerQuantite(id) {
+        fetch("{{ path('incrementer_quantite', {'id': 'ID_PLACEHOLDER'}) }}".replace("ID_PLACEHOLDER", id), {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                console.error('L\'incrémentation de la quantité a échoué.');
+            }
+        }).then(data => {
+            if (data.message) {
+                alert(data.message); // Affichez le message
+            } else {
+                location.reload(); // Recharge la page après l'incrémentation
+            }
+        }).catch(error => {
+            console.error('Une erreur est survenue lors de l\'incrémentation de la quantité :', error);
+        });
+    }
+
+
+  // Fonction pour décrémenter la quantité d'un produit dans le panier
+     function decrementerQuantite(id) {
+        fetch("{{ path('decrementer_quantite', {'id': 'ID_PLACEHOLDER'}) }}".replace("ID_PLACEHOLDER", id), {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                location.reload(); // Recharge la page après la décrémentation
+            } else {
+                console.error('La décrémentation de la quantité a échoué.');
+            }
+        }).catch(error => {
+            console.error('Une erreur est survenue lors de la décrémentation de la quantité :', error);
+        });
+    }
+
+    function supprimerAchat(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cet achat ?')) {
+                fetch("{{ path('supprimer_achat', {'id': 'ID_PLACEHOLDER'}) }}".replace("ID_PLACEHOLDER", id), {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload(); // Recharge la page après la suppression
+                    } else {
+                        console.error('La suppression de l\'achat a échoué.');
+                    }
+                }).catch(error => {
+                    console.error('Une erreur est survenue lors de la suppression de l\'achat :', error);
+                });
+            }
+        }
+    </script>
+{% endblock %}

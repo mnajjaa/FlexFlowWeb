@@ -1,3 +1,534 @@
 {% extends 'base-front.html.twig' %}
 
+{% block body %}
+<!-- Banner -->
+		<div class="main-bnr-one">
+			<div class="swiper main-slider">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div class="banner-inner" style="background-image: url(front-office/images/main-slider/slider1/bg1.jpg)">
+							<div class="container">
+								<div class="row align-items-center">
+									<div class="col-xxl-7 col-xl-8 col-sm-8">
+										<div class="banner-content">
+											<div class="top-content">
+												<h1 class="title" data-swiper-parallax="-50">
+													<span>Work Hard to Get</span>
+													<span class="text2 text-primary">Better</span> Life
+												</h1>
+												
+											</div>
+										</div>
+									</div>
+									<div class="col-xxl-5 col-xl-4 col-sm-4">
+										<div class="banner-media">
+											<img src="{{asset('front-office/images/main-slider/slider1/pic1.png')}}" class="main-img" data-swiper-parallax="300" alt="">	
+											<ul data-swiper-parallax="-50">
+												<li>7 DAYS AWEEK TRAININGS</li>
+												<li>AWESOME PROGRAMS</li>
+												<li>FOR EVERY DAY</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="banner-inner" style="background-image: url(front-office/images/main-slider/slider1/bg1.jpg)">
+							<div class="container">
+								<div class="row align-items-center">
+									<div class="col-xxl-7 col-xl-8 col-sm-8">
+										<div class="banner-content">
+											<div class="top-content">
+												<h1 class="title" data-swiper-parallax="-50">
+													<span class="text1">
+													<span class="sub-title text-primary">Work Hard</span> to Get</span>
+													<span class="text2 text-primary">Better</span> Life
+												</h1>
+												
+											</div>
+										</div>
+									</div>
+									<div class="col-xxl-5 col-xl-4 col-sm-4">
+										<div class="banner-media">
+											<img src="{{asset('front-office/images/main-slider/slider1/pic2.png')}}" class="main-img" data-swiper-parallax="300" alt="">	
+											<ul data-swiper-parallax="-50">
+												<li>7 DAYS AWEEK TRAININGS</li>
+												<li>AWESOME PROGRAMS</li>
+												<li>FOR EVERY DAY</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="banner-inner" style="background-image: url(front-office/images/main-slider/slider1/bg1.jpg)">
+							<div class="container">
+								<div class="row align-items-center">
+									<div class="col-xxl-7 col-xl-8 col-sm-8">
+										<div class="banner-content">											
+											<div class="top-content">
+												<h1 class="title" data-swiper-parallax="-50">
+													<span class="text1">
+													<span class="sub-title text-primary">Work Hard</span> to Get</span>
+													<span class="text2 text-primary">Better</span> Life
+												</h1>
+												
+											</div>
+										</div>
+									</div>
+									<div class="col-xxl-5 col-xl-4 col-sm-4">
+										<div class="banner-media">
+											<img src="{{asset('front-office/images/main-slider/slider1/pic3.png')}}" class="main-img" data-swiper-parallax="300" alt="">	
+											<ul data-swiper-parallax="-50">
+												<li>7 DAYS AWEEK TRAININGS</li>
+												<li>AWESOME PROGRAMS</li>
+												<li>FOR EVERY DAY</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container">
+					<div class="num-pagination wow bounceInUp center" data-wow-delay="1.6s">
+						<div class="swiper-pagination main-pagination style-2"></div>
+					</div>
+				</div>
+				<div class="main-btn wow wow rollIn" data-wow-delay="1.8s">
+					<div class="main-btn-prev btn-prev"><i class="fa-solid fa-arrow-left"></i></div>
+					<div class="main-btn-next btn-next"><i class="fa-solid fa-arrow-right"></i></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="call-action style-3 bg-img-fix bg-primary" >
+			<div class="container">
+				<div class="inner-content row justify-content-center">
+					<div class="col-lg-4 col-md-6 col-6 action-title wow fadeInUp m-sm-b10" data-wow-delay="2.0s">
+						<h2>Séance  <span>d'essai</span></h2>
+						<h3>Essai gratuit, coachs pros</h3>
+					</div>
+					
+					<div class="col-lg-4 col-md-6 col-6 contact wow fadeInUp m-sm-b10" data-wow-delay="2.4s">
+						<h4>APPELEZ-NOUS</h4>
+						<h2><a href="tel:+4733378901">24509366</a></h2>
+					</div>
+				</div>
+			</div>	
+		</div>
 
+		<div class="section-wrapper1 bg-parallax" style="background-image: url(front-office/images/background/bg5.png);">
+			<!-- Our Services -->
+			<section class="content-inner">
+				<div class="container">
+					<div class="row">
+						<div class="col-xl-3 col-md-6 m-lg-b30 wow fadeInUp" data-wow-delay="0.2s">
+							<div class="icon-bx-wraper style-1 hover-aware">
+								<div class="icon-bx m-b20"> 
+									<div class="icon-cell text-primary">
+										<i class="flaticon-fitness"></i>
+									</div>
+								</div>
+								<div class="icon-content">
+									<h4 class="dz-title m-b10"><a href="{{ path('liste_cours') }}">Nos cours</a></h4>
+									
+								</div>
+								 <a href="{{ path('liste_cours') }}" class="btn-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+								<div class="effect"></div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-md-6 m-lg-b30 wow fadeInUp" data-wow-delay="0.4s">
+							<div class="icon-bx-wraper style-1 hover-aware">
+								<div class="icon-bx m-b20"> 
+									<div class="icon-cell text-primary">
+										<i class="flaticon-user"></i>
+									</div>
+								</div>
+								<div class="icon-content">
+									<h4 class="dz-title m-b10"><a href="{{ path('produits') }}">Store</a></h4>
+									
+								</div>
+								<a href="{{ path('produits') }}" class="btn-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+								<div class="effect"></div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-md-6 m-lg-b30 wow fadeInUp" data-wow-delay="0.6s">
+							<div class="icon-bx-wraper style-1 hover-aware">
+								<div class="icon-bx m-b20"> 
+									<div class="icon-cell text-primary">
+										<i class="flaticon-medal"></i>
+									</div>
+								</div>
+								<div class="icon-content">
+									<h4 class="dz-title m-b10"><a href="service-details.html">Offres</a></h4>
+									
+								</div>
+								<a href="service-details.html" class="btn-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+								<div class="effect"></div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-md-6 m-lg-b30 wow fadeInUp" data-wow-delay="0.8s">
+							<div class="icon-bx-wraper style-1 hover-aware">
+								<div class="icon-bx m-b20"> 
+									<div class="icon-cell text-primary">
+										<i class="flaticon-calendar"></i>
+									</div>
+								</div>
+								<div class="icon-content">
+									<h4 class="dz-title m-b10"><a href="service-details.html">Événements</a></h4>
+									
+								</div>
+								<a href="service-details.html" class="btn-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+								<div class="effect"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Our Services -->
+			</section>
+		
+			<section class="about-bx1">
+				<!-- About Services -->
+				<div class="container">
+					<div class="row align-items-center ">
+						<div class="col-lg-6">
+							<div class="dz-media p-r20">
+								<div class="image-box wow fadeInUp" data-wow-delay="0.4s">
+									<!-- <img src="front-office/images/about/pic5.jpg" alt=""> -->
+									<div class="tag"><h2 class="counter">20</h2><h5>ANS D'EXPÉRIENCE</h5></div>
+									<div class="split-box h-100">
+										<video autoplay loop muted id="about-video">
+											<source src="{{asset('front-office/images/about/video.mp4')}}" type="video/mp4">
+										</video>
+									</div>
+								</div>
+								<div class="split-box">
+									<img src="{{asset('front-office/images/about/pic6.jpg')}}" alt="" class="wow fadeInUp" data-wow-delay="0.6s">
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 about-content m-lg-t40 wow fadeInUp" data-wow-delay="0.6s">
+							<h3 class="sub-title wow fadeInUp" data-wow-delay="0.8s">RÉVEILLE-TOI, C'EST L'HEURE</h3>
+							<h2 class="title m-0 wow fadeInUp" data-wow-delay="1.0s">Passez  <span class="text-primary">à l'action</span></h2>
+							<p class="description m-b10 wow fadeInUp" data-wow-delay="1.2s">Commencez votre formation avec nos entraîneurs professionnels</p>
+							
+							<ul class="pr-list list-italic m-t30 m-b35 wow fadeInUp" data-wow-delay="1.6s">
+								
+								<li><i class="flaticon-check-mark"></i>Musculation</li>
+								<li><i class="flaticon-check-mark"></i>Cours de boxe</li>
+								<li><i class="flaticon-check-mark"></i>Cardio et plus</li>
+								
+								<li><i class="flaticon-check-mark"></i>Musculation</li>
+								<li><i class="flaticon-check-mark"></i>Cours de boxe</li>
+								<li><i class="flaticon-check-mark"></i>Cardio et plus</li>
+							</ul>
+							
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- About Services -->
+		</div>
+		
+		<!-- Schedule Table -->
+		<div class="content-inner-2">
+			<div class="container">
+				<div class="section-head style-2 text-center wow fadeInUp" data-wow-delay="0.2s">
+					<h2 class="title">Trouvez la classe qui vous convient</h2>
+				</div>
+				<div class="schedule-table style-1 table-responsive wow fadeInUp" data-wow-delay="0.4s">
+					<table class="table-responsive-md ck-table">
+						<thead>
+							<tr class="">
+								<th></th>
+								<th>Monday</th>
+								<th>Tuesday</th>
+								<th>Wednesday</th>
+								<th>Thursday</th>
+								<th>Friday</th>
+								<th>Saturday</th>
+								<th>Sunday</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="row_1">
+								<td class="event-time"> 06:00 - 07:00 </td>
+								<td class="event" rowspan="2">
+									<a class="title" href="javascript:void(0);">Open Gym</a>
+									<div class="event-tag">Gym</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr class="row_2">
+								<td class="event-time"> 07:00 - 08:00 </td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Cardio Burn</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Hit Training</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Power Lifting</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Aerobic</div>
+								</td>
+							</tr>
+							<tr class="row_3">
+								<td class="event-time"> 08:00 - 09:00 </td>
+								<td></td>
+								<td></td>
+								<td class="event" rowspan="2">
+									<a class="title" href="javascript:void(0);">Crossfit Class</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Strenght</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr class="row_4">
+								<td class="event-time"> 09:00 - 10:00 </td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Cardio Burn</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Hit Training</div>
+								</td>
+							</tr>
+							<tr class="row_5">
+								<td class="event-time"> 10:00 - 11:00 </td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Crossfit Class</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Hit Training</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Crossfit Class</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Hit Training</div>
+								</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr class="row_6">
+								<td class="event-time"> 11:00 - 12:00 </td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr class="row_7">
+								<td class="event-time"> 12:00 - 13:00 </td>
+								<td></td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Cardio Burn</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Hit Training</div>
+								</td>
+								<td></td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Power Lifting</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Aerobic</div>
+								</td>
+								<td></td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Crossfit Class</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Hit Training</div>
+								</td>
+								<td></td>
+							</tr>
+							<tr class="row_8">
+								<td class="event-time"> 13:00 - 14:00 </td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Power Lifting</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Aerobic</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr class="row_9">
+								<td class="event-time"> 14:00 - 15:00 </td>
+								<td></td>
+								<td></td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Crossfit Class</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Hit Training</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr class="row_10">
+								<td class="event-time"> 15:00 - 16:00 </td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Cardio Burn</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Hit Training</div>
+								</td>
+								<td></td>
+							</tr>
+							<tr class="row_11">
+								<td class="event-time"> 18:00 - 19:00 </td>
+								<td></td>
+								<td class="event">
+									<a class="title" href="javascript:void(0);">Crossfit Class</a>
+									<span class="subtitle">Madison Fren</span>
+									<div class="event-tag">Hit Training</div>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- Schedule Table -->
+		
+		<!-- Team -->
+		<section class="content-inner-1 team-slider-wrapper">
+			<div class="container">
+				<div class="section-head style-2 text-center wow fadeInUp" data-wow-delay="0.2s">
+					<h2 class="title">Ils sont toujours les meilleurs</h2>
+				</div>
+				<div class="swiper team-slider style-2">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide wow fadeInUp" data-wow-delay="0.4s">
+							<div class="dz-team style-1">
+								<div class="dz-media">
+									<a href="team.html"><img src="{{asset('front-office/images/team/team-1.png')}}" alt=""></a>
+									<ul class="team-social">
+										<li><a href="https://www.facebook.com/profile.php?id=61556203916437" class="fab fa-facebook-f"></a></li>
+										<li><a href="https://www.instagram.com/coach_oussama_trabelsi/?hl=fr" class="fab fa-instagram"></a></li>
+										<li><a href="https://twitter.com/c_bumstead" class="fab fa-twitter"></a></li>
+									</ul>
+								</div>
+								<div class="dz-content ">
+									<h4 class="dz-name">DESERT</h4>
+									<span class="dz-position">FITNESS TRAINER</span>
+								</div>
+							</div>
+						</div>	
+						<div class="swiper-slide wow fadeInUp" data-wow-delay="0.6s">
+							<div class="dz-team style-1">
+								<div class="dz-media">
+									<a href="team.html"><img src="{{asset('front-office/images/team/team-2.png')}}" alt=""></a>
+									<ul class="team-social">
+										<li><a href="https://www.facebook.com/profile.php?id=61556203916437" class="fab fa-facebook-f"></a></li>
+										<li><a href="https://www.instagram.com/coach_oussama_trabelsi/?hl=fr" class="fab fa-instagram"></a></li>
+										<li><a href="https://twitter.com/c_bumstead" class="fab fa-twitter"></a></li>
+									</ul>
+								</div>
+								<div class="dz-content ">
+									<h4 class="dz-name">OLIVER</h4>
+									<span class="dz-position">CROSSFIT COACH</span>
+								</div>
+							</div>
+						</div>	
+						<div class="swiper-slide wow fadeInUp" data-wow-delay="0.8s">
+							<div class="dz-team style-1">
+								<div class="dz-media">
+									<a href="team.html"><img src="{{asset('front-office/images/team/team-3.png')}}" alt=""></a>
+									<ul class="team-social">
+										<li><a href="https://www.facebook.com/profile.php?id=61556203916437" class="fab fa-facebook-f"></a></li>
+										<li><a href="https://www.instagram.com/coach_oussama_trabelsi/?hl=fr" class="fab fa-instagram"></a></li>
+										<li><a href="https://twitter.com/c_bumstead" class="fab fa-twitter"></a></li>
+									</ul>
+								</div>
+								<div class="dz-content ">
+									<h4 class="dz-name">JAMES</h4>
+									<span class="dz-position">DUMBBELL TRAINER</span>
+								</div>
+							</div>
+						</div>	
+					</div>
+				</div>
+				<div class="num-pagination justify-content-center">
+					<div class="team-slider-prev btn-prev"><i class="fa-solid fa-arrow-left"></i></div>
+					<div class="swiper-pagination team-slider-pagination style-2"></div>
+					<div class="team-slider-next btn-next"><i class="fa-solid fa-arrow-right"></i></div>
+				</div>
+			</div>
+		</section>
+		<!-- Team -->
+
+		<!-- About Us -->
+		
+		<!-- About Us -->
+		
+		<!-- Testimonials-->
+		
+		<!-- Testimonials-->
+		
+		<!-- Call To Action -->
+		<section class="call-action style-2 bg-img-fix bg-primary">
+			<div class="container">
+				<div class="inner-content">
+					<div class="row justify-content-between align-items-center">
+						<div class="text-center text-lg-start col-xl-6 m-lg-b20 wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+							<h2 class="title m-0"><span class="font-weight-400">Subscribe To Our </span>Newsletter</h2>
+						</div>
+						<div class="text-center text-lg-end col-xl-6 wow fadeInUp" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+							<form class="dzSubscribe" action="https://powerzone.dexignzone.com/xhtml/assets/script/mailchamp.php" method="post">
+								<div class="dzSubscribeMsg"></div>
+								<div class="form-group">
+									<div class="input-group mb-0"> 
+										<div class="input-skew">
+											<input name="dzEmail" required="required" type="email" class="form-control" placeholder="Your Email Address">
+										</div>
+										<div class="input-group-addon">
+											<button name="submit" value="Submit" type="submit" class="btn btn-secondary btn-lg btn-skew h-100"><span class="skew-inner"><span class="text">Subscribe Now</span></span></button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Call To Action -->
+        {% endblock %}
+	
