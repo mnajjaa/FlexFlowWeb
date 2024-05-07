@@ -5,8 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     images_directory: '%kernel.project_dir%/public/uploads/images'
-        badword_api_key: '3e33204cb468d4e21d789a40c7bd2080'
-        twilio_number: '%env(TWILIO_NUMBER)%'
+    badword_api_key: '3e33204cb468d4e21d789a40c7bd2080'
+    twilio_number: '%env(TWILIO_NUMBER)%'
 
     upload_directory: '%kernel.project_dir%/public/uploads'
     uploads: '%kernel.project_dir%/public/uploads/users'

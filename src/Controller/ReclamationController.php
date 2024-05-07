@@ -179,6 +179,8 @@ public function edit(Request $request, Reclamation $reclamation, EntityManagerIn
 
         $entityManager->persist($reclamation);
         $entityManager->flush();
+
+        
 /*
         if ($originalEtat !== 'Traite' && $newEtat === 'Traite') {
             // Envoie un SMS seulement si l'état change à "Traité"
