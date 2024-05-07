@@ -15,7 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\File; // Ajoutez cette ligne pour importer la classe File
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
-
+use App\Repository\ReservationRepository;
+use App\Repository\FavorisRepository;
 use Symfony\Component\Intl\DateFormat\DateFormat;
 
 class EvenementController extends AbstractController
@@ -114,30 +115,43 @@ class EvenementController extends AbstractController
 
 
 
-    #[Route('/admin/liste/Events', name: 'evenements_list')]
-    public function listEvenements(EvenementRepository $EvenementRepository): Response
+    #[Route('/admin/list', name: 'evenements_list')]
+    public function listEvenements(EvenementRepository $EvenementRepository, ReservationRepository $reservationRepo, FavorisRepository $favorisRepo): Response
     {
-       
-
-        // Récupérer tous les événements depuis le repository
+        // Get statistical data
+        $mostReservedEvent = $reservationRepo->findMostReservedEvent();
+        $mostLovedEvent = $favorisRepo->findMostLovedEvent();
+        $mostHatedEvent = $favorisRepo->findMostUnlovedEvent();
+    
+        // Create the $data array
+        $data = [
+            'mostReservedName' => $mostReservedEvent ? $mostReservedEvent['eventName'] : 'No event',
+            'mostLovedName' => $mostLovedEvent ? $mostLovedEvent['eventName'] : 'No event',
+            'mostHatedName' => $mostHatedEvent ? $mostHatedEvent['eventName'] : 'No event',
+            'mostReservedCount' => $mostReservedEvent ? $mostReservedEvent['reservationCount'] : 0,
+            'mostLovedCount' => $mostLovedEvent ? $mostLovedEvent['loveCount'] : 0,
+            'mostHatedCount' => $mostHatedEvent ? $mostHatedEvent['unloveCount'] : 0,
+        ];
+    
+        // Get events
         $evenements = $EvenementRepository->findAll();
-
+    
         foreach ($evenements as $evenement) {
-            // Vérifier si l'image existe
+            // Check if the image exists and convert it to base64 if it does
             if ($evenement->getImage()) {
-                // Convertir les données binaires en base64
                 $imageData = base64_encode(stream_get_contents($evenement->getImage()));
                 $evenement->setImage($imageData);
             }
         }
-
-        // Rendre la vue en passant les événements récupérés
+    
+        // Render the template with both statistical data and events
         return $this->render('Evenement/list.html.twig', [
+            'data' => $data,
             'evenements' => $evenements,
         ]);
     }
 
-    #[Route('/admin/event/supprimer/{id}', name: 'Evenement_supprimer', methods: ['POST'])]
+    #[Route('/admin/supprimer/{id}', name: 'Evenement_supprimer', methods: ['POST'])]
     public function supprimerEvenement(Request $request, int $id, EvenementRepository $EvenementRepository): Response
     {
         $evenement = $EvenementRepository->find($id);
@@ -154,7 +168,7 @@ class EvenementController extends AbstractController
     
         return $this->redirectToRoute('evenements_list');
     }
-    #[Route('/admin/events/modifier/{id}', name: 'Evenement_modifier')]
+    #[Route('/admin/modifier/{id}', name: 'Evenement_modifier')]
     public function modifier(Request $request, int $id, EvenementRepository $EvenementRepository): Response
     {
         // Find the event by its ID
@@ -206,7 +220,7 @@ class EvenementController extends AbstractController
 
 
  
-    #[Route("/ComingSoon", name:"calendar_events")]
+    #[Route("/events", name:"calendar_events")]
 
     public function events(EvenementRepository $eventRepository)
     {

@@ -33,7 +33,7 @@
         <!-- App Css-->
         <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
     </head>
-  
+
    <body>
 
     <!-- <body data-layout="horizontal" data-topbar="colored"> -->
@@ -43,7 +43,16 @@
 
                 <div class="page-content ">
                     <div class="container-fluid ">
-
+	<div class="col-xl-12 ">
+    <div class="card custom-card ">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Evenement statstique</h4>
+            
+             
+			  <div id="bar_chart" class="apex-charts" dir="ltr"></div> 
+        </div>
+    </div>
+</div>
                         <!-- start page title -->
                         <div class="row ">
                             <div class="col-12">
@@ -378,7 +387,36 @@ $('#btn-filter').click(function(e) {
         {% endif %}
     {% endfor %}
 </script>
+ <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
+<script>
+    var options = {
+        series: [{
+            name: 'Events',
+            data: [{{ data.mostReservedCount }}, {{ data.mostLovedCount }}, {{ data.mostHatedCount }}]
+        }],
+        chart: {
+            height: 350,
+            type: 'bar',
+        },
+
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                barHeight: '30%', // Adjust this value to change the height of the bars
+                dataLabels: {
+                    // ...
+                }
+            }
+        },
+        xaxis: {
+            categories: ['Most Reserved:{{ data.mostReservedName }}', 'Most Loved:  {{ data.mostLovedName }}', 'Most Hated:  {{ data.mostHatedName }}'],
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#bar_chart"), options);
+    chart.render();
+</script>
     </body>
 
 </html>
