@@ -4,7 +4,6 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.1",
         "php": ">=8",
         "ext-ctype": "*",
         "ext-iconv": "*",
@@ -58,7 +57,6 @@
         "symfony/translation": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
         "symfony/twilio-notifier": "5.4.*",
-        "symfony/twilio-notifier": "5.4.*",
         "symfony/ux-turbo": "^2.16",
         "symfony/validator": "5.4.*",
         "symfony/web-link": "5.4.*",
@@ -67,8 +65,6 @@
         "symfonycasts/verify-email-bundle": "^1.17",
         "tecnickcom/tcpdf": "^6.7",
         "twig/extra-bundle": "*",
-        "twig/twig": "^2.12|^3.0",
-        "twilio/sdk": "^8.0",
         "twig/twig": "^2.12|^3.0",
         "twilio/sdk": "^8.0"
     },

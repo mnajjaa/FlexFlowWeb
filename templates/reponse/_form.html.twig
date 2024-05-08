@@ -1,0 +1,13 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+    <div class="mb-3">
+        {{ form_label(form.reponse_reclamation, 'Reponse', {'label_attr': {'class': 'form-label'}}) }}
+        {% set errorClass = form.reponse_reclamation.vars.errors is not empty ? 'is-invalid' : '' %}
+       {{ form_widget(form.reponse_reclamation, {'attr': {'class': 'form-control ' ~ errorClass }}) }}
+        {% if form.reponse_reclamation.vars.errors %}
+                            <div class="invalid-feedback">
+                                {{ form_errors(form.reponse_reclamation) }}
+                            </div>
+                        {% endif %}
+    </div>
+    <button class="btn" style="background-color:#3F85F9; color: white;padding: 10px 20px; text-align: center;">{{ button_label|default('ajouter') }}</button>
+{{ form_end(form) }}

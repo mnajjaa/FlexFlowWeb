@@ -287,7 +287,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+    public function __toString(): string
+    {
+        return $this->getUsername(); // Remplacez getUsername() par la méthode qui retourne une représentation de l'utilisateur que vous souhaitez afficher.
+    }
+
     /**
      * @return Collection<int, LoginHistory>
      */

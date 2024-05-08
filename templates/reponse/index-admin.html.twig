@@ -1,0 +1,89 @@
+{% extends 'base-back.html.twig' %}
+
+
+{% block body %}
+<head>
+
+        <meta charset="utf-8" />
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{{asset('back-office/images/favicon.ico')}}">
+
+        {% block css %}
+        <!-- Bootstrap Css -->
+        <link href="{{asset('back-office/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{asset('back-office/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{asset('back-office/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+        {% endblock %}
+
+<style>
+.table {
+    border-collapse: collapse; /* Fusionner les bordures de cellule */
+    width: 100%; /* Assurez-vous que la table prend toute la largeur du conteneur */
+}
+
+.table th, .table td {
+    border: 1px solid #ddd; /* Ajouter une bordure de 1px solide avec la couleur grise #ddd */
+    padding: 8px; /* Ajouter un rembourrage intérieur */
+    text-align: left; /* Aligner le texte à gauche */
+}
+
+/* Style facultatif pour les en-têtes de colonne */
+.table th {
+    background-color: #f2f2f2; /* Couleur de fond pour les en-têtes de colonne */
+    color: #333; /* Couleur du texte pour les en-têtes de colonne */
+}
+</style>
+
+
+
+    </head>
+<body> 
+<div class="mt-4 mb-5" extra-margin> <!-- Ajout de marges au titre -->
+        <h1 class="page-title">Listes des Reponses</h1>
+    </div>
+
+    <div class="mt-4 mb-5" extra-margin>
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reponse</th>
+                <th>Réclamation </th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reponse in reponses %}
+            <tr>
+                <td>{{ reponse.id }}</td>
+                <td>{{ reponse.reponseReclamation }}</td>
+                <td>{{ reponse.reclamation.titreReclamation }}</td> {# Afficher le titre de la réclamation correspondante #}
+                <td>
+                    {#<a href="{{ path('app_reponse_show', {'id': reponse.id}) }}">show</a>#}
+                    <a href="{{ path('app_reponse_edit', {'id': reponse.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">aucune reponse</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+
+    {#<a href="{{ path('app_reclamation_new') }}">Ajouter une Reclamation</a>#}
+
+    {# Bouton pour retourner vers l'interface de réclamation #}
+<a href="{{ path('app_reclamation_index') }}" class="btn btn-primary">Retourner à l'interface de réclamation</a>
+
+</body>
+{% endblock %}

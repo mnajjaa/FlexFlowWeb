@@ -1,0 +1,27 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+    <div class="mb-3">
+        {{ form_label(form.titre_reclamation, 'Titre de la réclamation', {'label_attr': {'class': 'form-label'}}) }}
+        {% set errorClass = form.titre_reclamation.vars.errors is not empty ? 'is-invalid' : '' %}
+       {{ form_widget(form.titre_reclamation, {'attr': {'class': 'form-control ' ~ errorClass }}) }}
+        {% if form.titre_reclamation.vars.errors %}
+                            <div class="invalid-feedback">
+                                {{ form_errors(form.titre_reclamation) }}
+                            </div>
+                        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+        {% set errorClass = form.description.vars.errors is not empty ? 'is-invalid' : '' %}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control ' ~ errorClass }}) }}
+        {% if form.description.vars.errors %}
+                            <div class="invalid-feedback">
+                                {{ form_errors(form.description) }}
+                            </div>
+                        {% endif %}
+    </div>
+   {# <div class="mb-3">
+        {{ form_label(form.user, 'Utilisateur', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+    </div>#}
+    <button type="submit" class="btn btn-primary"  >{{ button_label|default('Enregistré') }}</button>
+{{ form_end(form) }}

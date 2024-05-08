@@ -1,0 +1,358 @@
+{% extends 'base-back.html.twig' %}
+
+{% block body %}
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}Reclamation Index{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('back-office/images/favicon.ico') }}">
+
+    <!-- Bootstrap and Custom CSS -->
+    <link href="{{ asset('back-office/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('back-office/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('back-office/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
+
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v11.0" nonce="{{ nonce }}"></script>
+
+
+
+</head>
+<style>
+   
+    .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li a {
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    color: #007bff;
+    margin: 0 5px;
+}
+
+.pagination li.active a {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination li a:hover {
+    text-decoration: none;
+    background-color: #ddd;
+}
+
+.pagination li:first-child a, .pagination li:last-child a {
+    border-radius: 5px;
+}
+
+.pagination .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+
+/* CSS pour le conteneur de la table avec un arrière-plan */
+.table-container {
+    background-color: #f2f2f2; /* Couleur de fond de votre choix */
+    padding: 20px; /* Espacement intérieur pour la table */
+    border-radius: 10px; /* Ajoutez une bordure arrondie si désiré */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ajoutez une ombre si désiré */
+}
+
+
+.table {
+    border-collapse: collapse; /* Fusionner les bordures de cellule */
+    width: 100%; /* Assurez-vous que la table prend toute la largeur du conteneur */
+}
+
+.table th, .table td {
+    border: 1px solid #ddd; /* Ajouter une bordure de 1px solide avec la couleur grise #ddd */
+    padding: 8px; /* Ajouter un rembourrage intérieur */
+    text-align: left; /* Aligner le texte à gauche */
+}
+
+/* Style facultatif pour les en-têtes de colonne */
+.table th {
+    background-color: #f2f2f2; /* Couleur de fond pour les en-têtes de colonne */
+    color: #333; /* Couleur du texte pour les en-têtes de colonne */
+}
+
+
+
+
+
+
+
+    </style>
+
+<body>
+
+    <div class="container mt-3">
+        <h1 class="mb-4">Listes de Reclamation</h1>
+
+<form action="{{ path('app_reclamation_index') }}" method="GET" class="mb-5">
+    <div class="form-row">
+        <div class="col">
+            <input type="date" name="date" class="form-control mb-2" placeholder="Date">
+        </div>
+        <div class="col">
+            <input type="text" name="titre" class="form-control mb-2" placeholder="Titre">
+        </div>
+        <div class="col">
+            <select class="form-control mb-2" name="etat">
+                <option value="">choisir l'etat</option>
+                <option value="Traite">Traité</option>
+                <option value="Non_traite">Non Traité</option>
+            </select>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary mt-3">Rechercher</button>
+        </div>
+    </div>
+</form>
+
+<!-- Display Reclamations -->
+<div class="container">
+    <div class="row">
+        {% for reclamation in reclamations %}
+        <div class="col-md-4">
+            <!-- Display each reclamation here -->
+        </div>
+        {% else %}
+        <p>aucune reclamation </p>
+        {% endfor %}
+    </div>
+
+
+
+
+
+        {% set totalReclamations = reclamations|length %}
+        {% set nombreNonTraite = reclamations|filter(reclamation => reclamation.etat == 'Non_traite')|length %}
+        {% set nombreTraite = totalReclamations - nombreNonTraite %}
+        {% set pourcentageNonTraite = (nombreNonTraite / totalReclamations) * 100 %}
+        {% set pourcentageTraite = (nombreTraite / totalReclamations) * 100 %}
+
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Reclamations</h5>
+                        <p class="card-text">{{ totalReclamations }}</p>
+                        <div id="totalReclamationsProgress" class="apex-charts"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Non Traitées</h5>
+                        <p class="card-text">{{ nombreNonTraite }}</p>
+                        <div id="untreatedProgress" class="apex-charts"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pourcentage Non Traitées</h5>
+                        <div id="reclamationPieChart" class="apex-charts"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+<div class="table-container">
+        <table class="table table-bordered dt-responsive nowrap table-separator">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Date_reclamation</th>
+                    <th>Titre_reclamation</th>
+                    <th>Description</th>
+                    <th>Etat</th>
+                    <th>modifier etat</th>
+                    <th>Ajouter Réponse</th> <!-- Nouvelle colonne -->
+                </tr>
+            </thead>
+            <tbody>
+            {% for reclamation in pagination %}
+                <tr>
+                    <td>{{ reclamation.id }}</td>
+                    <td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d') : '' }}</td>
+                    <td>{{ reclamation.titreReclamation }}</td>
+                    <td>{{ reclamation.description }}</td>
+                    <td>{{ reclamation.etat }}</td>
+                    <td><a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-primary">edit</a></td>
+
+                    <!-- Nouvelle colonne pour ajouter une réponse -->
+            <td>
+                <a href="{{ path('app_reponse_new', {'reclamation_id': reclamation.id}) }}" class="btn btn-primary">Ajouter Réponse</a>
+                
+                {# Vérifie si la réclamation a une réponse associée 
+                {% if reclamation.reponse is not null %}
+                <button type="button" disabled class="btn btn-primary">Ajouter réponse (Réponse déjà ajoutée)</button>
+                {% else %}
+                <a href="{{ path('app_reponse_new', {'reclamation_id': reclamation.id}) }}" class="btn btn-primary">Ajouter réponse</a>
+                {% endif %} #}
+            </td>
+
+
+                </tr>
+            {% else %}
+                <tr><td colspan="7">aucune reclamation</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+
+        
+        <div class="col-12 d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% set currentPage = pagination.currentPageNumber %}
+            {% set pageCount = pagination.pageCount %}
+
+            {% if currentPage > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path('app_reclamation_index', { page: currentPage - 1 }) }}" aria-label="Previous">
+                    <span aria-hidden="true">previous</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for page in 1..pageCount %}
+                <li class="page-item {{ page == currentPage ? 'active' : '' }}">
+                    <a class="page-link" href="{{ path('app_reclamation_index', { page: page }) }}">{{ page }}</a>
+                </li>
+            {% endfor %}
+
+            {% if currentPage < pageCount %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path('app_reclamation_index', { page: currentPage + 1 }) }}" aria-label="Next">
+                    <span aria-hidden="true">next</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+        
+        
+        
+        </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var totalReclamationsOptions = {
+            series: [100],
+            chart: {
+                height: 200,
+                type: 'radialBar',
+            },
+            plotOptions: {
+                radialBar: {
+                    hollow: {
+                        size: '70%',
+                    }
+                }
+            },
+            colors: ['#20E647'],
+            labels: ['Total'],
+        };
+
+        
+
+    var untreatedOptions = {
+        series: [{{ pourcentageNonTraite|round }}],
+        chart: {
+            height: 200,
+            type: 'radialBar',
+        },
+        plotOptions: {
+            radialBar: {
+                hollow: {
+                    size: '70%',
+                }
+            }
+        },
+        // Color logic based on the number of untreated reclamations
+        colors: [{{ nombreNonTraite < 3 ? "'#007bff'" : nombreNonTraite < 6 ? "'#ffc107'" : "'#dc3545'" }}],
+        labels: ['Non Traitées'],
+    };
+
+
+
+
+
+        var pieOptions = {
+            series: [{{ pourcentageTraite|round }}, {{ pourcentageNonTraite|round }}],
+            chart: {
+                type: 'pie',
+                
+                
+            },
+            labels: ['Traitées', 'Non Traitées'],
+            colors: ['#00FB09', '#FB0000'],
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        };
+
+        new ApexCharts(document.querySelector("#totalReclamationsProgress"), totalReclamationsOptions).render();
+        new ApexCharts(document.querySelector("#untreatedProgress"), untreatedOptions).render();
+        new ApexCharts(document.querySelector("#reclamationPieChart"), pieOptions).render();
+    });
+    </script>
+
+    
+   {# <a href="{{ path('app_reponse_new') }}">Ajouter une reponse</a>#}
+
+   
+   {#<div class="text-right"> <!-- Cette div va aligner son contenu à droite -->
+    <a href="javascript:void(0);" onclick="shareOnFacebook('{{ url('app_reclamation_new') }}');" class="btn btn-primary float-right">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+</div>}#}
+
+<!-- Bouton pour aller vers l'interface admin -->
+<a href="{{ path('app_reponse_index_admin') }}" class="btn btn-primary">voir listes reponse</a>
+
+
+   
+
+
+    <script>
+function shareOnFacebook(url) {
+    FB.ui({
+        method: 'share',
+        href: url,
+    }, function(response){});
+}
+</script>
+</body>
+{% endblock %}
