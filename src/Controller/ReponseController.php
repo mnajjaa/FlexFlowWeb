@@ -26,7 +26,7 @@ class ReponseController extends AbstractController
 
 
 
-    #[Route('/', name: 'app_reponse_index', methods: ['GET'])]
+    #[Route('/addReclamation', name: 'app_reponse_index', methods: ['GET'])]
     public function index(ReponseRepository $reponseRepository): Response
     {
         return $this->render('reponse/index.html.twig', [

@@ -37,7 +37,7 @@ class ReclamationController extends AbstractController
 
 
 
-    #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
+    #[Route('/listesReclamation', name: 'app_reclamation_index', methods: ['GET'])]
     public function index(Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator, ReclamationRepository $reclamationRepository): Response
     {
 
